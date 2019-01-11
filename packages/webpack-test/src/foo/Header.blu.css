@@ -1,0 +1,20 @@
+.Header {
+  font-size: 16px
+}
+
+.Header:hover {
+  color: red
+}
+
+@media (min-width:320px) {
+.Header {
+  color: blue;
+  background-color: red
+}
+}
+
+@media (min-width:320px) {
+.Header:hover {
+  color: green
+}
+}

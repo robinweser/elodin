@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Traversing ast nodes should correctly traverse nodes 1`] = `
+Object {
+  "body": Array [
+    Object {
+      "body": Array [
+        Object {
+          "property": "color",
+          "type": "Declaration",
+          "value": Object {
+            "type": "Identifier",
+            "value": "RED",
+          },
+        },
+        Object {
+          "body": Array [
+            Object {
+              "property": "color",
+              "type": "Declaration",
+              "value": Object {
+                "type": "Identifier",
+                "value": "blue",
+              },
+            },
+          ],
+          "operator": "=",
+          "property": Object {
+            "type": "Identifier",
+            "value": "TYPE",
+          },
+          "type": "Conditional",
+          "value": Object {
+            "type": "Identifier",
+            "value": "PRIMARY",
+          },
+        },
+      ],
+      "name": "Button",
+      "type": "Style",
+    },
+  ],
+  "type": "File",
+}
+`;
+
+exports[`Traversing ast nodes should correctly traverse nodes 2`] = `
+Array [
+  "red",
+  "RED",
+  "RED",
+  "Type",
+  "TYPE",
+  "TYPE",
+  "Primary",
+  "PRIMARY",
+  "PRIMARY",
+  "blue",
+  "blue",
+  "blue",
+]
+`;

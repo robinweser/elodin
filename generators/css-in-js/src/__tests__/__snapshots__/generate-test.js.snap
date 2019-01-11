@@ -1,0 +1,119 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Compiling to CSS and JavaScript should return a map of files 1`] = `
+Object {
+  "Button.elodin.css": ".Button {
+  background-color: red;
+  color: rgba(250,250,250,0.35);
+  font-size: 15px;
+  line-height: 5.2px
+}",
+  "Button.elodin.js": "import './Button.elodin.css'
+
+export function Button(props) {
+  return {
+    _className: 'Button',
+    
+  }
+}",
+  "Label.elodin.css": ".Label {
+  padding: 20px
+}
+
+.Label:hover {
+  color: red
+}
+
+@media (min-width:320px) {
+.Label {
+  color: green
+}
+}
+
+@media (min-width:320px) {
+.Label:hover {
+  color: blue
+}
+}",
+  "Label.elodin.js": "import './Label.elodin.css'
+
+export function Label(props) {
+  return {
+    _className: 'Label',
+    \\"lineHeight\\":props.lineHeight,
+    \\":hover\\":{\\"borderColor\\":props.hoverBorder},
+    \\"min-width:320px\\":{\\"borderColor\\":props.mediaBorder,
+\\":hover\\":{\\"borderColor\\":props.mediaHoverBorder}}
+  }
+}",
+  "_root": "import { Button } from './Button.elodin.js'
+import { Label } from './Label.elodin.js'
+
+export {
+  Button,
+  Label
+}",
+}
+`;
+
+exports[`Compiling to CSS and JavaScript should use the given adapter 1`] = `
+Object {
+  "Button.elodin.css": ".Button {
+  background-color: red;
+  color: rgba(250,250,250,0.35);
+  font-size: 15px;
+  line-height: 5.2px
+}",
+  "Button.elodin.js": "import './Button.elodin.css'
+import { createComponent } from 'react-fela'
+
+function Button(props) {
+  return {
+    _className: 'Button',
+    
+  }
+}
+
+export default createComponent(Button)",
+  "Label.elodin.css": ".Label {
+  padding: 20px
+}
+
+.Label:hover {
+  color: red
+}
+
+@media (min-width:320px) {
+.Label {
+  color: green
+}
+}
+
+@media (min-width:320px) {
+.Label:hover {
+  color: blue
+}
+}",
+  "Label.elodin.js": "import './Label.elodin.css'
+import { createComponent } from 'react-fela'
+
+function Label(props) {
+  return {
+    _className: 'Label',
+    \\"lineHeight\\":props.lineHeight,
+    \\":hover\\":{\\"borderColor\\":props.hoverBorder},
+    \\"min-width:320px\\":{\\"borderColor\\":props.mediaBorder,
+\\":hover\\":{\\"borderColor\\":props.mediaHoverBorder}}
+  }
+}
+
+export default createComponent(Label)",
+  "_root": "import { Button } from './Button.elodin.js'
+import { Label } from './Label.elodin.js'
+
+export {
+  Button,
+  Label
+}",
+}
+`;

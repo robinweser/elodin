@@ -1,0 +1,23 @@
+{
+  "private": true,
+  "name": "elodin",
+  "repository": "https://github.com/rofrischmann/elodin.git",
+  "author": "rofrischmann <robin@rofrischmann.de>",
+  "license": "MIT",
+  "scripts": {
+    "bootstrap": "lerna run clean && lerna bootstrap --reject-cycles",
+    "build": "lerna run build",
+    "test": "lerna run test",
+    "setup": "yarn bootstrap && yarn build",
+    "coverage": "lerna run coverage"
+  },
+  "workspaces": [
+    "packages/*",
+    "generators/*"
+  ],
+  "devDependencies": {
+    "lerna": "^3.6.0",
+    "prettier": "^1.15.3",
+    "rimraf": "^2.6.2"
+  }
+}

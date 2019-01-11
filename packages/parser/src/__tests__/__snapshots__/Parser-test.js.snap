@@ -1,0 +1,333 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Parsing elodin syntax should correctly parse conditionals 1`] = `
+Object {
+  "body": Array [
+    Object {
+      "body": Array [
+        Object {
+          "property": "backgroundColor",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "type": "Identifier",
+            "value": "red",
+          },
+        },
+        Object {
+          "body": Array [
+            Object {
+              "property": "color",
+              "raw": false,
+              "type": "Declaration",
+              "value": Object {
+                "type": "Identifier",
+                "value": "red",
+              },
+            },
+          ],
+          "operator": "=",
+          "property": Object {
+            "type": "Identifier",
+            "value": "Type",
+          },
+          "type": "Conditional",
+          "value": Object {
+            "type": "Identifier",
+            "value": "Primary",
+          },
+        },
+      ],
+      "name": "Button",
+      "type": "Style",
+    },
+  ],
+  "type": "File",
+}
+`;
+
+exports[`Parsing elodin syntax should correctly parse env condition 1`] = `
+Object {
+  "body": Array [
+    Object {
+      "body": Array [
+        Object {
+          "body": Array [
+            Object {
+              "property": "color",
+              "raw": false,
+              "type": "Declaration",
+              "value": Object {
+                "type": "Identifier",
+                "value": "red",
+              },
+            },
+          ],
+          "boolean": true,
+          "property": Object {
+            "environment": true,
+            "type": "Variable",
+            "value": "hover",
+          },
+          "type": "Conditional",
+        },
+        Object {
+          "body": Array [
+            Object {
+              "property": "color",
+              "raw": false,
+              "type": "Declaration",
+              "value": Object {
+                "type": "Identifier",
+                "value": "blue",
+              },
+            },
+            Object {
+              "body": Array [
+                Object {
+                  "property": "color",
+                  "raw": false,
+                  "type": "Declaration",
+                  "value": Object {
+                    "type": "Identifier",
+                    "value": "green",
+                  },
+                },
+              ],
+              "boolean": true,
+              "property": Object {
+                "environment": true,
+                "type": "Variable",
+                "value": "hover",
+              },
+              "type": "Conditional",
+            },
+          ],
+          "operator": "=",
+          "property": Object {
+            "environment": true,
+            "type": "Variable",
+            "value": "minWidth",
+          },
+          "type": "Conditional",
+          "value": Object {
+            "type": "NumericLiteral",
+            "value": "320",
+          },
+        },
+      ],
+      "name": "Button",
+      "type": "Style",
+    },
+  ],
+  "type": "File",
+}
+`;
+
+exports[`Parsing elodin syntax should correctly parse fragments 1`] = `
+Object {
+  "body": Array [
+    Object {
+      "body": Array [
+        Object {
+          "property": "flexDirection",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "type": "Identifier",
+            "value": "row",
+          },
+        },
+        Object {
+          "property": "alignSelf",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "type": "Identifier",
+            "value": "stretch",
+          },
+        },
+        Object {
+          "property": "flexGrow",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "type": "NumericLiteral",
+            "value": "0",
+          },
+        },
+        Object {
+          "property": "flexShrink",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "type": "NumericLiteral",
+            "value": "1",
+          },
+        },
+        Object {
+          "property": "flexBasis",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "type": "Identifier",
+            "value": "auto",
+          },
+        },
+      ],
+      "name": "Flex",
+      "type": "Fragment",
+    },
+  ],
+  "type": "File",
+}
+`;
+
+exports[`Parsing elodin syntax should correctly parse multiple styles 1`] = `
+Object {
+  "body": Array [
+    Object {
+      "body": Array [
+        Object {
+          "property": "backgroundColor",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "type": "Identifier",
+            "value": "red",
+          },
+        },
+        Object {
+          "property": "color",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "type": "Identifier",
+            "value": "blue",
+          },
+        },
+        Object {
+          "property": "fontSize",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "type": "NumericLiteral",
+            "value": "15",
+          },
+        },
+      ],
+      "name": "Button",
+      "type": "Style",
+    },
+    Object {
+      "body": Array [
+        Object {
+          "property": "lineHeight",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "type": "NumericLiteral",
+            "value": "2",
+          },
+        },
+      ],
+      "name": "Label",
+      "type": "Style",
+    },
+  ],
+  "type": "File",
+}
+`;
+
+exports[`Parsing elodin syntax should correctly parse styles 1`] = `
+Object {
+  "body": Array [
+    Object {
+      "body": Array [
+        Object {
+          "property": "backgroundColor",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "type": "Identifier",
+            "value": "red",
+          },
+        },
+        Object {
+          "property": "color",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "type": "Identifier",
+            "value": "blue",
+          },
+        },
+        Object {
+          "property": "borderColor",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "callee": "rgb",
+            "params": Array [
+              Object {
+                "type": "NumericLiteral",
+                "value": "255",
+              },
+              Object {
+                "type": "NumericLiteral",
+                "value": "255",
+              },
+              Object {
+                "type": "NumericLiteral",
+                "value": "255",
+              },
+            ],
+            "type": "FunctionExpression",
+          },
+        },
+        Object {
+          "property": "fontSize",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "type": "NumericLiteral",
+            "value": "15",
+          },
+        },
+        Object {
+          "property": "lineHeight",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "fractional": "2",
+            "integer": "1",
+            "type": "Float",
+          },
+        },
+        Object {
+          "property": "borderWidth",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "environment": false,
+            "type": "Variable",
+            "value": "width",
+          },
+        },
+        Object {
+          "property": "animationName",
+          "raw": true,
+          "type": "Declaration",
+          "value": Object {
+            "type": "Identifier",
+            "value": "keyframe",
+          },
+        },
+      ],
+      "name": "Button",
+      "type": "Style",
+    },
+  ],
+  "type": "File",
+}
+`;

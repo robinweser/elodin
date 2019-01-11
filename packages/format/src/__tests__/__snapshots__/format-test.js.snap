@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Formatting elodin syntax should return beautiful syntax 1`] = `
+"fragment Flex {
+  display: flex
+  flexDirection: row
+}
+
+style Button {
+  backgroundColor: red
+  color: blue
+  fontSize: 15
+  lineHeight: 1.3
+  borderWidth: .3
+  borderColor: rgb(255 200 155)
+  [Type=Primary] {
+    color: red
+    [Mode=Dark] {
+      color: yellow
+      backgroundColor: green
+    }
+  }
+}
+
+style Label {
+  lineHeight: $lineHeight
+  padding: 20
+  [@hover] {
+    color: red
+  }
+  [@minWidth=320] {
+    color: blue
+    [@hover] {
+      color: green
+    }
+  }
+}"
+`;
+
+exports[`Formatting elodin syntax should return beautiful syntax with custom syntax 1`] = `
+"fragment Flex {
+    display: flex
+    flexDirection: row
+}
+
+style Button {
+    backgroundColor: red
+    color: blue
+    fontSize: 15
+    lineHeight: 1.3
+    borderWidth: .3
+    borderColor: rgb(255 200 155)
+    [Type=Primary] {
+        color: red
+        [Mode=Dark] {
+            color: yellow
+            backgroundColor: green
+        }
+    }
+}
+
+style Label {
+    lineHeight: $lineHeight
+    padding: 20
+    [@hover] {
+        color: red
+    }
+    [@minWidth=320] {
+        color: blue
+        [@hover] {
+            color: green
+        }
+    }
+}"
+`;
