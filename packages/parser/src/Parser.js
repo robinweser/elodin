@@ -16,6 +16,11 @@ const ruleMap = {
   variable: /^[$@]$/,
 }
 
+const errorTypes = {
+  INVALID_PROPERTY: 'INVALID_PROPERTY',
+  INVALID_VALUE: 'INVALID_VALUE',
+}
+
 export default class Parser {
   constructor(config = {}) {
     this.config = config
@@ -46,6 +51,7 @@ export default class Parser {
     // initialize/reset indices
     this.input = input
     this.currentPosition = 0
+    this.errors = []
     this.updateCurrentToken()
 
     const file = {
@@ -58,7 +64,10 @@ export default class Parser {
       file.body.push(node)
     }
 
-    return file
+    return {
+      errors: this.errors,
+      ast: file,
+    }
   }
 
   parseStyle() {
@@ -163,35 +172,19 @@ export default class Parser {
 
           if (typeof validation === 'object') {
             if (validation.type === 'property') {
-              throw new SyntaxError(
-                validation.message +
-                  '\n' +
-                  this.input.substring(
-                    propertyToken.start + 1,
-                    valueToken.end + 1
-                  ) +
-                  '   /components/Header.elo (10:' +
-                  propertyToken.start +
-                  ')\n' +
-                  '↑'.repeat(property.length)
-              )
+              this.errors.push({
+                type: errorTypes.INVALID_PROPERTY,
+                property,
+                value,
+              })
             }
 
             if (validation.type === 'value' && value.type !== 'Variable') {
-              throw new SyntaxError(
-                validation.message +
-                  '\n' +
-                  this.input.substring(
-                    propertyToken.start + 1,
-                    valueToken.end + 1
-                  ) +
-                  '   /components/Header.elo (10:' +
-                  propertyToken.start +
-                  ')\n' +
-                  '↑'.repeat(property.length) +
-                  '\n' +
-                  validation.hint
-              )
+              this.errors.push({
+                type: errorTypes.INVALID_VALUE,
+                property,
+                value,
+              })
             }
           }
         }

@@ -4,16 +4,6 @@ style Button {
   fontSize: 15
 }
 
-style Label {
-  lineHeight: $lineHeight
-}
-
-style Header {
-  fontSize: $fontSize
-  backgroundColor: $bgColor
-  color: yellow
-}
-
 style Test {
   fontSize: $foo
   color: rgb(230 230 230)

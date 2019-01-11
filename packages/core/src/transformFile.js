@@ -17,16 +17,15 @@ export default function transformFile(inputPath, options, callback) {
   const gen = require('@elodin/generator-' + generator).default
 
   const transform = file => write => {
-    let ast
-    try {
-      ast = traverse(parse(file), plugins)
-    } catch (e) {
-      if (errors === 'throw') {
-        throw e
+    const parsed = parse(file)
+
+    if (parsed.errors.length > 0) {
+      if (parsed.errors === 'throw') {
+        throw new SyntaxError(parsed.errors[0])
       }
 
       if (errors === 'log') {
-        console.log(e)
+        console.log(parsed.errors[0])
       }
 
       if (callback) {
@@ -36,6 +35,7 @@ export default function transformFile(inputPath, options, callback) {
       return
     }
 
+    const ast = traverse(parsed.ast, plugins)
     const files = gen({ adapterName: adapter })(ast, inputPath)
 
     const inputDir = dirname(inputPath)
