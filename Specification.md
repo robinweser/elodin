@@ -58,7 +58,7 @@ It can be used to inject target-specific properties that are not part of the Elo
 }
 ```
 
-Conditional declarations are special declarations that are only applied if a given **condition** is fulfilled.
+Conditional declarations are special declarations that are only applied if a given **condition** is fulfilled. Think of them as if-statements.
 
 #### Condition
 
@@ -66,11 +66,10 @@ Conditional declarations are special declarations that are only applied if a giv
 Type=Primary
 ```
 
-##### Environment
+A condition is a boolean expression that evaluates to either `true` or `false`.  
+One can check [variant](#variant) values, [variable](#variable) values and [environment](#environment) variable values. Boolean variables use a shorthand notation.
 
-```elodin
-@hover
-```
+Valid condition operators are `=`, `>=`, `>`, `<=`, and `<`.
 
 ## Fragment
 
@@ -107,10 +106,23 @@ stretch
 27.45
 ```
 
+### Percentage
+
+```elodin
+55%
+45.55%
+```
+
 ### Function
 
 ```elodin
 rgba(250 250 250 0.35)
+```
+
+### HexColor
+
+```elodin
+#efefef
 ```
 
 ### String
@@ -125,8 +137,32 @@ rgba(250 250 250 0.35)
 $bgColor
 ```
 
+##### Environment
+
+```elodin
+@hover
+```
+
 ## Modules
 
 ### Color
 
+#### brighten
+
+#### darken
+
 ### Math
+
+#### add
+
+#### substract
+
+#### multiply
+
+#### divide
+
+#### pow
+
+#### max
+
+#### min
