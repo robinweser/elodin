@@ -1,11 +1,25 @@
 import adapters from './adapters'
 
-export default function createGenerator({ adapterName = 'fela' }) {
-  const adapter = adapters.find(adapter => adapter.name === adapterName)
+const validPseudoClasses = [
+  'link',
+  'hover',
+  'focus',
+  'active',
+  'visited',
+  'disabled',
+  'focusWithin',
+  'firstChild',
+  'lastChild',
+]
+
+const validMediaQueries = ['viewportWidth', 'viewportHeight']
+
+export default function createGenerator({ adapter = 'fela' }) {
+  const usedAdapter = adapters.find(adapt => adapt.name === adapter)
 
   return function generate(ast, fileName) {
     const css = generateCSS(ast)
-    const js = generateJS(ast, adapter)
+    const js = generateJS(ast, usedAdapter)
     const root = generateRoot(ast)
 
     return { _root: root, ...css, ...js }
@@ -92,7 +106,10 @@ function generateClasses(nodes, classes = [], pseudo = '', media = '') {
 
   nesting.forEach(nest => {
     if (nest.property.type === 'Variable' && nest.property.environment) {
-      if (nest.boolean && nest.property.value === 'hover') {
+      if (
+        nest.boolean &&
+        validPseudoClasses.indexOf(nest.property.value) !== -1
+      ) {
         generateClasses(
           nest.body,
           classes,
@@ -101,12 +118,12 @@ function generateClasses(nodes, classes = [], pseudo = '', media = '') {
         )
       }
 
-      if (nest.property.value === 'minWidth') {
+      if (validMediaQueries.indexOf(nest.property.value) !== -1) {
         generateClasses(
           nest.body,
           classes,
           pseudo,
-          '(min-width:' + nest.value.value + 'px)'
+          getMediaQuery(nest.value.value, nest.property.value, nest.operator)
         )
       }
     }
@@ -176,16 +193,23 @@ function generateStyle(nodes) {
   const nests = nestings
     .map(nest => {
       if (nest.property.type === 'Variable' && nest.property.environment) {
-        if (nest.boolean && nest.property.value === 'hover') {
+        if (
+          nest.boolean &&
+          validPseudoClasses.indexOf(nest.property.value) !== -1
+        ) {
           return {
             property: ':' + nest.property.value,
             value: generateStyle(nest.body),
           }
         }
 
-        if (nest.property.value === 'minWidth') {
+        if (validMediaQueries.indexOf(nest.property.value) !== -1) {
           return {
-            property: '@media (min-width: ' + nest.value.value + 'px)',
+            property: getMediaQuery(
+              nest.value.value,
+              nest.property.value,
+              nest.operator
+            ),
             value: generateStyle(nest.body),
           }
         }
@@ -194,4 +218,38 @@ function generateStyle(nodes) {
     .filter(nesting => nesting && nesting.value.length > 0)
 
   return [...declarations, ...nests]
+}
+
+function getMediaQuery(value, property, operator) {
+  const dimension = property.indexOf('Height') !== -1 ? 'height' : 'width'
+
+  if (operator === '=') {
+    return (
+      '(min-' +
+      dimension +
+      ': ' +
+      value +
+      'px) and (max-' +
+      dimension +
+      ': ' +
+      value +
+      'px)'
+    )
+  }
+
+  if (operator === '>') {
+    return '(min-' + dimension + ': ' + (value + 1) + 'px)'
+  }
+
+  if (operator === '>=') {
+    return '(min-' + dimension + ': ' + value + 'px)'
+  }
+
+  if (operator === '<=') {
+    return '(max-' + dimension + ': ' + value + 'px)'
+  }
+
+  if (operator === '<') {
+    return '(max-' + dimension + ': ' + (value - 1) + 'px)'
+  }
 }

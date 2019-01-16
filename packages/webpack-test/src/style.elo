@@ -1,4 +1,4 @@
-style Button {
+style Bla {
   backgroundColor: red
   color: blue
   fontSize: 15
@@ -7,4 +7,20 @@ style Button {
 style Test {
   fontSize: $foo
   color: rgb(230 230 230)
+
+  [@focus] {
+    color: red
+    [@hover] {
+      color: blue
+    }
+  }
+
+  [@viewportWidth>=320] {
+    color: red
+  }
+
+  [@viewportHeight>=320] {
+    color: red
+    fontSize: $fontSize
+  }
 }

@@ -1,0 +1,3 @@
+style Elo {
+  fontSize: $fontSize
+}

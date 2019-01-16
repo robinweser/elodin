@@ -36,19 +36,7 @@ import pkg from '../package.json'
 //   'list of glob paths to **only** compile',
 //   collect
 // )
-
-commander.option(
-  '--generator [generator]',
-  'The generator used to generate output files. ' +
-    'One of the official generators published as @elodin/generator-*.'
-)
-
-commander.option(
-  '--adapter [adapter]',
-  'The generator used to generate output files. ' +
-    'One of the official generators published as @elodin/generator-*.'
-)
-
+commander.option('--config [path]', 'Path to a elodin.config.js file to use')
 commander.option('-w, --watch', 'Recompile files on changes')
 commander.option('--skip-initial-build', 'Do not compile files before watching')
 
@@ -107,7 +95,7 @@ export default function parseArgv(args) {
   }
 
   if (errors.length) {
-    console.error('babel:')
+    console.error('elodin:')
     errors.forEach(function(e) {
       console.error('  ' + e)
     })
@@ -121,8 +109,7 @@ export default function parseArgv(args) {
     // plugins: opts.plugins,
     // ignore: opts.ignore,
     // only: opts.only,
-    generator: opts.generator,
-    adapter: opts.adapter,
+    configFile: opts.config || './elodin.config.js',
   }
 
   return {

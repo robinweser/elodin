@@ -4,23 +4,18 @@ import readTransformWrite from 'read-transform-write'
 import { parse } from '@elodin/parser'
 import { traverse } from '@elodin/traverser'
 
-export default function transformFile(inputPath, options, callback) {
-  const plugins = options.plugins || []
-  const generator = options.generator
-  const adapter = options.adapter
-  const errors = options.errors || 'throw'
+export default function transformFile(inputPath, config, callback) {
+  const { plugins = [], generator, errors = 'throw' } = config
 
   if (!generator) {
     throw new Error('No generator passed.')
   }
 
-  const gen = require('@elodin/generator-' + generator).default
-
   const transform = file => write => {
     const parsed = parse(file)
 
     if (parsed.errors.length > 0) {
-      if (parsed.errors === 'throw') {
+      if (errors === 'throw') {
         throw new SyntaxError(parsed.errors[0])
       }
 
@@ -29,14 +24,14 @@ export default function transformFile(inputPath, options, callback) {
       }
 
       if (callback) {
-        callback()
+        callback(false)
       }
 
       return
     }
 
     const ast = traverse(parsed.ast, plugins)
-    const files = gen({ adapterName: adapter })(ast, inputPath)
+    const files = generator(ast, inputPath)
 
     const inputDir = dirname(inputPath)
     const inputFile = basename(inputPath)
@@ -53,7 +48,7 @@ export default function transformFile(inputPath, options, callback) {
   readTransformWrite(inputPath, transform, ({ output, outputPath, isDone }) => {
     //console.log(`Written ${outputPath}.`)
     if (isDone && callback) {
-      callback()
+      callback(true)
     }
   })
 }

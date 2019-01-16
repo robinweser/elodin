@@ -9,7 +9,7 @@
     "build": "yarn build:es && yarn build:lib",
     "build:es": "babel src --out-dir es --ignore \"src/__tests__\"",
     "build:lib": "babel src --out-dir lib --ignore \"src/__tests__\"",
-    "elodin": "elodin src --generator css-in-js",
+    "elodin": "elodin src/foo.elo --config elo.js",
     "test": "echo 1",
     "coverage": "yarn test --coverage"
   },

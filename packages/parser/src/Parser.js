@@ -276,14 +276,14 @@ export default class Parser {
 
         return {
           type: 'Float',
-          integer: integer,
-          fractional: nextNextToken.value,
+          integer: parseInt(integer),
+          fractional: parseInt(nextNextToken.value),
         }
       }
 
       return {
         type: 'NumericLiteral',
-        value: integer,
+        value: parseInt(integer),
       }
     }
 
@@ -294,7 +294,7 @@ export default class Parser {
         return {
           type: 'Float',
           integer: 0,
-          fractional: this.currentToken.value,
+          fractional: parseInt(this.currentToken.value),
         }
       }
     }

@@ -9,6 +9,8 @@ import fs from 'fs'
 import * as util from './util'
 
 export default async function({ cliOptions, elodinOptions }) {
+  const config = require(path.join(process.cwd(), elodinOptions.configFile))
+
   const filenames = cliOptions.filenames
 
   async function walk(filenames) {
@@ -29,29 +31,48 @@ export default async function({ cliOptions, elodinOptions }) {
       }
     })
 
-    let count = 0
+    let success = 0
+    let fail = 0
     const results = await Promise.all(
       _filenames.map(async function(filename) {
         let sourceFilename = filename
 
         sourceFilename = slash(sourceFilename)
 
-        count++
-
-        return await util.compile(filename, {
-          ...elodinOptions,
+        const didCompile = await util.compile(filename, {
+          ...config,
           errors: cliOptions.watch ? 'log' : 'throw',
         })
+
+        if (didCompile) {
+          success++
+        } else {
+          fail++
+        }
       })
     )
 
-    console.log(
-      'Successfully compiled ' +
-        count +
-        ' file' +
-        (count > 1 ? 's' : '') +
-        ' with elodin.'
-    )
+    const successLog =
+      success > 0
+        ? 'Successfully compiled ' +
+          success +
+          ' file' +
+          (success > 1 ? 's' : '') +
+          '. '
+        : ''
+
+    const failLog =
+      fail > 0
+        ? (successLog.length > 0 ? '\n' : '') +
+          fail +
+          ' file' +
+          (fail > 1 ? 's' : '') +
+          ' failed to compile.'
+        : ''
+
+    if (successLog.length + failLog.length > 0) {
+      console.log(successLog + failLog)
+    }
   }
 
   async function files(filenames) {
