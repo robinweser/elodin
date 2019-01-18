@@ -17,6 +17,7 @@ const ruleMap = {
 }
 
 const errorTypes = {
+  SYNTAX_ERROR: 'SYNTAX_ERROR',
   INVALID_PROPERTY: 'INVALID_PROPERTY',
   INVALID_VALUE: 'INVALID_VALUE',
 }
@@ -40,13 +41,29 @@ export default class Parser {
   }
 
   isRunning() {
-    return this.currentPosition < this.tokens.length
+    return this.currentPosition < this.tokens.length - 1
+  }
+
+  addError(error, exit) {
+    this.errors.push({
+      ...error,
+      token: this.currentToken,
+    })
+
+    if (exit) {
+      this.currentPosition = this.tokens.length - 1
+      this.updateCurrentToken()
+    }
   }
 
   parse(input) {
     this.tokens = tokenize(input.trim(), ruleMap, 'unknown').filter(
       token => token.type !== 'whitespace'
     )
+
+    this.tokens.push({
+      type: 'end_token',
+    })
 
     // initialize/reset indices
     this.input = input
@@ -61,6 +78,16 @@ export default class Parser {
 
     while (this.isRunning()) {
       const node = this.parseStyle() || this.parseFragment()
+
+      if (!node) {
+        this.addError(
+          {
+            type: errorTypes.SYNTAX_ERROR,
+          },
+          true
+        )
+      }
+
       file.body.push(node)
     }
 
@@ -78,7 +105,25 @@ export default class Parser {
       this.updateCurrentToken(1)
 
       const name = this.parseStyleName()
+
+      if (!name) {
+        this.addError(
+          {
+            type: errorTypes.SYNTAX_ERROR,
+          },
+          true
+        )
+      }
       const body = this.parseStyleBody()
+
+      if (!body) {
+        this.addError(
+          {
+            type: errorTypes.SYNTAX_ERROR,
+          },
+          true
+        )
+      }
 
       return {
         type: 'Style',
@@ -105,8 +150,17 @@ export default class Parser {
     ) {
       this.updateCurrentToken(1)
 
-      while (this.currentToken.type !== 'curly_bracket') {
+      while (this.isRunning() && this.currentToken.type !== 'curly_bracket') {
         const node = this.parseDeclaration() || this.parseConditional()
+
+        if (!node) {
+          this.addError(
+            {
+              type: errorTypes.SYNTAX_ERROR,
+            },
+            true
+          )
+        }
 
         body.push(node)
         this.updateCurrentToken(1)
@@ -125,8 +179,24 @@ export default class Parser {
       this.updateCurrentToken(1)
 
       const name = this.parseStyleName()
+      if (!name) {
+        this.addError(
+          {
+            type: errorTypes.SYNTAX_ERROR,
+          },
+          true
+        )
+      }
       const body = this.parseFragmentBody()
 
+      if (!body) {
+        this.addError(
+          {
+            type: errorTypes.SYNTAX_ERROR,
+          },
+          true
+        )
+      }
       return {
         type: 'Fragment',
         name,
@@ -144,8 +214,17 @@ export default class Parser {
     ) {
       this.updateCurrentToken(1)
 
-      while (this.currentToken.type !== 'curly_bracket') {
-        body.push(this.parseDeclaration())
+      while (this.isRunning() && this.currentToken.type !== 'curly_bracket') {
+        const declaration = this.parseDeclaration()
+        if (!declaration) {
+          this.addError(
+            {
+              type: errorTypes.SYNTAX_ERROR,
+            },
+            true
+          )
+        }
+        body.push(declaration)
         this.updateCurrentToken(1)
       }
 
@@ -166,6 +245,15 @@ export default class Parser {
         this.updateCurrentToken(1)
         const valueToken = this.currentToken
         const value = this.parseValue()
+
+        if (!value) {
+          return this.addError(
+            {
+              type: errorTypes.SYNTAX_ERROR,
+            },
+            true
+          )
+        }
 
         if (!isRawDeclaration) {
           const validation = validateDeclaration(property, value, value.value)
@@ -207,8 +295,26 @@ export default class Parser {
       this.updateCurrentToken(1)
 
       const condition = this.parseCondition()
+
+      if (!condition) {
+        this.addError(
+          {
+            type: errorTypes.SYNTAX_ERROR,
+          },
+          true
+        )
+      }
+
       const body = this.parseStyleBody()
 
+      if (!body) {
+        this.addError(
+          {
+            type: errorTypes.SYNTAX_ERROR,
+          },
+          true
+        )
+      }
       this.updateCurrentToken(-1)
 
       return {
@@ -312,8 +418,18 @@ export default class Parser {
 
         const params = []
 
-        while (this.currentToken.type !== 'round_bracket') {
-          params.push(this.parseValue())
+        while (this.isRunning() && this.currentToken.type !== 'round_bracket') {
+          const param = this.parseValue()
+
+          if (!param) {
+            this.addError(
+              {
+                type: errorTypes.SYNTAX_ERROR,
+              },
+              true
+            )
+          }
+          params.push(param)
           this.updateCurrentToken(1)
         }
 

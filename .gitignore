@@ -23,7 +23,8 @@ Thumbs.db
 
 **/*.elodin.*
 
-**/node_modules
-**/es
-**/coverage
-**/lib
+node_modules
+lib
+es 
+coverage 
+.next

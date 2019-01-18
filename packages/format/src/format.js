@@ -6,8 +6,14 @@ export default function format(input, config = {}) {
   const parsed = parse(input)
 
   if (parsed.errors.length === 0) {
-    return formatFromAST(parsed.ast, config)
+    return {
+      code: formatFromAST(parsed.ast, config),
+      errors: [],
+    }
   }
 
-  return input
+  return {
+    code: input,
+    errors: parsed.errors,
+  }
 }
