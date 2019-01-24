@@ -14,7 +14,7 @@ const validPseudoClasses = [
 
 const validMediaQueries = ['viewportWidth', 'viewportHeight']
 
-export default function createGenerator({ adapter = 'fela' }) {
+export default function createGenerator({ adapter = 'fela' } = {}) {
   const usedAdapter = adapters.find(adapt => adapt.name === adapter)
 
   return function generate(ast, fileName) {

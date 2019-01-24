@@ -12,18 +12,18 @@ style Button {
 
 style Label {
   lineHeight: $lineHeight
-  padding: 20
+  fontSize: 20
 
   [@hover] {
     color: red
-    borderColor: $hoverBorder
+    backgroundColor: $bgColor
   }
 
   [@minWidth=320] {
     color: green
-    borderColor: $mediaBorder
+    backgroundColor: $mediaBgColor
     [@hover]{
-      borderColor: $mediaHoverBorder
+      backgroundColor: $mediaHoverBgColor
       color: blue
     }
   }
@@ -39,6 +39,6 @@ describe('Compiling to CSS and JavaScript', () => {
   it('should use the given adapter', () => {
     const { ast } = parse(file)
 
-    expect(createGenerator('react-fela')(ast)).toMatchSnapshot()
+    expect(createGenerator({ adapter: 'react-fela' })(ast)).toMatchSnapshot()
   })
 })

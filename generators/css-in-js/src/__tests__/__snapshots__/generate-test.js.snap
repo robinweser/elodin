@@ -17,23 +17,11 @@ export function Button(props) {
   }
 }",
   "Label.elodin.css": ".Label {
-  padding: 20px
+  font-size: 20px
 }
 
 .Label:hover {
   color: red
-}
-
-@media (min-width:320px) {
-.Label {
-  color: green
-}
-}
-
-@media (min-width:320px) {
-.Label:hover {
-  color: blue
-}
 }",
   "Label.elodin.js": "import './Label.elodin.css'
 
@@ -41,9 +29,7 @@ export function Label(props) {
   return {
     _className: 'Label',
     \\"lineHeight\\":props.lineHeight,
-    \\":hover\\":{\\"borderColor\\":props.hoverBorder},
-    \\"min-width:320px\\":{\\"borderColor\\":props.mediaBorder,
-\\":hover\\":{\\"borderColor\\":props.mediaHoverBorder}}
+    \\":hover\\":{\\"backgroundColor\\":props.bgColor}
   }
 }",
   "_root": "import { Button } from './Button.elodin.js'
@@ -76,23 +62,11 @@ function Button(props) {
 
 export default createComponent(Button)",
   "Label.elodin.css": ".Label {
-  padding: 20px
+  font-size: 20px
 }
 
 .Label:hover {
   color: red
-}
-
-@media (min-width:320px) {
-.Label {
-  color: green
-}
-}
-
-@media (min-width:320px) {
-.Label:hover {
-  color: blue
-}
 }",
   "Label.elodin.js": "import './Label.elodin.css'
 import { createComponent } from 'react-fela'
@@ -101,9 +75,7 @@ function Label(props) {
   return {
     _className: 'Label',
     \\"lineHeight\\":props.lineHeight,
-    \\":hover\\":{\\"borderColor\\":props.hoverBorder},
-    \\"min-width:320px\\":{\\"borderColor\\":props.mediaBorder,
-\\":hover\\":{\\"borderColor\\":props.mediaHoverBorder}}
+    \\":hover\\":{\\"backgroundColor\\":props.bgColor}
   }
 }
 
