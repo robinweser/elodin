@@ -31,13 +31,13 @@ style Label {
 
 describe('Compiling to CSS and JavaScript', () => {
   it('should return a map of files', () => {
-    const ast = parse(file)
+    const { ast } = parse(file)
 
     expect(createGenerator()(ast)).toMatchSnapshot()
   })
 
   it('should use the given adapter', () => {
-    const ast = parse(file)
+    const { ast } = parse(file)
 
     expect(createGenerator('react-fela')(ast)).toMatchSnapshot()
   })

@@ -1,6 +1,7 @@
 {
-  "name": "repl",
-  "version": "1.0.0",
+  "private": true,
+  "name": "@elodin/repl",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,9 +11,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@elodin/parser": "^1.0.0",
-    "@elodin/generator-css-in-js": "^1.0.0",
-    "@elodin/format": "^1.0.0",
+    "@elodin/parser": "^0.0.1",
+    "@elodin/generator-css-in-js": "^0.0.1",
+    "@elodin/format": "^0.0.1",
     "next": "^7.0.2",
     "react": "16.7.0-alpha.2",
     "react-dom": "16.7.0-alpha.2"

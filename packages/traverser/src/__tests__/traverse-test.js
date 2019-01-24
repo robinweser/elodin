@@ -28,7 +28,7 @@ style Button {
       },
     }
 
-    const ast = parse(file)
+    const { ast } = parse(file)
 
     expect(traverse(ast, [visitor])).toMatchSnapshot()
     expect(log).toMatchSnapshot()

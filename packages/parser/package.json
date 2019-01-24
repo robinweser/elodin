@@ -1,6 +1,6 @@
 {
   "name": "@elodin/parser",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "main": "lib/index.js",
   "module": "es/index.js",
   "scripts": {
@@ -15,7 +15,7 @@
   "author": "rofrischmann <robin@rofrischmann.de>",
   "license": "MIT",
   "dependencies": {
-    "@elodin/validator": "^1.0.0",
+    "@elodin/validator": "^0.0.1",
     "tokenize-sync": "^2.0.0"
   },
   "devDependencies": {

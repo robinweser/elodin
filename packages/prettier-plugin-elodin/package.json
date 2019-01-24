@@ -1,8 +1,8 @@
 {
   "name": "prettier-plugin-elodin",
-  "version": "1.0.0",
-  "main": "lib",
-  "module": "es",
+  "version": "0.0.1",
+  "main": "lib/index.js",
+  "module": "es/index.js",
   "scripts": {
     "clean": "rimraf lib es coverage",
     "build": "yarn build:es && yarn build:lib",
@@ -21,13 +21,13 @@
   "author": "rofrischmann <robin@rofrischmann.de>",
   "license": "MIT",
   "dependencies": {
-    "@elodin/format": "^1.0.0"
+    "@elodin/format": "^0.0.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.0",
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.0",
-    "@elodin/parser": "^1.0.0",
+    "@elodin/parser": "^0.0.1",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "cross-env": "^5.2.0",

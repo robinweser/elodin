@@ -16,9 +16,9 @@ describe('Validating declarations', () => {
         type: 'Identifier',
         value: 'left',
       })
-    ).toBe(false)
+    ).not.toBe(true)
     expect(
       validateDeclaration('display', { type: 'Identifier', value: 'table' })
-    ).toBe(false)
+    ).not.toBe(false)
   })
 })

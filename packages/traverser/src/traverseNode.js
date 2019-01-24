@@ -9,6 +9,7 @@ export default function traverseNode(node, visitor) {
 
   switch (node.type) {
     case 'File':
+      traverseNodeList
     case 'Style':
     case 'Fragment':
       traverseNodeList(node.body, visitor)

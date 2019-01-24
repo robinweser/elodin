@@ -4,7 +4,7 @@ import generator from '@elodin/generator-css-in-js'
 import { format } from '@elodin/format'
 
 const generate = generator({
-  adapter: 'fela',
+  adapter: 'react-fela',
 })
 
 export default () => {

@@ -5,11 +5,15 @@
   "author": "rofrischmann <robin@rofrischmann.de>",
   "license": "MIT",
   "scripts": {
-    "bootstrap": "lerna run clean && lerna bootstrap --reject-cycles",
+    "bootstrap": "lerna bootstrap --reject-cycles",
+    "cleanup": "lerna run clean && lerna clean --yes",
     "build": "lerna run build",
-    "test": "lerna run test",
+    "format": "prettier --write \"**/*.js\"",
+    "coverage": "lerna run coverage",
+    "release": "git pull --rebase && yarn run cleanup && yarn build && yarn run coverage && lerna publish --force-publish",
     "setup": "yarn bootstrap && yarn build",
-    "coverage": "lerna run coverage"
+    "test": "lerna run test",
+    "postinstall": "yarn build"
   },
   "workspaces": [
     "packages/*",
