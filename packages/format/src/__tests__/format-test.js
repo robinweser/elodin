@@ -2,21 +2,22 @@ import format from '../format'
 
 const file = `
 fragment Flex {
-   display:   flex
+   flexGrow: 1
   flexDirection: row
 }
 style Button{backgroundColor: red color: blue
      fontSize: 15
        lineHeight: 1.3
-       borderWidth: 0.3
-       borderColor: rgb(  255  200   155  )
+
+      __borderWidth: .3
+       color: rgb(  255  200   155  )
 
   [ Type =   Primary  ] {  color:red [Mode=Dark]{color:yellow backgroundColor:green}}
   }
 
    style    Label {
 lineHeight:   $lineHeight
-     padding   : 20
+    fontSize: 20
 
      [@hover] {
        color:red

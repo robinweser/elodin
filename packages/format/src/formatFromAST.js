@@ -68,7 +68,9 @@ export default function formatFromAST(node, customConfig = {}, level = 1) {
       return node.callee + '(' + node.params.map(generate).join(' ') + ')'
 
     case 'Declaration':
-      return node.property + ': ' + generate(node.value)
+      return (
+        (node.raw ? '__' : '') + node.property + ': ' + generate(node.value)
+      )
 
     case 'Variable':
       return (node.environment ? '@' : '$') + node.value
