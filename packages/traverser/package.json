@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "main": "lib/index.js",
   "module": "es/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "clean": "rimraf lib es coverage",
     "build": "yarn build:es && yarn build:lib",
@@ -24,5 +27,6 @@
     "cross-env": "^5.2.0",
     "jest": "^23.6.0",
     "rimraf": "^2.6.2"
-  }
+  },
+  "gitHead": "974383a4e8bca0abd357f804b190addc5e1a8a56"
 }

@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "main": "lib/index.js",
   "module": "es/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "clean": "rimraf lib es coverage",
     "build": "yarn build:es && yarn build:lib",
@@ -35,5 +38,6 @@
     "prettier": "^1.15.3",
     "rimraf": "^2.6.2",
     "temp-dir": "^1.0.0"
-  }
+  },
+  "gitHead": "974383a4e8bca0abd357f804b190addc5e1a8a56"
 }
