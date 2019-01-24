@@ -1,7 +1,7 @@
 import { format } from '@elodin/format'
 
 export default function parse(text) {
-  const formattedText = format(text)
+  const formattedText = format(text).code
 
   return {
     ast_type: 'elodin-ast',

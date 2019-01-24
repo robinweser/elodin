@@ -1,4 +1,5 @@
 style Button {
   color: red
   fontSize: $size
+  backgroundColor: blue
 }

@@ -30,7 +30,7 @@ export const parsers = {
 }
 
 export const printers = {
-  elodin: {
+  'elodin-ast': {
     print,
   },
 }

@@ -32,14 +32,17 @@ lineHeight:   $lineHeight
 
 describe('Formatting elodin syntax', () => {
   it('should return beautiful syntax', () => {
-    expect(format(file)).toMatchSnapshot()
+    expect(format(file).code).toMatchSnapshot()
   })
 
   it('should return beautiful syntax with custom syntax', () => {
     expect(
-      format(file, {
-        ident: '    ',
-      })
+      format(
+        file,
+        {
+          ident: '    ',
+        }.code
+      )
     ).toMatchSnapshot()
   })
 })
