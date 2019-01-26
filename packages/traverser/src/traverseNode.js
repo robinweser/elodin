@@ -1,32 +1,34 @@
 import traverseNodeList from './traverseNodeList'
+import createPath from './createPath'
 
-export default function traverseNode(node, visitor) {
+export default function traverseNode(node, visitor, parentPath) {
   const methods = visitor[node.type]
 
+  const nodePath = createPath(node, parentPath, parentPath.context)
+
   if (methods && methods.enter) {
-    methods.enter(node)
+    methods.enter(nodePath)
   }
 
   switch (node.type) {
     case 'File':
-      traverseNodeList
     case 'Style':
     case 'Fragment':
-      traverseNodeList(node.body, visitor)
+      traverseNodeList(node.body, visitor, nodePath)
       break
 
     case 'FunctionExpression':
-      traverseNodeList(node.params, visitor)
+      traverseNodeList(node.params, visitor, nodePath)
       break
 
     case 'Conditional':
-      traverseNode(node.property, visitor)
-      traverseNode(node.value, visitor)
-      traverseNodeList(node.body, visitor)
+      traverseNode(node.property, visitor, nodePath)
+      traverseNode(node.value, visitor, nodePath)
+      traverseNodeList(node.body, visitor, nodePath)
       break
 
     case 'Declaration':
-      traverseNode(node.value, visitor)
+      traverseNode(node.value, visitor, nodePath)
       break
 
     case 'Variable':
@@ -40,6 +42,6 @@ export default function traverseNode(node, visitor) {
   }
 
   if (methods && methods.exit) {
-    methods.exit(node)
+    methods.exit(nodePath)
   }
 }

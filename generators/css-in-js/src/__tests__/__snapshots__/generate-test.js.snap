@@ -2,38 +2,51 @@
 
 exports[`Compiling to CSS and JavaScript should return a map of files 1`] = `
 Object {
-  "Button.elodin.css": ".Button {
+  "Button.elo.css": "._43fvyx {
   background-color: red;
   color: rgba(250,250,250,0.35);
   font-size: 15px;
-  line-height: 5.2px
+  line-height: 5.2px;
+  border-width: multiply(borderWidth,2)
+}
+
+._43fvyx__Type-Primary {
+  color: red
 }",
-  "Button.elodin.js": "import './Button.elodin.css'
+  "Button.elo.js": "import './Button.elo.css'
+import { getClassNameWithVariants } from '@elodin/runtime'
+
+const variants = {\\"Type\\":[\\"Primary\\",\\"Secondary\\"]}
 
 export function Button(props) {
   return {
-    _className: 'Button',
+    _className: getClassNameWithVariants('_43fvyx', props, variants),
     
   }
 }",
-  "Label.elodin.css": ".Label {
+  "Label.elo.css": "._1lfo85i {
+  line-height: lineHeight;
   font-size: 20px
 }
 
-.Label:hover {
-  color: red
+._1lfo85i:hover {
+  color: red;
+  background-color: bgColor
 }",
-  "Label.elodin.js": "import './Label.elodin.css'
+  "Label.elo.js": "import './Label.elo.css'
+import { getClassNameWithVariants } from '@elodin/runtime'
+
+const variants = {\\"Type\\":[\\"Primary\\",\\"Secondary\\"]}
 
 export function Label(props) {
   return {
-    _className: 'Label',
+    _className: getClassNameWithVariants('_1lfo85i', props, variants),
     \\"lineHeight\\":props.lineHeight,
     \\":hover\\":{\\"backgroundColor\\":props.bgColor}
   }
 }",
-  "_root": "import { Button } from './Button.elodin.js'
-import { Label } from './Label.elodin.js'
+  "_root": "import { Button } from './Button.elo.js'
+import { Label } from './Label.elo.js'
 
 export {
   Button,
@@ -44,44 +57,57 @@ export {
 
 exports[`Compiling to CSS and JavaScript should use the given adapter 1`] = `
 Object {
-  "Button.elodin.css": ".Button {
+  "Button.elo.css": "._43fvyx {
   background-color: red;
   color: rgba(250,250,250,0.35);
   font-size: 15px;
-  line-height: 5.2px
+  line-height: 5.2px;
+  border-width: multiply(borderWidth,2)
+}
+
+._43fvyx__Type-Primary {
+  color: red
 }",
-  "Button.elodin.js": "import './Button.elodin.css'
+  "Button.elo.js": "import './Button.elo.css'
+import { getClassNameWithVariants } from '@elodin/runtime'
 import { createComponent } from 'react-fela'
+
+const variants = {\\"Type\\":[\\"Primary\\",\\"Secondary\\"]}
 
 function Button(props) {
   return {
-    _className: 'Button',
+    _className: getClassNameWithVariants('_43fvyx', props, variants),
     
   }
 }
 
 export default createComponent(Button)",
-  "Label.elodin.css": ".Label {
+  "Label.elo.css": "._1lfo85i {
+  line-height: lineHeight;
   font-size: 20px
 }
 
-.Label:hover {
-  color: red
+._1lfo85i:hover {
+  color: red;
+  background-color: bgColor
 }",
-  "Label.elodin.js": "import './Label.elodin.css'
+  "Label.elo.js": "import './Label.elo.css'
+import { getClassNameWithVariants } from '@elodin/runtime'
 import { createComponent } from 'react-fela'
+
+const variants = {\\"Type\\":[\\"Primary\\",\\"Secondary\\"]}
 
 function Label(props) {
   return {
-    _className: 'Label',
+    _className: getClassNameWithVariants('_1lfo85i', props, variants),
     \\"lineHeight\\":props.lineHeight,
     \\":hover\\":{\\"backgroundColor\\":props.bgColor}
   }
 }
 
 export default createComponent(Label)",
-  "_root": "import { Button } from './Button.elodin.js'
-import { Label } from './Label.elodin.js'
+  "_root": "import { Button } from './Button.elo.js'
+import { Label } from './Label.elo.js'
 
 export {
   Button,

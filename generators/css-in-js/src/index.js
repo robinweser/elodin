@@ -1,5 +1,7 @@
 import adapters from './adapters'
 
+import hash from './hash'
+
 const validPseudoClasses = [
   'link',
   'hover',
@@ -14,16 +16,31 @@ const validPseudoClasses = [
 
 const validMediaQueries = ['viewportWidth', 'viewportHeight']
 
-export default function createGenerator({ adapter = 'fela' } = {}) {
+export default function createGenerator({
+  adapter = 'fela',
+  devMode = false,
+} = {}) {
   const usedAdapter = adapters.find(adapt => adapt.name === adapter)
+  const config = {
+    devMode,
+  }
 
   return function generate(ast, fileName) {
-    const css = generateCSS(ast)
-    const js = generateJS(ast, usedAdapter)
-    const root = generateRoot(ast)
+    const css = generateCSS(ast, config)
+    const js = generateJS(ast, config, usedAdapter)
+    const root = generateRoot(ast, config)
 
     return { _root: root, ...css, ...js }
   }
+}
+
+function getModuleName(module, devMode) {
+  const hashedBody = '_' + hash(JSON.stringify(module.body))
+
+  if (devMode) {
+    return module.name + hashedBody
+  }
+  return hashedBody
 }
 
 function generateRoot(ast) {
@@ -33,7 +50,7 @@ function generateRoot(ast) {
   const imports = styles
     .map(
       module =>
-        'import { ' + module.name + " } from './" + module.name + ".elodin.js'"
+        'import { ' + module.name + " } from './" + module.name + ".elo.js'"
     )
     .join('\n')
 
@@ -48,7 +65,7 @@ function generateRoot(ast) {
 
 function generateCSSValue(value, unit = true) {
   if (value.type === 'NumericLiteral') {
-    return value.value + (unit ? 'px' : '')
+    return (value.negative ? '-' : '') + value.value + (unit ? 'px' : '')
   }
 
   if (value.type === 'FunctionExpression') {
@@ -61,25 +78,32 @@ function generateCSSValue(value, unit = true) {
   }
 
   if (value.type === 'Float') {
-    return value.integer + '.' + value.fractional + (unit ? 'px' : '')
+    return (
+      (value.negative ? '-' : '') +
+      value.integer +
+      '.' +
+      value.fractional +
+      (unit ? 'px' : '')
+    )
   }
 
   return value.value
 }
 
-function generateCSS(ast) {
+function generateCSS(ast, { devMode }) {
   // TODO: include fragments
   const styles = ast.body.filter(node => node.type === 'Style')
+  const variants = ast.body.filter(node => node.type === 'Variant')
 
   return styles.reduce((files, module) => {
-    const classes = generateClasses(module.body)
+    const classes = generateClasses(module.body, variants)
 
-    files[module.name + '.elodin.css'] = classes
+    files[module.name + '.elo.css'] = classes
       .filter(selector => selector.declarations.length > 0)
       .map(selector => {
         const css = stringifyCSS(
           selector.declarations,
-          module.name + selector.pseudo
+          getModuleName(module, devMode) + selector.modifier + selector.pseudo
         )
 
         if (selector.media) {
@@ -94,17 +118,52 @@ function generateCSS(ast) {
   }, {})
 }
 
-function generateClasses(nodes, classes = [], pseudo = '', media = '') {
+function generateClasses(
+  nodes,
+  variants,
+  classes = [],
+  modifier = '',
+  pseudo = '',
+  media = ''
+) {
   const base = nodes.filter(node => node.type === 'Declaration')
   const nesting = nodes.filter(node => node.type !== 'Declaration')
 
   classes.push({
     media,
     pseudo,
+    modifier,
     declarations: getStaticDeclarations(base),
   })
 
   nesting.forEach(nest => {
+    if (nest.property.type === 'Identifier') {
+      const variant = variants.find(
+        variant => variant.name === nest.property.value
+      )
+
+      if (variant) {
+        if (nest.value.type === 'Identifier') {
+          const variation = variant.body.find(
+            variant => variant.value === nest.value.value
+          )
+
+          if (variation) {
+            generateClasses(
+              nest.body,
+              variants,
+              classes,
+              modifier + '__' + variant.name + '-' + variation.value,
+              pseudo,
+              media
+            )
+          }
+        }
+      } else {
+        // TODO: throw
+      }
+    }
+
     if (nest.property.type === 'Variable' && nest.property.environment) {
       if (
         nest.boolean &&
@@ -112,7 +171,9 @@ function generateClasses(nodes, classes = [], pseudo = '', media = '') {
       ) {
         generateClasses(
           nest.body,
+          variants,
           classes,
+          modifier,
           pseudo + ':' + nest.property.value,
           media
         )
@@ -121,7 +182,9 @@ function generateClasses(nodes, classes = [], pseudo = '', media = '') {
       if (validMediaQueries.indexOf(nest.property.value) !== -1) {
         generateClasses(
           nest.body,
+          variants,
           classes,
+          modifier,
           pseudo,
           getMediaQuery(nest.value.value, nest.property.value, nest.operator)
         )
@@ -134,7 +197,7 @@ function generateClasses(nodes, classes = [], pseudo = '', media = '') {
 
 function getStaticDeclarations(declarations) {
   return declarations
-    .filter(decl => decl.value.type !== 'Variable')
+    .filter(decl => !decl.dynamic)
     .map(declaration => ({
       property: declaration.property,
       value: generateCSSValue(declaration.value),
@@ -167,14 +230,27 @@ function stringifyCSS(declarations, name) {
   )
 }
 
-function generateJS(ast, adapter) {
+function generateJS(ast, { devMode }, adapter) {
   // TODO: include fragments
   const styles = ast.body.filter(node => node.type === 'Style')
+  const variants = ast.body.filter(node => node.type === 'Variant')
 
   return styles.reduce((files, module) => {
     const style = generateStyle(module.body)
 
-    files[module.name + '.elodin.js'] = adapter.stringify(style, module.name)
+    files[module.name + '.elo.js'] = adapter.stringify({
+      style,
+      moduleName: module.name,
+      className: getModuleName(module, devMode),
+      variants: variants.reduce((flatVariants, variant) => {
+        flatVariants[variant.name] = variant.body.map(
+          variation => variation.value
+        )
+
+        return flatVariants
+      }, {}),
+    })
+
     return files
   }, {})
 }

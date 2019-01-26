@@ -1,5 +1,5 @@
 {
-  "name": "@elodin/validator",
+  "name": "@elodin/stdlib",
   "version": "0.0.1",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -10,13 +10,16 @@
     "clean": "rimraf lib es coverage",
     "build": "yarn build:es && yarn build:lib",
     "build:es": "babel src --out-dir es --ignore \"src/__tests__\"",
-    "build:lib": "babel src --out-dir lib --ignore \"src/__tests__\"",
+    "build:lib": "BABEL_ENV=commonjs babel src --out-dir lib --ignore \"src/__tests__\"",
     "test": "cross-env BABEL_ENV=commonjs jest",
     "coverage": "yarn test --coverage"
   },
   "repository": "https://github.com/rofrischmann/elodin.git",
   "author": "rofrischmann <robin@rofrischmann.de>",
   "license": "MIT",
+  "dependencies": {
+    "color": "^3.1.0"
+  },
   "devDependencies": {
     "@babel/cli": "^7.2.0",
     "@babel/core": "^7.2.2",

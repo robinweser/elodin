@@ -1,8 +1,10 @@
 function stringifyDeclaration(declaration) {
-  const prop = '"' +declaration.property + '":'
+  const prop = '"' + declaration.property + '":'
 
   if (typeof declaration.value === 'object') {
-    return prop + '{' + declaration.value.map(stringifyDeclaration).join(',\n') + '}'
+    return (
+      prop + '{' + declaration.value.map(stringifyDeclaration).join(',\n') + '}'
+    )
   }
 
   return prop + 'props.' + declaration.value
@@ -10,24 +12,26 @@ function stringifyDeclaration(declaration) {
 
 export default {
   name: 'react-fela',
-  stringify: (declarations, className) =>
+  stringify: ({ style, moduleName, variants, className }) =>
     "import './" +
-    className +
-    ".elodin.css'\n" +
+    moduleName +
+    ".elo.css'\n" +
+    "import { getClassNameWithVariants } from '@elodin/runtime'\n" +
     "import { createComponent } from 'react-fela'\n\n" +
+    'const variants = ' +
+    JSON.stringify(variants) +
+    '\n\n' +
     'function ' +
-    className +
+    moduleName +
     '(props)' +
     ' {\n  ' +
     'return {\n    ' +
-    "_className: '" +
+    "_className: getClassNameWithVariants('" +
     className +
-    "',\n    " +
-    declarations
-      .map(stringifyDeclaration)
-      .join(',\n    ') +
+    "', props, variants),\n    " +
+    style.map(stringifyDeclaration).join(',\n    ') +
     '\n  }\n}\n\n' +
     'export default createComponent(' +
-    className +
+    moduleName +
     ')',
 }

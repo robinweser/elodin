@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Lightening a color should return a string with the input format 1`] = `"rgb(150, 150, 150)"`;
+
+exports[`Lightening a color should return a string with the input format 2`] = `"rgba(150, 150, 150, 0.5)"`;

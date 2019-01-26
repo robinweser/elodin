@@ -3,11 +3,19 @@ import { parse } from '@elodin/parser'
 import createGenerator from '../index'
 
 const file = `
+variant Type {
+  Primary
+  Secondary
+}
 style Button {
   backgroundColor: red
   color: rgba(250 250 250 0.35)
   fontSize: 15
   lineHeight: 5.2
+  __borderWidth: multiply($borderWidth 2)
+  [Type=Primary] {
+    color: red
+  }
 }
 
 style Label {

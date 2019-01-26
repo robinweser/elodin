@@ -16,14 +16,14 @@ style Button {
 
     const visitor = {
       Identifier: {
-        enter(node) {
-          log.push(node.value)
-          node.value = node.value.toUpperCase()
-          log.push(node.value)
+        enter(path) {
+          log.push(path.node.value)
+          path.node.value = path.node.value.toUpperCase()
+          log.push(path.node.value)
         },
 
-        exit(node) {
-          log.push(node.value)
+        exit(path) {
+          log.push(path.node.value)
         },
       },
     }

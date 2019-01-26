@@ -7,6 +7,7 @@ Object {
       Object {
         "body": Array [
           Object {
+            "dynamic": false,
             "property": "backgroundColor",
             "raw": false,
             "type": "Declaration",
@@ -18,6 +19,7 @@ Object {
           Object {
             "body": Array [
               Object {
+                "dynamic": false,
                 "property": "color",
                 "raw": false,
                 "type": "Declaration",
@@ -58,6 +60,7 @@ Object {
           Object {
             "body": Array [
               Object {
+                "dynamic": false,
                 "property": "color",
                 "raw": false,
                 "type": "Declaration",
@@ -78,6 +81,7 @@ Object {
           Object {
             "body": Array [
               Object {
+                "dynamic": false,
                 "property": "color",
                 "raw": false,
                 "type": "Declaration",
@@ -89,6 +93,7 @@ Object {
               Object {
                 "body": Array [
                   Object {
+                    "dynamic": false,
                     "property": "color",
                     "raw": false,
                     "type": "Declaration",
@@ -115,6 +120,7 @@ Object {
             },
             "type": "Conditional",
             "value": Object {
+              "negative": false,
               "type": "NumericLiteral",
               "value": 320,
             },
@@ -137,6 +143,7 @@ Object {
       Object {
         "body": Array [
           Object {
+            "dynamic": false,
             "property": "flexDirection",
             "raw": false,
             "type": "Declaration",
@@ -146,6 +153,7 @@ Object {
             },
           },
           Object {
+            "dynamic": false,
             "property": "alignSelf",
             "raw": false,
             "type": "Declaration",
@@ -155,24 +163,29 @@ Object {
             },
           },
           Object {
+            "dynamic": false,
             "property": "flexGrow",
             "raw": false,
             "type": "Declaration",
             "value": Object {
+              "negative": false,
               "type": "NumericLiteral",
               "value": 0,
             },
           },
           Object {
+            "dynamic": false,
             "property": "flexShrink",
             "raw": false,
             "type": "Declaration",
             "value": Object {
+              "negative": false,
               "type": "NumericLiteral",
               "value": 1,
             },
           },
           Object {
+            "dynamic": false,
             "property": "flexBasis",
             "raw": false,
             "type": "Declaration",
@@ -199,6 +212,7 @@ Object {
       Object {
         "body": Array [
           Object {
+            "dynamic": false,
             "property": "backgroundColor",
             "raw": false,
             "type": "Declaration",
@@ -208,6 +222,7 @@ Object {
             },
           },
           Object {
+            "dynamic": false,
             "property": "color",
             "raw": false,
             "type": "Declaration",
@@ -217,10 +232,12 @@ Object {
             },
           },
           Object {
+            "dynamic": false,
             "property": "fontSize",
             "raw": false,
             "type": "Declaration",
             "value": Object {
+              "negative": false,
               "type": "NumericLiteral",
               "value": 15,
             },
@@ -232,10 +249,12 @@ Object {
       Object {
         "body": Array [
           Object {
+            "dynamic": false,
             "property": "lineHeight",
             "raw": false,
             "type": "Declaration",
             "value": Object {
+              "negative": false,
               "type": "NumericLiteral",
               "value": 2,
             },
@@ -258,6 +277,7 @@ Object {
       Object {
         "body": Array [
           Object {
+            "dynamic": false,
             "property": "backgroundColor",
             "raw": false,
             "type": "Declaration",
@@ -267,6 +287,7 @@ Object {
             },
           },
           Object {
+            "dynamic": false,
             "property": "color",
             "raw": false,
             "type": "Declaration",
@@ -276,6 +297,7 @@ Object {
             },
           },
           Object {
+            "dynamic": false,
             "property": "borderColor",
             "raw": false,
             "type": "Declaration",
@@ -283,14 +305,17 @@ Object {
               "callee": "rgb",
               "params": Array [
                 Object {
+                  "negative": false,
                   "type": "NumericLiteral",
                   "value": 255,
                 },
                 Object {
+                  "negative": false,
                   "type": "NumericLiteral",
                   "value": 255,
                 },
                 Object {
+                  "negative": false,
                   "type": "NumericLiteral",
                   "value": 255,
                 },
@@ -299,25 +324,30 @@ Object {
             },
           },
           Object {
+            "dynamic": false,
             "property": "fontSize",
             "raw": false,
             "type": "Declaration",
             "value": Object {
+              "negative": false,
               "type": "NumericLiteral",
               "value": 15,
             },
           },
           Object {
+            "dynamic": false,
             "property": "lineHeight",
             "raw": false,
             "type": "Declaration",
             "value": Object {
               "fractional": 2,
               "integer": 1,
+              "negative": false,
               "type": "Float",
             },
           },
           Object {
+            "dynamic": true,
             "property": "borderWidth",
             "raw": false,
             "type": "Declaration",
@@ -328,6 +358,7 @@ Object {
             },
           },
           Object {
+            "dynamic": false,
             "property": "animationName",
             "raw": true,
             "type": "Declaration",

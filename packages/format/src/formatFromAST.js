@@ -76,9 +76,15 @@ export default function formatFromAST(node, customConfig = {}, level = 1) {
       return (node.environment ? '@' : '$') + node.value
 
     case 'Float':
-      return (node.integer > 0 ? node.integer : '') + '.' + node.fractional
+      return (
+        (node.negative ? '-' : '') +
+        (node.integer > 0 ? node.integer : '') +
+        '.' +
+        node.fractional
+      )
 
     case 'NumericLiteral':
+      return (node.negative ? '-' : '') + node.value
     case 'Identifier':
       return node.value
 

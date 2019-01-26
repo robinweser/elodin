@@ -3,6 +3,7 @@ import { validateDeclaration } from '@elodin/validator'
 
 const ruleMap = {
   minus: /^[-]$/,
+  hash: /^[#]$/,
   comparison: /^[><=]+$/i,
   quote: /^("|\\")$/,
   identifier: /^[_a-z]+$/i,
@@ -18,6 +19,7 @@ const ruleMap = {
 
 const errorTypes = {
   SYNTAX_ERROR: 'SYNTAX_ERROR',
+  DUPLICATE_MODULE: 'DUPLICATE_MODULE',
   INVALID_PROPERTY: 'INVALID_PROPERTY',
   INVALID_VALUE: 'INVALID_VALUE',
 }
@@ -45,14 +47,17 @@ export default class Parser {
   }
 
   addError(error, exit) {
-    this.errors.push({
-      ...error,
-      token: this.currentToken,
-    })
+    if (!this.exit) {
+      this.errors.push({
+        ...error,
+        token: this.currentToken,
+      })
+    }
 
     if (exit) {
       this.currentPosition = this.tokens.length - 1
       this.updateCurrentToken()
+      this.exit = true
     }
   }
 
@@ -77,7 +82,26 @@ export default class Parser {
     }
 
     while (this.isRunning()) {
-      const node = this.parseStyle() || this.parseFragment()
+      const node =
+        this.parseStyle() || this.parseFragment() || this.parseVariant()
+
+      const duplicate = file.body.find(n => n.name === node.name)
+
+      if (duplicate) {
+        this.addError(
+          {
+            type: errorTypes.DUPLICATE_MODULE,
+            hint: `The  ${node.type.toLowerCase()} '${
+              node.name
+            }' has already been defined as a ${
+              duplicate.type
+            } in the same file.`,
+            node,
+            duplicate,
+          },
+          true
+        )
+      }
 
       if (!node) {
         this.addError(
@@ -114,6 +138,18 @@ export default class Parser {
           true
         )
       }
+
+      if (name.charAt(0).toUpperCase() !== name.charAt(0)) {
+        this.addError(
+          {
+            type: errorTypes.SYNTAX_ERROR,
+            hint: 'Style names must begin with an uppercase letter.',
+            name,
+          },
+          true
+        )
+      }
+
       const body = this.parseStyleBody()
 
       if (!body) {
@@ -179,6 +215,7 @@ export default class Parser {
       this.updateCurrentToken(1)
 
       const name = this.parseStyleName()
+
       if (!name) {
         this.addError(
           {
@@ -187,6 +224,18 @@ export default class Parser {
           true
         )
       }
+
+      if (name.charAt(0).toUpperCase() !== name.charAt(0)) {
+        this.addError(
+          {
+            type: errorTypes.SYNTAX_ERROR,
+            hint: 'Fragment names must begin with an uppercase letter.',
+            name,
+          },
+          true
+        )
+      }
+
       const body = this.parseFragmentBody()
 
       if (!body) {
@@ -233,6 +282,96 @@ export default class Parser {
     }
   }
 
+  parseVariant() {
+    if (
+      this.currentToken.type === 'identifier' &&
+      this.currentToken.value === 'variant'
+    ) {
+      this.updateCurrentToken(1)
+
+      const name = this.parseStyleName()
+
+      if (!name) {
+        this.addError(
+          {
+            type: errorTypes.SYNTAX_ERROR,
+          },
+          true
+        )
+      }
+
+      if (name.charAt(0).toUpperCase() !== name.charAt(0)) {
+        this.addError(
+          {
+            type: errorTypes.SYNTAX_ERROR,
+            hint: 'Variant names must begin with an uppercase letter.',
+            name,
+          },
+          true
+        )
+      }
+
+      const body = this.parseVariantBody()
+
+      if (!body) {
+        this.addError(
+          {
+            type: errorTypes.SYNTAX_ERROR,
+          },
+          true
+        )
+      }
+
+      return {
+        type: 'Variant',
+        name,
+        body,
+      }
+    }
+  }
+
+  parseVariantBody() {
+    const body = []
+
+    if (
+      this.currentToken.type === 'curly_bracket' &&
+      this.currentToken.value === '{'
+    ) {
+      this.updateCurrentToken(1)
+
+      while (this.isRunning() && this.currentToken.type !== 'curly_bracket') {
+        const variant = this.parseIdentifier()
+
+        if (!variant) {
+          this.addError(
+            {
+              type: errorTypes.SYNTAX_ERROR,
+              hint: 'Variants can only define identifier variations.',
+            },
+            true
+          )
+        }
+
+        if (variant.value.charAt(0).toUpperCase() !== variant.value.charAt(0)) {
+          this.addError(
+            {
+              type: errorTypes.SYNTAX_ERROR,
+              hint: 'Variation values must begin with an uppercase letter.',
+              variation: variant.value,
+            },
+            true
+          )
+        }
+
+        body.push(variant)
+        this.updateCurrentToken(1)
+      }
+
+      this.updateCurrentToken(1)
+      return body
+    }
+  }
+
   parseDeclaration() {
     if (this.currentToken.type === 'identifier') {
       const propertyToken = this.currentToken
@@ -243,6 +382,8 @@ export default class Parser {
 
       if (this.currentToken.type === 'colon') {
         this.updateCurrentToken(1)
+        this.isDynamic = false
+
         const valueToken = this.currentToken
         const value = this.parseValue()
 
@@ -280,6 +421,7 @@ export default class Parser {
         return {
           type: 'Declaration',
           raw: isRawDeclaration,
+          dynamic: this.isDynamic,
           property: isRawDeclaration ? property.slice(2) : property,
           value,
         }
@@ -315,6 +457,7 @@ export default class Parser {
           true
         )
       }
+
       this.updateCurrentToken(-1)
 
       return {
@@ -368,6 +511,15 @@ export default class Parser {
   }
 
   parseValue() {
+    if (this.currentToken.type === 'minus') {
+      this.updateCurrentToken(1)
+      return this.parseNumber(true)
+    }
+
+    return this.parseNumber() || this.parseIdentifier() || this.parseVariable()
+  }
+
+  parseNumber(isNegative = false) {
     if (this.currentToken.type === 'number') {
       const integer = this.currentToken.value
 
@@ -384,12 +536,14 @@ export default class Parser {
           type: 'Float',
           integer: parseInt(integer),
           fractional: parseInt(nextNextToken.value),
+          negative: isNegative,
         }
       }
 
       return {
         type: 'NumericLiteral',
         value: parseInt(integer),
+        negative: isNegative,
       }
     }
 
@@ -401,11 +555,10 @@ export default class Parser {
           type: 'Float',
           integer: 0,
           fractional: parseInt(this.currentToken.value),
+          negative: isNegative,
         }
       }
     }
-
-    return this.parseIdentifier() || this.parseVariable()
   }
 
   parseIdentifier() {
@@ -454,6 +607,7 @@ export default class Parser {
       this.updateCurrentToken(1)
 
       if (this.currentToken.type === 'identifier') {
+        this.isDynamic = true
         return {
           type: 'Variable',
           value: this.currentToken.value,
