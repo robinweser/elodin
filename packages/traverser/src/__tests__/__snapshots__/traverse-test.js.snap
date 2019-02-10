@@ -6,6 +6,7 @@ Object {
     Object {
       "body": Array [
         Object {
+          "dynamic": false,
           "property": "color",
           "raw": false,
           "type": "Declaration",
@@ -17,6 +18,7 @@ Object {
         Object {
           "body": Array [
             Object {
+              "dynamic": false,
               "property": "color",
               "raw": false,
               "type": "Declaration",
