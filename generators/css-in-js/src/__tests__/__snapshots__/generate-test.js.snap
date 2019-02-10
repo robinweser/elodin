@@ -23,31 +23,19 @@ Object {
   "Button.elo.js": "import './Button.elo.css'
 import { getClassNameFromVariantMap } from '@elodin/runtime'
 
-const variantMap = [
-  {
-    \\"variations\\": {},
-    \\"modifier\\": \\"\\"
+const variantMap = {
+  \\"\\": {},
+  \\"__Type-Primary\\": {
+    \\"Type\\": \\"Primary\\"
   },
-  {
-    \\"variations\\": {
-      \\"Type\\": \\"Primary\\"
-    },
-    \\"modifier\\": \\"__Type-Primary\\"
+  \\"__Type-Primary__Mode-Dark\\": {
+    \\"Type\\": \\"Primary\\",
+    \\"Mode\\": \\"Dark\\"
   },
-  {
-    \\"variations\\": {
-      \\"Type\\": \\"Primary\\",
-      \\"Mode\\": \\"Dark\\"
-    },
-    \\"modifier\\": \\"__Type-Primary__Mode-Dark\\"
-  },
-  {
-    \\"variations\\": {
-      \\"Mode\\": \\"Light\\"
-    },
-    \\"modifier\\": \\"__Mode-Light\\"
+  \\"__Mode-Light\\": {
+    \\"Mode\\": \\"Light\\"
   }
-]
+}
 
 export function Button(props = {}) {
   return {
@@ -105,31 +93,19 @@ Object {
 import { createComponent } from 'react-fela'
 import { getClassNameFromVariantMap } from '@elodin/runtime'
 
-const variantMap = [
-  {
-    \\"variations\\": {},
-    \\"modifier\\": \\"\\"
+const variantMap = {
+  \\"\\": {},
+  \\"__Type-Primary\\": {
+    \\"Type\\": \\"Primary\\"
   },
-  {
-    \\"variations\\": {
-      \\"Type\\": \\"Primary\\"
-    },
-    \\"modifier\\": \\"__Type-Primary\\"
+  \\"__Type-Primary__Mode-Dark\\": {
+    \\"Type\\": \\"Primary\\",
+    \\"Mode\\": \\"Dark\\"
   },
-  {
-    \\"variations\\": {
-      \\"Type\\": \\"Primary\\",
-      \\"Mode\\": \\"Dark\\"
-    },
-    \\"modifier\\": \\"__Type-Primary__Mode-Dark\\"
-  },
-  {
-    \\"variations\\": {
-      \\"Mode\\": \\"Light\\"
-    },
-    \\"modifier\\": \\"__Mode-Light\\"
+  \\"__Mode-Light\\": {
+    \\"Mode\\": \\"Light\\"
   }
-]
+}
 
 function Button(props  = {}) {
   return {
