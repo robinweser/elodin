@@ -1,6 +1,6 @@
 {
   "name": "@elodin/format",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "lib/index.js",
   "module": "es/index.js",
   "publishConfig": {
@@ -18,7 +18,7 @@
   "author": "rofrischmann <robin@rofrischmann.de>",
   "license": "MIT",
   "dependencies": {
-    "@elodin/parser": "^0.0.1"
+    "@elodin/parser": "^0.0.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.0",
