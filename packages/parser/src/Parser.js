@@ -17,6 +17,8 @@ const ruleMap = {
   variable: /^[$@]$/,
 }
 
+const OPERATOR_REGEX = /^(>|<|>=|>=|=)$/
+
 const errorTypes = {
   SYNTAX_ERROR: 'SYNTAX_ERROR',
   DUPLICATE_MODULE: 'DUPLICATE_MODULE',
@@ -27,6 +29,7 @@ const errorTypes = {
 export default class Parser {
   constructor(config = {}) {
     this.config = config
+    this.context = config.context || {}
   }
 
   getNextToken(position) {
@@ -49,6 +52,7 @@ export default class Parser {
   addError(error, exit) {
     if (!this.exit) {
       this.errors.push({
+        ...this.context,
         ...error,
         token: this.currentToken,
       })
@@ -85,22 +89,24 @@ export default class Parser {
       const node =
         this.parseStyle() || this.parseFragment() || this.parseVariant()
 
-      const duplicate = file.body.find(n => n.name === node.name)
+      if (node) {
+        const duplicate = file.body.find(n => n.name === node.name)
 
-      if (duplicate) {
-        this.addError(
-          {
-            type: errorTypes.DUPLICATE_MODULE,
-            hint: `The  ${node.type.toLowerCase()} '${
-              node.name
-            }' has already been defined as a ${
-              duplicate.type
-            } in the same file.`,
-            node,
-            duplicate,
-          },
-          true
-        )
+        if (duplicate) {
+          this.addError(
+            {
+              type: errorTypes.DUPLICATE_MODULE,
+              hint: `The  ${node.type.toLowerCase()} '${
+                node.name
+              }' has already been defined as a ${
+                duplicate.type
+              } in the same file.`,
+              node,
+              duplicate,
+            },
+            true
+          )
+        }
       }
 
       if (!node) {
@@ -139,7 +145,7 @@ export default class Parser {
         )
       }
 
-      if (name.charAt(0).toUpperCase() !== name.charAt(0)) {
+      if (name && name.charAt(0).toUpperCase() !== name.charAt(0)) {
         this.addError(
           {
             type: errorTypes.SYNTAX_ERROR,
@@ -225,7 +231,7 @@ export default class Parser {
         )
       }
 
-      if (name.charAt(0).toUpperCase() !== name.charAt(0)) {
+      if (name && name.charAt(0).toUpperCase() !== name.charAt(0)) {
         this.addError(
           {
             type: errorTypes.SYNTAX_ERROR,
@@ -300,7 +306,7 @@ export default class Parser {
         )
       }
 
-      if (name.charAt(0).toUpperCase() !== name.charAt(0)) {
+      if (name && name.charAt(0).toUpperCase() !== name.charAt(0)) {
         this.addError(
           {
             type: errorTypes.SYNTAX_ERROR,
@@ -352,7 +358,10 @@ export default class Parser {
           )
         }
 
-        if (variant.value.charAt(0).toUpperCase() !== variant.value.charAt(0)) {
+        if (
+          variant &&
+          variant.value.charAt(0).toUpperCase() !== variant.value.charAt(0)
+        ) {
           this.addError(
             {
               type: errorTypes.SYNTAX_ERROR,
@@ -476,8 +485,20 @@ export default class Parser {
 
       if (this.currentToken.type === 'comparison') {
         const operator = this.currentToken.value
-        this.updateCurrentToken(1)
 
+        if (operator.match(OPERATOR_REGEX) === null) {
+          this.addError(
+            {
+              type: errorTypes.SYNTAX_ERROR,
+              operator,
+            },
+            true
+          )
+
+          return
+        }
+
+        this.updateCurrentToken(1)
         const value = this.parseValue()
         this.updateCurrentToken(1)
 

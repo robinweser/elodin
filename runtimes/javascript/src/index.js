@@ -1,3 +1,2 @@
-export function test() {
-  return true
-}
+import getClassNameFromVariantMap from './getClassNameFromVariantMap'
+export { getClassNameFromVariantMap }

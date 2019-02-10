@@ -3,7 +3,7 @@ import { parse } from '@elodin/parser'
 import formatFromAST from './formatFromAST'
 
 export default function format(input, config = {}) {
-  const parsed = parse(input)
+  const parsed = parse(input, config)
 
   if (parsed.errors.length === 0) {
     return {

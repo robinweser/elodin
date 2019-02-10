@@ -2,45 +2,71 @@
 
 exports[`Compiling to CSS and JavaScript should return a map of files 1`] = `
 Object {
-  "Button.elo.css": "._43fvyx {
+  "Button.elo.css": "._q5mnyi {
   background-color: red;
   color: rgba(250,250,250,0.35);
   font-size: 15px;
-  line-height: 5.2px;
-  border-width: multiply(borderWidth,2)
+  line-height: 5.2px
 }
 
-._43fvyx__Type-Primary {
+._q5mnyi__Type-Primary {
   color: red
+}
+
+._q5mnyi__Type-Primary__Mode-Dark {
+  color: blue
+}
+
+._q5mnyi__Mode-Light {
+  color: green
 }",
   "Button.elo.js": "import './Button.elo.css'
-import { getClassNameWithVariants } from '@elodin/runtime'
+import { getClassNameFromVariantMap } from '@elodin/runtime'
 
-const variants = {\\"Type\\":[\\"Primary\\",\\"Secondary\\"]}
+const variantMap = [
+  {
+    \\"variations\\": {},
+    \\"modifier\\": \\"\\"
+  },
+  {
+    \\"variations\\": {
+      \\"Type\\": \\"Primary\\"
+    },
+    \\"modifier\\": \\"__Type-Primary\\"
+  },
+  {
+    \\"variations\\": {
+      \\"Type\\": \\"Primary\\",
+      \\"Mode\\": \\"Dark\\"
+    },
+    \\"modifier\\": \\"__Type-Primary__Mode-Dark\\"
+  },
+  {
+    \\"variations\\": {
+      \\"Mode\\": \\"Light\\"
+    },
+    \\"modifier\\": \\"__Mode-Light\\"
+  }
+]
 
-export function Button(props) {
+export function Button(props = {}) {
   return {
-    _className: getClassNameWithVariants('_43fvyx', props, variants),
-    
+    _className: getClassNameFromVariantMap('_q5mnyi', variantMap, props),
+    \\"borderWidth\\":props.undefined
   }
 }",
-  "Label.elo.css": "._1lfo85i {
-  line-height: lineHeight;
+  "Label.elo.css": "._1hw7vmc {
   font-size: 20px
 }
 
-._1lfo85i:hover {
-  color: red;
-  background-color: bgColor
+._1hw7vmc:hover {
+  color: red
 }",
   "Label.elo.js": "import './Label.elo.css'
-import { getClassNameWithVariants } from '@elodin/runtime'
 
-const variants = {\\"Type\\":[\\"Primary\\",\\"Secondary\\"]}
-
-export function Label(props) {
+export function Label(props = {}) {
   return {
-    _className: getClassNameWithVariants('_1lfo85i', props, variants),
+    _className: _1hw7vmc,
     \\"lineHeight\\":props.lineHeight,
     \\":hover\\":{\\"backgroundColor\\":props.bgColor}
   }
@@ -57,49 +83,75 @@ export {
 
 exports[`Compiling to CSS and JavaScript should use the given adapter 1`] = `
 Object {
-  "Button.elo.css": "._43fvyx {
+  "Button.elo.css": "._q5mnyi {
   background-color: red;
   color: rgba(250,250,250,0.35);
   font-size: 15px;
-  line-height: 5.2px;
-  border-width: multiply(borderWidth,2)
+  line-height: 5.2px
 }
 
-._43fvyx__Type-Primary {
+._q5mnyi__Type-Primary {
   color: red
+}
+
+._q5mnyi__Type-Primary__Mode-Dark {
+  color: blue
+}
+
+._q5mnyi__Mode-Light {
+  color: green
 }",
   "Button.elo.js": "import './Button.elo.css'
-import { getClassNameWithVariants } from '@elodin/runtime'
 import { createComponent } from 'react-fela'
+import { getClassNameFromVariantMap } from '@elodin/runtime'
 
-const variants = {\\"Type\\":[\\"Primary\\",\\"Secondary\\"]}
+const variantMap = [
+  {
+    \\"variations\\": {},
+    \\"modifier\\": \\"\\"
+  },
+  {
+    \\"variations\\": {
+      \\"Type\\": \\"Primary\\"
+    },
+    \\"modifier\\": \\"__Type-Primary\\"
+  },
+  {
+    \\"variations\\": {
+      \\"Type\\": \\"Primary\\",
+      \\"Mode\\": \\"Dark\\"
+    },
+    \\"modifier\\": \\"__Type-Primary__Mode-Dark\\"
+  },
+  {
+    \\"variations\\": {
+      \\"Mode\\": \\"Light\\"
+    },
+    \\"modifier\\": \\"__Mode-Light\\"
+  }
+]
 
-function Button(props) {
+function Button(props  = {}) {
   return {
-    _className: getClassNameWithVariants('_43fvyx', props, variants),
-    
+    _className: getClassNameFromVariantMap('_q5mnyi', variantMap, props),
+    \\"borderWidth\\":props.undefined
   }
 }
 
 export default createComponent(Button)",
-  "Label.elo.css": "._1lfo85i {
-  line-height: lineHeight;
+  "Label.elo.css": "._1hw7vmc {
   font-size: 20px
 }
 
-._1lfo85i:hover {
-  color: red;
-  background-color: bgColor
+._1hw7vmc:hover {
+  color: red
 }",
   "Label.elo.js": "import './Label.elo.css'
-import { getClassNameWithVariants } from '@elodin/runtime'
 import { createComponent } from 'react-fela'
 
-const variants = {\\"Type\\":[\\"Primary\\",\\"Secondary\\"]}
-
-function Label(props) {
+function Label(props  = {}) {
   return {
-    _className: getClassNameWithVariants('_1lfo85i', props, variants),
+    _className: _1hw7vmc,
     \\"lineHeight\\":props.lineHeight,
     \\":hover\\":{\\"backgroundColor\\":props.bgColor}
   }

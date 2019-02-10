@@ -12,22 +12,31 @@ function stringifyDeclaration(declaration) {
 
 export default {
   name: 'fela',
-  stringify: ({ style, className, moduleName, variants }) =>
-    "import './" +
-    moduleName +
-    ".elo.css'\n" +
-    "import { getClassNameWithVariants } from '@elodin/runtime'\n\n" +
-    'const variants = ' +
-    JSON.stringify(variants) +
-    '\n\n' +
-    'export function ' +
-    moduleName +
-    '(props)' +
-    ' {\n  ' +
-    'return {\n    ' +
-    "_className: getClassNameWithVariants('" +
-    className +
-    "', props, variants),\n    " +
-    style.map(stringifyDeclaration).join(',\n    ') +
-    '\n  }\n}',
+  stringify: ({ style, className, classNameMap, moduleName }) => {
+    const hasVariations = Object.keys(classNameMap).length > 1
+
+    return (
+      "import './" +
+      moduleName +
+      ".elo.css'\n" +
+      (hasVariations
+        ? "import { getClassNameFromVariantMap } from '@elodin/runtime'\n\n" +
+          'const variantMap = ' +
+          JSON.stringify(classNameMap, null, 2) +
+          '\n\n'
+        : '\n') +
+      'export function ' +
+      moduleName +
+      '(props = {})' +
+      ' {\n  ' +
+      'return {\n    ' +
+      '_className: ' +
+      (hasVariations
+        ? "getClassNameFromVariantMap('" + className + "', variantMap, props)"
+        : className) +
+      ',\n    ' +
+      style.map(stringifyDeclaration).join(',\n    ') +
+      '\n  }\n}'
+    )
+  },
 }

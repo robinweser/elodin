@@ -237,10 +237,12 @@ function generateJS(ast, { devMode }, adapter) {
 
   return styles.reduce((files, module) => {
     const style = generateStyle(module.body)
+    const classNameMap = generateClassNameMap(module.body, variants)
 
     files[module.name + '.elo.js'] = adapter.stringify({
       style,
       moduleName: module.name,
+      classNameMap,
       className: getModuleName(module, devMode),
       variants: variants.reduce((flatVariants, variant) => {
         flatVariants[variant.name] = variant.body.map(
@@ -255,12 +257,58 @@ function generateJS(ast, { devMode }, adapter) {
   }, {})
 }
 
+function generateClassNameMap(
+  nodes,
+  variants,
+  classes = {},
+  variations = {},
+  modifier = ''
+) {
+  const base = nodes.filter(node => node.type === 'Declaration')
+  const nesting = nodes.filter(node => node.type !== 'Declaration')
+
+  classes[modifier] = variations
+
+  nesting.forEach(nest => {
+    if (nest.property.type === 'Identifier') {
+      const variant = variants.find(
+        variant => variant.name === nest.property.value
+      )
+
+      if (variant) {
+        if (nest.value.type === 'Identifier') {
+          const variation = variant.body.find(
+            variant => variant.value === nest.value.value
+          )
+
+          if (variation) {
+            generateClassNameMap(
+              nest.body,
+              variants,
+              classes,
+              {
+                ...variations,
+                [variant.name]: variation.value,
+              },
+              modifier + '__' + variant.name + '-' + variation.value
+            )
+          }
+        }
+      } else {
+        // TODO: throw
+      }
+    }
+  })
+
+  return classes
+}
+
 function generateStyle(nodes) {
   const base = nodes.filter(node => node.type === 'Declaration')
   const nestings = nodes.filter(node => node.type !== 'Declaration')
 
   const declarations = base
-    .filter(decl => decl.value.type === 'Variable')
+    .filter(decl => decl.dynamic)
     .map(declaration => ({
       property: declaration.property,
       value: declaration.value.value,

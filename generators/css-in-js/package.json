@@ -17,6 +17,9 @@
   "repository": "https://github.com/rofrischmann/elodin.git",
   "author": "rofrischmann <robin@rofrischmann.de>",
   "license": "MIT",
+  "dependencies": {
+    "@elodin/runtime": "^0.0.1"
+  },
   "devDependencies": {
     "@babel/cli": "^7.2.0",
     "@babel/core": "^7.2.2",

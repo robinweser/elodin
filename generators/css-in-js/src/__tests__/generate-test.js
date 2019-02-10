@@ -7,6 +7,12 @@ variant Type {
   Primary
   Secondary
 }
+
+variant Mode {
+  Dark
+  Light
+}
+
 style Button {
   backgroundColor: red
   color: rgba(250 250 250 0.35)
@@ -15,6 +21,12 @@ style Button {
   __borderWidth: multiply($borderWidth 2)
   [Type=Primary] {
     color: red
+    [Mode=Dark] {
+      color: blue
+    }
+  }
+  [Mode=Light] {
+    color: green
   }
 }
 

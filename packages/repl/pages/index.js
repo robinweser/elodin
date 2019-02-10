@@ -4,7 +4,7 @@ import generator from '@elodin/generator-css-in-js'
 import { format } from '@elodin/format'
 
 const generate = generator({
-  adapter: 'react-fela',
+  adapter: 'fela',
 })
 
 export default () => {
@@ -18,30 +18,24 @@ export default () => {
     }
   }, [])
 
-  useEffect(
-    () => {
-      localStorage.setItem('code', code)
-    },
-    [code]
-  )
+  useEffect(() => {
+    localStorage.setItem('code', code)
+  }, [code])
 
-  useEffect(
-    () => {
-      try {
-        const parsed = parse(code)
+  useEffect(() => {
+    try {
+      const parsed = parse(code)
 
-        if (parsed.errors.length === 0) {
-          setOut(generate(parsed.ast))
-        } else {
-          setOut({})
-        }
-        setErrors(parsed.errors)
-      } catch (e) {
-        throw new Error(e)
+      if (parsed.errors.length === 0) {
+        setOut(generate(parsed.ast))
+      } else {
+        setOut({})
       }
-    },
-    [code]
-  )
+      setErrors(parsed.errors)
+    } catch (e) {
+      throw new Error(e)
+    }
+  }, [code])
 
   return (
     <div>

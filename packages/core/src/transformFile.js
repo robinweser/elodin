@@ -12,7 +12,11 @@ export default function transformFile(inputPath, config, callback) {
   }
 
   const transform = file => write => {
-    const parsed = parse(file)
+    const parsed = parse(file, {
+      context: {
+        path: inputPath,
+      },
+    })
 
     if (parsed.errors.length > 0) {
       if (errors === 'throw') {
