@@ -1,3 +1,5 @@
+import { isUnitlessProperty } from 'css-in-js-utils'
+
 import adapters from './adapters'
 
 import hash from './hash'
@@ -63,16 +65,22 @@ function generateRoot(ast) {
   )
 }
 
-function generateCSSValue(value, unit = true) {
+function generateCSSValue(value, property, unit = true) {
   if (value.type === 'NumericLiteral') {
-    return (value.negative ? '-' : '') + value.value + (unit ? 'px' : '')
+    return (
+      (value.negative ? '-' : '') +
+      value.value +
+      (unit && !isUnitlessProperty(property) ? 'px' : '')
+    )
   }
 
   if (value.type === 'FunctionExpression') {
     return (
       value.callee +
       '(' +
-      value.params.map(param => generateCSSValue(param, false)).join(',') +
+      value.params
+        .map(param => generateCSSValue(param, undefined, false))
+        .join(',') +
       ')'
     )
   }
@@ -200,7 +208,7 @@ function getStaticDeclarations(declarations) {
     .filter(decl => !decl.dynamic)
     .map(declaration => ({
       property: declaration.property,
-      value: generateCSSValue(declaration.value),
+      value: generateCSSValue(declaration.value, declaration.property),
     }))
 }
 

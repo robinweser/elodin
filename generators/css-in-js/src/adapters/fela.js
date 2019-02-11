@@ -33,7 +33,7 @@ export default {
       '_className: ' +
       (hasVariations
         ? "getClassNameFromVariantMap('" + className + "', variantMap, props)"
-        : className) +
+        : "'" + className "'") +
       ',\n    ' +
       style.map(stringifyDeclaration).join(',\n    ') +
       '\n  }\n}'

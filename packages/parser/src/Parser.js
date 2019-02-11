@@ -17,7 +17,7 @@ const ruleMap = {
   variable: /^[$@]$/,
 }
 
-const OPERATOR_REGEX = /^(>|<|>=|>=|=)$/
+const OPERATOR_REGEX = /^(>|<|>=|<=|=)$/
 
 const errorTypes = {
   SYNTAX_ERROR: 'SYNTAX_ERROR',
