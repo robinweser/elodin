@@ -1,0 +1,31 @@
+{
+  "private": true,
+  "name": "@elodin/example-react",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "next src",
+    "build1": "echo 1",
+    "build": "next build src",
+    "start": "next start src",
+    "elodin": "elodin src --watch"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@babel/polyfill": "^7.2.5",
+    "@elodin/cli": "^0.0.2",
+    "@elodin/core": "^0.0.2",
+    "@elodin/generator-css-in-js": "^0.0.2",
+    "@elodin/parser": "^0.0.2",
+    "@zeit/next-css": "^1.0.1",
+    "fela": "^10.4.0",
+    "fela-beautifier": "^10.4.0",
+    "fela-dom": "^10.4.0",
+    "fela-plugin-rtl": "^10.4.0",
+    "fela-preset-web": "^10.4.0",
+    "next": "latest",
+    "prettier-plugin-elodin": "^0.0.2",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0",
+    "react-fela": "^10.4.0"
+  }
+}

@@ -1,0 +1,43 @@
+style Button {
+  color: white
+  backgroundColor: rgb(61 116 204)
+  fontSize: $fontSize
+
+  [@hover] {
+    backgroundColor: rgb(89 148 242)
+  }
+}
+
+style Label {
+  color: grey
+  fontSize: 20
+}
+
+style Input {
+  fontSize: 15
+  color: red
+
+  [@viewportWidth>=1000] {
+    fontSize: 20
+    color: blue
+  }
+}
+
+variant Mode {
+  Dark
+  Light
+}
+
+style Block {
+  fontSize: 16
+
+  [Mode=Light] {
+    backgroundColor: white
+    color: black
+  }
+
+  [Mode=Dark] {
+    backgroundColor: black
+    color: white
+  }
+}
