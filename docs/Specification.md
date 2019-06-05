@@ -12,7 +12,7 @@ At the end, it also specifies a standard library consisting of a set of useful f
 
 ## Style
 
-```elodin
+```
 style Button {
   backgroundColor: red
   fontSize: 15
@@ -32,27 +32,27 @@ The declaration block consists of [declarations](#declaration) and [conditional 
 
 ### Declaration
 
-```elodin
+```
 backgroundColor: red
 ```
 
-A declaration is a pair of **property** and **value** where property is an camelCased Identifier and value is a single instance of one of the [types](#types) mentioned later. It is separated using a colon.  
+A declaration is a pair of **property** and **value** where property is an camelCased Identifier and value is a single instance of one of the [types](#types) mentioned later. It is separated using a colon.
 A declaration that references a [variable](#variable) is called dynamic declaration and are resolved during runtime. The variable value might also change over time.
 
 > **Type System**: While any property-value pair is syntactically valid, there's a strong type system that will throw if wrong values are applied to properties. Check the [Properties]() documentation for detail information on all available properties and their allowed value types.
 
 #### Raw Property
 
-```elodin
+```
 __background: url("/static/test.jpg")
 ```
 
-There also is a raw property syntax prefixed with a double `_`.  
+There also is a raw property syntax prefixed with a double `_`.
 It can be used to inject target-specific properties that are not part of the Elodin type system.
 
 ### ConditionalDeclaration
 
-```elodin
+```
 [Type=Primary] {
   backgroundColor: red
 }
@@ -62,18 +62,18 @@ Conditional declarations are special declarations that are only applied if a giv
 
 #### Condition
 
-```elodin
+```
 Type=Primary
 ```
 
-A condition is a boolean expression that evaluates to either `true` or `false`.  
+A condition is a boolean expression that evaluates to either `true` or `false`.
 One can check [variant](#variant) values, [variable](#variable) values and [environment](#environment) variable values. Boolean variables use a shorthand notation.
 
 Valid condition operators are `=`, `>=`, `>`, `<=`, and `<`.
 
 ## Fragment
 
-```elodin
+```
 fragment Flex {
   flexDirection: column
   alignSelf: stretch
@@ -82,7 +82,7 @@ fragment Flex {
 
 ## Variant
 
-```elodin
+```
 variant Type = Primary | Secondary
 ```
 
@@ -90,56 +90,56 @@ variant Type = Primary | Secondary
 
 ### Identifier
 
-```elodin
+```
 stretch
 ```
 
 ### Integer
 
-```elodin
+```
 27
 ```
 
 ### Float
 
-```elodin
+```
 27.45
 ```
 
 ### Percentage
 
-```elodin
+```
 55%
 45.55%
 ```
 
 ### Function
 
-```elodin
+```
 rgba(250 250 250 0.35)
 ```
 
 ### HexColor
 
-```elodin
+```
 #efefef
 ```
 
 ### String
 
-```elodin
+```
 "Hello Elodin!"
 ```
 
 ### Variable
 
-```elodin
+```
 $bgColor
 ```
 
 ##### Environment
 
-```elodin
+```
 @hover
 ```
 
