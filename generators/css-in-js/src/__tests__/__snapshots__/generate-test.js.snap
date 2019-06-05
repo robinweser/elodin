@@ -54,7 +54,7 @@ export function Button(props = {}) {
 
 export function Label(props = {}) {
   return {
-    _className: _1hw7vmc,
+    _className: '_1hw7vmc',
     \\"lineHeight\\":props.lineHeight,
     \\":hover\\":{\\"backgroundColor\\":props.bgColor}
   }
@@ -127,7 +127,7 @@ import { createComponent } from 'react-fela'
 
 function Label(props  = {}) {
   return {
-    _className: _1hw7vmc,
+    _className: '_1hw7vmc',
     \\"lineHeight\\":props.lineHeight,
     \\":hover\\":{\\"backgroundColor\\":props.bgColor}
   }

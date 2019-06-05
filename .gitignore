@@ -15,16 +15,17 @@ Thumbs.db
 *.orig
 *.pyc
 *.rej
+
 *.sass-cache
 *.sw?
 *.vi
 
 .vscode
 
-**/*.elodin.*
+**/*.elo.*
 
-node_modules
-lib
-es 
-coverage 
-.next
+**/node_modules
+**/lib
+**/es 
+**/coverage 
+**/.next
