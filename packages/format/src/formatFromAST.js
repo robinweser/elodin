@@ -83,7 +83,7 @@ export default function formatFromAST(node, customConfig = {}, level = 1) {
         node.fractional
       )
 
-    case 'NumericLiteral':
+    case 'Integer':
       return (node.negative ? '-' : '') + node.value
     case 'Identifier':
       return node.value

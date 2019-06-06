@@ -562,7 +562,7 @@ export default class Parser {
       }
 
       return {
-        type: 'NumericLiteral',
+        type: 'Integer',
         value: parseInt(integer),
         negative: isNegative,
       }

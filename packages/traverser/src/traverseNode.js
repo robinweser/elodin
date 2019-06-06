@@ -33,7 +33,7 @@ export default function traverseNode(node, visitor, parentPath) {
 
     case 'Variable':
     case 'Float':
-    case 'NumericLiteral':
+    case 'Integer':
     case 'Identifier':
       break
 
