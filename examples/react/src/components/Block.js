@@ -2,8 +2,12 @@ import { useFela } from 'react-fela'
 
 import { Block as BlockStyle } from './style.elo.js'
 
-export default function Block({ children, ...styleProps }) {
+export default function Block({ children, onClick, ...styleProps }) {
   const { css } = useFela(styleProps)
 
-  return <div className={css(BlockStyle)}>{children}</div>
+  return (
+    <div onClick={onClick} className={css(BlockStyle)}>
+      {children}
+    </div>
+  )
 }

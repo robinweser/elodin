@@ -29,7 +29,11 @@ variant Mode {
 }
 
 style Block {
-  fontSize: 16
+  fontSize: $size
+  paddingLeft: 10
+  paddingRight: 10
+  paddingTop: 10
+  paddingBottom: 10
 
   [Mode=Light] {
     backgroundColor: white

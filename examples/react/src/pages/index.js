@@ -6,13 +6,21 @@ import Block from '../components/Block'
 
 function ModeSwitch() {
   const [mode, setMode] = useState('Light')
+  const [size, setSize] = useState(16)
 
   return (
     <div>
-      <button onClick={() => setMode(mode === 'Light' ? 'Dark' : 'Light')}>
-        Click
-      </button>
-      <Block Mode={mode}>Hello</Block>
+      <input
+        type="number"
+        value={size}
+        onChange={e => setSize(e.target.value)}
+      />
+      <Block
+        size={size}
+        Mode={mode}
+        onClick={() => setMode(mode === 'Light' ? 'Dark' : 'Light')}>
+        Mode: {mode}
+      </Block>
     </div>
   )
 }
