@@ -18,7 +18,7 @@ style Button {
   fontSize: 15
   lineHeight: 1.5
   [Type=Primary] {
-    color: rgb(200, 200, 100)
+    color: rgb(200 200 100)
     fontSize: 17
   }
 }
@@ -39,7 +39,7 @@ backgroundColor: red
 A declaration is a pair of **property** and **value** where property is an camelCased Identifier and value is a single instance of one of the [types](#types) mentioned later. It is separated using a colon.
 A declaration that references a [variable](#variable) is called dynamic declaration and are resolved during runtime. The variable value might also change over time.
 
-> **Type System**: While any property-value pair is syntactically valid, there's a strong type system that will throw if wrong values are applied to properties. Check the [Properties]() documentation for detail information on all available properties and their allowed value types.
+> **Type System**: While any property-value pair is syntactically valid, there's a strong type system that will throw if wrong values are applied to properties. Check the [Properties](Properties.md) documentation for detail information on all available properties and their allowed value types.
 
 #### Raw Property
 
@@ -83,7 +83,10 @@ fragment Flex {
 ## Variant
 
 ```
-variant Type = Primary | Secondary
+variant Mode {
+  Dark
+  Light
+}
 ```
 
 ## Types
