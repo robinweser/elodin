@@ -66,7 +66,7 @@ function generateRoot(ast) {
 }
 
 function generateCSSValue(value, property, unit = true) {
-  if (value.type === 'NumericLiteral') {
+  if (value.type === 'Integer') {
     return (
       (value.negative ? '-' : '') +
       value.value +
