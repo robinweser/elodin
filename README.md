@@ -21,6 +21,27 @@ Alternatively, one can also use npm.
 npm i --save @elodin/core @elodin/cli
 ```
 
+## Targets
+
+- JavaScript
+  - CSS in JS
+    - fela
+    - react-fela
+
+#### Planned
+
+- JavaScript
+  - CSS in JS
+    - styled-components
+    - emotion
+    - glamor
+    - jss
+  - Vanilla
+  - React Native
+- ReasonML
+  - bs-css
+- SwiftUI
+
 ## Documentation
 
 - [Introduction]()
