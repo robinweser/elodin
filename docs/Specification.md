@@ -146,7 +146,7 @@ $bgColor
 @hover
 ```
 
-## Modules
+<!-- ## Modules
 
 ### Color
 
@@ -168,4 +168,4 @@ $bgColor
 
 #### max
 
-#### min
+#### min -->

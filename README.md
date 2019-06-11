@@ -50,7 +50,7 @@ npm i --save @elodin/core @elodin/cli
 
 ## Examples
 
-Coming soon.
+- [React](examples/react)
 
 ## Contributing
 
