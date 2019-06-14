@@ -51,7 +51,7 @@ export function createError(error) {
 
     default:
       return {
-        message: error.type,
+        message: JSON.stringify(error),
       }
   }
 }

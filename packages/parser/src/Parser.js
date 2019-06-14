@@ -138,8 +138,10 @@ export default class Parser {
   parseStyle() {
     if (
       this.currentToken.type === 'identifier' &&
-      this.currentToken.value === 'style'
+      (this.currentToken.value === 'view' || this.currentToken.value === 'text')
     ) {
+      const format = this.currentToken.value
+
       this.updateCurrentToken(1)
 
       const name = this.parseStyleName()
@@ -165,7 +167,8 @@ export default class Parser {
       }
 
       this.parent = {
-        type: 'style',
+        type: 'Style',
+        format,
         name,
       }
 
@@ -181,8 +184,7 @@ export default class Parser {
       }
 
       return {
-        type: 'Style',
-        name,
+        ...this.parent,
         body,
       }
     }
@@ -429,7 +431,12 @@ export default class Parser {
         }
 
         if (!isRawDeclaration) {
-          const validation = validateDeclaration(property, value, value.value)
+          const validation = validateDeclaration(
+            property,
+            value,
+            value.value,
+            this.parent.format
+          )
 
           if (typeof validation === 'object') {
             if (validation.type === 'property') {

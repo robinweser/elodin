@@ -1,4 +1,4 @@
-style Header {
+view Header {
   paddingLeft: 10
   paddingRight: 10
   paddingTop: 12
@@ -10,13 +10,13 @@ style Header {
   flexDirection: row
 }
 
-style Layout {
+view Layout {
   maxWidth: 1200
   width: percentage(100)
   flexDirection: row
 }
 
-style NavItem {
+view NavItem {
   paddingLeft: 10
   paddingRight: 10
   color: black

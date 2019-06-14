@@ -3,7 +3,7 @@ import Parser from '../Parser'
 describe('Parsing elodin syntax', () => {
   it('should correctly parse styles', () => {
     const file = `
-style Button {
+view Button {
   backgroundColor: red
   color: blue
   borderColor: rgb(255 255 255)
@@ -20,13 +20,13 @@ style Button {
 
   it('should correctly parse multiple styles', () => {
     const file = `
-style Button {
+view Button {
   backgroundColor: red
   color: blue
   fontSize: 15
 }
 
-style Label {
+text Label {
   lineHeight: 2
 }`
 
@@ -37,7 +37,7 @@ style Label {
 
   it('should correctly parse conditionals', () => {
     const file = `
-style Button {
+view Button {
   backgroundColor: red
 
   [Type=Primary] {
@@ -67,7 +67,7 @@ fragment Flex {
 
   it('should correctly parse env condition', () => {
     const file = `
-style Button {
+view Button {
   [@hover] {
     color: red
   }

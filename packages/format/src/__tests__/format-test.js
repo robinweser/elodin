@@ -5,7 +5,7 @@ fragment Flex {
    flexGrow: 1
   flexDirection: row
 }
-style Button{backgroundColor: red color: blue
+view Button{backgroundColor: red color: blue
      fontSize: 15
        lineHeight: 1.3
 
@@ -15,7 +15,7 @@ style Button{backgroundColor: red color: blue
   [ Type =   Primary  ] {  color:red [Mode=Dark]{color:yellow backgroundColor:green}}
   }
 
-   style    Label {
+   text    Label {
 lineHeight:   $lineHeight
     fontSize: 20
 
