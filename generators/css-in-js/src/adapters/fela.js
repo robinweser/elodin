@@ -12,13 +12,17 @@ function stringifyDeclaration(declaration) {
 
 export default {
   name: 'fela',
-  stringify: ({ style, className, classNameMap, moduleName }) => {
+  stringify: ({
+    style,
+    className,
+    classNameMap,
+    moduleName,
+    dynamicImport,
+  }) => {
     const hasVariations = Object.keys(classNameMap).length > 1
 
     return (
-      "import './" +
-      moduleName +
-      ".elo.css'\n" +
+      (!dynamicImport ? "import './" + moduleName + ".elo.css'\n" : '') +
       (hasVariations
         ? "import { getClassNameFromVariantMap } from '@elodin/runtime'\n\n" +
           'const variantMap = ' +
@@ -29,6 +33,7 @@ export default {
       moduleName +
       '(props = {})' +
       ' {\n  ' +
+      (dynamicImport ? "import('./" + moduleName + ".elo.css')\n" : '') +
       'return {\n    ' +
       '_className: ' +
       (hasVariations

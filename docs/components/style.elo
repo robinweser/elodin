@@ -1,0 +1,29 @@
+style Header {
+  paddingLeft: 10
+  paddingRight: 10
+  paddingTop: 12
+  paddingBottom: 12
+  backgroundColor: rgb(230 230 230)
+  fontSize: 18
+  lineHeight: 1
+  justifyContent: center
+  flexDirection: row
+}
+
+style Layout {
+  maxWidth: 1200
+  width: percentage(100)
+  flexDirection: row
+}
+
+style NavItem {
+  paddingLeft: 10
+  paddingRight: 10
+  color: black
+
+  [@hover] {
+    color: rgb(100 100 100)
+  }
+
+  __textDecoration: none
+}

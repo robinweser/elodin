@@ -38,7 +38,7 @@ style Block {
   [Mode=Light] {
     backgroundColor: white
     color: black
-  }
+  } 
 
   [Mode=Dark] {
     backgroundColor: black

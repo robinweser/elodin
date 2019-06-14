@@ -1,5 +1,0 @@
-# Types
-
-## Color
-
-##

@@ -87,6 +87,10 @@ export default function formatFromAST(node, customConfig = {}, level = 1) {
       return (node.negative ? '-' : '') + node.value
     case 'Identifier':
       return node.value
+    case 'RawValue':
+      return 'raw(' + node.value + ')'
+    case 'Percentage':
+      return 'percentage(' + node.value + ')'
 
     default:
       throw new Error('Unknown node: ', node.type)

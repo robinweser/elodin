@@ -9,7 +9,16 @@ import fs from 'fs'
 import * as util from './util'
 
 export default async function({ cliOptions, elodinOptions }) {
-  const config = require(path.join(process.cwd(), elodinOptions.configFile))
+  let config
+
+  try {
+    config = require(path.join(process.cwd(), elodinOptions.configFile))
+  } catch (e) {
+    console.error(
+      '[ERROR] An elodin configuration must be passed. Start by creating a elodin.config.js file.'
+    )
+    return false
+  }
 
   const filenames = cliOptions.filenames
 

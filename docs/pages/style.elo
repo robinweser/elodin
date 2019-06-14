@@ -1,0 +1,15 @@
+style Test {
+  color: blue
+  borderTopColor: green
+  borderTopWidth: 10
+  borderBottomWidth: 0
+  borderLeftWidth: 0
+  borderRightWidth: 0
+  borderStyle: solid
+}
+
+style Spread {
+  flexGrow: 1
+  flexShrink: 1
+  backgroundColor: hex(f0f0f0)
+}

@@ -1,9 +1,11 @@
 import tokenize from 'tokenize-sync'
 import { validateDeclaration } from '@elodin/validator'
+import { createError } from '@elodin/error'
+
+import color from 'color'
 
 const ruleMap = {
   minus: /^[-]$/,
-  hash: /^[#]$/,
   comparison: /^[><=]+$/i,
   quote: /^("|\\")$/,
   identifier: /^[_a-z]+$/i,
@@ -51,11 +53,14 @@ export default class Parser {
 
   addError(error, exit) {
     if (!this.exit) {
-      this.errors.push({
-        ...this.context,
-        ...error,
-        token: this.currentToken,
-      })
+      this.errors.push(
+        createError({
+          ...this.context,
+          ...error,
+          parent: this.parent,
+          token: this.currentToken,
+        })
+      )
     }
 
     if (exit) {
@@ -86,6 +91,8 @@ export default class Parser {
     }
 
     while (this.isRunning()) {
+      this.parent = undefined
+
       const node =
         this.parseStyle() || this.parseFragment() || this.parseVariant()
 
@@ -123,6 +130,7 @@ export default class Parser {
 
     return {
       errors: this.errors,
+      tokens: this.tokens,
       ast: file,
     }
   }
@@ -154,6 +162,11 @@ export default class Parser {
           },
           true
         )
+      }
+
+      this.parent = {
+        type: 'style',
+        name,
       }
 
       const body = this.parseStyleBody()
@@ -242,6 +255,11 @@ export default class Parser {
         )
       }
 
+      this.parent = {
+        type: 'fragment',
+        name,
+      }
+
       const body = this.parseFragmentBody()
 
       if (!body) {
@@ -315,6 +333,11 @@ export default class Parser {
           },
           true
         )
+      }
+
+      this.parent = {
+        type: 'variant',
+        name,
       }
 
       const body = this.parseVariantBody()
@@ -410,19 +433,29 @@ export default class Parser {
 
           if (typeof validation === 'object') {
             if (validation.type === 'property') {
-              this.errors.push({
-                type: errorTypes.INVALID_PROPERTY,
-                property,
-                value,
-              })
+              this.addError(
+                {
+                  type: errorTypes.INVALID_PROPERTY,
+                  property,
+                  value,
+                },
+                false
+              )
             }
 
-            if (validation.type === 'value' && value.type !== 'Variable') {
-              this.errors.push({
-                type: errorTypes.INVALID_VALUE,
-                property,
-                value,
-              })
+            if (
+              validation.type === 'value' &&
+              value.type !== 'Variable' &&
+              value.type !== 'RawValue'
+            ) {
+              this.addError(
+                {
+                  type: errorTypes.INVALID_VALUE,
+                  property,
+                  value,
+                },
+                false
+              )
             }
           }
         }
@@ -537,7 +570,32 @@ export default class Parser {
       return this.parseNumber(true)
     }
 
-    return this.parseNumber() || this.parseIdentifier() || this.parseVariable()
+    return (
+      this.parseNumber() ||
+      this.parseIdentifier() ||
+      this.parseVariable() ||
+      this.parseString()
+    )
+  }
+
+  parseString() {
+    if (this.currentToken.type === 'quote') {
+      let value = ''
+      this.updateCurrentToken(1)
+
+      while (this.isRunning() && this.currentToken.type !== 'quote') {
+        // parse whitespace sensitive
+        value +=
+          ' '.repeat(this.currentToken.start - this.getNextToken(-1).end) +
+          this.currentToken.value
+        this.updateCurrentToken(1)
+      }
+
+      return {
+        type: 'String',
+        value,
+      }
+    }
   }
 
   parseNumber(isNegative = false) {
@@ -582,29 +640,147 @@ export default class Parser {
     }
   }
 
+  parseUntil(until, cummulate = false) {
+    const values = []
+
+    while (this.isRunning() && !until(this.currentToken)) {
+      const value = this.parseValue()
+
+      if (!value) {
+        this.addError(
+          {
+            type: errorTypes.SYNTAX_ERROR,
+          },
+          true
+        )
+      }
+
+      values.push(value)
+      this.updateCurrentToken(1)
+    }
+
+    return values
+  }
+
   parseIdentifier() {
     if (this.currentToken.type === 'identifier') {
       const ident = this.currentToken.value
-
       const nextToken = this.getNextToken(1)
       if (nextToken.type === 'round_bracket' && nextToken.value === '(') {
         this.updateCurrentToken(2)
 
-        const params = []
+        const params = this.parseUntil(token => token.type === 'round_bracket')
 
-        while (this.isRunning() && this.currentToken.type !== 'round_bracket') {
-          const param = this.parseValue()
-
-          if (!param) {
+        if (ident === 'percentage') {
+          if (params.length === 1 && params[0]) {
+            if (
+              // parse float
+              params[0].type === 'Integer' &&
+              params[0].value >= 0 &&
+              params[0].value <= 100
+            ) {
+              return {
+                type: 'Percentage',
+                value: params[0].value,
+              }
+            } else {
+              this.addError(
+                {
+                  type: 'SYNTAX_ERROR',
+                },
+                true
+              )
+            }
+          } else {
             this.addError(
               {
-                type: errorTypes.SYNTAX_ERROR,
+                type: 'SYNTAX_ERROR',
               },
               true
             )
           }
-          params.push(param)
-          this.updateCurrentToken(1)
+        }
+
+        if (ident === 'hex') {
+          let normalizedValue
+          try {
+            normalizedValue = color(
+              '#' + params.map(param => param && param.value).join('')
+            )
+          } catch (e) {
+            this.addError(
+              {
+                type: 'SYNTAX_ERROR',
+                message: 'WRONG HEX',
+              },
+              true
+            )
+          }
+
+          if (normalizedValue) {
+            return {
+              type: 'Color',
+              red: normalizedValue.red(),
+              green: normalizedValue.green(),
+              blue: normalizedValue.blue(),
+              alpha: normalizedValue.alpha(),
+              format: 'hex',
+            }
+          }
+        }
+
+        if (ident === 'rgb' || ident === 'rgba') {
+          const [
+            red,
+            green,
+            blue,
+            alpha = { type: 'Percentage', value: 100 },
+          ] = params
+
+          // TODO: validate value
+          if (
+            !red ||
+            !green ||
+            !blue ||
+            red.type !== 'Integer' ||
+            green.type !== 'Integer' ||
+            blue.type !== 'Integer' ||
+            alpha.type !== 'Percentage'
+          ) {
+            this.addError(
+              {
+                type: 'SYNTAX_ERROR',
+                message: 'WRONG RGB',
+              },
+              true
+            )
+          } else {
+            return {
+              type: 'Color',
+              red: red.value,
+              green: green.value,
+              blue: blue.value,
+              alpha: alpha.value / 100,
+              format: 'rgb',
+            }
+          }
+        }
+
+        if (ident === 'raw') {
+          if (params.length === 1 && params[0] && params[0].type === 'String') {
+            return {
+              type: 'RawValue',
+              value: params[0].value,
+            }
+          } else {
+            this.addError(
+              {
+                type: errorTypes.SYNTAX_ERROR,
+                message: 'WRONG RAW',
+              },
+              true
+            )
+          }
         }
 
         return {

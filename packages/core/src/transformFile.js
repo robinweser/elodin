@@ -15,16 +15,17 @@ export default function transformFile(inputPath, config, callback) {
     const parsed = parse(file, {
       context: {
         path: inputPath,
+        source: file,
       },
     })
 
     if (parsed.errors.length > 0) {
       if (errors === 'throw') {
-        throw new SyntaxError(parsed.errors[0])
+        console.error(parsed.errors[0].message)
       }
 
       if (errors === 'log') {
-        console.log(parsed.errors[0])
+        console.log(parsed.errors[0].message)
       }
 
       if (callback) {

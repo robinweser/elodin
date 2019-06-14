@@ -19,7 +19,8 @@
     "packages/*",
     "generators/*",
     "examples/*",
-    "runtimes/*"
+    "runtimes/*",
+    "docs"
   ],
   "devDependencies": {
     "lerna": "^3.6.0",
