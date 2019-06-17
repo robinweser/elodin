@@ -41,13 +41,129 @@ Object {
             },
           },
         ],
+        "format": "view",
         "name": "Button",
         "type": "Style",
       },
     ],
     "type": "File",
   },
-  "errors": Array [],
+  "errors": Array [
+    Object {
+      "message": "color: red
+^-------
+The property color is an invalid property.
+In Button
+",
+    },
+  ],
+  "tokens": Array [
+    Object {
+      "end": 4,
+      "start": 0,
+      "type": "identifier",
+      "value": "view",
+    },
+    Object {
+      "end": 11,
+      "start": 5,
+      "type": "identifier",
+      "value": "Button",
+    },
+    Object {
+      "end": 13,
+      "start": 12,
+      "type": "curly_bracket",
+      "value": "{",
+    },
+    Object {
+      "end": 31,
+      "start": 16,
+      "type": "identifier",
+      "value": "backgroundColor",
+    },
+    Object {
+      "end": 32,
+      "start": 31,
+      "type": "colon",
+      "value": ":",
+    },
+    Object {
+      "end": 36,
+      "start": 33,
+      "type": "identifier",
+      "value": "red",
+    },
+    Object {
+      "end": 41,
+      "start": 40,
+      "type": "square_bracket",
+      "value": "[",
+    },
+    Object {
+      "end": 45,
+      "start": 41,
+      "type": "identifier",
+      "value": "Type",
+    },
+    Object {
+      "end": 46,
+      "start": 45,
+      "type": "comparison",
+      "value": "=",
+    },
+    Object {
+      "end": 53,
+      "start": 46,
+      "type": "identifier",
+      "value": "Primary",
+    },
+    Object {
+      "end": 54,
+      "start": 53,
+      "type": "square_bracket",
+      "value": "]",
+    },
+    Object {
+      "end": 56,
+      "start": 55,
+      "type": "curly_bracket",
+      "value": "{",
+    },
+    Object {
+      "end": 66,
+      "start": 61,
+      "type": "identifier",
+      "value": "color",
+    },
+    Object {
+      "end": 67,
+      "start": 66,
+      "type": "colon",
+      "value": ":",
+    },
+    Object {
+      "end": 71,
+      "start": 68,
+      "type": "identifier",
+      "value": "red",
+    },
+    Object {
+      "end": 75,
+      "start": 74,
+      "type": "curly_bracket",
+      "value": "}",
+    },
+    Object {
+      "end": 77,
+      "start": 76,
+      "type": "curly_bracket",
+      "value": "}",
+    },
+    Object {
+      "type": "end_token",
+    },
+  ],
 }
 `;
 
@@ -121,18 +237,244 @@ Object {
             "type": "Conditional",
             "value": Object {
               "negative": false,
-              "type": "NumericLiteral",
+              "type": "Integer",
               "value": 320,
             },
           },
         ],
+        "format": "view",
         "name": "Button",
         "type": "Style",
       },
     ],
     "type": "File",
   },
-  "errors": Array [],
+  "errors": Array [
+    Object {
+      "message": "color: red
+^-------
+The property color is an invalid property.
+In Button
+",
+    },
+    Object {
+      "message": "color: blue
+^-------
+The property color is an invalid property.
+In Button
+",
+    },
+    Object {
+      "message": "color: green
+^-------
+The property color is an invalid property.
+In Button
+",
+    },
+  ],
+  "tokens": Array [
+    Object {
+      "end": 4,
+      "start": 0,
+      "type": "identifier",
+      "value": "view",
+    },
+    Object {
+      "end": 11,
+      "start": 5,
+      "type": "identifier",
+      "value": "Button",
+    },
+    Object {
+      "end": 13,
+      "start": 12,
+      "type": "curly_bracket",
+      "value": "{",
+    },
+    Object {
+      "end": 17,
+      "start": 16,
+      "type": "square_bracket",
+      "value": "[",
+    },
+    Object {
+      "end": 18,
+      "start": 17,
+      "type": "variable",
+      "value": "@",
+    },
+    Object {
+      "end": 23,
+      "start": 18,
+      "type": "identifier",
+      "value": "hover",
+    },
+    Object {
+      "end": 24,
+      "start": 23,
+      "type": "square_bracket",
+      "value": "]",
+    },
+    Object {
+      "end": 26,
+      "start": 25,
+      "type": "curly_bracket",
+      "value": "{",
+    },
+    Object {
+      "end": 36,
+      "start": 31,
+      "type": "identifier",
+      "value": "color",
+    },
+    Object {
+      "end": 37,
+      "start": 36,
+      "type": "colon",
+      "value": ":",
+    },
+    Object {
+      "end": 41,
+      "start": 38,
+      "type": "identifier",
+      "value": "red",
+    },
+    Object {
+      "end": 45,
+      "start": 44,
+      "type": "curly_bracket",
+      "value": "}",
+    },
+    Object {
+      "end": 50,
+      "start": 49,
+      "type": "square_bracket",
+      "value": "[",
+    },
+    Object {
+      "end": 51,
+      "start": 50,
+      "type": "variable",
+      "value": "@",
+    },
+    Object {
+      "end": 59,
+      "start": 51,
+      "type": "identifier",
+      "value": "minWidth",
+    },
+    Object {
+      "end": 60,
+      "start": 59,
+      "type": "comparison",
+      "value": "=",
+    },
+    Object {
+      "end": 63,
+      "start": 60,
+      "type": "number",
+      "value": "320",
+    },
+    Object {
+      "end": 64,
+      "start": 63,
+      "type": "square_bracket",
+      "value": "]",
+    },
+    Object {
+      "end": 66,
+      "start": 65,
+      "type": "curly_bracket",
+      "value": "{",
+    },
+    Object {
+      "end": 76,
+      "start": 71,
+      "type": "identifier",
+      "value": "color",
+    },
+    Object {
+      "end": 77,
+      "start": 76,
+      "type": "colon",
+      "value": ":",
+    },
+    Object {
+      "end": 82,
+      "start": 78,
+      "type": "identifier",
+      "value": "blue",
+    },
+    Object {
+      "end": 88,
+      "start": 87,
+      "type": "square_bracket",
+      "value": "[",
+    },
+    Object {
+      "end": 89,
+      "start": 88,
+      "type": "variable",
+      "value": "@",
+    },
+    Object {
+      "end": 94,
+      "start": 89,
+      "type": "identifier",
+      "value": "hover",
+    },
+    Object {
+      "end": 95,
+      "start": 94,
+      "type": "square_bracket",
+      "value": "]",
+    },
+    Object {
+      "end": 97,
+      "start": 96,
+      "type": "curly_bracket",
+      "value": "{",
+    },
+    Object {
+      "end": 109,
+      "start": 104,
+      "type": "identifier",
+      "value": "color",
+    },
+    Object {
+      "end": 110,
+      "start": 109,
+      "type": "colon",
+      "value": ":",
+    },
+    Object {
+      "end": 116,
+      "start": 111,
+      "type": "identifier",
+      "value": "green",
+    },
+    Object {
+      "end": 122,
+      "start": 121,
+      "type": "curly_bracket",
+      "value": "}",
+    },
+    Object {
+      "end": 126,
+      "start": 125,
+      "type": "curly_bracket",
+      "value": "}",
+    },
+    Object {
+      "end": 128,
+      "start": 127,
+      "type": "curly_bracket",
+      "value": "}",
+    },
+    Object {
+      "type": "end_token",
+    },
+  ],
 }
 `;
 
@@ -169,7 +511,7 @@ Object {
             "type": "Declaration",
             "value": Object {
               "negative": false,
-              "type": "NumericLiteral",
+              "type": "Integer",
               "value": 0,
             },
           },
@@ -180,7 +522,7 @@ Object {
             "type": "Declaration",
             "value": Object {
               "negative": false,
-              "type": "NumericLiteral",
+              "type": "Integer",
               "value": 1,
             },
           },
@@ -201,7 +543,134 @@ Object {
     ],
     "type": "File",
   },
-  "errors": Array [],
+  "errors": Array [
+    Object {
+      "message": "flexBasis: auto
+           ^-------
+The value auto is an invalid value for the property flexBasis.
+In Flex
+",
+    },
+  ],
+  "tokens": Array [
+    Object {
+      "end": 8,
+      "start": 0,
+      "type": "identifier",
+      "value": "fragment",
+    },
+    Object {
+      "end": 13,
+      "start": 9,
+      "type": "identifier",
+      "value": "Flex",
+    },
+    Object {
+      "end": 15,
+      "start": 14,
+      "type": "curly_bracket",
+      "value": "{",
+    },
+    Object {
+      "end": 31,
+      "start": 18,
+      "type": "identifier",
+      "value": "flexDirection",
+    },
+    Object {
+      "end": 32,
+      "start": 31,
+      "type": "colon",
+      "value": ":",
+    },
+    Object {
+      "end": 36,
+      "start": 33,
+      "type": "identifier",
+      "value": "row",
+    },
+    Object {
+      "end": 48,
+      "start": 39,
+      "type": "identifier",
+      "value": "alignSelf",
+    },
+    Object {
+      "end": 49,
+      "start": 48,
+      "type": "colon",
+      "value": ":",
+    },
+    Object {
+      "end": 57,
+      "start": 50,
+      "type": "identifier",
+      "value": "stretch",
+    },
+    Object {
+      "end": 68,
+      "start": 60,
+      "type": "identifier",
+      "value": "flexGrow",
+    },
+    Object {
+      "end": 69,
+      "start": 68,
+      "type": "colon",
+      "value": ":",
+    },
+    Object {
+      "end": 71,
+      "start": 70,
+      "type": "number",
+      "value": "0",
+    },
+    Object {
+      "end": 84,
+      "start": 74,
+      "type": "identifier",
+      "value": "flexShrink",
+    },
+    Object {
+      "end": 85,
+      "start": 84,
+      "type": "colon",
+      "value": ":",
+    },
+    Object {
+      "end": 87,
+      "start": 86,
+      "type": "number",
+      "value": "1",
+    },
+    Object {
+      "end": 99,
+      "start": 90,
+      "type": "identifier",
+      "value": "flexBasis",
+    },
+    Object {
+      "end": 100,
+      "start": 99,
+      "type": "colon",
+      "value": ":",
+    },
+    Object {
+      "end": 105,
+      "start": 101,
+      "type": "identifier",
+      "value": "auto",
+    },
+    Object {
+      "end": 107,
+      "start": 106,
+      "type": "curly_bracket",
+      "value": "}",
+    },
+    Object {
+      "type": "end_token",
+    },
+  ],
 }
 `;
 
@@ -238,11 +707,12 @@ Object {
             "type": "Declaration",
             "value": Object {
               "negative": false,
-              "type": "NumericLiteral",
+              "type": "Integer",
               "value": 15,
             },
           },
         ],
+        "format": "view",
         "name": "Button",
         "type": "Style",
       },
@@ -255,18 +725,159 @@ Object {
             "type": "Declaration",
             "value": Object {
               "negative": false,
-              "type": "NumericLiteral",
+              "type": "Integer",
               "value": 2,
             },
           },
         ],
+        "format": "text",
         "name": "Label",
         "type": "Style",
       },
     ],
     "type": "File",
   },
-  "errors": Array [],
+  "errors": Array [
+    Object {
+      "message": "color: blue
+^-------
+The property color is an invalid property.
+In Button
+",
+    },
+    Object {
+      "message": "fontSize: 15
+^-------
+The property fontSize is an invalid property.
+In Button
+",
+    },
+  ],
+  "tokens": Array [
+    Object {
+      "end": 4,
+      "start": 0,
+      "type": "identifier",
+      "value": "view",
+    },
+    Object {
+      "end": 11,
+      "start": 5,
+      "type": "identifier",
+      "value": "Button",
+    },
+    Object {
+      "end": 13,
+      "start": 12,
+      "type": "curly_bracket",
+      "value": "{",
+    },
+    Object {
+      "end": 31,
+      "start": 16,
+      "type": "identifier",
+      "value": "backgroundColor",
+    },
+    Object {
+      "end": 32,
+      "start": 31,
+      "type": "colon",
+      "value": ":",
+    },
+    Object {
+      "end": 36,
+      "start": 33,
+      "type": "identifier",
+      "value": "red",
+    },
+    Object {
+      "end": 44,
+      "start": 39,
+      "type": "identifier",
+      "value": "color",
+    },
+    Object {
+      "end": 45,
+      "start": 44,
+      "type": "colon",
+      "value": ":",
+    },
+    Object {
+      "end": 50,
+      "start": 46,
+      "type": "identifier",
+      "value": "blue",
+    },
+    Object {
+      "end": 61,
+      "start": 53,
+      "type": "identifier",
+      "value": "fontSize",
+    },
+    Object {
+      "end": 62,
+      "start": 61,
+      "type": "colon",
+      "value": ":",
+    },
+    Object {
+      "end": 65,
+      "start": 63,
+      "type": "number",
+      "value": "15",
+    },
+    Object {
+      "end": 67,
+      "start": 66,
+      "type": "curly_bracket",
+      "value": "}",
+    },
+    Object {
+      "end": 73,
+      "start": 69,
+      "type": "identifier",
+      "value": "text",
+    },
+    Object {
+      "end": 79,
+      "start": 74,
+      "type": "identifier",
+      "value": "Label",
+    },
+    Object {
+      "end": 81,
+      "start": 80,
+      "type": "curly_bracket",
+      "value": "{",
+    },
+    Object {
+      "end": 94,
+      "start": 84,
+      "type": "identifier",
+      "value": "lineHeight",
+    },
+    Object {
+      "end": 95,
+      "start": 94,
+      "type": "colon",
+      "value": ":",
+    },
+    Object {
+      "end": 97,
+      "start": 96,
+      "type": "number",
+      "value": "2",
+    },
+    Object {
+      "end": 99,
+      "start": 98,
+      "type": "curly_bracket",
+      "value": "}",
+    },
+    Object {
+      "type": "end_token",
+    },
+  ],
 }
 `;
 
@@ -302,25 +913,12 @@ Object {
             "raw": false,
             "type": "Declaration",
             "value": Object {
-              "callee": "rgb",
-              "params": Array [
-                Object {
-                  "negative": false,
-                  "type": "NumericLiteral",
-                  "value": 255,
-                },
-                Object {
-                  "negative": false,
-                  "type": "NumericLiteral",
-                  "value": 255,
-                },
-                Object {
-                  "negative": false,
-                  "type": "NumericLiteral",
-                  "value": 255,
-                },
-              ],
-              "type": "FunctionExpression",
+              "alpha": 1,
+              "blue": 255,
+              "format": "rgb",
+              "green": 255,
+              "red": 255,
+              "type": "Color",
             },
           },
           Object {
@@ -330,7 +928,7 @@ Object {
             "type": "Declaration",
             "value": Object {
               "negative": false,
-              "type": "NumericLiteral",
+              "type": "Integer",
               "value": 15,
             },
           },
@@ -368,12 +966,252 @@ Object {
             },
           },
         ],
+        "format": "view",
         "name": "Button",
         "type": "Style",
       },
     ],
     "type": "File",
   },
-  "errors": Array [],
+  "errors": Array [
+    Object {
+      "message": "color: blue
+^-------
+The property color is an invalid property.
+In Button
+",
+    },
+    Object {
+      "message": "borderColor: undefined
+^-------
+The property borderColor is an invalid property.
+In Button
+",
+    },
+    Object {
+      "message": "fontSize: 15
+^-------
+The property fontSize is an invalid property.
+In Button
+",
+    },
+    Object {
+      "message": "lineHeight: undefined
+^-------
+The property lineHeight is an invalid property.
+In Button
+",
+    },
+    Object {
+      "message": "borderWidth: width
+^-------
+The property borderWidth is an invalid property.
+In Button
+",
+    },
+  ],
+  "tokens": Array [
+    Object {
+      "end": 4,
+      "start": 0,
+      "type": "identifier",
+      "value": "view",
+    },
+    Object {
+      "end": 11,
+      "start": 5,
+      "type": "identifier",
+      "value": "Button",
+    },
+    Object {
+      "end": 13,
+      "start": 12,
+      "type": "curly_bracket",
+      "value": "{",
+    },
+    Object {
+      "end": 31,
+      "start": 16,
+      "type": "identifier",
+      "value": "backgroundColor",
+    },
+    Object {
+      "end": 32,
+      "start": 31,
+      "type": "colon",
+      "value": ":",
+    },
+    Object {
+      "end": 36,
+      "start": 33,
+      "type": "identifier",
+      "value": "red",
+    },
+    Object {
+      "end": 44,
+      "start": 39,
+      "type": "identifier",
+      "value": "color",
+    },
+    Object {
+      "end": 45,
+      "start": 44,
+      "type": "colon",
+      "value": ":",
+    },
+    Object {
+      "end": 50,
+      "start": 46,
+      "type": "identifier",
+      "value": "blue",
+    },
+    Object {
+      "end": 64,
+      "start": 53,
+      "type": "identifier",
+      "value": "borderColor",
+    },
+    Object {
+      "end": 65,
+      "start": 64,
+      "type": "colon",
+      "value": ":",
+    },
+    Object {
+      "end": 69,
+      "start": 66,
+      "type": "identifier",
+      "value": "rgb",
+    },
+    Object {
+      "end": 70,
+      "start": 69,
+      "type": "round_bracket",
+      "value": "(",
+    },
+    Object {
+      "end": 73,
+      "start": 70,
+      "type": "number",
+      "value": "255",
+    },
+    Object {
+      "end": 77,
+      "start": 74,
+      "type": "number",
+      "value": "255",
+    },
+    Object {
+      "end": 81,
+      "start": 78,
+      "type": "number",
+      "value": "255",
+    },
+    Object {
+      "end": 82,
+      "start": 81,
+      "type": "round_bracket",
+      "value": ")",
+    },
+    Object {
+      "end": 93,
+      "start": 85,
+      "type": "identifier",
+      "value": "fontSize",
+    },
+    Object {
+      "end": 94,
+      "start": 93,
+      "type": "colon",
+      "value": ":",
+    },
+    Object {
+      "end": 97,
+      "start": 95,
+      "type": "number",
+      "value": "15",
+    },
+    Object {
+      "end": 110,
+      "start": 100,
+      "type": "identifier",
+      "value": "lineHeight",
+    },
+    Object {
+      "end": 111,
+      "start": 110,
+      "type": "colon",
+      "value": ":",
+    },
+    Object {
+      "end": 113,
+      "start": 112,
+      "type": "number",
+      "value": "1",
+    },
+    Object {
+      "end": 114,
+      "start": 113,
+      "type": "floating_point",
+      "value": ".",
+    },
+    Object {
+      "end": 115,
+      "start": 114,
+      "type": "number",
+      "value": "2",
+    },
+    Object {
+      "end": 129,
+      "start": 118,
+      "type": "identifier",
+      "value": "borderWidth",
+    },
+    Object {
+      "end": 130,
+      "start": 129,
+      "type": "colon",
+      "value": ":",
+    },
+    Object {
+      "end": 132,
+      "start": 131,
+      "type": "variable",
+      "value": "$",
+    },
+    Object {
+      "end": 137,
+      "start": 132,
+      "type": "identifier",
+      "value": "width",
+    },
+    Object {
+      "end": 155,
+      "start": 140,
+      "type": "identifier",
+      "value": "__animationName",
+    },
+    Object {
+      "end": 156,
+      "start": 155,
+      "type": "colon",
+      "value": ":",
+    },
+    Object {
+      "end": 165,
+      "start": 157,
+      "type": "identifier",
+      "value": "keyframe",
+    },
+    Object {
+      "end": 167,
+      "start": 166,
+      "type": "curly_bracket",
+      "value": "}",
+    },
+    Object {
+      "type": "end_token",
+    },
+  ],
 }
 `;

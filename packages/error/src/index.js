@@ -9,7 +9,9 @@ export function createError(error) {
           '\n^-------\n' +
           'The property ' +
           error.property +
-          ' is an invalid property.' +
+          ' is an invalid ' +
+          error.format +
+          ' property.' +
           '\n' +
           'In ' +
           error.parent.name +

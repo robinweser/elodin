@@ -1,7 +1,9 @@
 import definitions from './definitions'
 
-export function validateDeclaration(property, value, rawValue) {
-  const propertyDefinition = definitions[property]
+export function validateDeclaration(property, value, rawValue, format) {
+  const propertyDefinition = format
+    ? definitions[format][property]
+    : definitions.view[property] || definitions.text[property]
 
   if (propertyDefinition) {
     const isValid = propertyDefinition.find(
@@ -11,6 +13,7 @@ export function validateDeclaration(property, value, rawValue) {
     if (!isValid) {
       return {
         type: 'value',
+        format,
         message:
           'The value `' +
           rawValue +
@@ -26,6 +29,7 @@ export function validateDeclaration(property, value, rawValue) {
 
   return {
     type: 'property',
+    format,
     message: 'The property `' + property + '` is not a valid property.',
   }
 }

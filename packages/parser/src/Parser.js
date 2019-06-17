@@ -443,6 +443,7 @@ export default class Parser {
               this.addError(
                 {
                   type: errorTypes.INVALID_PROPERTY,
+                  format: this.parent.format,
                   property,
                   value,
                 },
@@ -458,6 +459,7 @@ export default class Parser {
               this.addError(
                 {
                   type: errorTypes.INVALID_VALUE,
+                  format: this.parent.format,
                   property,
                   value,
                 },
