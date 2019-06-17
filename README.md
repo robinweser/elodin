@@ -1,6 +1,6 @@
 # The Elodin Styling Language
 
-> **Warning**: Elodin is still WIP and experimental. It is not recommended to use it in production yet. There might be unknown bugs and the APIs might change rapidly.<br>**You've been warned!**
+> **Warning**: Elodin is still WIP and experimental. It is not recommended to use it in production yet. There might be unknown bugs and the APIs might change rapidly.
 
 Elodin is a styling language that aims to provide a universal way to author user interface styles. It uses a single file format that compiles to several different plattforms, languages, frameworks and libraries.
 
@@ -19,6 +19,26 @@ Alternatively, one can also use npm.
 
 ```sh
 npm i --save @elodin/core @elodin/cli
+```
+
+## The Gist
+
+```
+view Header {
+  backgroundColor: rgb(100 100 100)
+  height: percentage(80)
+  justifyContent: center
+  alignItems: flexEnd
+  paddingBottom: 10
+  paddingTop: 10
+  flexGrow: 1
+}
+
+text HeaderText {
+  lineHeight: 1.2
+  textAlign: center
+  fontSize: 20
+}
 ```
 
 ## Targets
