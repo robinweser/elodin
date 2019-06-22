@@ -6,14 +6,14 @@ Elodin is a small styling language that aims to provide a universal way to autho
 
 <img alt="npm downloads" src="https://img.shields.io/npm/dm/@elodin/core.svg">
 
-## Why
+## Why?
 
 Gone are the days where products only target a specific platform. Nowadays our customers expect us to support all kind of platforms, devices and system. We have browser apps, mobile apps, tv apps, VR apps and even embedded apps e.g. in cars.
 Given their different requirements, capabilities and technological background, we use very different languages, libraries and tools to built those apps. While this accounts for performant and high-quality apps on all platforms, it also leads to duplicate implementations of a similar UI without a way to reuse the underlying primitives.<br>
 Yet, most platforms share quite a lot visual properties. After all, we want to implement a similar visual experience everywhere to create a seamless user experience across platforms.<br>
 That's where Elodin enters the game. It provides an easy-to-use declarative format to define primitive style components, which then compiles to native applicable code for all kind of different platforms.
 
-## How
+## How?
 
 Elodin defines a set of style properties that many platforms have in common. During compilation, all components are parsed into an AST where all properties are strongly validated to match their provided types. This AST is then used to generate native platform-specific code using so called generators. Each generator targets a specific platform and has many different configuration options in order to satisfy as much requirements as possible.
 
