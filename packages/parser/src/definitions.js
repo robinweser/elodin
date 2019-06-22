@@ -1,5 +1,6 @@
 const isInteger = value => value.type === 'Integer'
 const isFloat = value => value.type === 'Float'
+const isString = value => value.type === 'String'
 const isPercentage = value => value.type === 'Percentage'
 const isNumber = value => isInteger(value) || isFloat(value)
 
@@ -25,6 +26,7 @@ export default {
     position: [matchesKeywords('relative', 'absolute')],
     display: [matchesKeywords('show', 'hide')],
     opacity: [isPercentage],
+    zIndex: [isInteger],
 
     // box model
     paddingBottom: [isNumber, isPercentage],
@@ -103,10 +105,20 @@ export default {
   },
 
   text: {
-    // text
     fontSize: [isNumber],
-    fontStyle: [matchesKeywords('bold', 'italic')],
-    textAlign: [matchesKeywords('center', 'left', 'right')],
+    fontStyle: [matchesKeywords('normal', 'italic')],
+    fontWeight: [
+      value =>
+        isInteger(value) &&
+        value.value >= 100 &&
+        value.value <= 900 &&
+        value.value % 100 === 0,
+      // matchesKeywords('normal', 'bold'),
+    ],
+    textAlign: [matchesKeywords('auto', 'justify,', 'center', 'left', 'right')],
+    textDecorationLine: [matchesKeywords('none', 'underline', 'lineThrough')],
+    fontFamily: [isString],
+    letterSpacing: [isNumber],
     lineHeight: [isNumber],
     color: [isColor],
   },

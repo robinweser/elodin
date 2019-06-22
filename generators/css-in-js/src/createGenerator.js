@@ -1,4 +1,4 @@
-import { isUnitlessProperty } from 'css-in-js-utils'
+import { isUnitlessProperty, hyphenateProperty } from 'css-in-js-utils'
 import color from 'color'
 
 import adapters from './adapters'
@@ -99,6 +99,11 @@ function generateCSSValue(value, property, unit = true) {
       return colorValue.hex()
     }
 
+    if (format === 'keyword') {
+      // TODO: check APIs
+      return colorValue.keyword()
+    }
+
     return colorValue[format]().string()
   }
 
@@ -110,6 +115,10 @@ function generateCSSValue(value, property, unit = true) {
       value.fractional +
       (unit ? 'px' : '')
     )
+  }
+
+  if (value.type === 'Identifier') {
+    return hyphenateProperty(value.value)
   }
 
   return value.value
@@ -199,7 +208,7 @@ function generateClasses(
           variants,
           classes,
           modifier,
-          pseudo + ':' + nest.property.value,
+          pseudo + ':' + hyphenateProperty(nest.property.value),
           media
         )
       }
@@ -229,19 +238,6 @@ function getStaticDeclarations(declarations) {
     }))
 }
 
-var uppercasePattern = /[A-Z]/g
-var msPattern = /^ms-/
-var cache = {}
-
-function hyphenateProperty(string) {
-  return string in cache
-    ? cache[string]
-    : (cache[string] = string
-        .replace(uppercasePattern, '-$&')
-        .toLowerCase()
-        .replace(msPattern, '-ms-'))
-}
-
 function stringifyCSS(declarations, name) {
   return (
     '.' +
@@ -269,7 +265,7 @@ function generateJS(ast, { devMode, dynamicImport }, adapter) {
       moduleName: module.name,
       dynamicImport,
       classNameMap,
-      className: '_elo_view ' + getModuleName(module, devMode),
+      className: '_elo_' + module.format + ' ' + getModuleName(module, devMode),
       variants: variants.reduce((flatVariants, variant) => {
         flatVariants[variant.name] = variant.body.map(
           variation => variation.value

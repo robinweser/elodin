@@ -1,6 +1,6 @@
 import definitions from './definitions'
 
-export function validateDeclaration(property, value, rawValue, format) {
+export default function validateDeclaration(property, value, rawValue, format) {
   const propertyDefinition = format
     ? definitions[format][property]
     : definitions.view[property] || definitions.text[property]

@@ -1,8 +1,9 @@
 import tokenize from 'tokenize-sync'
-import { validateDeclaration } from '@elodin/validator'
-import { createError } from '@elodin/error'
-
 import color from 'color'
+
+import validateDeclaration from './validateDeclaration'
+import errorTypes from './errorTypes'
+import colorNames from './colorNames'
 
 const ruleMap = {
   minus: /^[-]$/,
@@ -20,13 +21,6 @@ const ruleMap = {
 }
 
 const OPERATOR_REGEX = /^(>|<|>=|<=|=)$/
-
-const errorTypes = {
-  SYNTAX_ERROR: 'SYNTAX_ERROR',
-  DUPLICATE_MODULE: 'DUPLICATE_MODULE',
-  INVALID_PROPERTY: 'INVALID_PROPERTY',
-  INVALID_VALUE: 'INVALID_VALUE',
-}
 
 export default class Parser {
   constructor(config = {}) {
@@ -53,14 +47,7 @@ export default class Parser {
 
   addError(error, exit) {
     if (!this.exit) {
-      this.errors.push(
-        createError({
-          ...this.context,
-          ...error,
-          parent: this.parent,
-          token: this.currentToken,
-        })
-      )
+      this.errors.push(error)
     }
 
     if (exit) {
@@ -103,7 +90,7 @@ export default class Parser {
           this.addError(
             {
               type: errorTypes.DUPLICATE_MODULE,
-              hint: `The  ${node.type.toLowerCase()} '${
+              message: `The  ${node.type.toLowerCase()} '${
                 node.name
               }' has already been defined as a ${
                 duplicate.type
@@ -120,6 +107,8 @@ export default class Parser {
         this.addError(
           {
             type: errorTypes.SYNTAX_ERROR,
+            message:
+              'Invalid Syntax. Top-level constructs can only be view, text, fragment or variant.',
           },
           true
         )
@@ -150,6 +139,7 @@ export default class Parser {
         this.addError(
           {
             type: errorTypes.SYNTAX_ERROR,
+            message: 'A ' + format + ' must have a valid name.',
           },
           true
         )
@@ -159,7 +149,8 @@ export default class Parser {
         this.addError(
           {
             type: errorTypes.SYNTAX_ERROR,
-            hint: 'Style names must begin with an uppercase letter.',
+            message:
+              'A ' + format + ' name must begin with an uppercase letter.',
             name,
           },
           true
@@ -178,6 +169,7 @@ export default class Parser {
         this.addError(
           {
             type: errorTypes.SYNTAX_ERROR,
+            message: 'A ' + format + ' must at least contain 1 declaration.',
           },
           true
         )
@@ -214,6 +206,10 @@ export default class Parser {
           this.addError(
             {
               type: errorTypes.SYNTAX_ERROR,
+              message:
+                'A ' +
+                this.parent.format +
+                ' must only contain declarations and conditional declarations.',
             },
             true
           )
@@ -241,6 +237,7 @@ export default class Parser {
         this.addError(
           {
             type: errorTypes.SYNTAX_ERROR,
+            message: 'A fragment must have a valid name.',
           },
           true
         )
@@ -291,10 +288,12 @@ export default class Parser {
 
       while (this.isRunning() && this.currentToken.type !== 'curly_bracket') {
         const declaration = this.parseDeclaration()
+
         if (!declaration) {
           this.addError(
             {
               type: errorTypes.SYNTAX_ERROR,
+              messages: 'Fragments must only contain declarations.',
             },
             true
           )
@@ -321,6 +320,7 @@ export default class Parser {
         this.addError(
           {
             type: errorTypes.SYNTAX_ERROR,
+            message: 'A variant must have a valid name.',
           },
           true
         )
@@ -348,6 +348,7 @@ export default class Parser {
         this.addError(
           {
             type: errorTypes.SYNTAX_ERROR,
+            message: 'A variant must at least have 1 variation.',
           },
           true
         )
@@ -377,12 +378,13 @@ export default class Parser {
           this.addError(
             {
               type: errorTypes.SYNTAX_ERROR,
-              hint: 'Variants can only define identifier variations.',
+              hint: 'Variants must only contain identifier variations.',
             },
             true
           )
         }
 
+        // TODO: parse duplicate variation
         if (
           variant &&
           variant.value.charAt(0).toUpperCase() !== variant.value.charAt(0)
@@ -425,6 +427,7 @@ export default class Parser {
           return this.addError(
             {
               type: errorTypes.SYNTAX_ERROR,
+              message: 'A declaration must always have a valid value.',
             },
             true
           )
@@ -443,9 +446,29 @@ export default class Parser {
               this.addError(
                 {
                   type: errorTypes.INVALID_PROPERTY,
-                  format: this.parent.format,
-                  property,
-                  value,
+                  message:
+                    property +
+                    ': ' +
+                    value.value +
+                    '\n^-------\n' +
+                    'The property ' +
+                    property +
+                    ' is an invalid ' +
+                    this.parent.format +
+                    ' property.' +
+                    '\n' +
+                    'In ' +
+                    this.parent.name +
+                    (this.context.path
+                      ? ' (' +
+                        this.context.path +
+                        ':' +
+                        this.context.source
+                          .substr(0, this.currentToken.start)
+                          .split('\n').length +
+                        ')'
+                      : '') +
+                    '\n',
                 },
                 false
               )
@@ -459,9 +482,30 @@ export default class Parser {
               this.addError(
                 {
                   type: errorTypes.INVALID_VALUE,
-                  format: this.parent.format,
-                  property,
-                  value,
+                  message:
+                    property +
+                    ': ' +
+                    value.value +
+                    '\n' +
+                    ' '.repeat(property.length + 2) +
+                    '^-------\n' +
+                    'The value ' +
+                    value.value +
+                    ' is an invalid value for the property ' +
+                    property +
+                    '.\n' +
+                    'In ' +
+                    this.parent.name +
+                    (this.context.path
+                      ? ' (' +
+                        this.context.path +
+                        ':' +
+                        this.context.source
+                          .substr(0, this.currentToken.start)
+                          .split('\n').length +
+                        ')'
+                      : '') +
+                    '\n',
                 },
                 false
               )
@@ -493,6 +537,7 @@ export default class Parser {
         this.addError(
           {
             type: errorTypes.SYNTAX_ERROR,
+            message: 'Conditional delcarations must have a valid condition.',
           },
           true
         )
@@ -504,6 +549,8 @@ export default class Parser {
         this.addError(
           {
             type: errorTypes.SYNTAX_ERROR,
+            message:
+              'Conditional declarations must at least contain 1 declaration.',
           },
           true
         )
@@ -532,6 +579,7 @@ export default class Parser {
           this.addError(
             {
               type: errorTypes.SYNTAX_ERROR,
+              message: 'A condition must have a valid comparison operator.',
               operator,
             },
             true
@@ -659,6 +707,8 @@ export default class Parser {
         this.addError(
           {
             type: errorTypes.SYNTAX_ERROR,
+            message:
+              "The value couldn't be parsed. Maybe you're missing closing parenthesis.",
           },
           true
         )
@@ -696,6 +746,8 @@ export default class Parser {
               this.addError(
                 {
                   type: 'SYNTAX_ERROR',
+                  message:
+                    'Percentage values must contain an Integer between 0 and 100.',
                 },
                 true
               )
@@ -704,6 +756,8 @@ export default class Parser {
             this.addError(
               {
                 type: 'SYNTAX_ERROR',
+                message:
+                  'The `percentage` function requires exactly 1 parameter of type Integer.',
               },
               true
             )
@@ -720,7 +774,8 @@ export default class Parser {
             this.addError(
               {
                 type: 'SYNTAX_ERROR',
-                message: 'WRONG HEX',
+                message:
+                  'A valid hexadecimal string of length 3, 6 or 8 must be passed to the `hex` function.',
               },
               true
             )
@@ -785,7 +840,8 @@ export default class Parser {
             this.addError(
               {
                 type: errorTypes.SYNTAX_ERROR,
-                message: 'WRONG RAW',
+                message:
+                  'The `raw` function only accepts a single String value.',
               },
               true
             )
@@ -796,6 +852,20 @@ export default class Parser {
           type: 'FunctionExpression',
           callee: ident,
           params,
+        }
+      }
+
+      // TODO: parse color names
+      if (colorNames[ident]) {
+        const namedColor = color(ident)
+
+        return {
+          type: 'Color',
+          red: namedColor.red(),
+          green: namedColor.green(),
+          blue: namedColor.blue(),
+          alpha: namedColor.alpha(),
+          format: 'keyword',
         }
       }
 
