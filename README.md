@@ -39,15 +39,17 @@ text HeaderText {
 
 ## Documentation
 
-- [Setup]()
+To be done.
+
+<!-- - [Setup]()
 - [Introduction]()
 - [Language]()
 - [Usage Guides]()
-- [API Reference]()
+- [API Reference]() -->
 
 ## Examples
 
-- [CSS in JS]()
+- Web
   - [React](examples/react)
 
 ## Contributing
