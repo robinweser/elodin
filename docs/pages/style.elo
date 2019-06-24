@@ -1,10 +1,11 @@
 view Test {
-  color: blue
-  borderTopColor: green
+  borderTopColor: rgb(200 200 200 percentage(40))
   borderTopWidth: 10
   borderBottomWidth: 0
   borderLeftWidth: 0
   borderRightWidth: 0
+  paddingTop: 10
+  paddingBottom: 10
   borderStyle: solid
 }
 
