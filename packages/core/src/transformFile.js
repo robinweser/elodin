@@ -41,12 +41,8 @@ export default function transformFile(inputPath, config, callback) {
     const inputDir = dirname(inputPath)
     const inputFile = basename(inputPath)
 
-    const { _root, ...otherFiles } = files
-
-    write(join(inputDir, inputFile + '.js'), _root, files.length)
-
-    for (let fileName in otherFiles) {
-      write(join(inputDir, fileName), otherFiles[fileName], files.length)
+    for (let fileName in files) {
+      write(join(inputDir, fileName), files[fileName], files.length)
     }
   }
 

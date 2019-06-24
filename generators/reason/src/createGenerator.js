@@ -1,8 +1,6 @@
 import { isUnitlessProperty, hyphenateProperty } from 'css-in-js-utils'
 import color from 'color'
 
-import adapters from './adapters'
-
 import hash from './hash'
 
 const validPseudoClasses = [
@@ -19,25 +17,35 @@ const validPseudoClasses = [
 
 const validMediaQueries = ['viewportWidth', 'viewportHeight']
 
-export default function createGenerator({
-  adapter = 'fela',
-  devMode = false,
-  rootNode = 'body',
-  dynamicImport = false,
-} = {}) {
-  const usedAdapter = adapters.find(adapt => adapt.name === adapter)
+function stringifyDeclaration(declaration) {
+  const prop = '"' + declaration.property + '":'
+
+  if (typeof declaration.value === 'object') {
+    return (
+      prop + '{' + declaration.value.map(stringifyDeclaration).join(',\n') + '}'
+    )
+  }
+
+  return prop + 'props.' + declaration.value
+}
+
+const defaultConfig = {
+  devMode: false,
+  dynamicImport: false,
+  modulePrefix: 'Elodin',
+}
+export default function createGenerator(customConfig = {}) {
   const config = {
-    devMode,
-    rootNode,
-    dynamicImport,
+    ...defaultConfig,
+    ...customConfig,
   }
 
   return function generate(ast, fileName) {
     const css = generateCSS(ast, config)
-    const js = generateJS(ast, config, usedAdapter)
-    const root = generateRoot(ast, config)
+    const modules = generateModules(ast, config)
+    const reason = generateReason(ast, config, modules, fileName)
 
-    return { [fileName + '.js']: root, ...css, ...js }
+    return { ...css, ...reason }
   }
 }
 
@@ -50,24 +58,36 @@ function getModuleName(module, devMode) {
   return hashedBody
 }
 
-function generateRoot(ast) {
+function generateReason(ast, config, modules, fileName) {
   // TODO: include fragments
+  const moduleName =
+    config.modulePrefix +
+    fileName
+      .replace(/[.]elo/gi, '')
+      .split('.')
+      .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+
   const styles = ast.body.filter(node => node.type === 'Style')
 
-  const imports = styles
-    .map(
-      module =>
-        'import { ' + module.name + " } from './" + module.name + ".elo.js'"
-    )
-    .join('\n')
+  const imports = styles.reduce((imports, module) => {
+    imports.push('import("' + module.name + '.elo.css")')
+    return imports
+  }, [])
 
-  return (
-    imports +
-    '\n\n' +
-    'export {\n  ' +
-    styles.map(module => module.name).join(',\n  ') +
-    '\n}'
-  )
+  return {
+    [moduleName + '.re']:
+      '[%bs.raw {|\n  ' +
+      imports.join('\n  ') +
+      '\n|}]' +
+      '\n\n' +
+      'module ' +
+      moduleName +
+      ' {\n' +
+      '  open Css;' +
+      '\n\n  ' +
+      modules.join('\n\n  ') +
+      '\n}',
+  }
 }
 
 function generateCSSValue(value, property, unit = true) {
@@ -251,32 +271,37 @@ function stringifyCSS(declarations, name) {
   )
 }
 
-function generateJS(ast, { devMode, dynamicImport }, adapter) {
+function generateModules(ast, config) {
   // TODO: include fragments
   const styles = ast.body.filter(node => node.type === 'Style')
-  const variants = ast.body.filter(node => node.type === 'Variant')
 
-  return styles.reduce((files, module) => {
+  return styles.reduce((rules, module) => {
     const style = generateStyle(module.body)
-    const classNameMap = generateClassNameMap(module.body, variants)
 
-    files[module.name + '.elo.js'] = adapter.stringify({
-      style,
-      moduleName: module.name,
-      dynamicImport,
-      classNameMap,
-      className: '_elo_' + module.format + ' ' + getModuleName(module, devMode),
-      variants: variants.reduce((flatVariants, variant) => {
-        flatVariants[variant.name] = variant.body.map(
-          variation => variation.value
-        )
+    const className =
+      '_elo_' + module.format + ' ' + getModuleName(module, config.devMode)
+    rules.push(
+      `let ` +
+        module.name +
+        ' = (' +
+        // TODO: deduplicate
+        // TODO: add typings
+        style.map(({ value }) => '~' + value).join(', ') +
+        ') => "' +
+        className +
+        '" + style([' +
+        '\n    ' +
+        style
+          .map(
+            ({ property, value }) => 'unsafe("' + property + '", ' + value + ')'
+          )
+          .join(',\n    ') +
+        '\n  ' +
+        '])'
+    )
 
-        return flatVariants
-      }, {}),
-    })
-
-    return files
-  }, {})
+    return rules
+  }, [])
 }
 
 function generateClassNameMap(

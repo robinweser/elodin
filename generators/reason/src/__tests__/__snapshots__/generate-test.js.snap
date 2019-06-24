@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Compiling to ReasonML should return a map of files 1`] = `
+Object {
+  "Button.elo.css": "._18msnv5 {
+  background-color: red;
+  padding-left: 10px;
+  padding-bottom: 10px
+}",
+  "ButtonText.elo.css": "._1vm2fgp {
+  font-family: Arial
+}",
+  "ElodinRoot.re": "[%bs.raw {|
+  import(\\"Button.elo.css\\")
+  import(\\"ButtonText.elo.css\\")
+|}]
+
+module ElodinRoot {
+  open Css;
+
+  let Button = (~top) => \\"_elo_view _18msnv5\\" + style([
+    unsafe(\\"paddingTop\\", top)
+  ])
+
+  let ButtonText = (~size, ~height) => \\"_elo_text _1vm2fgp\\" + style([
+    unsafe(\\"fontSize\\", size),
+    unsafe(\\"lineHeight\\", height)
+  ])
+}",
+}
+`;
