@@ -13,11 +13,11 @@ Object {
 }",
   "ElodinRoot.re": "[%bs.raw {|
   import(\\"./Button.elo.css\\")
-|}]
+|}];
 
 [%bs.raw {|
   import(\\"./ButtonText.elo.css\\")
-|}]
+|}];
 
 open Css;
 
