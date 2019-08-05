@@ -76,7 +76,7 @@ function generateReason(ast, config, modules, fileName) {
   const styles = ast.body.filter(node => node.type === 'Style')
 
   const imports = styles.reduce((imports, module) => {
-    imports.push('import("./' + module.name + '.elo.css")')
+    imports.push('import "./' + module.name + '.elo.css"')
     return imports
   }, [])
 
