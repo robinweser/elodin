@@ -286,10 +286,10 @@ function generateModules(ast, config) {
         ' = (' +
         // TODO: deduplicate
         // TODO: add typings
-        style.map(({ value }) => '~' + value).join(', ') +
+        style.map(({ value }) => '~' + value + ':string').join(', ') +
         ') => "' +
         className +
-        '" + style([' +
+        '" ++ style([' +
         '\n    ' +
         style
           .map(

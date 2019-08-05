@@ -1,0 +1,45 @@
+view HeaderImage {
+  height: percentage(70)
+  minHeight: 400
+  paddingLeft: 10
+  paddingBottom: 10
+}
+
+view Nav {
+  paddingTop: 10
+  paddingBottom: 10
+
+  flexGrow: 0
+  flexDirection: row
+}
+
+view Content {
+  __overflow: auto
+  flexBasis: 0
+  backgroundColor: grey
+  flexGrow: 1
+}
+
+view Layout {
+  maxWidth: 900
+  width: percentage(100)
+  justifyContent: spaceBetween
+  flexGrow: 1
+  alignSelf: center
+}
+
+view Container {
+  height: percentage(100)
+  maxHeight: percentage(100)
+  __overflow: hidden
+}
+
+text HeaderText {
+  fontSize: 80
+  textAlign: center
+}
+
+text HeaderLink {
+  textDecorationLine: none
+  fontSize: 20
+}

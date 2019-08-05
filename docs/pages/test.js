@@ -26,6 +26,7 @@ function TabNav({ duration = 150, children }) {
   return (
     <TabNavContext.Provider value={context}>
       <div
+        dir="rtl"
         style={{
           display: 'flex',
           flexDirection: 'column',
@@ -55,7 +56,7 @@ function TabNavItem({ children, isActive }) {
     setBorderLeft,
   } = useContext(TabNavContext)
   const itemRef = useRef()
-  const dir = 'ltr'
+  const dir = 'rtl'
 
   function activateTab() {
     const currentBorderWidth = (activeTab && activeTab.offsetWidth) || 0
@@ -130,7 +131,7 @@ function TabNavItemBorder({ children }) {
       id="border"
       style={{
         height: 3,
-        left: borderLeft,
+        right: borderLeft,
         width: borderWidth,
         position: 'relative',
         backgroundColor: 'blue',

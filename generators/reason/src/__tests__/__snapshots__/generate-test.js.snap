@@ -18,11 +18,11 @@ Object {
 module ElodinRoot {
   open Css;
 
-  let Button = (~top) => \\"_elo_view _18msnv5\\" + style([
+  let Button = (~top:string) => \\"_elo_view _18msnv5\\" ++ style([
     unsafe(\\"paddingTop\\", top)
   ])
 
-  let ButtonText = (~size, ~height) => \\"_elo_text _1vm2fgp\\" + style([
+  let ButtonText = (~size:string, ~height:string) => \\"_elo_text _1vm2fgp\\" ++ style([
     unsafe(\\"fontSize\\", size),
     unsafe(\\"lineHeight\\", height)
   ])
