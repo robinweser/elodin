@@ -2,17 +2,17 @@
   "private": true,
   "name": "weser.farm",
   "description": "",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "scripts": {
     "dev": "now dev",
     "deploy": "now --target production",
     "elodin": "elodin pages components --watch"
   },
   "dependencies": {
-    "@elodin/cli": "^0.0.4",
-    "@elodin/core": "^0.0.4",
-    "@elodin/generator-css-in-js": "^0.0.4",
-    "@elodin/parser": "^0.0.4",
+    "@elodin/cli": "^0.0.5",
+    "@elodin/core": "^0.0.5",
+    "@elodin/generator-css-in-js": "^0.0.5",
+    "@elodin/parser": "^0.0.5",
     "@mdx-js/loader": "^0.17.5",
     "@mdx-js/mdx": "^0.17.5",
     "@mdx-js/tag": "^0.17.5",
