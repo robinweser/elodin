@@ -11,8 +11,12 @@ Object {
           "raw": false,
           "type": "Declaration",
           "value": Object {
-            "type": "Identifier",
-            "value": "RED",
+            "alpha": 1,
+            "blue": 0,
+            "format": "keyword",
+            "green": 0,
+            "red": 255,
+            "type": "Color",
           },
         },
         Object {
@@ -23,8 +27,12 @@ Object {
               "raw": false,
               "type": "Declaration",
               "value": Object {
-                "type": "Identifier",
-                "value": "BLUE",
+                "alpha": 1,
+                "blue": 255,
+                "format": "keyword",
+                "green": 0,
+                "red": 0,
+                "type": "Color",
               },
             },
           ],
@@ -40,6 +48,7 @@ Object {
           },
         },
       ],
+      "format": "view",
       "name": "Button",
       "type": "Style",
     },
@@ -50,17 +59,11 @@ Object {
 
 exports[`Traversing ast nodes should correctly traverse nodes 2`] = `
 Array [
-  "red",
-  "RED",
-  "RED",
   "Type",
   "TYPE",
   "TYPE",
   "Primary",
   "PRIMARY",
   "PRIMARY",
-  "blue",
-  "BLUE",
-  "BLUE",
 ]
 `;

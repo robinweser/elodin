@@ -1,4 +1,4 @@
-import { validateDeclaration } from '..'
+import validateDeclaration from '../validateDeclaration'
 
 describe('Validating declarations', () => {
   it('should correctly validate', () => {

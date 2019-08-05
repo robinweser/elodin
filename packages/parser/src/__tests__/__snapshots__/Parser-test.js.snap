@@ -12,8 +12,12 @@ Object {
             "raw": false,
             "type": "Declaration",
             "value": Object {
-              "type": "Identifier",
-              "value": "red",
+              "alpha": 1,
+              "blue": 0,
+              "format": "keyword",
+              "green": 0,
+              "red": 255,
+              "type": "Color",
             },
           },
           Object {
@@ -24,8 +28,12 @@ Object {
                 "raw": false,
                 "type": "Declaration",
                 "value": Object {
-                  "type": "Identifier",
-                  "value": "red",
+                  "alpha": 1,
+                  "blue": 0,
+                  "format": "keyword",
+                  "green": 0,
+                  "red": 255,
+                  "type": "Color",
                 },
               },
             ],
@@ -50,11 +58,12 @@ Object {
   },
   "errors": Array [
     Object {
-      "message": "color: red
+      "message": "color: undefined
 ^-------
-The property color is an invalid property.
+The property color is an invalid view property.
 In Button
 ",
+      "type": "INVALID_PROPERTY",
     },
   ],
   "tokens": Array [
@@ -181,8 +190,12 @@ Object {
                 "raw": false,
                 "type": "Declaration",
                 "value": Object {
-                  "type": "Identifier",
-                  "value": "red",
+                  "alpha": 1,
+                  "blue": 0,
+                  "format": "keyword",
+                  "green": 0,
+                  "red": 255,
+                  "type": "Color",
                 },
               },
             ],
@@ -202,8 +215,12 @@ Object {
                 "raw": false,
                 "type": "Declaration",
                 "value": Object {
-                  "type": "Identifier",
-                  "value": "blue",
+                  "alpha": 1,
+                  "blue": 255,
+                  "format": "keyword",
+                  "green": 0,
+                  "red": 0,
+                  "type": "Color",
                 },
               },
               Object {
@@ -214,8 +231,12 @@ Object {
                     "raw": false,
                     "type": "Declaration",
                     "value": Object {
-                      "type": "Identifier",
-                      "value": "green",
+                      "alpha": 1,
+                      "blue": 0,
+                      "format": "keyword",
+                      "green": 128,
+                      "red": 0,
+                      "type": "Color",
                     },
                   },
                 ],
@@ -251,25 +272,28 @@ Object {
   },
   "errors": Array [
     Object {
-      "message": "color: red
+      "message": "color: undefined
 ^-------
-The property color is an invalid property.
+The property color is an invalid view property.
 In Button
 ",
+      "type": "INVALID_PROPERTY",
     },
     Object {
-      "message": "color: blue
+      "message": "color: undefined
 ^-------
-The property color is an invalid property.
+The property color is an invalid view property.
 In Button
 ",
+      "type": "INVALID_PROPERTY",
     },
     Object {
-      "message": "color: green
+      "message": "color: undefined
 ^-------
-The property color is an invalid property.
+The property color is an invalid view property.
 In Button
 ",
+      "type": "INVALID_PROPERTY",
     },
   ],
   "tokens": Array [
@@ -550,6 +574,7 @@ Object {
 The value auto is an invalid value for the property flexBasis.
 In Flex
 ",
+      "type": "INVALID_VALUE",
     },
   ],
   "tokens": Array [
@@ -686,8 +711,12 @@ Object {
             "raw": false,
             "type": "Declaration",
             "value": Object {
-              "type": "Identifier",
-              "value": "red",
+              "alpha": 1,
+              "blue": 0,
+              "format": "keyword",
+              "green": 0,
+              "red": 255,
+              "type": "Color",
             },
           },
           Object {
@@ -696,8 +725,12 @@ Object {
             "raw": false,
             "type": "Declaration",
             "value": Object {
-              "type": "Identifier",
-              "value": "blue",
+              "alpha": 1,
+              "blue": 255,
+              "format": "keyword",
+              "green": 0,
+              "red": 0,
+              "type": "Color",
             },
           },
           Object {
@@ -739,18 +772,20 @@ Object {
   },
   "errors": Array [
     Object {
-      "message": "color: blue
+      "message": "color: undefined
 ^-------
-The property color is an invalid property.
+The property color is an invalid view property.
 In Button
 ",
+      "type": "INVALID_PROPERTY",
     },
     Object {
       "message": "fontSize: 15
 ^-------
-The property fontSize is an invalid property.
+The property fontSize is an invalid view property.
 In Button
 ",
+      "type": "INVALID_PROPERTY",
     },
   ],
   "tokens": Array [
@@ -893,18 +928,12 @@ Object {
             "raw": false,
             "type": "Declaration",
             "value": Object {
-              "type": "Identifier",
-              "value": "red",
-            },
-          },
-          Object {
-            "dynamic": false,
-            "property": "color",
-            "raw": false,
-            "type": "Declaration",
-            "value": Object {
-              "type": "Identifier",
-              "value": "blue",
+              "alpha": 1,
+              "blue": 0,
+              "format": "keyword",
+              "green": 0,
+              "red": 255,
+              "type": "Color",
             },
           },
           Object {
@@ -923,7 +952,7 @@ Object {
           },
           Object {
             "dynamic": false,
-            "property": "fontSize",
+            "property": "paddingLeft",
             "raw": false,
             "type": "Declaration",
             "value": Object {
@@ -934,7 +963,7 @@ Object {
           },
           Object {
             "dynamic": false,
-            "property": "lineHeight",
+            "property": "marginTop",
             "raw": false,
             "type": "Declaration",
             "value": Object {
@@ -975,39 +1004,20 @@ Object {
   },
   "errors": Array [
     Object {
-      "message": "color: blue
-^-------
-The property color is an invalid property.
-In Button
-",
-    },
-    Object {
       "message": "borderColor: undefined
 ^-------
-The property borderColor is an invalid property.
+The property borderColor is an invalid view property.
 In Button
 ",
-    },
-    Object {
-      "message": "fontSize: 15
-^-------
-The property fontSize is an invalid property.
-In Button
-",
-    },
-    Object {
-      "message": "lineHeight: undefined
-^-------
-The property lineHeight is an invalid property.
-In Button
-",
+      "type": "INVALID_PROPERTY",
     },
     Object {
       "message": "borderWidth: width
 ^-------
-The property borderWidth is an invalid property.
+The property borderWidth is an invalid view property.
 In Button
 ",
+      "type": "INVALID_PROPERTY",
     },
   ],
   "tokens": Array [
@@ -1048,164 +1058,146 @@ In Button
       "value": "red",
     },
     Object {
-      "end": 44,
-      "start": 39,
-      "type": "identifier",
-      "value": "color",
-    },
-    Object {
-      "end": 45,
-      "start": 44,
-      "type": "colon",
-      "value": ":",
-    },
-    Object {
       "end": 50,
-      "start": 46,
-      "type": "identifier",
-      "value": "blue",
-    },
-    Object {
-      "end": 64,
-      "start": 53,
+      "start": 39,
       "type": "identifier",
       "value": "borderColor",
     },
     Object {
-      "end": 65,
-      "start": 64,
+      "end": 51,
+      "start": 50,
       "type": "colon",
       "value": ":",
     },
     Object {
-      "end": 69,
-      "start": 66,
+      "end": 55,
+      "start": 52,
       "type": "identifier",
       "value": "rgb",
     },
     Object {
-      "end": 70,
-      "start": 69,
+      "end": 56,
+      "start": 55,
       "type": "round_bracket",
       "value": "(",
     },
     Object {
-      "end": 73,
-      "start": 70,
+      "end": 59,
+      "start": 56,
       "type": "number",
       "value": "255",
     },
     Object {
-      "end": 77,
-      "start": 74,
+      "end": 63,
+      "start": 60,
       "type": "number",
       "value": "255",
     },
     Object {
-      "end": 81,
-      "start": 78,
+      "end": 67,
+      "start": 64,
       "type": "number",
       "value": "255",
     },
     Object {
-      "end": 82,
-      "start": 81,
+      "end": 68,
+      "start": 67,
       "type": "round_bracket",
       "value": ")",
     },
     Object {
-      "end": 93,
-      "start": 85,
+      "end": 82,
+      "start": 71,
       "type": "identifier",
-      "value": "fontSize",
+      "value": "paddingLeft",
     },
     Object {
-      "end": 94,
-      "start": 93,
+      "end": 83,
+      "start": 82,
       "type": "colon",
       "value": ":",
     },
     Object {
-      "end": 97,
-      "start": 95,
+      "end": 86,
+      "start": 84,
       "type": "number",
       "value": "15",
     },
     Object {
-      "end": 110,
-      "start": 100,
+      "end": 98,
+      "start": 89,
       "type": "identifier",
-      "value": "lineHeight",
+      "value": "marginTop",
     },
     Object {
-      "end": 111,
-      "start": 110,
+      "end": 99,
+      "start": 98,
       "type": "colon",
       "value": ":",
     },
     Object {
-      "end": 113,
-      "start": 112,
+      "end": 101,
+      "start": 100,
       "type": "number",
       "value": "1",
     },
     Object {
-      "end": 114,
-      "start": 113,
+      "end": 102,
+      "start": 101,
       "type": "floating_point",
       "value": ".",
     },
     Object {
-      "end": 115,
-      "start": 114,
+      "end": 103,
+      "start": 102,
       "type": "number",
       "value": "2",
     },
     Object {
-      "end": 129,
-      "start": 118,
+      "end": 117,
+      "start": 106,
       "type": "identifier",
       "value": "borderWidth",
     },
     Object {
-      "end": 130,
-      "start": 129,
+      "end": 118,
+      "start": 117,
       "type": "colon",
       "value": ":",
     },
     Object {
-      "end": 132,
-      "start": 131,
+      "end": 120,
+      "start": 119,
       "type": "variable",
       "value": "$",
     },
     Object {
-      "end": 137,
-      "start": 132,
+      "end": 125,
+      "start": 120,
       "type": "identifier",
       "value": "width",
     },
     Object {
-      "end": 155,
-      "start": 140,
+      "end": 143,
+      "start": 128,
       "type": "identifier",
       "value": "__animationName",
     },
     Object {
-      "end": 156,
-      "start": 155,
+      "end": 144,
+      "start": 143,
       "type": "colon",
       "value": ":",
     },
     Object {
-      "end": 165,
-      "start": 157,
+      "end": 153,
+      "start": 145,
       "type": "identifier",
       "value": "keyframe",
     },
     Object {
-      "end": 167,
-      "start": 166,
+      "end": 155,
+      "start": 154,
       "type": "curly_bracket",
       "value": "}",
     },

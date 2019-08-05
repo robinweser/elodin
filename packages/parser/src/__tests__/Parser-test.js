@@ -5,10 +5,9 @@ describe('Parsing elodin syntax', () => {
     const file = `
 view Button {
   backgroundColor: red
-  color: blue
   borderColor: rgb(255 255 255)
-  fontSize: 15
-  lineHeight: 1.2
+  paddingLeft: 15
+  marginTop: 1.2
   borderWidth: $width
   __animationName: keyframe
 }`

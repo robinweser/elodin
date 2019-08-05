@@ -35,6 +35,7 @@ export default function traverseNode(node, visitor, parentPath) {
     case 'Float':
     case 'Integer':
     case 'Identifier':
+    case 'Color':
       break
 
     default:

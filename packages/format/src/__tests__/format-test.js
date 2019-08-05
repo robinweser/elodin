@@ -6,8 +6,7 @@ fragment Flex {
   flexDirection: row
 }
 view Button{backgroundColor: red color: blue
-     fontSize: 15
-       lineHeight: 1.3
+
 
       __borderWidth: .3
        color: rgb(  255  200   155  )
