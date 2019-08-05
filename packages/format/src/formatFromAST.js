@@ -28,7 +28,8 @@ export default function formatFromAST(node, customConfig = {}, level = 1) {
 
     case 'Style':
       return (
-        'style ' +
+        node.format +
+        ' ' +
         node.name +
         ' {\n' +
         ident +
@@ -91,6 +92,11 @@ export default function formatFromAST(node, customConfig = {}, level = 1) {
       return 'raw(' + node.value + ')'
     case 'Percentage':
       return 'percentage(' + node.value + ')'
+
+    case 'Color':
+      return (
+        'rgba(' + [node.red, node.green, node.blue, node.alpha].join(', ') + ')'
+      )
 
     default:
       throw new Error('Unknown node: ', node.type)

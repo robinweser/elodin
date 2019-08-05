@@ -1,6 +1,6 @@
 import { parse } from '@elodin/parser'
 
-import createGenerator from '../index'
+import { createGenerator } from '../index'
 
 const file = `
 variant Type {
@@ -13,11 +13,9 @@ variant Mode {
   Light
 }
 
-style Button {
+view Button {
   backgroundColor: red
-  color: rgba(250 250 250 0.35)
-  fontSize: 15
-  lineHeight: 5.2
+  paddingLeft: 10
   __borderWidth: multiply($borderWidth 2)
   [Type=Primary] {
     color: red
@@ -30,20 +28,19 @@ style Button {
   }
 }
 
-style Label {
+text Label {
   lineHeight: $lineHeight
-  fontSize: 20
 
   [@hover] {
     color: red
-    backgroundColor: $bgColor
+    fontSize: $fontSize
   }
 
   [@minWidth=320] {
     color: green
-    backgroundColor: $mediaBgColor
+    fontSize: $mediaFontSize
     [@hover]{
-      backgroundColor: $mediaHoverBgColor
+      fontSize: $mediaHoverFontSize
       color: blue
     }
   }
@@ -59,6 +56,8 @@ describe('Compiling to CSS and JavaScript', () => {
   it('should use the given adapter', () => {
     const { ast } = parse(file)
 
-    expect(createGenerator({ adapter: 'react-fela' })(ast)).toMatchSnapshot()
+    expect(
+      createGenerator({ adapter: 'react-fela' })(ast, 'root')
+    ).toMatchSnapshot()
   })
 })

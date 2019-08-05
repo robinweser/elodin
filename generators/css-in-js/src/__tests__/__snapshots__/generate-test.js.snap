@@ -2,22 +2,20 @@
 
 exports[`Compiling to CSS and JavaScript should return a map of files 1`] = `
 Object {
-  "Button.elo.css": "._q5mnyi {
+  "Button.elo.css": "._ixdniv {
   background-color: red;
-  color: rgba(250,250,250,0.35);
-  font-size: 15px;
-  line-height: 5.2px
+  padding-left: 10px
 }
 
-._q5mnyi__Type-Primary {
+._ixdniv__Type-Primary {
   color: red
 }
 
-._q5mnyi__Type-Primary__Mode-Dark {
+._ixdniv__Type-Primary__Mode-Dark {
   color: blue
 }
 
-._q5mnyi__Mode-Light {
+._ixdniv__Mode-Light {
   color: green
 }",
   "Button.elo.js": "import './Button.elo.css'
@@ -39,27 +37,23 @@ const variantMap = {
 
 export function Button(props = {}) {
   return {
-    _className: getClassNameFromVariantMap('_q5mnyi', variantMap, props),
+    _className: getClassNameFromVariantMap('_elo_view _ixdniv', variantMap, props),
     \\"borderWidth\\":props.undefined
   }
 }",
-  "Label.elo.css": "._1hw7vmc {
-  font-size: 20px
-}
-
-._1hw7vmc:hover {
+  "Label.elo.css": "._1edorjp:hover {
   color: red
 }",
   "Label.elo.js": "import './Label.elo.css'
 
 export function Label(props = {}) {
   return {
-    _className: '_1hw7vmc',
+    _className: '_elo_text _1edorjp',
     \\"lineHeight\\":props.lineHeight,
-    \\":hover\\":{\\"backgroundColor\\":props.bgColor}
+    \\":hover\\":{\\"fontSize\\":props.fontSize}
   }
 }",
-  "_root": "import { Button } from './Button.elo.js'
+  "undefined.js": "import { Button } from './Button.elo.js'
 import { Label } from './Label.elo.js'
 
 export {
@@ -71,22 +65,20 @@ export {
 
 exports[`Compiling to CSS and JavaScript should use the given adapter 1`] = `
 Object {
-  "Button.elo.css": "._q5mnyi {
+  "Button.elo.css": "._ixdniv {
   background-color: red;
-  color: rgba(250,250,250,0.35);
-  font-size: 15px;
-  line-height: 5.2px
+  padding-left: 10px
 }
 
-._q5mnyi__Type-Primary {
+._ixdniv__Type-Primary {
   color: red
 }
 
-._q5mnyi__Type-Primary__Mode-Dark {
+._ixdniv__Type-Primary__Mode-Dark {
   color: blue
 }
 
-._q5mnyi__Mode-Light {
+._ixdniv__Mode-Light {
   color: green
 }",
   "Button.elo.js": "import './Button.elo.css'
@@ -109,17 +101,13 @@ const variantMap = {
 
 function Button(props  = {}) {
   return {
-    _className: getClassNameFromVariantMap('_q5mnyi', variantMap, props),
+    _className: getClassNameFromVariantMap('_elo_view _ixdniv', variantMap, props),
     \\"borderWidth\\":props.undefined
   }
 }
 
 export default createComponent(Button)",
-  "Label.elo.css": "._1hw7vmc {
-  font-size: 20px
-}
-
-._1hw7vmc:hover {
+  "Label.elo.css": "._1edorjp:hover {
   color: red
 }",
   "Label.elo.js": "import './Label.elo.css'
@@ -127,14 +115,14 @@ import { createComponent } from 'react-fela'
 
 function Label(props  = {}) {
   return {
-    _className: '_1hw7vmc',
+    _className: '_elo_text _1edorjp',
     \\"lineHeight\\":props.lineHeight,
-    \\":hover\\":{\\"backgroundColor\\":props.bgColor}
+    \\":hover\\":{\\"fontSize\\":props.fontSize}
   }
 }
 
 export default createComponent(Label)",
-  "_root": "import { Button } from './Button.elo.js'
+  "root.js": "import { Button } from './Button.elo.js'
 import { Label } from './Label.elo.js'
 
 export {

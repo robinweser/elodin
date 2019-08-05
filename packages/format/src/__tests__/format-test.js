@@ -5,13 +5,13 @@ fragment Flex {
    flexGrow: 1
   flexDirection: row
 }
-view Button{backgroundColor: red color: blue
+view Button{justifyContent: flexStart
 
 
       __borderWidth: .3
-       color: rgb(  255  200   155  )
+       backgroundColor: rgb(  255  200   155  )
 
-  [ Type =   Primary  ] {  color:red [Mode=Dark]{color:yellow backgroundColor:green}}
+  [ Type =   Primary  ] {  paddingLeft: 20[Mode=Dark]{ backgroundColor:green}}
   }
 
    text    Label {

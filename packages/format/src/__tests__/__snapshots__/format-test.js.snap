@@ -1,99 +1,70 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Formatting elodin syntax should return beautiful syntax 1`] = `
-"
-fragment Flex {
-   flexGrow: 1
+"fragment Flex {
+  flexGrow: 1
   flexDirection: row
 }
-view Button{backgroundColor: red color: blue
 
-
-      __borderWidth: .3
-       color: rgb(  255  200   155  )
-
-  [ Type =   Primary  ] {  color:red [Mode=Dark]{color:yellow backgroundColor:green}}
+view Button {
+  justifyContent: flexStart
+  __borderWidth: .3
+  backgroundColor: rgba(255, 200, 155, 1)
+  [Type=Primary] {
+    paddingLeft: 20
+    [Mode=Dark] {
+      backgroundColor: rgba(0, 128, 0, 1)
+    }
   }
+}
 
-   text    Label {
-lineHeight:   $lineHeight
-    fontSize: 20
-
-     [@hover] {
-       color:red
-     }
-
-     [@minWidth=320] {
-       color:blue [@hover] {
-         color: green
-       }
-     }
+text Label {
+  lineHeight: $lineHeight
+  fontSize: 20
+  [@hover] {
+    color: rgba(255, 0, 0, 1)
+  }
+  [@minWidth=320] {
+    color: rgba(0, 0, 255, 1)
+    [@hover] {
+      color: rgba(0, 128, 0, 1)
+    }
+  }
 }"
 `;
 
 exports[`Formatting elodin syntax should return beautiful syntax with custom syntax 1`] = `
 Object {
-  "code": "
-fragment Flex {
-   flexGrow: 1
+  "code": "fragment Flex {
+  flexGrow: 1
   flexDirection: row
 }
-view Button{backgroundColor: red color: blue
 
-
-      __borderWidth: .3
-       color: rgb(  255  200   155  )
-
-  [ Type =   Primary  ] {  color:red [Mode=Dark]{color:yellow backgroundColor:green}}
+view Button {
+  justifyContent: flexStart
+  __borderWidth: .3
+  backgroundColor: rgba(255, 200, 155, 1)
+  [Type=Primary] {
+    paddingLeft: 20
+    [Mode=Dark] {
+      backgroundColor: rgba(0, 128, 0, 1)
+    }
   }
+}
 
-   text    Label {
-lineHeight:   $lineHeight
-    fontSize: 20
-
-     [@hover] {
-       color:red
-     }
-
-     [@minWidth=320] {
-       color:blue [@hover] {
-         color: green
-       }
-     }
+text Label {
+  lineHeight: $lineHeight
+  fontSize: 20
+  [@hover] {
+    color: rgba(255, 0, 0, 1)
+  }
+  [@minWidth=320] {
+    color: rgba(0, 0, 255, 1)
+    [@hover] {
+      color: rgba(0, 128, 0, 1)
+    }
+  }
 }",
-  "errors": Array [
-    Object {
-      "message": "color: undefined
-^-------
-The property color is an invalid view property.
-In Button
-",
-      "type": "INVALID_PROPERTY",
-    },
-    Object {
-      "message": "color: undefined
-^-------
-The property color is an invalid view property.
-In Button
-",
-      "type": "INVALID_PROPERTY",
-    },
-    Object {
-      "message": "color: undefined
-^-------
-The property color is an invalid view property.
-In Button
-",
-      "type": "INVALID_PROPERTY",
-    },
-    Object {
-      "message": "color: yellow
-^-------
-The property color is an invalid view property.
-In Button
-",
-      "type": "INVALID_PROPERTY",
-    },
-  ],
+  "errors": Array [],
 }
 `;
