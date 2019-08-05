@@ -83,7 +83,7 @@ function generateReason(ast, config, modules, fileName) {
   return {
     [moduleName + '.re']:
       imports
-        .map(cssFile => '[%bs.raw {|\n  ' + cssFile + '\n|}]')
+        .map(cssFile => '[%bs.raw {|\n  ' + cssFile + '\n|}];')
         .join('\n\n') +
       '\n\n' +
       'open Css;' +
