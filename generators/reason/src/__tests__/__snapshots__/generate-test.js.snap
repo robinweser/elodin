@@ -7,11 +7,15 @@ Object {
   padding-left: 10px;
   padding-bottom: 10px
 }",
-  "ButtonText.elo.css": "._1vm2fgp {
+  "ButtonText.elo.css": "._371xhw {
+  line-height: 1.3;
   font-family: Arial
 }",
   "ElodinRoot.re": "[%bs.raw {|
   import(\\"./Button.elo.css\\")
+|}]
+
+[%bs.raw {|
   import(\\"./ButtonText.elo.css\\")
 |}]
 
@@ -21,9 +25,9 @@ let button = (~top:string) => \\"_elo_view _18msnv5 \\" ++ style([
     unsafe(\\"padding-top\\", top)
   ])
 
-let buttonText = (~size:string, ~height:string) => \\"_elo_text _1vm2fgp \\" ++ style([
+let buttonText = (~size:string, ~weight:string) => \\"_elo_text _371xhw \\" ++ style([
     unsafe(\\"font-size\\", size),
-    unsafe(\\"line-height\\", height)
+    unsafe(\\"font-weight\\", weight)
   ])
 ",
 }

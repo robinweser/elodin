@@ -82,9 +82,9 @@ function generateReason(ast, config, modules, fileName) {
 
   return {
     [moduleName + '.re']:
-      '[%bs.raw {|\n  ' +
-      imports.join('\n  ') +
-      '\n|}]' +
+      imports
+        .map(cssFile => '[%bs.raw {|\n  ' + cssFile + '\n|}]')
+        .join('\n\n') +
       '\n\n' +
       'open Css;' +
       '\n\n' +
@@ -136,7 +136,7 @@ function generateCSSValue(value, property, unit = true) {
       value.integer +
       '.' +
       value.fractional +
-      (unit ? 'px' : '')
+      (unit && !isUnitlessProperty(property) ? 'px' : '')
     )
   }
 

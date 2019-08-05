@@ -12,7 +12,8 @@ view Button {
 
 text ButtonText {
   fontSize: $size
-  lineHeight: $height
+  fontWeight: $weight
+  lineHeight: 1.3
   fontFamily: "Arial"
 }`
 
