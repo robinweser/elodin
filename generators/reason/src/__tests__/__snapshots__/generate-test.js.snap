@@ -11,20 +11,19 @@ Object {
   font-family: Arial
 }",
   "ElodinRoot.re": "[%bs.raw {|
-  import(\\"Button.elo.css\\")
-  import(\\"ButtonText.elo.css\\")
+  import(\\"./Button.elo.css\\")
+  import(\\"./ButtonText.elo.css\\")
 |}]
 
-module ElodinRoot {
-  open Css;
+open Css;
 
-  let Button = (~top:string) => \\"_elo_view _18msnv5\\" ++ style([
-    unsafe(\\"paddingTop\\", top)
+let button = (~top:string) => \\"_elo_view _18msnv5\\" ++ style([
+    unsafe(\\"padding-top\\", top)
   ])
 
-  let ButtonText = (~size:string, ~height:string) => \\"_elo_text _1vm2fgp\\" ++ style([
-    unsafe(\\"fontSize\\", size),
-    unsafe(\\"lineHeight\\", height)
+let buttonText = (~size:string, ~height:string) => \\"_elo_text _1vm2fgp\\" ++ style([
+    unsafe(\\"font-size\\", size),
+    unsafe(\\"line-height\\", height)
   ])
 }",
 }

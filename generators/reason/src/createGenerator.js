@@ -43,7 +43,13 @@ export default function createGenerator(customConfig = {}) {
   return function generate(ast, fileName) {
     const css = generateCSS(ast, config)
     const modules = generateModules(ast, config)
-    const reason = generateReason(ast, config, modules, fileName)
+
+    const reason = generateReason(
+      ast,
+      config,
+      modules,
+      fileName.split('/').pop()
+    )
 
     return { ...css, ...reason }
   }
@@ -70,7 +76,7 @@ function generateReason(ast, config, modules, fileName) {
   const styles = ast.body.filter(node => node.type === 'Style')
 
   const imports = styles.reduce((imports, module) => {
-    imports.push('import("' + module.name + '.elo.css")')
+    imports.push('import("./' + module.name + '.elo.css")')
     return imports
   }, [])
 
@@ -80,12 +86,9 @@ function generateReason(ast, config, modules, fileName) {
       imports.join('\n  ') +
       '\n|}]' +
       '\n\n' +
-      'module ' +
-      moduleName +
-      ' {\n' +
-      '  open Css;' +
-      '\n\n  ' +
-      modules.join('\n\n  ') +
+      'open Css;' +
+      '\n\n' +
+      modules.join('\n\n') +
       '\n}',
   }
 }
@@ -280,24 +283,29 @@ function generateModules(ast, config) {
 
     const className =
       '_elo_' + module.format + ' ' + getModuleName(module, config.devMode)
+
     rules.push(
       `let ` +
-        module.name +
+        module.name.charAt(0).toLowerCase() +
+        module.name.substr(1) +
         ' = (' +
         // TODO: deduplicate
         // TODO: add typings
         style.map(({ value }) => '~' + value + ':string').join(', ') +
         ') => "' +
         className +
-        '" ++ style([' +
-        '\n    ' +
-        style
-          .map(
-            ({ property, value }) => 'unsafe("' + property + '", ' + value + ')'
-          )
-          .join(',\n    ') +
-        '\n  ' +
-        '])'
+        (style.length > 0
+          ? '" ++ style([' +
+            '\n    ' +
+            style
+              .map(
+                ({ property, value }) =>
+                  'unsafe("' + hyphenateProperty(property) + '", ' + value + ')'
+              )
+              .join(',\n    ') +
+            '\n  ' +
+            '])'
+          : '')
     )
 
     return rules
