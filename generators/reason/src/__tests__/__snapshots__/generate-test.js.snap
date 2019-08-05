@@ -17,14 +17,14 @@ Object {
 
 open Css;
 
-let button = (~top:string) => \\"_elo_view _18msnv5\\" ++ style([
+let button = (~top:string) => \\"_elo_view _18msnv5 \\" ++ style([
     unsafe(\\"padding-top\\", top)
   ])
 
-let buttonText = (~size:string, ~height:string) => \\"_elo_text _1vm2fgp\\" ++ style([
+let buttonText = (~size:string, ~height:string) => \\"_elo_text _1vm2fgp \\" ++ style([
     unsafe(\\"font-size\\", size),
     unsafe(\\"line-height\\", height)
   ])
-}",
+",
 }
 `;
