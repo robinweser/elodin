@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@elodin/example-webpack",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "main": "lib/index.js",
   "module": "es/index.js",
   "scripts": {
@@ -13,8 +13,8 @@
   "author": "rofrischmann <robin@rofrischmann.de>",
   "license": "MIT",
   "dependencies": {
-    "@elodin/core": "^0.0.9",
-    "@elodin/generator-css-in-js": "^0.0.9",
+    "@elodin/core": "^0.0.10",
+    "@elodin/generator-css-in-js": "^0.0.10",
     "fela": "^10.0.2",
     "fela-dom": "^10.0.2"
   },
@@ -22,7 +22,7 @@
     "@babel/cli": "^7.2.0",
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.0",
-    "@elodin/cli": "^0.0.9",
+    "@elodin/cli": "^0.0.10",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "cross-env": "^5.2.0",
