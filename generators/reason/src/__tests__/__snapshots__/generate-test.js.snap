@@ -12,11 +12,11 @@ Object {
   font-family: Arial
 }",
   "ElodinRoot.re": "[%bs.raw {|
-  require(\\"./Button.elo.css\\");
+  require(\\"./Button.elo.css\\")
 |}];
 
 [%bs.raw {|
-  require(\\"./ButtonText.elo.css\\");
+  require(\\"./ButtonText.elo.css\\")
 |}];
 
 open Css;
