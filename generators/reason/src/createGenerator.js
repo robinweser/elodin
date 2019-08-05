@@ -89,7 +89,7 @@ function generateReason(ast, config, modules, fileName) {
       'open Css;' +
       '\n\n' +
       modules.join('\n\n') +
-      '\n}',
+      '\n',
   }
 }
 
@@ -295,7 +295,7 @@ function generateModules(ast, config) {
         ') => "' +
         className +
         (style.length > 0
-          ? '" ++ style([' +
+          ? ' " ++ style([' +
             '\n    ' +
             style
               .map(
@@ -305,7 +305,7 @@ function generateModules(ast, config) {
               .join(',\n    ') +
             '\n  ' +
             '])'
-          : '')
+          : '"')
     )
 
     return rules
