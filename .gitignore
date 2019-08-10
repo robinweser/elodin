@@ -20,8 +20,6 @@ Thumbs.db
 *.sw?
 *.vi
 
-.vscode
-
 **/*.elo.*
 
 **/node_modules

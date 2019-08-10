@@ -337,25 +337,27 @@ function generateModules(ast, config) {
 
     const variantNames = Object.keys(variantMap)
 
-    const combinations = cartesian(
-      ...variantNames.map(variant => [...variantMap[variant], 'None'])
-    )
+    let variantSwitch = ''
+    if (variantNames.length > 0) {
+      const combinations = cartesian(
+        ...variantNames.map(variant => [...variantMap[variant], 'None'])
+      )
 
-    const powerset = array => {
-      // O(2^n)
-      const results = [[]]
-      for (const value of array) {
-        const copy = [...results] // See note below.
-        for (const prefix of copy) {
-          results.push(prefix.concat(value))
+      const powerset = array => {
+        // O(2^n)
+        const results = [[]]
+        for (const value of array) {
+          const copy = [...results] // See note below.
+          for (const prefix of copy) {
+            results.push(prefix.concat(value))
+          }
         }
+        return results
       }
-      return results
-    }
 
-    const variantSwitch = `let get${module.name}Variants = (${variantNames
-      .map(variant => '~' + variant.toLowerCase())
-      .join(', ')}, ()) => {
+      variantSwitch = `let get${module.name}Variants = (${variantNames
+        .map(variant => '~' + variant.toLowerCase())
+        .join(', ')}, ()) => {
         switch (${Object.keys(variantMap)
           .map(v => v.toLowerCase())
           .join(', ')}) {
@@ -386,11 +388,11 @@ function generateModules(ast, config) {
                 '"'
             )
             .join('\n')}}
-    }`
+    }\n\n`
+    }
 
     rules.push(
       variantSwitch +
-        '\n\n' +
         `let ` +
         module.name.charAt(0).toLowerCase() +
         module.name.substr(1) +
