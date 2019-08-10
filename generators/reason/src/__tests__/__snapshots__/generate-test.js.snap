@@ -2,33 +2,80 @@
 
 exports[`Compiling to ReasonML should return a map of files 1`] = `
 Object {
-  "Button.elo.css": "._18msnv5 {
-  background-color: red;
-  padding-left: 10px;
-  padding-bottom: 10px
-}",
-  "ButtonText.elo.css": "._371xhw {
-  line-height: 1.3;
-  font-family: Arial
-}",
-  "ElodinRoot.re": "[%bs.raw {|
-  require(\\"./Button.elo.css\\")
+  "RootStyle.re": "[%bs.raw {|
+  require(\\"./RootStyleButton.elo.css\\")
 |}];
 
 [%bs.raw {|
-  require(\\"./ButtonText.elo.css\\")
+  require(\\"./RootStyleButtonText.elo.css\\")
 |}];
 
 open Css;
 
-let button = (~top:string) => \\"_elo_view _18msnv5 \\" ++ style([
+[@bs.deriving jsConverter]
+type variant =
+  | Primary
+  | Secondary
+
+[@bs.deriving jsConverter]
+type mode =
+  | Dark
+  | Light
+  | Semi
+
+let getButtonVariants = (~variant, ~mode, ()) => {
+        switch (variant, mode) {
+          | (Some(Primary), Some(Dark)) => \\"_1js6mbz__Variant-Primary _1js6mbz__Mode-Dark _1js6mbz__Variant-Primary__Mode-Dark\\"
+| (Some(Primary), Some(Light)) => \\"_1js6mbz__Variant-Primary _1js6mbz__Mode-Light _1js6mbz__Variant-Primary__Mode-Light\\"
+| (Some(Primary), Some(Semi)) => \\"_1js6mbz__Variant-Primary _1js6mbz__Mode-Semi _1js6mbz__Variant-Primary__Mode-Semi\\"
+| (Some(Primary), None) => \\"_1js6mbz__Variant-Primary\\"
+| (Some(Secondary), Some(Dark)) => \\"_1js6mbz__Variant-Secondary _1js6mbz__Mode-Dark _1js6mbz__Variant-Secondary__Mode-Dark\\"
+| (Some(Secondary), Some(Light)) => \\"_1js6mbz__Variant-Secondary _1js6mbz__Mode-Light _1js6mbz__Variant-Secondary__Mode-Light\\"
+| (Some(Secondary), Some(Semi)) => \\"_1js6mbz__Variant-Secondary _1js6mbz__Mode-Semi _1js6mbz__Variant-Secondary__Mode-Semi\\"
+| (Some(Secondary), None) => \\"_1js6mbz__Variant-Secondary\\"
+| (None, Some(Dark)) => \\"_1js6mbz__Mode-Dark\\"
+| (None, Some(Light)) => \\"_1js6mbz__Mode-Light\\"
+| (None, Some(Semi)) => \\"_1js6mbz__Mode-Semi\\"
+| (None, None) => \\"_1js6mbz\\"}
+    }
+
+let button = (~top:string, ~variant=?, ~mode=?, ()) => \\"_elo_view _1js6mbz\\" ++ \\" \\" ++ getButtonVariants(~variant, ~mode, ()) ++ \\" \\" ++ style([
     unsafe(\\"padding-top\\", top)
   ])
 
-let buttonText = (~size:string, ~weight:string) => \\"_elo_text _371xhw \\" ++ style([
+let getButtonTextVariants = (~variant, ~mode, ()) => {
+        switch (variant, mode) {
+          | (Some(Primary), Some(Dark)) => \\"_371xhw__Variant-Primary _371xhw__Mode-Dark _371xhw__Variant-Primary__Mode-Dark\\"
+| (Some(Primary), Some(Light)) => \\"_371xhw__Variant-Primary _371xhw__Mode-Light _371xhw__Variant-Primary__Mode-Light\\"
+| (Some(Primary), Some(Semi)) => \\"_371xhw__Variant-Primary _371xhw__Mode-Semi _371xhw__Variant-Primary__Mode-Semi\\"
+| (Some(Primary), None) => \\"_371xhw__Variant-Primary\\"
+| (Some(Secondary), Some(Dark)) => \\"_371xhw__Variant-Secondary _371xhw__Mode-Dark _371xhw__Variant-Secondary__Mode-Dark\\"
+| (Some(Secondary), Some(Light)) => \\"_371xhw__Variant-Secondary _371xhw__Mode-Light _371xhw__Variant-Secondary__Mode-Light\\"
+| (Some(Secondary), Some(Semi)) => \\"_371xhw__Variant-Secondary _371xhw__Mode-Semi _371xhw__Variant-Secondary__Mode-Semi\\"
+| (Some(Secondary), None) => \\"_371xhw__Variant-Secondary\\"
+| (None, Some(Dark)) => \\"_371xhw__Mode-Dark\\"
+| (None, Some(Light)) => \\"_371xhw__Mode-Light\\"
+| (None, Some(Semi)) => \\"_371xhw__Mode-Semi\\"
+| (None, None) => \\"_371xhw\\"}
+    }
+
+let buttonText = (~size:string, ~weight:string, ~variant=?, ~mode=?, ()) => \\"_elo_text _371xhw\\" ++ \\" \\" ++ getButtonTextVariants(~variant, ~mode, ()) ++ \\" \\" ++ style([
     unsafe(\\"font-size\\", size),
     unsafe(\\"font-weight\\", weight)
   ])
 ",
+  "RootStyleButton.elo.css": "._1js6mbz {
+  background-color: red;
+  padding-left: 10px;
+  padding-bottom: 10px
+}
+
+._1js6mbz__Variant-Primary {
+  background-color: blue
+}",
+  "RootStyleButtonText.elo.css": "._371xhw {
+  line-height: 1.3;
+  font-family: Arial
+}",
 }
 `;

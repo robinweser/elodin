@@ -3,11 +3,25 @@ import { parse } from '@elodin/parser'
 import createGenerator from '../createGenerator'
 
 const file = `
+variant Variant {
+  Primary
+  Secondary
+}
+
+variant Mode {
+  Dark
+  Light
+  Semi
+}
+
 view Button {
   backgroundColor: red
   paddingLeft: 10
   paddingBottom: 10
   paddingTop: $top
+  [Variant=Primary] {
+    backgroundColor: blue
+  }
 }
 
 text ButtonText {

@@ -3,6 +3,14 @@ import color from 'color'
 
 import hash from './hash'
 
+function capitalizeString(str) {
+  return str.charAt(0).toUpperCase() + str.substr(1)
+}
+
+function uncapitalizeString(str) {
+  return str.charAt(0).toLowerCase() + str.substr(1)
+}
+
 const validPseudoClasses = [
   'link',
   'hover',
@@ -32,7 +40,8 @@ function stringifyDeclaration(declaration) {
 const defaultConfig = {
   devMode: false,
   dynamicImport: false,
-  modulePrefix: 'Elodin',
+  generateFileName: (fileName, moduleName) =>
+    capitalizeString(fileName) + moduleName + 'Style',
 }
 export default function createGenerator(customConfig = {}) {
   const config = {
@@ -40,16 +49,18 @@ export default function createGenerator(customConfig = {}) {
     ...customConfig,
   }
 
-  return function generate(ast, fileName) {
-    const css = generateCSS(ast, config)
-    const modules = generateModules(ast, config)
+  return function generate(ast, path) {
+    const fileName = path
+      .split('/')
+      .pop()
+      .replace(/[.]elo/gi, '')
+      .split('.')
+      .map(capitalizeString)
+      .join('')
 
-    const reason = generateReason(
-      ast,
-      config,
-      modules,
-      fileName.split('/').pop()
-    )
+    const css = generateCSS(ast, config, fileName)
+    const modules = generateModules(ast, config)
+    const reason = generateReason(ast, config, modules, fileName)
 
     return { ...css, ...reason }
   }
@@ -66,19 +77,32 @@ function getModuleName(module, devMode) {
 
 function generateReason(ast, config, modules, fileName) {
   // TODO: include fragments
-  const moduleName =
-    config.modulePrefix +
-    fileName
-      .replace(/[.]elo/gi, '')
-      .split('.')
-      .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+  const moduleName = config.generateFileName(fileName, '')
 
   const styles = ast.body.filter(node => node.type === 'Style')
+  const variants = ast.body.filter(node => node.type === 'Variant')
 
   const imports = styles.reduce((imports, module) => {
-    imports.push('require("./' + module.name + '.elo.css")')
+    imports.push('require("./' + moduleName + module.name + '.elo.css")')
     return imports
   }, [])
+
+  const variantMap = variants.reduce((flatVariants, variant) => {
+    flatVariants[variant.name] = variant.body.map(variation => variation.value)
+
+    return flatVariants
+  }, {})
+
+  const variantTypes = Object.keys(variantMap)
+    .map(
+      variant =>
+        '[@bs.deriving jsConverter]\n' +
+        `type ` +
+        variant.toLowerCase() +
+        ` =\n  ` +
+        variantMap[variant].map(val => '| ' + val).join('\n  ')
+    )
+    .join('\n\n')
 
   return {
     [moduleName + '.re']:
@@ -87,6 +111,8 @@ function generateReason(ast, config, modules, fileName) {
         .join('\n\n') +
       '\n\n' +
       'open Css;' +
+      '\n\n' +
+      variantTypes +
       '\n\n' +
       modules.join('\n\n') +
       '\n',
@@ -147,15 +173,16 @@ function generateCSSValue(value, property, unit = true) {
   return value.value
 }
 
-function generateCSS(ast, { devMode }) {
+function generateCSS(ast, { devMode, generateFileName }, fileName) {
   // TODO: include fragments
   const styles = ast.body.filter(node => node.type === 'Style')
   const variants = ast.body.filter(node => node.type === 'Variant')
+  const generatedFileName = generateFileName(fileName, '')
 
   return styles.reduce((files, module) => {
     const classes = generateClasses(module.body, variants)
 
-    files[module.name + '.elo.css'] = classes
+    files[generatedFileName + module.name + '.elo.css'] = classes
       .filter(selector => selector.declarations.length > 0)
       .map(selector => {
         const css = stringifyCSS(
@@ -210,6 +237,7 @@ function generateClasses(
               nest.body,
               variants,
               classes,
+              // TODO: variants in deterministic order
               modifier + '__' + variant.name + '-' + variation.value,
               pseudo,
               media
@@ -274,9 +302,32 @@ function stringifyCSS(declarations, name) {
   )
 }
 
+function cartesian() {
+  var r = [],
+    arg = arguments,
+    max = arg.length - 1
+  function helper(arr, i) {
+    for (var j = 0, l = arg[i].length; j < l; j++) {
+      var a = arr.slice(0) // clone arr
+      a.push(arg[i][j])
+      if (i == max) r.push(a)
+      else helper(a, i + 1)
+    }
+  }
+  helper([], 0)
+  return r
+}
+
 function generateModules(ast, config) {
   // TODO: include fragments
   const styles = ast.body.filter(node => node.type === 'Style')
+  const variants = ast.body.filter(node => node.type === 'Variant')
+
+  const variantMap = variants.reduce((flatVariants, variant) => {
+    flatVariants[variant.name] = variant.body.map(variation => variation.value)
+
+    return flatVariants
+  }, {})
 
   return styles.reduce((rules, module) => {
     const style = generateStyle(module.body)
@@ -284,18 +335,80 @@ function generateModules(ast, config) {
     const className =
       '_elo_' + module.format + ' ' + getModuleName(module, config.devMode)
 
+    const variantNames = Object.keys(variantMap)
+
+    const combinations = cartesian(
+      ...variantNames.map(variant => [...variantMap[variant], 'None'])
+    )
+
+    const powerset = array => {
+      // O(2^n)
+      const results = [[]]
+      for (const value of array) {
+        const copy = [...results] // See note below.
+        for (const prefix of copy) {
+          results.push(prefix.concat(value))
+        }
+      }
+      return results
+    }
+
+    const variantSwitch = `let get${module.name}Variants = (${variantNames
+      .map(variant => '~' + variant.toLowerCase())
+      .join(', ')}, ()) => {
+        switch (${Object.keys(variantMap)
+          .map(v => v.toLowerCase())
+          .join(', ')}) {
+          ${combinations
+            // .filter(combination => combination.find(comp => comp !== 'None'))
+            .map(
+              combination =>
+                '| (' +
+                combination
+                  .map(comb =>
+                    comb === 'None' ? 'None' : 'Some(' + comb + ')'
+                  )
+                  .join(', ') +
+                ') => "' +
+                getModuleName(module, config.devMode) +
+                powerset(
+                  combination
+                    .map((comb, index) =>
+                      comb === 'None'
+                        ? ''
+                        : '__' + variantNames[index] + '-' + comb
+                    )
+                    .filter(val => val !== '')
+                )
+                  .filter(set => set.length > 0)
+                  .map(set => set.join(''))
+                  .join(' ' + getModuleName(module, config.devMode)) +
+                '"'
+            )
+            .join('\n')}}
+    }`
+
     rules.push(
-      `let ` +
+      variantSwitch +
+        '\n\n' +
+        `let ` +
         module.name.charAt(0).toLowerCase() +
         module.name.substr(1) +
         ' = (' +
         // TODO: deduplicate
         // TODO: add typings
         style.map(({ value }) => '~' + value + ':string').join(', ') +
-        ') => "' +
+        (style.length > 0 ? ', ' : '') +
+        variants.map(({ name }) => '~' + name.toLowerCase() + '=?').join(', ') +
+        ', ()) => "' +
         className +
+        '" ++ " " ++ get' +
+        module.name +
+        'Variants(' +
+        variants.map(({ name }) => '~' + name.toLowerCase()).join(', ') +
+        ', ()) ++ " "' +
         (style.length > 0
-          ? ' " ++ style([' +
+          ? ' ++ style([' +
             '\n    ' +
             style
               .map(
@@ -305,7 +418,7 @@ function generateModules(ast, config) {
               .join(',\n    ') +
             '\n  ' +
             '])'
-          : '"')
+          : '')
     )
 
     return rules
