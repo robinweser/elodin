@@ -400,17 +400,19 @@ function generateModules(ast, config) {
         // TODO: deduplicate
         // TODO: add typings
         style.map(({ value }) => '~' + value + ':string').join(', ') +
-        (style.length > 0 ? ', ' : '') +
+        (style.length > 0 && variants.length > 0 ? ', ' : '') +
         variants.map(({ name }) => '~' + name.toLowerCase() + '=?').join(', ') +
-        ', ()) => "' +
+        (style.length > 0 || variants.length > 0 ? ', ()) => "' : ') => "') +
         className +
-        '" ++ " " ++ get' +
-        module.name +
-        'Variants(' +
-        variants.map(({ name }) => '~' + name.toLowerCase()).join(', ') +
-        ', ()) ++ " "' +
+        (variants.length > 0
+          ? '" ++ " " ++ get' +
+            module.name +
+            'Variants(' +
+            variants.map(({ name }) => '~' + name.toLowerCase()).join(', ') +
+            ', ())'
+          : '"') +
         (style.length > 0
-          ? ' ++ style([' +
+          ? ' ++ " " ++ style([' +
             '\n    ' +
             style
               .map(
