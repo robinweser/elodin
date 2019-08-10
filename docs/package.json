@@ -2,17 +2,17 @@
   "private": true,
   "name": "@elodin/docs",
   "description": "Official Elodin Documentation",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "scripts": {
     "dev": "now dev",
     "deploy": "now --target production",
     "elodin": "elodin pages components --watch"
   },
   "dependencies": {
-    "@elodin/cli": "^0.0.10",
-    "@elodin/core": "^0.0.10",
-    "@elodin/generator-css-in-js": "^0.0.10",
-    "@elodin/parser": "^0.0.10",
+    "@elodin/cli": "^0.0.11",
+    "@elodin/core": "^0.0.11",
+    "@elodin/generator-css-in-js": "^0.0.11",
+    "@elodin/parser": "^0.0.11",
     "@mdx-js/loader": "^0.17.5",
     "@mdx-js/mdx": "^0.17.5",
     "@mdx-js/tag": "^0.17.5",
