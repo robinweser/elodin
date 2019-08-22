@@ -1,3 +1,5 @@
+import colorNames from './colorNames'
+
 const isInteger = value => value.type === 'Integer'
 const isFloat = value => value.type === 'Float'
 const isString = value => value.type === 'String'
@@ -10,7 +12,7 @@ const matchesKeywords = (...keywords) => value =>
 
 const isColor = value => {
   // TODO: parse in parser
-  if (value.type === 'Identifier') {
+  if (value.type === 'Identifier' && colorNames[value.value]) {
     return true
   }
 
@@ -29,33 +31,38 @@ export default {
     zIndex: [isInteger],
 
     // box model
+    padding: [isNumber, isPercentage],
     paddingBottom: [isNumber, isPercentage],
     paddingTop: [isNumber, isPercentage],
     paddingLeft: [isNumber, isPercentage],
     paddingRight: [isNumber, isPercentage],
+    margin: [isNumber, isPercentage],
     marginBottom: [isNumber, isPercentage],
     marginTop: [isNumber, isPercentage],
     marginLeft: [isNumber, isPercentage],
     marginRight: [isNumber, isPercentage],
-    offsetBottom: [isNumber, isPercentage],
-    offsetTop: [isNumber, isPercentage],
-    offsetLeft: [isNumber, isPercentage],
-    offsetRight: [isNumber, isPercentage],
+    bottom: [isNumber, isPercentage],
+    top: [isNumber, isPercentage],
+    left: [isNumber, isPercentage],
+    right: [isNumber, isPercentage],
     width: [isNumber, isPercentage],
     height: [isNumber, isPercentage],
     maxWidth: [isNumber, isPercentage],
     maxHeight: [isNumber, isPercentage],
     minWidth: [isNumber, isPercentage],
     minHeight: [isNumber, isPercentage],
+    borderWidth: [isNumber],
     borderBottomWidth: [isNumber],
     borderTopWidth: [isNumber],
     borderLeftWidth: [isNumber],
     borderRightWidth: [isNumber],
+    borderColor: [isColor],
     borderBottomColor: [isColor],
     borderTopColor: [isColor],
     borderLeftColor: [isColor],
     borderRightColor: [isColor],
     borderStyle: [matchesKeywords('solid', 'dotted', 'dashed')],
+    borderRadius: [isNumber],
     borderTopLeftRadius: [isNumber],
     borderTopRightRadius: [isNumber],
     borderBottomLeftRadius: [isNumber],
