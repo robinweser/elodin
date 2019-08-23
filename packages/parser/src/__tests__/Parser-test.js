@@ -21,8 +21,7 @@ view Button {
     const file = `
 view Button {
   backgroundColor: red
-  color: blue
-  fontSize: 15
+  paddingLeft: 10
 }
 
 text Label {
