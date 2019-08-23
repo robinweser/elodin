@@ -1,6 +1,6 @@
 {
   "name": "@elodin/stdlib",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "main": "lib/index.js",
   "module": "es/index.js",
   "publishConfig": {
