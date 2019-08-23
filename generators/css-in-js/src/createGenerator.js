@@ -5,16 +5,45 @@ import adapters from './adapters'
 
 import hash from './hash'
 
+// still missing some special onces
 const validPseudoClasses = [
   'link',
   'hover',
   'focus',
   'active',
   'visited',
+  'checked',
+  'default',
+  'empty',
+  'enabled',
+  'first',
   'disabled',
   'focusWithin',
   'firstChild',
   'lastChild',
+  'firstOfType',
+  'intermediate',
+  'inRange',
+  'invalid',
+  'lastOfType',
+  'left',
+  'onlyChild',
+  'onlyOfType',
+  'optional',
+  'readOnly',
+  'readWrite',
+  'required',
+  'right',
+  'target',
+  'valid',
+  'visited',
+  // pseudo elements
+  // TODO: split later
+  'before',
+  'after',
+  'firstLine',
+  'firstLetter',
+  'selection',
 ]
 
 const validMediaQueries = ['viewportWidth', 'viewportHeight']

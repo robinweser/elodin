@@ -89,9 +89,11 @@ export default function formatFromAST(node, customConfig = {}, level = 1) {
     case 'Identifier':
       return node.value
     case 'RawValue':
-      return 'raw(' + node.value + ')'
+      return 'raw("' + node.value + '")'
     case 'Percentage':
       return 'percentage(' + node.value + ')'
+    case 'String':
+      return '"' + node.value + '"'
 
     case 'Color':
       return (

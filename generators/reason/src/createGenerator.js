@@ -11,16 +11,45 @@ function uncapitalizeString(str) {
   return str.charAt(0).toLowerCase() + str.substr(1)
 }
 
+// still missing some special onces
 const validPseudoClasses = [
   'link',
   'hover',
   'focus',
   'active',
   'visited',
+  'checked',
+  'default',
+  'empty',
+  'enabled',
+  'first',
   'disabled',
   'focusWithin',
   'firstChild',
   'lastChild',
+  'firstOfType',
+  'intermediate',
+  'inRange',
+  'invalid',
+  'lastOfType',
+  'left',
+  'onlyChild',
+  'onlyOfType',
+  'optional',
+  'readOnly',
+  'readWrite',
+  'required',
+  'right',
+  'target',
+  'valid',
+  'visited',
+  // pseudo elements
+  // TODO: split later
+  'before',
+  'after',
+  'firstLine',
+  'firstLetter',
+  'selection',
 ]
 
 const validMediaQueries = ['viewportWidth', 'viewportHeight']
@@ -49,7 +78,7 @@ export default function createGenerator(customConfig = {}) {
     ...customConfig,
   }
 
-  return function generate(ast, path) {
+  return function generate(ast, path = '') {
     const fileName = path
       .split('/')
       .pop()
@@ -329,6 +358,26 @@ function generateModules(ast, config) {
     return flatVariants
   }, {})
 
+  function stringifyDeclaration({ property, value }) {
+    if (typeof value === 'object') {
+      return (
+        property + '([' + value.map(stringifyDeclaration).join(',\n') + '])'
+      )
+    }
+
+    return 'unsafe("' + hyphenateProperty(property) + '", ' + value + ')'
+  }
+
+  function flattenVariables(style, _ = []) {
+    return style.reduce((vars, { value, property }) => {
+      if (Array.isArray(value)) {
+        return flattenVariables(value, vars)
+      }
+
+      return [...vars, value]
+    }, _)
+  }
+
   return styles.reduce((rules, module) => {
     const style = generateStyle(module.body)
 
@@ -399,10 +448,16 @@ function generateModules(ast, config) {
         ' = (' +
         // TODO: deduplicate
         // TODO: add typings
-        style.map(({ value }) => '~' + value + ':string').join(', ') +
-        (style.length > 0 && variants.length > 0 ? ', ' : '') +
+        flattenVariables(style)
+          .map(variable => '~' + variable + ':string')
+          .join(', ') +
+        (flattenVariables(style).length > 0 && variants.length > 0
+          ? ', '
+          : '') +
         variants.map(({ name }) => '~' + name.toLowerCase() + '=?').join(', ') +
-        (style.length > 0 || variants.length > 0 ? ', ()) => "' : ') => "') +
+        (flattenVariables(style).length > 0 || variants.length > 0
+          ? ', ()) => "'
+          : ') => "') +
         className +
         (variants.length > 0
           ? '" ++ " " ++ get' +
@@ -414,12 +469,7 @@ function generateModules(ast, config) {
         (style.length > 0
           ? ' ++ " " ++ style([' +
             '\n    ' +
-            style
-              .map(
-                ({ property, value }) =>
-                  'unsafe("' + hyphenateProperty(property) + '", ' + value + ')'
-              )
-              .join(',\n    ') +
+            style.map(stringifyDeclaration).join(',\n    ') +
             '\n  ' +
             '])'
           : '')
@@ -494,7 +544,7 @@ function generateStyle(nodes) {
           validPseudoClasses.indexOf(nest.property.value) !== -1
         ) {
           return {
-            property: ':' + nest.property.value,
+            property: nest.property.value,
             value: generateStyle(nest.body),
           }
         }

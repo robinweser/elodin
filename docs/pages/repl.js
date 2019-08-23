@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import { parse } from '@elodin/parser'
-import generator from '@elodin/generator-css-in-js'
+import { createGenerator as createJsGenerator } from '@elodin/generator-css-in-js'
+import { createGenerator as createReasonGenerator } from '@elodin/generator-reason'
 import { format } from '@elodin/format'
 
-const generate = generator({
-  adapter: 'fela',
-})
+// const generate = createJsGenerator({
+//   adapter: 'fela',
+// })
+
+const generate = createReasonGenerator()
 
 export default () => {
   const [code, setCode] = useState('')
   const [out, setOut] = useState({})
+  const [ast, setAst] = useState({})
   const [errors, setErrors] = useState([])
 
   useEffect(() => {
@@ -27,10 +31,12 @@ export default () => {
       const parsed = parse(code)
 
       if (parsed.errors.length === 0) {
+        setAst(parsed.ast)
         setOut(generate(parsed.ast))
       } else {
         setOut({})
       }
+
       setErrors(parsed.errors)
     } catch (e) {
       throw new Error(e)
@@ -38,7 +44,7 @@ export default () => {
   }, [code])
 
   return (
-    <div>
+    <div style={{ overflow: 'auto' }}>
       <textarea
         value={code}
         onChange={e => setCode(e.target.value)}
@@ -64,6 +70,10 @@ export default () => {
             <div>{JSON.stringify(error)}</div>
           ))}
         </div>
+        <details>
+          <summary>AST</summary>
+          <pre>{JSON.stringify(ast, null, 2)}</pre>
+        </details>
         {Object.keys(out).map(filename => (
           <div>
             <b>{filename}</b>
