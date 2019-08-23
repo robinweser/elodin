@@ -9,11 +9,11 @@ exports[`Formatting elodin syntax should return beautiful syntax 1`] = `
 view Button {
   justifyContent: flexStart
   __borderWidth: .3
-  backgroundColor: rgba(255, 200, 155, 1)
+  backgroundColor: rgb(255 200 155)
   [Type=Primary] {
     paddingLeft: 20
     [Mode=Dark] {
-      backgroundColor: rgba(0, 128, 0, 1)
+      backgroundColor: rgb(0 128 0)
     }
   }
 }
@@ -22,12 +22,12 @@ text Label {
   lineHeight: $lineHeight
   fontSize: 20
   [@hover] {
-    color: rgba(255, 0, 0, 1)
+    color: rgb(255 0 0)
   }
   [@minWidth=320] {
-    color: rgba(0, 0, 255, 1)
+    color: rgb(0 0 255)
     [@hover] {
-      color: rgba(0, 128, 0, 1)
+      color: rgb(0 128 0)
     }
   }
 }"
@@ -43,11 +43,11 @@ Object {
 view Button {
   justifyContent: flexStart
   __borderWidth: .3
-  backgroundColor: rgba(255, 200, 155, 1)
+  backgroundColor: rgb(255 200 155)
   [Type=Primary] {
     paddingLeft: 20
     [Mode=Dark] {
-      backgroundColor: rgba(0, 128, 0, 1)
+      backgroundColor: rgb(0 128 0)
     }
   }
 }
@@ -56,12 +56,12 @@ text Label {
   lineHeight: $lineHeight
   fontSize: 20
   [@hover] {
-    color: rgba(255, 0, 0, 1)
+    color: rgb(255 0 0)
   }
   [@minWidth=320] {
-    color: rgba(0, 0, 255, 1)
+    color: rgb(0 0 255)
     [@hover] {
-      color: rgba(0, 128, 0, 1)
+      color: rgb(0 128 0)
     }
   }
 }",

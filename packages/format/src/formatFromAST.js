@@ -96,9 +96,20 @@ export default function formatFromAST(node, customConfig = {}, level = 1) {
       return '"' + node.value + '"'
 
     case 'Color':
-      return (
-        'rgba(' + [node.red, node.green, node.blue, node.alpha].join(', ') + ')'
-      )
+      if (node.alpha < 1) {
+        return (
+          'rgba(' +
+          [
+            node.red,
+            node.green,
+            node.blue,
+            'percentage(' + node.alpha * 100 + ')',
+          ].join(' ') +
+          ')'
+        )
+      } else {
+        return 'rgb(' + [node.red, node.green, node.blue].join(' ') + ')'
+      }
 
     default:
       throw new Error('Unknown node: ', node.type)
