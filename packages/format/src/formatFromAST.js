@@ -19,8 +19,11 @@ export default function formatFromAST(node, customConfig = {}, level = 1) {
     case 'File':
       const fragments = node.body.filter(node => node.type === 'Fragment')
       const styles = node.body.filter(node => node.type === 'Style')
+      const variants = node.body.filter(node => node.type === 'Variant')
 
       return (
+        variants.map(generate).join(lineSpace) +
+        (variants.length > 0 ? lineSpace : '') +
         fragments.map(generate).join(lineSpace) +
         (fragments.length > 0 ? lineSpace : '') +
         styles.map(generate).join(lineSpace)
@@ -30,6 +33,16 @@ export default function formatFromAST(node, customConfig = {}, level = 1) {
       return (
         node.format +
         ' ' +
+        node.name +
+        ' {\n' +
+        ident +
+        node.body.map(generate).join('\n' + ident) +
+        '\n}'
+      )
+
+    case 'Variant':
+      return (
+        'variant ' +
         node.name +
         ' {\n' +
         ident +

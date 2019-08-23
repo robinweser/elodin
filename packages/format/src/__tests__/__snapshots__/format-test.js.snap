@@ -1,7 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Formatting elodin syntax should return beautiful syntax 1`] = `
-"fragment Flex {
+"variant Mode {
+  Dark
+  Light
+}
+
+fragment Flex {
   flexGrow: 1
   flexDirection: row
 }
@@ -35,7 +40,12 @@ text Label {
 
 exports[`Formatting elodin syntax should return beautiful syntax with custom syntax 1`] = `
 Object {
-  "code": "fragment Flex {
+  "code": "variant Mode {
+  Dark
+  Light
+}
+
+fragment Flex {
   flexGrow: 1
   flexDirection: row
 }

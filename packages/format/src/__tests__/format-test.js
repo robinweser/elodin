@@ -1,6 +1,9 @@
 import format from '../format'
 
 const file = `
+variant Mode { Dark 
+
+ Light}
 fragment Flex {
    flexGrow: 1
   flexDirection: row
