@@ -19,6 +19,9 @@ view Button {
   paddingLeft: 10
   paddingBottom: 10
   paddingTop: $top
+  [@viewportWidth>=100] {
+    paddingRight: $paddingMedia
+  }
   [Variant=Primary] {
     backgroundColor: blue
   }

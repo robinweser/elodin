@@ -3,6 +3,7 @@ import { parse } from '@elodin/parser'
 import { useRouter } from 'next/router'
 import { createGenerator as createJsGenerator } from '@elodin/generator-css-in-js'
 import { createGenerator as createReasonGenerator } from '@elodin/generator-reason'
+import { createGenerator as createReactNativeGenerator } from '@elodin/generator-react-native'
 import { format } from '@elodin/format'
 
 const generators = {
@@ -12,6 +13,9 @@ const generators = {
   'css-in-js': {
     generate: createJsGenerator,
     adapters: ['fela', 'react-fela'],
+  },
+  'react-native': {
+    generate: createReactNativeGenerator,
   },
 }
 
@@ -26,6 +30,7 @@ export default () => {
   const [errors, setErrors] = useState([])
 
   const config = {
+    devMode: true,
     adapter,
   }
 

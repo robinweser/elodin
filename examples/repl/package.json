@@ -13,6 +13,7 @@
     "@elodin/core": "^0.0.16",
     "@elodin/generator-css-in-js": "^0.0.16",
     "@elodin/generator-reason": "^0.0.16",
+    "@elodin/generator-react-native": "^0.0.16",
     "@elodin/format": "^0.0.16",
     "@elodin/parser": "^0.0.16",
     "@zeit/next-css": "^1.0.1",

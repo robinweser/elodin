@@ -24,53 +24,54 @@ type mode =
   | Semi
 
 let getButtonVariants = (~variant, ~mode, ()) => {
-        switch (variant, mode) {
-          | (Some(Primary), Some(Dark)) => \\"_1js6mbz__Variant-Primary _1js6mbz__Mode-Dark _1js6mbz__Variant-Primary__Mode-Dark\\"
-| (Some(Primary), Some(Light)) => \\"_1js6mbz__Variant-Primary _1js6mbz__Mode-Light _1js6mbz__Variant-Primary__Mode-Light\\"
-| (Some(Primary), Some(Semi)) => \\"_1js6mbz__Variant-Primary _1js6mbz__Mode-Semi _1js6mbz__Variant-Primary__Mode-Semi\\"
-| (Some(Primary), None) => \\"_1js6mbz__Variant-Primary\\"
-| (Some(Secondary), Some(Dark)) => \\"_1js6mbz__Variant-Secondary _1js6mbz__Mode-Dark _1js6mbz__Variant-Secondary__Mode-Dark\\"
-| (Some(Secondary), Some(Light)) => \\"_1js6mbz__Variant-Secondary _1js6mbz__Mode-Light _1js6mbz__Variant-Secondary__Mode-Light\\"
-| (Some(Secondary), Some(Semi)) => \\"_1js6mbz__Variant-Secondary _1js6mbz__Mode-Semi _1js6mbz__Variant-Secondary__Mode-Semi\\"
-| (Some(Secondary), None) => \\"_1js6mbz__Variant-Secondary\\"
-| (None, Some(Dark)) => \\"_1js6mbz__Mode-Dark\\"
-| (None, Some(Light)) => \\"_1js6mbz__Mode-Light\\"
-| (None, Some(Semi)) => \\"_1js6mbz__Mode-Semi\\"
-| (None, None) => \\"_1js6mbz\\"}
-    }
+  switch (variant, mode) {
+    | (Some(Primary), Some(Dark)) => \\"_r1x8i5__Variant-Primary _r1x8i5__Mode-Dark _r1x8i5__Variant-Primary__Mode-Dark\\"
+    | (Some(Primary), Some(Light)) => \\"_r1x8i5__Variant-Primary _r1x8i5__Mode-Light _r1x8i5__Variant-Primary__Mode-Light\\"
+    | (Some(Primary), Some(Semi)) => \\"_r1x8i5__Variant-Primary _r1x8i5__Mode-Semi _r1x8i5__Variant-Primary__Mode-Semi\\"
+    | (Some(Primary), None) => \\"_r1x8i5__Variant-Primary\\"
+    | (Some(Secondary), Some(Dark)) => \\"_r1x8i5__Variant-Secondary _r1x8i5__Mode-Dark _r1x8i5__Variant-Secondary__Mode-Dark\\"
+    | (Some(Secondary), Some(Light)) => \\"_r1x8i5__Variant-Secondary _r1x8i5__Mode-Light _r1x8i5__Variant-Secondary__Mode-Light\\"
+    | (Some(Secondary), Some(Semi)) => \\"_r1x8i5__Variant-Secondary _r1x8i5__Mode-Semi _r1x8i5__Variant-Secondary__Mode-Semi\\"
+    | (Some(Secondary), None) => \\"_r1x8i5__Variant-Secondary\\"
+    | (None, Some(Dark)) => \\"_r1x8i5__Mode-Dark\\"
+    | (None, Some(Light)) => \\"_r1x8i5__Mode-Light\\"
+    | (None, Some(Semi)) => \\"_r1x8i5__Mode-Semi\\"
+    | (None, None) => \\"_r1x8i5\\"}
+}
 
-let button = (~top:string, ~variant=?, ~mode=?, ()) => \\"_elo_view _1js6mbz\\" ++ \\" \\" ++ getButtonVariants(~variant, ~mode, ()) ++ \\" \\" ++ style([
-    unsafe(\\"padding-top\\", top)
+let button = (~top:string, ~paddingMedia:string, ~variant=?, ~mode=?, ()) => \\"_elo_view _r1x8i5\\" ++ \\" \\" ++ getButtonVariants(~variant, ~mode, ()) ++ \\" \\" ++ style([
+    unsafe(\\"padding-top\\", top),
+    media(\\"(min-width: 100px)\\", [unsafe(\\"padding-right\\", paddingMedia)])
   ])
 
 let getButtonTextVariants = (~variant, ~mode, ()) => {
-        switch (variant, mode) {
-          | (Some(Primary), Some(Dark)) => \\"_371xhw__Variant-Primary _371xhw__Mode-Dark _371xhw__Variant-Primary__Mode-Dark\\"
-| (Some(Primary), Some(Light)) => \\"_371xhw__Variant-Primary _371xhw__Mode-Light _371xhw__Variant-Primary__Mode-Light\\"
-| (Some(Primary), Some(Semi)) => \\"_371xhw__Variant-Primary _371xhw__Mode-Semi _371xhw__Variant-Primary__Mode-Semi\\"
-| (Some(Primary), None) => \\"_371xhw__Variant-Primary\\"
-| (Some(Secondary), Some(Dark)) => \\"_371xhw__Variant-Secondary _371xhw__Mode-Dark _371xhw__Variant-Secondary__Mode-Dark\\"
-| (Some(Secondary), Some(Light)) => \\"_371xhw__Variant-Secondary _371xhw__Mode-Light _371xhw__Variant-Secondary__Mode-Light\\"
-| (Some(Secondary), Some(Semi)) => \\"_371xhw__Variant-Secondary _371xhw__Mode-Semi _371xhw__Variant-Secondary__Mode-Semi\\"
-| (Some(Secondary), None) => \\"_371xhw__Variant-Secondary\\"
-| (None, Some(Dark)) => \\"_371xhw__Mode-Dark\\"
-| (None, Some(Light)) => \\"_371xhw__Mode-Light\\"
-| (None, Some(Semi)) => \\"_371xhw__Mode-Semi\\"
-| (None, None) => \\"_371xhw\\"}
-    }
+  switch (variant, mode) {
+    | (Some(Primary), Some(Dark)) => \\"_371xhw__Variant-Primary _371xhw__Mode-Dark _371xhw__Variant-Primary__Mode-Dark\\"
+    | (Some(Primary), Some(Light)) => \\"_371xhw__Variant-Primary _371xhw__Mode-Light _371xhw__Variant-Primary__Mode-Light\\"
+    | (Some(Primary), Some(Semi)) => \\"_371xhw__Variant-Primary _371xhw__Mode-Semi _371xhw__Variant-Primary__Mode-Semi\\"
+    | (Some(Primary), None) => \\"_371xhw__Variant-Primary\\"
+    | (Some(Secondary), Some(Dark)) => \\"_371xhw__Variant-Secondary _371xhw__Mode-Dark _371xhw__Variant-Secondary__Mode-Dark\\"
+    | (Some(Secondary), Some(Light)) => \\"_371xhw__Variant-Secondary _371xhw__Mode-Light _371xhw__Variant-Secondary__Mode-Light\\"
+    | (Some(Secondary), Some(Semi)) => \\"_371xhw__Variant-Secondary _371xhw__Mode-Semi _371xhw__Variant-Secondary__Mode-Semi\\"
+    | (Some(Secondary), None) => \\"_371xhw__Variant-Secondary\\"
+    | (None, Some(Dark)) => \\"_371xhw__Mode-Dark\\"
+    | (None, Some(Light)) => \\"_371xhw__Mode-Light\\"
+    | (None, Some(Semi)) => \\"_371xhw__Mode-Semi\\"
+    | (None, None) => \\"_371xhw\\"}
+}
 
 let buttonText = (~size:string, ~weight:string, ~variant=?, ~mode=?, ()) => \\"_elo_text _371xhw\\" ++ \\" \\" ++ getButtonTextVariants(~variant, ~mode, ()) ++ \\" \\" ++ style([
     unsafe(\\"font-size\\", size),
     unsafe(\\"font-weight\\", weight)
   ])
 ",
-  "RootStyleButton.elo.css": "._1js6mbz {
+  "RootStyleButton.elo.css": "._r1x8i5 {
   background-color: red;
   padding-left: 10px;
   padding-bottom: 10px
 }
 
-._1js6mbz__Variant-Primary {
+._r1x8i5__Variant-Primary {
   background-color: blue
 }",
   "RootStyleButtonText.elo.css": "._371xhw {

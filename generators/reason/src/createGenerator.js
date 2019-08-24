@@ -54,16 +54,32 @@ const validPseudoClasses = [
 
 const validMediaQueries = ['viewportWidth', 'viewportHeight']
 
-function stringifyDeclaration(declaration) {
-  const prop = '"' + declaration.property + '":'
-
-  if (typeof declaration.value === 'object') {
+function stringifyDeclaration({ property, value, media }) {
+  if (media && typeof value === 'object') {
     return (
-      prop + '{' + declaration.value.map(stringifyDeclaration).join(',\n') + '}'
+      'media("' +
+      property +
+      '", [' +
+      value.map(stringifyDeclaration).join(',\n') +
+      '])'
     )
   }
 
-  return prop + 'props.' + declaration.value
+  if (typeof value === 'object') {
+    return property + '([' + value.map(stringifyDeclaration).join(',\n') + '])'
+  }
+
+  return 'unsafe("' + hyphenateProperty(property) + '", ' + value + ')'
+}
+
+function flattenVariables(style, _ = []) {
+  return style.reduce((vars, { value, property }) => {
+    if (Array.isArray(value)) {
+      return flattenVariables(value, vars)
+    }
+
+    return [...vars, value]
+  }, _)
 }
 
 const defaultConfig = {
@@ -358,26 +374,6 @@ function generateModules(ast, config) {
     return flatVariants
   }, {})
 
-  function stringifyDeclaration({ property, value }) {
-    if (typeof value === 'object') {
-      return (
-        property + '([' + value.map(stringifyDeclaration).join(',\n') + '])'
-      )
-    }
-
-    return 'unsafe("' + hyphenateProperty(property) + '", ' + value + ')'
-  }
-
-  function flattenVariables(style, _ = []) {
-    return style.reduce((vars, { value, property }) => {
-      if (Array.isArray(value)) {
-        return flattenVariables(value, vars)
-      }
-
-      return [...vars, value]
-    }, _)
-  }
-
   return styles.reduce((rules, module) => {
     const style = generateStyle(module.body)
 
@@ -407,37 +403,33 @@ function generateModules(ast, config) {
       variantSwitch = `let get${module.name}Variants = (${variantNames
         .map(variant => '~' + variant.toLowerCase())
         .join(', ')}, ()) => {
-        switch (${Object.keys(variantMap)
-          .map(v => v.toLowerCase())
-          .join(', ')}) {
-          ${combinations
-            // .filter(combination => combination.find(comp => comp !== 'None'))
-            .map(
-              combination =>
-                '| (' +
-                combination
-                  .map(comb =>
-                    comb === 'None' ? 'None' : 'Some(' + comb + ')'
-                  )
-                  .join(', ') +
-                ') => "' +
-                getModuleName(module, config.devMode) +
-                powerset(
-                  combination
-                    .map((comb, index) =>
-                      comb === 'None'
-                        ? ''
-                        : '__' + variantNames[index] + '-' + comb
-                    )
-                    .filter(val => val !== '')
-                )
-                  .filter(set => set.length > 0)
-                  .map(set => set.join(''))
-                  .join(' ' + getModuleName(module, config.devMode)) +
-                '"'
-            )
-            .join('\n')}}
-    }\n\n`
+  switch (${Object.keys(variantMap)
+    .map(v => v.toLowerCase())
+    .join(', ')}) {
+    ${combinations
+      // .filter(combination => combination.find(comp => comp !== 'None'))
+      .map(
+        combination =>
+          '| (' +
+          combination
+            .map(comb => (comb === 'None' ? 'None' : 'Some(' + comb + ')'))
+            .join(', ') +
+          ') => "' +
+          getModuleName(module, config.devMode) +
+          powerset(
+            combination
+              .map((comb, index) =>
+                comb === 'None' ? '' : '__' + variantNames[index] + '-' + comb
+              )
+              .filter(val => val !== '')
+          )
+            .filter(set => set.length > 0)
+            .map(set => set.join(''))
+            .join(' ' + getModuleName(module, config.devMode)) +
+          '"'
+      )
+      .join('\n    ')}}
+}\n\n`
     }
 
     rules.push(
@@ -557,6 +549,7 @@ function generateStyle(nodes) {
               nest.operator
             ),
             value: generateStyle(nest.body),
+            media: true,
           }
         }
       }
