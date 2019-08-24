@@ -1,5 +1,5 @@
 {
-  "name": "@elodin/utils",
+  "name": "@elodin/types",
   "version": "0.0.16",
   "main": "lib/index.js",
   "module": "es/index.js",
