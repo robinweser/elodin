@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { parse } from '@elodin/parser'
+import { useRouter } from 'next/router'
 import { createGenerator as createJsGenerator } from '@elodin/generator-css-in-js'
 import { createGenerator as createReasonGenerator } from '@elodin/generator-reason'
 import { format } from '@elodin/format'
@@ -15,7 +16,9 @@ const generators = {
 }
 
 export default () => {
-  const [code, setCode] = useState('')
+  const router = useRouter()
+  const [code, setCode] = useState(router.query.code || '')
+
   const [out, setOut] = useState({})
   const [ast, setAst] = useState({})
   const [generator, setGenerator] = useState('css-in-js')
@@ -27,20 +30,17 @@ export default () => {
   }
 
   useEffect(() => {
-    if (!code && localStorage.getItem('code') !== null) {
-      setCode(localStorage.getItem('code'))
-    }
-  }, [])
-
-  useEffect(() => {
     setAdapter(
       generators[generator].adapters
         ? generators[generator].adapters[0]
         : undefined
     )
   }, [generator])
+
   useEffect(() => {
-    localStorage.setItem('code', code)
+    if (code) {
+      history && history.replaceState({}, null, '?code=' + encodeURI(code))
+    }
   }, [code])
 
   useEffect(() => {
