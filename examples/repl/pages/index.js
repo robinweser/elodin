@@ -17,7 +17,7 @@ const generators = {
 
 export default () => {
   const router = useRouter()
-  const [code, setCode] = useState(router.query.code || '')
+  const [code, setCode] = useState('')
 
   const [out, setOut] = useState({})
   const [ast, setAst] = useState({})
@@ -30,6 +30,12 @@ export default () => {
   }
 
   useEffect(() => {
+    if (router.query.code) {
+      setCode(router.query.code)
+    }
+  }, [router])
+
+  useEffect(() => {
     setAdapter(
       generators[generator].adapters
         ? generators[generator].adapters[0]
@@ -39,7 +45,10 @@ export default () => {
 
   useEffect(() => {
     if (code) {
-      history && history.replaceState({}, null, '?code=' + encodeURI(code))
+      // use try/catch to catch replaceState overuse errors
+      try {
+        history && history.replaceState({}, null, '?code=' + encodeURI(code))
+      } catch (e) {}
     }
   }, [code])
 

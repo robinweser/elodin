@@ -2051,26 +2051,10 @@
     resolve-from "^5.0.0"
     semver "^5.6.0"
 
-"@now/next@^0.4.0":
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@now/next/-/next-0.4.1.tgz#f04948d95d4fb2762c2bf0f1407a690759005602"
-  integrity sha512-Pc2hZeEW5fzxbS4olCONbxv2mDSdtE+BknosHNeGVmGJtpIaIheW0pBLfIhRccewZJ6WSVOfgU108bnFkP5R0Q==
-  dependencies:
-    "@now/node-bridge" "^1.1.4"
-    fs-extra "^7.0.0"
-    get-port "^5.0.0"
-    resolve-from "^5.0.0"
-    semver "^5.6.0"
-
 "@now/node-bridge@1.2.3":
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/@now/node-bridge/-/node-bridge-1.2.3.tgz#1e632e99a85ec55282fd968490dde136efd20ec1"
   integrity sha512-OsFCwK6dTO01fXivSo2qrRlr5r7rDg3StPRNxFiC6a9unNJvhQ3Ir7O9T3mcy3oHONBRuTK/UOTq3u1C71DiYQ==
-
-"@now/node-bridge@^1.1.4":
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/@now/node-bridge/-/node-bridge-1.1.4.tgz#80b3311d90b1bf2d7e1fec4ad9f5b98bd1192dd6"
-  integrity sha512-P9hsw8EphqWxrD8hSBz8lq4O95R3Sbr2id5gKnjmX0b+coi1l0jiNAEgt9zWL6v44touQLDf4ed42HF+solAqA==
 
 "@types/node@*":
   version "12.0.7"
@@ -7976,7 +7960,7 @@ next@9.0.2:
     webpack-sources "1.3.0"
     worker-farm "1.7.0"
 
-next@^8.1.0, next@latest:
+next@latest:
   version "8.1.0"
   resolved "https://registry.yarnpkg.com/next/-/next-8.1.0.tgz#2a996dcd611f9e16920841c615e8bd6e5ada6e1c"
   integrity sha512-NRlL+FNSeHXkDSi8hFoBWghXFJrjHTCXyH6T/EFR1HJiGo2xR3xBPhsb7W+GvIIGIxHRTCDq+lyQLYvPirH84g==
