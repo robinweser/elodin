@@ -1,8 +1,6 @@
+import { uncapitalizeString } from '@elodin/utils'
+import { hyphenateProperty } from 'css-in-js-utils'
 import color from 'color'
-
-function uncapitalizeString(str) {
-  return str.charAt(0).toLowerCase() + str.substr(1)
-}
 
 export default function createGenerator(config = {}) {
   return function generate(ast, fileName = '') {
@@ -24,7 +22,7 @@ function stringifyDeclaration(declaration) {
   return prop + (declaration.dynamic ? 'props.' : '') + declaration.value
 }
 
-function generateCSSValue(value, property) {
+function generateValue(value, property) {
   if (value.type === 'Variable') {
     return value.value
   }
@@ -127,7 +125,7 @@ function generateStyle(nodes) {
 
   return base.map(declaration => ({
     property: declaration.property,
-    value: generateCSSValue(declaration.value, declaration.property),
+    value: generateValue(declaration.value, declaration.property),
     dynamic: declaration.dynamic,
   }))
 }

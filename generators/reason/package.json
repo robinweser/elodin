@@ -18,9 +18,7 @@
   "author": "rofrischmann <robin@rofrischmann.de>",
   "license": "MIT",
   "dependencies": {
-    "@elodin/runtime": "^0.0.16",
     "@elodin/utils": "^0.0.16",
-    "color": "^3.1.2",
     "css-in-js-utils": "^3.0.0"
   },
   "devDependencies": {

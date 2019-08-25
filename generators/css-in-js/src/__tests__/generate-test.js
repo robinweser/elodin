@@ -2,6 +2,9 @@ import { parse } from '@elodin/parser'
 
 import { createGenerator } from '../index'
 
+import felaAdapter from '../adapters/fela'
+import reactFelaAdapter from '../adapters/react-fela'
+
 const file = `
 variant Type {
   Primary
@@ -16,7 +19,8 @@ variant Mode {
 view Button {
   backgroundColor: red
   paddingLeft: 10
-  __borderWidth: multiply($borderWidth 2)
+  __border: 0
+  borderWidth: $borderWidth
   [Type=Primary] {
     color: red
     [Mode=Dark] {
@@ -50,14 +54,18 @@ describe('Compiling to CSS and JavaScript', () => {
   it('should return a map of files', () => {
     const { ast } = parse(file)
 
-    expect(createGenerator()(ast)).toMatchSnapshot()
+    expect(
+      createGenerator({
+        adapter: felaAdapter,
+      })(ast)
+    ).toMatchSnapshot()
   })
 
   it('should use the given adapter', () => {
     const { ast } = parse(file)
 
     expect(
-      createGenerator({ adapter: 'react-fela' })(ast, 'root')
+      createGenerator({ adapter: reactFelaAdapter })(ast, 'root')
     ).toMatchSnapshot()
   })
 })

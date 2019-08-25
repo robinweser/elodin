@@ -8,26 +8,28 @@ import {
   stringifyCSSRule,
 } from '@elodin/utils'
 import { isUnitlessProperty, hyphenateProperty } from 'css-in-js-utils'
-import color from 'color'
-
-import adapters from './adapters'
 
 export default function createGenerator({
-  adapter = 'fela',
+  adapter,
   devMode = false,
   rootNode = 'body',
   dynamicImport = false,
 } = {}) {
-  const usedAdapter = adapters.find(adapt => adapt.name === adapter)
   const config = {
     devMode,
     rootNode,
     dynamicImport,
   }
 
+  if (!adapter) {
+    throw new Error(
+      'An adapter needs to passed in order to generate code. See @elodin/generator-css-in-js/lib/adapters for more information.'
+    )
+  }
+
   return function generate(ast, fileName) {
     const css = generateCSS(ast, config)
-    const js = generateJS(ast, config, usedAdapter)
+    const js = generateJS(ast, config, adapter)
     const root = generateRoot(ast, config)
 
     return { [fileName + '.js']: root, ...css, ...js }
@@ -92,7 +94,7 @@ function generateJS(ast, { devMode, dynamicImport }, adapter) {
     const style = generateStyle(module.body)
     const classNameMap = generateClassNameMap(module.body, variants)
 
-    files[module.name + '.elo.js'] = adapter.stringify({
+    files[module.name + '.elo.js'] = adapter({
       style,
       moduleName: module.name,
       dynamicImport,

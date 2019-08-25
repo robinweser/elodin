@@ -2,20 +2,21 @@
 
 exports[`Compiling to CSS and JavaScript should return a map of files 1`] = `
 Object {
-  "Button.elo.css": "._ixdniv {
+  "Button.elo.css": "._1p38iz4 {
   background-color: red;
-  padding-left: 10px
+  padding-left: 10px;
+  border: 0px
 }
 
-._ixdniv__Type-Primary {
+._1p38iz4__Type-Primary {
   color: red
 }
 
-._ixdniv__Type-Primary__Mode-Dark {
+._1p38iz4__Type-Primary__Mode-Dark {
   color: blue
 }
 
-._ixdniv__Mode-Light {
+._1p38iz4__Mode-Light {
   color: green
 }",
   "Button.elo.js": "import './Button.elo.css'
@@ -37,8 +38,8 @@ const variantMap = {
 
 export function Button(props = {}) {
   return {
-    _className: getClassNameFromVariantMap('_elo_view _ixdniv', variantMap, props),
-    \\"borderWidth\\":props.undefined
+    _className: getClassNameFromVariantMap('_elo_view _1p38iz4', variantMap, props),
+    \\"borderWidth\\":props.borderWidth
   }
 }",
   "Label.elo.css": "._1edorjp:hover {
@@ -65,20 +66,21 @@ export {
 
 exports[`Compiling to CSS and JavaScript should use the given adapter 1`] = `
 Object {
-  "Button.elo.css": "._ixdniv {
+  "Button.elo.css": "._1p38iz4 {
   background-color: red;
-  padding-left: 10px
+  padding-left: 10px;
+  border: 0px
 }
 
-._ixdniv__Type-Primary {
+._1p38iz4__Type-Primary {
   color: red
 }
 
-._ixdniv__Type-Primary__Mode-Dark {
+._1p38iz4__Type-Primary__Mode-Dark {
   color: blue
 }
 
-._ixdniv__Mode-Light {
+._1p38iz4__Mode-Light {
   color: green
 }",
   "Button.elo.js": "import './Button.elo.css'
@@ -101,8 +103,8 @@ const variantMap = {
 
 function Button(props  = {}) {
   return {
-    _className: getClassNameFromVariantMap('_elo_view _ixdniv', variantMap, props),
-    \\"borderWidth\\":props.undefined
+    _className: getClassNameFromVariantMap('_elo_view _1p38iz4', variantMap, props),
+    \\"borderWidth\\":props.borderWidth
   }
 }
 
