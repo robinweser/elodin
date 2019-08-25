@@ -19,17 +19,24 @@ export default function generateCSSClasses(
   nodes,
   variants,
   classes = [],
-  modifier = '',
+  modifier = [],
   pseudo = '',
   media = ''
 ) {
   const base = nodes.filter(node => node.type === 'Declaration')
   const nesting = nodes.filter(node => node.type !== 'Declaration')
+  const variantOrder = variants.map(variant => variant.name)
 
   classes.push({
     media,
     pseudo,
-    modifier,
+    // ensure the variant modifier order is always deterministic
+    modifier: modifier
+      .sort((a, b) =>
+        variantOrder.indexOf(a[0]) > variantOrder.indexOf(b[0]) ? 1 : -1
+      )
+      .map(([name, value]) => '__' + name + '-' + value)
+      .join(''),
     declarations: getStaticDeclarations(base),
   })
 
@@ -52,7 +59,7 @@ export default function generateCSSClasses(
 
               classes,
               // TODO: variants in deterministic order
-              modifier + '__' + variant.name + '-' + variation.value,
+              [...modifier, [variant.name, variation.value]],
               pseudo,
               media
             )
