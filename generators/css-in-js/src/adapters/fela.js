@@ -13,6 +13,7 @@ function stringifyDeclaration(declaration) {
 export default function felaAdapter({
   style,
   className,
+  resetClassName,
   classNameMap,
   moduleName,
   dynamicImport,
@@ -35,8 +36,13 @@ export default function felaAdapter({
     'return {\n    ' +
     '_className: ' +
     (hasVariations
-      ? "getClassNameFromVariantMap('" + className + "', variantMap, props)"
-      : "'" + className + "'") +
+      ? "'" +
+        resetClassName +
+        " ' + " +
+        "getClassNameFromVariantMap('" +
+        className +
+        "', variantMap, props)"
+      : "'" + resetClassName + ' ' + className + "'") +
     ',\n    ' +
     style.map(stringifyDeclaration).join(',\n    ') +
     '\n  }\n}'

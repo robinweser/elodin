@@ -14,14 +14,14 @@ export default function reactFelaAdapter({
   style,
   moduleName,
   classNameMap,
+  resetClassName,
   className,
+  dynamicImport,
 }) {
   const hasVariations = Object.keys(classNameMap).length > 1
 
   return (
-    "import './" +
-    moduleName +
-    ".elo.css'\n" +
+    (!dynamicImport ? "import './" + moduleName + ".elo.css'\n" : '') +
     "import { createComponent } from 'react-fela'\n" +
     (hasVariations
       ? "import { getClassNameFromVariantMap } from '@elodin/runtime'\n\n" +
@@ -34,11 +34,17 @@ export default function reactFelaAdapter({
     'Style' +
     '(props  = {})' +
     ' {\n  ' +
+    (dynamicImport ? "import('./" + moduleName + ".elo.css')\n" : '') +
     'return {\n    ' +
     '_className: ' +
     (hasVariations
-      ? "getClassNameFromVariantMap('" + className + "', variantMap, props)"
-      : "'" + className + "'") +
+      ? "'" +
+        resetClassName +
+        " ' + " +
+        "getClassNameFromVariantMap('" +
+        className +
+        "', variantMap, props)"
+      : "'" + resetClassName + ' ' + className + "'") +
     ',\n    ' +
     style.map(stringifyDeclaration).join(',\n    ') +
     '\n  }\n}\n\n' +

@@ -99,7 +99,8 @@ function generateJS(ast, { devMode, dynamicImport }, adapter) {
       moduleName: module.name,
       dynamicImport,
       classNameMap,
-      className: '_elo_' + module.format + ' ' + getModuleName(module, devMode),
+      resetClassName: '_elo_' + module.format,
+      className: getModuleName(module, devMode),
       variants: variants.reduce((flatVariants, variant) => {
         flatVariants[variant.name] = variant.body.map(
           variation => variation.value

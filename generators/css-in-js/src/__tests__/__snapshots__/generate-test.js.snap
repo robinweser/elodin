@@ -38,7 +38,7 @@ const variantMap = {
 
 export function Button(props = {}) {
   return {
-    _className: getClassNameFromVariantMap('_elo_view _1p38iz4', variantMap, props),
+    _className: '_elo_view ' + getClassNameFromVariantMap('_1p38iz4', variantMap, props),
     \\"borderWidth\\":props.borderWidth
   }
 }",
@@ -103,7 +103,7 @@ const variantMap = {
 
 function ButtonStyle(props  = {}) {
   return {
-    _className: getClassNameFromVariantMap('_elo_view _1p38iz4', variantMap, props),
+    _className: '_elo_view ' + getClassNameFromVariantMap('_1p38iz4', variantMap, props),
     \\"borderWidth\\":props.borderWidth
   }
 }
