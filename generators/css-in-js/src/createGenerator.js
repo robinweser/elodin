@@ -1,52 +1,16 @@
+import {
+  isPseudoClass,
+  isPseudoElement,
+  isMediaQuery,
+  generateCSSMediaQueryFromNode,
+  generateCSSClasses,
+  getModuleName,
+  stringifyCSSRule,
+} from '@elodin/utils'
 import { isUnitlessProperty, hyphenateProperty } from 'css-in-js-utils'
 import color from 'color'
 
 import adapters from './adapters'
-
-import hash from './hash'
-
-// still missing some special onces
-const validPseudoClasses = [
-  'link',
-  'hover',
-  'focus',
-  'active',
-  'visited',
-  'checked',
-  'default',
-  'empty',
-  'enabled',
-  'first',
-  'disabled',
-  'focusWithin',
-  'firstChild',
-  'lastChild',
-  'firstOfType',
-  'intermediate',
-  'inRange',
-  'invalid',
-  'lastOfType',
-  'left',
-  'onlyChild',
-  'onlyOfType',
-  'optional',
-  'readOnly',
-  'readWrite',
-  'required',
-  'right',
-  'target',
-  'valid',
-  'visited',
-  // pseudo elements
-  // TODO: split later
-  'before',
-  'after',
-  'firstLine',
-  'firstLetter',
-  'selection',
-]
-
-const validMediaQueries = ['viewportWidth', 'viewportHeight']
 
 export default function createGenerator({
   adapter = 'fela',
@@ -70,15 +34,6 @@ export default function createGenerator({
   }
 }
 
-function getModuleName(module, devMode) {
-  const hashedBody = '_' + hash(JSON.stringify(module.body))
-
-  if (devMode) {
-    return module.name + hashedBody
-  }
-  return hashedBody
-}
-
 function generateRoot(ast) {
   // TODO: include fragments
   const styles = ast.body.filter(node => node.type === 'Style')
@@ -99,74 +54,21 @@ function generateRoot(ast) {
   )
 }
 
-function generateCSSValue(value, property, unit = true) {
-  if (value.type === 'Integer') {
-    return (
-      (value.negative ? '-' : '') +
-      value.value +
-      (unit && !isUnitlessProperty(property) ? 'px' : '')
-    )
-  }
-
-  if (value.type === 'RawValue' || value.type === 'String') {
-    return value.value
-  }
-
-  if (value.type === 'Percentage') {
-    if (property === 'opacity') {
-      return value.value / 100
-    } else {
-      return value.value + '%'
-    }
-  }
-
-  if (value.type === 'Color') {
-    const { format, red, blue, green, alpha } = value
-
-    const colorValue = color.rgb(red, green, blue, alpha)
-    if (format === 'hex') {
-      return colorValue.hex()
-    }
-
-    if (format === 'keyword') {
-      // TODO: check APIs
-      return colorValue.keyword()
-    }
-
-    return colorValue[format]().string()
-  }
-
-  if (value.type === 'Float') {
-    return (
-      (value.negative ? '-' : '') +
-      value.integer +
-      '.' +
-      value.fractional +
-      (unit ? 'px' : '')
-    )
-  }
-
-  if (value.type === 'Identifier') {
-    return hyphenateProperty(value.value)
-  }
-
-  return value.value
-}
-
 function generateCSS(ast, { devMode }) {
   // TODO: include fragments
   const styles = ast.body.filter(node => node.type === 'Style')
   const variants = ast.body.filter(node => node.type === 'Variant')
 
   return styles.reduce((files, module) => {
-    const classes = generateClasses(module.body, variants)
+    const classes = generateCSSClasses(module.body, variants)
 
     files[module.name + '.elo.css'] = classes
       .filter(selector => selector.declarations.length > 0)
       .map(selector => {
-        const css = stringifyCSS(
+        const css = stringifyCSSRule(
           selector.declarations,
-          getModuleName(module, devMode) + selector.modifier + selector.pseudo
+          getModuleName(module, devMode) + selector.modifier + selector.pseudo,
+          selector.media ? '  ' : ''
         )
 
         if (selector.media) {
@@ -179,105 +81,6 @@ function generateCSS(ast, { devMode }) {
 
     return files
   }, {})
-}
-
-function generateClasses(
-  nodes,
-  variants,
-  classes = [],
-  modifier = '',
-  pseudo = '',
-  media = ''
-) {
-  const base = nodes.filter(node => node.type === 'Declaration')
-  const nesting = nodes.filter(node => node.type !== 'Declaration')
-
-  classes.push({
-    media,
-    pseudo,
-    modifier,
-    declarations: getStaticDeclarations(base),
-  })
-
-  nesting.forEach(nest => {
-    if (nest.property.type === 'Identifier') {
-      const variant = variants.find(
-        variant => variant.name === nest.property.value
-      )
-
-      if (variant) {
-        if (nest.value.type === 'Identifier') {
-          const variation = variant.body.find(
-            variant => variant.value === nest.value.value
-          )
-
-          if (variation) {
-            generateClasses(
-              nest.body,
-              variants,
-              classes,
-              modifier + '__' + variant.name + '-' + variation.value,
-              pseudo,
-              media
-            )
-          }
-        }
-      } else {
-        // TODO: throw
-      }
-    }
-
-    if (nest.property.type === 'Variable' && nest.property.environment) {
-      if (
-        nest.boolean &&
-        validPseudoClasses.indexOf(nest.property.value) !== -1
-      ) {
-        generateClasses(
-          nest.body,
-          variants,
-          classes,
-          modifier,
-          pseudo + ':' + hyphenateProperty(nest.property.value),
-          media
-        )
-      }
-
-      if (validMediaQueries.indexOf(nest.property.value) !== -1) {
-        generateClasses(
-          nest.body,
-          variants,
-          classes,
-          modifier,
-          pseudo,
-          getMediaQuery(nest.value.value, nest.property.value, nest.operator)
-        )
-      }
-    }
-  })
-
-  return classes
-}
-
-function getStaticDeclarations(declarations) {
-  return declarations
-    .filter(decl => !decl.dynamic)
-    .map(declaration => ({
-      property: declaration.property,
-      value: generateCSSValue(declaration.value, declaration.property),
-    }))
-}
-
-function stringifyCSS(declarations, name) {
-  return (
-    '.' +
-    name +
-    ' {\n  ' +
-    declarations
-      .map(decl => hyphenateProperty(decl.property) + ': ' + decl.value)
-      .join(';\n  ') +
-    '\n' +
-    '}'
-  )
 }
 
 function generateJS(ast, { devMode, dynamicImport }, adapter) {
@@ -368,19 +171,21 @@ function generateStyle(nodes) {
   const nests = nestings
     .map(nest => {
       if (nest.property.type === 'Variable' && nest.property.environment) {
-        if (
-          nest.boolean &&
-          validPseudoClasses.indexOf(nest.property.value) !== -1
-        ) {
-          return {
-            property: ':' + nest.property.value,
-            value: generateStyle(nest.body),
+        if (nest.boolean) {
+          const pseudoClass = isPseudoClass(nest.property.value)
+          const pseudoElement = isPseudoElement(nest.property.value)
+
+          if (pseudoClass || pseudoElement) {
+            return {
+              property: (pseudoElement ? '::' : ':') + nest.property.value,
+              value: generateStyle(nest.body),
+            }
           }
         }
 
-        if (validMediaQueries.indexOf(nest.property.value) !== -1) {
+        if (isMediaQuery(nest.property.value)) {
           return {
-            property: getMediaQuery(
+            property: getCSSMediaQueryFromNode(
               nest.value.value,
               nest.property.value,
               nest.operator
@@ -393,38 +198,4 @@ function generateStyle(nodes) {
     .filter(nesting => nesting && nesting.value.length > 0)
 
   return [...declarations, ...nests]
-}
-
-function getMediaQuery(value, property, operator) {
-  const dimension = property.indexOf('Height') !== -1 ? 'height' : 'width'
-
-  if (operator === '=') {
-    return (
-      '(min-' +
-      dimension +
-      ': ' +
-      value +
-      'px) and (max-' +
-      dimension +
-      ': ' +
-      value +
-      'px)'
-    )
-  }
-
-  if (operator === '>') {
-    return '(min-' + dimension + ': ' + (value + 1) + 'px)'
-  }
-
-  if (operator === '>=') {
-    return '(min-' + dimension + ': ' + value + 'px)'
-  }
-
-  if (operator === '<=') {
-    return '(max-' + dimension + ': ' + value + 'px)'
-  }
-
-  if (operator === '<') {
-    return '(max-' + dimension + ': ' + (value - 1) + 'px)'
-  }
 }

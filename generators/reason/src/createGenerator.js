@@ -1,90 +1,21 @@
+import {
+  capitalizeString,
+  uncapitalizeString,
+  isPseudoClass,
+  isPseudoElement,
+  isMediaQuery,
+  getArrayCombinations,
+  getValueCombinations,
+  getModuleName,
+  stringifyCSSRule,
+  getCSSMediaQueryFromNode,
+  flattenVariables,
+  generateCSSClasses,
+} from '@elodin/utils'
 import { isUnitlessProperty, hyphenateProperty } from 'css-in-js-utils'
-import color from 'color'
-
-import hash from './hash'
-
-function capitalizeString(str) {
-  return str.charAt(0).toUpperCase() + str.substr(1)
-}
-
-function uncapitalizeString(str) {
-  return str.charAt(0).toLowerCase() + str.substr(1)
-}
-
-// still missing some special onces
-const validPseudoClasses = [
-  'link',
-  'hover',
-  'focus',
-  'active',
-  'visited',
-  'checked',
-  'default',
-  'empty',
-  'enabled',
-  'first',
-  'disabled',
-  'focusWithin',
-  'firstChild',
-  'lastChild',
-  'firstOfType',
-  'intermediate',
-  'inRange',
-  'invalid',
-  'lastOfType',
-  'left',
-  'onlyChild',
-  'onlyOfType',
-  'optional',
-  'readOnly',
-  'readWrite',
-  'required',
-  'right',
-  'target',
-  'valid',
-  'visited',
-  // pseudo elements
-  // TODO: split later
-  'before',
-  'after',
-  'firstLine',
-  'firstLetter',
-  'selection',
-]
-
-const validMediaQueries = ['viewportWidth', 'viewportHeight']
-
-function stringifyDeclaration({ property, value, media }) {
-  if (media && typeof value === 'object') {
-    return (
-      'media("' +
-      property +
-      '", [' +
-      value.map(stringifyDeclaration).join(',\n') +
-      '])'
-    )
-  }
-
-  if (typeof value === 'object') {
-    return property + '([' + value.map(stringifyDeclaration).join(',\n') + '])'
-  }
-
-  return 'unsafe("' + hyphenateProperty(property) + '", ' + value + ')'
-}
-
-function flattenVariables(style, _ = []) {
-  return style.reduce((vars, { value, property }) => {
-    if (Array.isArray(value)) {
-      return flattenVariables(value, vars)
-    }
-
-    return [...vars, value]
-  }, _)
-}
 
 const defaultConfig = {
   devMode: false,
-  dynamicImport: false,
   generateFileName: (fileName, moduleName) =>
     capitalizeString(fileName) + moduleName + 'Style',
 }
@@ -103,27 +34,23 @@ export default function createGenerator(customConfig = {}) {
       .map(capitalizeString)
       .join('')
 
-    const css = generateCSS(ast, config, fileName)
     const modules = generateModules(ast, config)
-    const reason = generateReason(ast, config, modules, fileName)
+    const css = generateCSSFiles(ast, config, fileName)
+    const reason = generateReasonFile(ast, config, modules, fileName)
 
     return { ...css, ...reason }
   }
 }
 
-function getModuleName(module, devMode) {
-  const hashedBody = '_' + hash(JSON.stringify(module.body))
+function generateReasonFile(
+  ast,
+  { devMode, generateFileName },
+  modules,
+  fileName
+) {
+  const moduleName = generateFileName(fileName, '')
 
-  if (devMode) {
-    return module.name + hashedBody
-  }
-  return hashedBody
-}
-
-function generateReason(ast, config, modules, fileName) {
   // TODO: include fragments
-  const moduleName = config.generateFileName(fileName, '')
-
   const styles = ast.body.filter(node => node.type === 'Style')
   const variants = ast.body.filter(node => node.type === 'Variant')
 
@@ -164,75 +91,22 @@ function generateReason(ast, config, modules, fileName) {
   }
 }
 
-function generateCSSValue(value, property, unit = true) {
-  if (value.type === 'Integer') {
-    return (
-      (value.negative ? '-' : '') +
-      value.value +
-      (unit && !isUnitlessProperty(property) ? 'px' : '')
-    )
-  }
-
-  if (value.type === 'RawValue' || value.type === 'String') {
-    return value.value
-  }
-
-  if (value.type === 'Percentage') {
-    if (property === 'opacity') {
-      return value.value / 100
-    } else {
-      return value.value + '%'
-    }
-  }
-
-  if (value.type === 'Color') {
-    const { format, red, blue, green, alpha } = value
-
-    const colorValue = color.rgb(red, green, blue, alpha)
-    if (format === 'hex') {
-      return colorValue.hex()
-    }
-
-    if (format === 'keyword') {
-      // TODO: check APIs
-      return colorValue.keyword()
-    }
-
-    return colorValue[format]().string()
-  }
-
-  if (value.type === 'Float') {
-    return (
-      (value.negative ? '-' : '') +
-      value.integer +
-      '.' +
-      value.fractional +
-      (unit && !isUnitlessProperty(property) ? 'px' : '')
-    )
-  }
-
-  if (value.type === 'Identifier') {
-    return hyphenateProperty(value.value)
-  }
-
-  return value.value
-}
-
-function generateCSS(ast, { devMode, generateFileName }, fileName) {
+function generateCSSFiles(ast, { devMode, generateFileName }, fileName) {
   // TODO: include fragments
   const styles = ast.body.filter(node => node.type === 'Style')
   const variants = ast.body.filter(node => node.type === 'Variant')
   const generatedFileName = generateFileName(fileName, '')
 
   return styles.reduce((files, module) => {
-    const classes = generateClasses(module.body, variants)
+    const classes = generateCSSClasses(module.body, variants)
 
     files[generatedFileName + module.name + '.elo.css'] = classes
       .filter(selector => selector.declarations.length > 0)
       .map(selector => {
-        const css = stringifyCSS(
+        const css = stringifyCSSRule(
           selector.declarations,
-          getModuleName(module, devMode) + selector.modifier + selector.pseudo
+          getModuleName(module, devMode) + selector.modifier + selector.pseudo,
+          selector.media ? '  ' : ''
         )
 
         if (selector.media) {
@@ -247,123 +121,7 @@ function generateCSS(ast, { devMode, generateFileName }, fileName) {
   }, {})
 }
 
-function generateClasses(
-  nodes,
-  variants,
-  classes = [],
-  modifier = '',
-  pseudo = '',
-  media = ''
-) {
-  const base = nodes.filter(node => node.type === 'Declaration')
-  const nesting = nodes.filter(node => node.type !== 'Declaration')
-
-  classes.push({
-    media,
-    pseudo,
-    modifier,
-    declarations: getStaticDeclarations(base),
-  })
-
-  nesting.forEach(nest => {
-    if (nest.property.type === 'Identifier') {
-      const variant = variants.find(
-        variant => variant.name === nest.property.value
-      )
-
-      if (variant) {
-        if (nest.value.type === 'Identifier') {
-          const variation = variant.body.find(
-            variant => variant.value === nest.value.value
-          )
-
-          if (variation) {
-            generateClasses(
-              nest.body,
-              variants,
-              classes,
-              // TODO: variants in deterministic order
-              modifier + '__' + variant.name + '-' + variation.value,
-              pseudo,
-              media
-            )
-          }
-        }
-      } else {
-        // TODO: throw
-      }
-    }
-
-    if (nest.property.type === 'Variable' && nest.property.environment) {
-      if (
-        nest.boolean &&
-        validPseudoClasses.indexOf(nest.property.value) !== -1
-      ) {
-        generateClasses(
-          nest.body,
-          variants,
-          classes,
-          modifier,
-          pseudo + ':' + hyphenateProperty(nest.property.value),
-          media
-        )
-      }
-
-      if (validMediaQueries.indexOf(nest.property.value) !== -1) {
-        generateClasses(
-          nest.body,
-          variants,
-          classes,
-          modifier,
-          pseudo,
-          getMediaQuery(nest.value.value, nest.property.value, nest.operator)
-        )
-      }
-    }
-  })
-
-  return classes
-}
-
-function getStaticDeclarations(declarations) {
-  return declarations
-    .filter(decl => !decl.dynamic)
-    .map(declaration => ({
-      property: declaration.property,
-      value: generateCSSValue(declaration.value, declaration.property),
-    }))
-}
-
-function stringifyCSS(declarations, name) {
-  return (
-    '.' +
-    name +
-    ' {\n  ' +
-    declarations
-      .map(decl => hyphenateProperty(decl.property) + ': ' + decl.value)
-      .join(';\n  ') +
-    '\n' +
-    '}'
-  )
-}
-
-function cartesian() {
-  var r = [],
-    arg = arguments,
-    max = arg.length - 1
-  function helper(arr, i) {
-    for (var j = 0, l = arg[i].length; j < l; j++) {
-      var a = arr.slice(0) // clone arr
-      a.push(arg[i][j])
-      if (i == max) r.push(a)
-      else helper(a, i + 1)
-    }
-  }
-  helper([], 0)
-  return r
-}
-
-function generateModules(ast, config) {
+function generateModules(ast, { devMode }) {
   // TODO: include fragments
   const styles = ast.body.filter(node => node.type === 'Style')
   const variants = ast.body.filter(node => node.type === 'Variant')
@@ -378,27 +136,15 @@ function generateModules(ast, config) {
     const style = generateStyle(module.body)
 
     const className =
-      '_elo_' + module.format + ' ' + getModuleName(module, config.devMode)
+      '_elo_' + module.format + ' ' + getModuleName(module, devMode)
 
     const variantNames = Object.keys(variantMap)
 
     let variantSwitch = ''
     if (variantNames.length > 0) {
-      const combinations = cartesian(
+      const combinations = getArrayCombinations(
         ...variantNames.map(variant => [...variantMap[variant], 'None'])
       )
-
-      const powerset = array => {
-        // O(2^n)
-        const results = [[]]
-        for (const value of array) {
-          const copy = [...results] // See note below.
-          for (const prefix of copy) {
-            results.push(prefix.concat(value))
-          }
-        }
-        return results
-      }
 
       variantSwitch = `let get${module.name}Variants = (${variantNames
         .map(variant => '~' + variant.toLowerCase())
@@ -415,9 +161,9 @@ function generateModules(ast, config) {
             .map(comb => (comb === 'None' ? 'None' : 'Some(' + comb + ')'))
             .join(', ') +
           ') => "' +
-          getModuleName(module, config.devMode) +
-          powerset(
-            combination
+          getModuleName(module, devMode) +
+          getValueCombinations(
+            ...combination
               .map((comb, index) =>
                 comb === 'None' ? '' : '__' + variantNames[index] + '-' + comb
               )
@@ -425,7 +171,7 @@ function generateModules(ast, config) {
           )
             .filter(set => set.length > 0)
             .map(set => set.join(''))
-            .join(' ' + getModuleName(module, config.devMode)) +
+            .join(' ' + getModuleName(module, devMode)) +
           '"'
       )
       .join('\n    ')}}
@@ -471,52 +217,6 @@ function generateModules(ast, config) {
   }, [])
 }
 
-function generateClassNameMap(
-  nodes,
-  variants,
-  classes = {},
-  variations = {},
-  modifier = ''
-) {
-  const base = nodes.filter(node => node.type === 'Declaration')
-  const nesting = nodes.filter(node => node.type !== 'Declaration')
-
-  classes[modifier] = variations
-
-  nesting.forEach(nest => {
-    if (nest.property.type === 'Identifier') {
-      const variant = variants.find(
-        variant => variant.name === nest.property.value
-      )
-
-      if (variant) {
-        if (nest.value.type === 'Identifier') {
-          const variation = variant.body.find(
-            variant => variant.value === nest.value.value
-          )
-
-          if (variation) {
-            generateClassNameMap(
-              nest.body,
-              variants,
-              classes,
-              {
-                ...variations,
-                [variant.name]: variation.value,
-              },
-              modifier + '__' + variant.name + '-' + variation.value
-            )
-          }
-        }
-      } else {
-        // TODO: throw
-      }
-    }
-  })
-
-  return classes
-}
-
 function generateStyle(nodes) {
   const base = nodes.filter(node => node.type === 'Declaration')
   const nestings = nodes.filter(node => node.type !== 'Declaration')
@@ -533,7 +233,8 @@ function generateStyle(nodes) {
       if (nest.property.type === 'Variable' && nest.property.environment) {
         if (
           nest.boolean &&
-          validPseudoClasses.indexOf(nest.property.value) !== -1
+          (isPseudoClass(nest.property.value) ||
+            isPseudoElement(nest.property.value))
         ) {
           return {
             property: nest.property.value,
@@ -541,9 +242,9 @@ function generateStyle(nodes) {
           }
         }
 
-        if (validMediaQueries.indexOf(nest.property.value) !== -1) {
+        if (isMediaQuery(nest.property.value)) {
           return {
-            property: getMediaQuery(
+            property: getCSSMediaQueryFromNode(
               nest.value.value,
               nest.property.value,
               nest.operator
@@ -559,36 +260,20 @@ function generateStyle(nodes) {
   return [...declarations, ...nests]
 }
 
-function getMediaQuery(value, property, operator) {
-  const dimension = property.indexOf('Height') !== -1 ? 'height' : 'width'
-
-  if (operator === '=') {
+function stringifyDeclaration({ property, value, media }) {
+  if (media && typeof value === 'object') {
     return (
-      '(min-' +
-      dimension +
-      ': ' +
-      value +
-      'px) and (max-' +
-      dimension +
-      ': ' +
-      value +
-      'px)'
+      'media("' +
+      property +
+      '", [' +
+      value.map(stringifyDeclaration).join(',\n') +
+      '])'
     )
   }
 
-  if (operator === '>') {
-    return '(min-' + dimension + ': ' + (value + 1) + 'px)'
+  if (typeof value === 'object') {
+    return property + '([' + value.map(stringifyDeclaration).join(',\n') + '])'
   }
 
-  if (operator === '>=') {
-    return '(min-' + dimension + ': ' + value + 'px)'
-  }
-
-  if (operator === '<=') {
-    return '(max-' + dimension + ': ' + value + 'px)'
-  }
-
-  if (operator === '<') {
-    return '(max-' + dimension + ': ' + (value - 1) + 'px)'
-  }
+  return 'unsafe("' + hyphenateProperty(property) + '", ' + value + ')'
 }
