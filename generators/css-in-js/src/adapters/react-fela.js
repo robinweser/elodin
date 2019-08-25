@@ -31,6 +31,7 @@ export default function reactFelaAdapter({
       : '\n') +
     'function ' +
     moduleName +
+    'Style' +
     '(props  = {})' +
     ' {\n  ' +
     'return {\n    ' +
@@ -41,8 +42,11 @@ export default function reactFelaAdapter({
     ',\n    ' +
     style.map(stringifyDeclaration).join(',\n    ') +
     '\n  }\n}\n\n' +
-    'export default createComponent(' +
+    'export const ' +
     moduleName +
+    ' = createComponent(' +
+    moduleName +
+    'Style' +
     ')'
   )
 }

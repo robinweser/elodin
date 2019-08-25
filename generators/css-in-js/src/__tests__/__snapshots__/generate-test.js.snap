@@ -54,7 +54,7 @@ export function Label(props = {}) {
     \\":hover\\":{\\"fontSize\\":props.fontSize}
   }
 }",
-  "undefined.js": "import { Button } from './Button.elo.js'
+  "index.elo.js": "import { Button } from './Button.elo.js'
 import { Label } from './Label.elo.js'
 
 export {
@@ -101,21 +101,21 @@ const variantMap = {
   }
 }
 
-function Button(props  = {}) {
+function ButtonStyle(props  = {}) {
   return {
     _className: getClassNameFromVariantMap('_elo_view _1p38iz4', variantMap, props),
     \\"borderWidth\\":props.borderWidth
   }
 }
 
-export default createComponent(Button)",
+export const Button = createComponent(ButtonStyle)",
   "Label.elo.css": "._1edorjp:hover {
   color: red
 }",
   "Label.elo.js": "import './Label.elo.css'
 import { createComponent } from 'react-fela'
 
-function Label(props  = {}) {
+function LabelStyle(props  = {}) {
   return {
     _className: '_elo_text _1edorjp',
     \\"lineHeight\\":props.lineHeight,
@@ -123,8 +123,8 @@ function Label(props  = {}) {
   }
 }
 
-export default createComponent(Label)",
-  "root.js": "import { Button } from './Button.elo.js'
+export const Label = createComponent(LabelStyle)",
+  "index.elo.js": "import { Button } from './Button.elo.js'
 import { Label } from './Label.elo.js'
 
 export {

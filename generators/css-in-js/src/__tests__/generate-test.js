@@ -57,7 +57,7 @@ describe('Compiling to CSS and JavaScript', () => {
     expect(
       createGenerator({
         adapter: felaAdapter,
-      })(ast)
+      })(ast, 'index.elo')
     ).toMatchSnapshot()
   })
 
@@ -65,7 +65,7 @@ describe('Compiling to CSS and JavaScript', () => {
     const { ast } = parse(file)
 
     expect(
-      createGenerator({ adapter: reactFelaAdapter })(ast, 'root')
+      createGenerator({ adapter: reactFelaAdapter })(ast, 'index.elo')
     ).toMatchSnapshot()
   })
 })
