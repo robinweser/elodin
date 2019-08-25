@@ -11,7 +11,7 @@ import stringifyCSSRule from './stringifyCSSRule'
 import flattenVariables from './flattenVariables'
 import generateCSSClasses from './generateCSSClasses'
 import generateCSSValue from './generateCSSValue'
-import getCSSMediaQueryFromNode from './getCSSMediaQueryFromNode'
+import generateCSSMediaQueryFromNode from './generateCSSMediaQueryFromNode'
 
 export {
   hash,
@@ -27,5 +27,5 @@ export {
   flattenVariables,
   generateCSSClasses,
   generateCSSValue,
-  getCSSMediaQueryFromNode,
+  generateCSSMediaQueryFromNode,
 }

@@ -2,8 +2,8 @@ import {
   isPseudoClass,
   isPseudoElement,
   isMediaQuery,
-  generateCSSMediaQueryFromNode,
   generateCSSClasses,
+  generateCSSMediaQueryFromNode,
   getModuleName,
   stringifyCSSRule,
 } from '@elodin/utils'
@@ -187,11 +187,13 @@ function generateStyle(nodes) {
 
         if (isMediaQuery(nest.property.value)) {
           return {
-            property: getCSSMediaQueryFromNode(
-              nest.value.value,
-              nest.property.value,
-              nest.operator
-            ),
+            property:
+              '@media ' +
+              generateCSSMediaQueryFromNode(
+                nest.value.value,
+                nest.property.value,
+                nest.operator
+              ),
             value: generateStyle(nest.body),
           }
         }

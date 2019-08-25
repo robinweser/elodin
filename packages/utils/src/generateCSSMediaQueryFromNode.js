@@ -1,4 +1,8 @@
-export default function getCSSMediaQueryFromNode(value, property, operator) {
+export default function generateCSSMediaQueryFromNode(
+  value,
+  property,
+  operator
+) {
   const dimension = property.indexOf('Height') !== -1 ? 'height' : 'width'
 
   if (operator === '=') {

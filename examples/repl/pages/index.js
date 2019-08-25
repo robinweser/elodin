@@ -4,6 +4,8 @@ import { useRouter } from 'next/router'
 import { createGenerator as createJsGenerator } from '@elodin/generator-css-in-js'
 import { createGenerator as createReasonGenerator } from '@elodin/generator-reason'
 import { createGenerator as createReactNativeGenerator } from '@elodin/generator-react-native'
+import felaAdapter from '@elodin/generator-css-in-js/lib/adapters/fela'
+import reactFelaAdapter from '@elodin/generator-css-in-js/lib/adapters/react-fela'
 import { format } from '@elodin/format'
 
 const generators = {
@@ -12,7 +14,7 @@ const generators = {
   },
   'css-in-js': {
     generate: createJsGenerator,
-    adapters: ['fela', 'react-fela'],
+    adapters: { fela: felaAdapter, 'react-fela': reactFelaAdapter },
   },
   'react-native': {
     generate: createReactNativeGenerator,
@@ -25,13 +27,17 @@ export default () => {
 
   const [out, setOut] = useState({})
   const [ast, setAst] = useState({})
+  const [devMode, setDevMode] = useState(false)
   const [generator, setGenerator] = useState('css-in-js')
-  const [adapter, setAdapter] = useState()
+  const [adapter, setAdapter] = useState('fela')
   const [errors, setErrors] = useState([])
 
   const config = {
-    devMode: true,
-    adapter,
+    devMode: devMode,
+    adapter:
+      adapter && generators[generator].adapters
+        ? generators[generator].adapters[adapter]
+        : undefined,
   }
 
   useEffect(() => {
@@ -43,7 +49,7 @@ export default () => {
   useEffect(() => {
     setAdapter(
       generators[generator].adapters
-        ? generators[generator].adapters[0]
+        ? Object.keys(generators[generator].adapters)[0]
         : undefined
     )
   }, [generator])
@@ -72,7 +78,7 @@ export default () => {
     } catch (e) {
       throw new Error(e)
     }
-  }, [code, generator, adapter])
+  }, [code, generator, adapter, devMode])
 
   return (
     <div style={{ overflow: 'auto' }}>
@@ -101,11 +107,19 @@ export default () => {
         </select>
         {generators[generator].adapters ? (
           <select value={adapter} onChange={e => setAdapter(e.target.value)}>
-            {generators[generator].adapters.map(name => (
+            {Object.keys(generators[generator].adapters).map(name => (
               <option value={name}>{name}</option>
             ))}
           </select>
         ) : null}
+        <span>
+          DevMode:{' '}
+          <input
+            type="checkbox"
+            checked={devMode}
+            onChange={_ => setDevMode(!devMode)}
+          />
+        </span>
         <div style={{ backgroundColor: 'rgba(250, 0,0, 0.2)' }}>
           <b>Errors</b>
           {errors.map(error => (

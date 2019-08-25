@@ -8,7 +8,7 @@ import {
   getValueCombinations,
   getModuleName,
   stringifyCSSRule,
-  getCSSMediaQueryFromNode,
+  generateCSSMediaQueryFromNode,
   flattenVariables,
   generateCSSClasses,
 } from '@elodin/utils'
@@ -244,7 +244,7 @@ function generateStyle(nodes) {
 
         if (isMediaQuery(nest.property.value)) {
           return {
-            property: getCSSMediaQueryFromNode(
+            property: generateCSSMediaQueryFromNode(
               nest.value.value,
               nest.property.value,
               nest.operator

@@ -1,6 +1,6 @@
 import { hyphenateProperty } from 'css-in-js-utils'
 
-import getCSSMediaQueryFromNode from './getCSSMediaQueryFromNode'
+import generateCSSMediaQueryFromNode from './generateCSSMediaQueryFromNode'
 import generateCSSValue from './generateCSSValue'
 import isPseudoClass from './isPseudoClass'
 import isPseudoElement from './isPseudoElement'
@@ -98,11 +98,13 @@ export default function generateCSSClasses(
           classes,
           modifier,
           pseudo,
-          getCSSMediaQueryFromNode(
-            nest.value.value,
-            nest.property.value,
-            nest.operator
-          )
+          media +
+            (media ? ' and ' : '') +
+            generateCSSMediaQueryFromNode(
+              nest.value.value,
+              nest.property.value,
+              nest.operator
+            )
         )
       }
     }
