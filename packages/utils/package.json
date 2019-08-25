@@ -1,6 +1,6 @@
 {
   "name": "@elodin/utils",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "main": "lib/index.js",
   "module": "es/index.js",
   "publishConfig": {
@@ -18,8 +18,8 @@
   "author": "rofrischmann <robin@rofrischmann.de>",
   "license": "MIT",
   "dependencies": {
-    "css-in-js-utils": "^3.0.0",
-    "color": "^3.1.2"
+    "color": "^3.1.2",
+    "css-in-js-utils": "^3.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.0",

@@ -1,6 +1,6 @@
 {
   "name": "@elodin/types",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "main": "lib/index.js",
   "module": "es/index.js",
   "publishConfig": {
