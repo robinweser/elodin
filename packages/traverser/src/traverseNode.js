@@ -14,6 +14,7 @@ export default function traverseNode(node, visitor, parentPath) {
     case 'File':
     case 'Style':
     case 'Fragment':
+    case 'Variant':
       traverseNodeList(node.body, visitor, nodePath)
       break
 
