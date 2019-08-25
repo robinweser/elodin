@@ -1,6 +1,6 @@
 {
   "name": "@elodin/core",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "main": "lib/index.js",
   "module": "es/index.js",
   "publishConfig": {
@@ -18,9 +18,9 @@
   "author": "rofrischmann <robin@rofrischmann.de>",
   "license": "MIT",
   "dependencies": {
-    "@elodin/parser": "^0.0.17",
-    "@elodin/traverser": "^0.0.17",
-    "@elodin/types": "^0.0.17",
+    "@elodin/parser": "^0.0.18",
+    "@elodin/traverser": "^0.0.18",
+    "@elodin/types": "^0.0.18",
     "read-transform-write": "^2.1.0"
   },
   "devDependencies": {
