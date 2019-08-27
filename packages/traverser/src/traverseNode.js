@@ -23,8 +23,8 @@ export default function traverseNode(node, visitor, parentPath) {
       break
 
     case 'Conditional':
+      !node.boolean && traverseNode(node.value, visitor, nodePath)
       traverseNode(node.property, visitor, nodePath)
-      traverseNode(node.value, visitor, nodePath)
       traverseNodeList(node.body, visitor, nodePath)
       break
 
@@ -36,6 +36,9 @@ export default function traverseNode(node, visitor, parentPath) {
     case 'Float':
     case 'Integer':
     case 'Identifier':
+    case 'RawValue':
+    case 'Percentage':
+    case 'String':
     case 'Color':
       break
 
