@@ -9,10 +9,10 @@ import {
   getModuleName,
   stringifyCSSRule,
   generateCSSMediaQueryFromNode,
-  flattenVariables,
   generateCSSClasses,
 } from '@elodin/utils'
 import { isUnitlessProperty, hyphenateProperty } from 'css-in-js-utils'
+import { traverse } from '@elodin/core'
 
 const defaultConfig = {
   devMode: false,
@@ -134,17 +134,97 @@ function generateModules(ast, { devMode }) {
 
   return styles.reduce((rules, module) => {
     const style = generateStyle(module.body)
+    const variables = getVariablesFromAST(module)
+    const variantStyleMap = generateVariantStyleMap(module.body, variants)
 
     const className =
       '_elo_' + module.format + ' ' + getModuleName(module, devMode)
 
     const variantNames = Object.keys(variantMap)
 
+    let dynamicStyle = variantStyleMap
+      .map(
+        vari =>
+          'let ' +
+          uncapitalizeString(module.name) +
+          'Style' +
+          Object.keys(vari.variants)
+            .map(variant => vari.variants[variant])
+            .join('') +
+          ' = ' +
+          'style([' +
+          vari.style.map(stringifyDeclaration).join(',\n      ') +
+          ']);'
+      )
+      .join('\n    ')
+
     let variantSwitch = ''
+    let variantStyleSwitch = ''
+
     if (variantNames.length > 0) {
       const combinations = getArrayCombinations(
         ...variantNames.map(variant => [...variantMap[variant], 'None'])
       )
+
+      const combis = combinations.reduce((matches, combination) => {
+        let vari = variantStyleMap
+          .map(vari => {
+            if (
+              Object.keys(vari.variants).reduce((match, variant) => {
+                let index = variantNames.indexOf(variant)
+                return match && combination[index] === vari.variants[variant]
+              }, true)
+            ) {
+              return vari
+            }
+          })
+          .filter(Boolean)
+
+        if (vari) {
+          matches.push({
+            combination,
+            style: vari.map(vari =>
+              Object.keys(vari.variants)
+                .map(variant => vari.variants[variant])
+                .join('')
+            ),
+          })
+        }
+        return matches
+      }, [])
+
+      variantStyleSwitch = `let get${
+        module.name
+      }StyleVariants = (${variables
+        .map(variable => '~' + variable + ':string')
+        .join(', ') +
+        (variables.length > 0 && variants.length > 0 ? ', ' : '') +
+        variants
+          .map(({ name }) => '~' + name.toLowerCase())
+          .join(', ')}, ()) => {
+    ${dynamicStyle ? dynamicStyle + '\n\n' : ''}switch (${Object.keys(
+        variantMap
+      )
+        .map(v => v.toLowerCase())
+        .join(', ')}) {
+    ${combis
+      // .filter(({ style }) => style.length > 0)
+      .map(
+        ({ combination, style }) =>
+          '| (' +
+          combination
+            .map(comb => (comb === 'None' ? 'None' : 'Some(' + comb + ')'))
+            .join(', ') +
+          ') => ' +
+          '[' +
+          style
+            .map(style => uncapitalizeString(module.name) + 'Style' + style)
+            .join(',') +
+          ']'
+      )
+      .join('\n    ')}
+    }
+  }`
 
       variantSwitch = `let get${module.name}Variants = (${variantNames
         .map(variant => '~' + variant.toLowerCase())
@@ -174,26 +254,35 @@ function generateModules(ast, { devMode }) {
             .join(' ' + getModuleName(module, devMode)) +
           '"'
       )
-      .join('\n    ')}}
-}\n\n`
+      .join('\n    ')}\n  }
+}`
     }
 
+    const baseStyle =
+      style.length > 0
+        ? 'let ' +
+          uncapitalizeString(module.name) +
+          'Style = (' +
+          variables.map(variable => '~' + variable + ':string').join(', ') +
+          ') => style([' +
+          style.map(stringifyDeclaration).join(',\n    ') +
+          '])'
+        : ''
+
     rules.push(
-      variantSwitch +
+      (baseStyle ? baseStyle + '\n' : '') +
+        (variantStyleSwitch ? variantStyleSwitch + '\n\n' : '') +
+        (variantSwitch ? variantSwitch + '\n\n' : '') +
         `let ` +
         module.name.charAt(0).toLowerCase() +
         module.name.substr(1) +
         ' = (' +
         // TODO: deduplicate
         // TODO: add typings
-        flattenVariables(style)
-          .map(variable => '~' + variable + ':string')
-          .join(', ') +
-        (flattenVariables(style).length > 0 && variants.length > 0
-          ? ', '
-          : '') +
+        variables.map(variable => '~' + variable + ':string').join(', ') +
+        (variables.length > 0 && variants.length > 0 ? ', ' : '') +
         variants.map(({ name }) => '~' + name.toLowerCase() + '=?').join(', ') +
-        (flattenVariables(style).length > 0 || variants.length > 0
+        (variables.length > 0 || variants.length > 0
           ? ', ()) => "'
           : ') => "') +
         className +
@@ -204,17 +293,80 @@ function generateModules(ast, { devMode }) {
             variants.map(({ name }) => '~' + name.toLowerCase()).join(', ') +
             ', ())'
           : '"') +
-        (style.length > 0
-          ? ' ++ " " ++ style([' +
-            '\n    ' +
-            style.map(stringifyDeclaration).join(',\n    ') +
-            '\n  ' +
+        (style.length > 0 || variantStyleSwitch
+          ? ' ++ " " ++ merge([' +
+            (style.length > 0
+              ? uncapitalizeString(module.name) +
+                'Style(' +
+                variables.map(variable => '~' + variable).join(', ') +
+                ')'
+              : '') +
+            (variantStyleSwitch
+              ? (style.length > 0 ? ', ' : '') +
+                '...get' +
+                module.name +
+                'StyleVariants(' +
+                variables.map(variable => '~' + variable).join(', ') +
+                (variables.length > 0 && variants.length > 0 ? ', ' : '') +
+                variants
+                  .map(({ name }) => '~' + name.toLowerCase())
+                  .join(', ') +
+                ', ())'
+              : '') +
             '])'
           : '')
     )
 
     return rules
   }, [])
+}
+
+function generateVariantStyleMap(
+  nodes,
+  variants,
+  styles = [],
+  style = [],
+  modifier = {}
+) {
+  const nesting = nodes.filter(node => node.type !== 'Declaration')
+  const variantOrder = variants.map(variant => variant.name)
+
+  if (style.length > 0) {
+    styles.push({ style, variants: modifier })
+  }
+
+  nesting.forEach(nest => {
+    if (nest.property.type === 'Identifier') {
+      const variant = variants.find(
+        variant => variant.name === nest.property.value
+      )
+
+      if (variant) {
+        if (nest.value.type === 'Identifier') {
+          const variation = variant.body.find(
+            variant => variant.value === nest.value.value
+          )
+
+          if (variation) {
+            generateVariantStyleMap(
+              nest.body,
+              variants,
+              styles,
+              generateStyle(nest.body),
+              {
+                ...modifier,
+                [variant.name]: variation.value,
+              }
+            )
+          }
+        }
+      } else {
+        // TODO: throw
+      }
+    }
+  })
+
+  return styles
 }
 
 function generateStyle(nodes) {
@@ -276,4 +428,21 @@ function stringifyDeclaration({ property, value, media }) {
   }
 
   return 'unsafe("' + hyphenateProperty(property) + '", ' + value + ')'
+}
+
+function getVariablesFromAST(ast) {
+  const vars = []
+  traverse(ast, [
+    {
+      Variable: {
+        enter(path) {
+          if (!path.node.environment) {
+            vars.push(path.node.value)
+          }
+        },
+      },
+    },
+  ])
+
+  return vars.filter((va, index) => vars.indexOf(va) === index)
 }

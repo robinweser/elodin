@@ -1,9 +1,9 @@
-import { parse } from '@elodin/parser'
+import { parse } from '@elodin/core'
 
 import createGenerator from '../createGenerator'
 
 const file = `
-variant Variant {
+variant Type {
   Primary
   Secondary
 }
@@ -17,21 +17,42 @@ variant Mode {
 view Button {
   backgroundColor: red
   paddingLeft: 10
-  paddingBottom: 10
-  paddingTop: $top
-  [@viewportWidth>=100] {
-    paddingRight: $paddingMedia
+  __border: 0
+  borderWidth: $borderWidth
+  [Type=Primary] {
+    backgroundColor: red
+    paddingLeft: $paddingLeft
+
+    [@hover] {
+      paddingLeft: 10
+      paddingRight: $paddingRight
+    }
+    [Mode=Dark] {
+      backgroundColor: blue
+      paddingLeft: $padLeft
+    }
   }
-  [Variant=Primary] {
-    backgroundColor: blue
+  [Mode=Light] {
+    backgroundColor: green
   }
 }
 
-text ButtonText {
-  fontSize: $size
-  fontWeight: $weight
-  lineHeight: 1.3
-  fontFamily: "Arial"
+text Label {
+  lineHeight: $lineHeight
+
+  [@hover] {
+    color: red
+    fontSize: $fontSize
+  }
+
+  [@viewportWidth=320] {
+    color: green
+    fontSize: $mediaFontSize
+    [@hover] {
+      fontSize: $mediaHoverFontSize
+      color: blue
+    }
+  }
 }`
 
 describe('Compiling to ReasonML', () => {
