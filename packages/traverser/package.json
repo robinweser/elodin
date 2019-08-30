@@ -1,6 +1,6 @@
 {
   "name": "@elodin/traverser",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "main": "lib/index.js",
   "module": "es/index.js",
   "publishConfig": {
@@ -18,8 +18,8 @@
   "author": "rofrischmann <robin@rofrischmann.de>",
   "license": "MIT",
   "dependencies": {
-    "@elodin/parser": "^0.0.18",
-    "@elodin/types": "^0.0.18"
+    "@elodin/parser": "^0.0.19",
+    "@elodin/types": "^0.0.19"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.0",
