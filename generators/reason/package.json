@@ -19,7 +19,6 @@
   "license": "MIT",
   "dependencies": {
     "@elodin/utils": "^0.0.18",
-    "@elodin/core": "^0.0.18",
     "css-in-js-utils": "^3.0.0"
   },
   "devDependencies": {

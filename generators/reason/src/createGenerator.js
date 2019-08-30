@@ -8,17 +8,21 @@ import {
   getValueCombinations,
   getModuleName,
   stringifyCSSRule,
+  getVariablesFromAST,
+  escapeKeywords,
   generateCSSMediaQueryFromNode,
   generateCSSClasses,
 } from '@elodin/utils'
 import { isUnitlessProperty, hyphenateProperty } from 'css-in-js-utils'
-import { traverse } from '@elodin/core'
+
+import keywords from './keywords'
 
 const defaultConfig = {
   devMode: false,
   generateFileName: (fileName, moduleName) =>
     capitalizeString(fileName) + moduleName + 'Style',
 }
+
 export default function createGenerator(customConfig = {}) {
   const config = {
     ...defaultConfig,
@@ -34,9 +38,11 @@ export default function createGenerator(customConfig = {}) {
       .map(capitalizeString)
       .join('')
 
-    const modules = generateModules(ast, config)
-    const css = generateCSSFiles(ast, config, fileName)
-    const reason = generateReasonFile(ast, config, modules, fileName)
+    const escapedAst = escapeKeywords(ast, keywords)
+
+    const modules = generateModules(escapedAst, config)
+    const css = generateCSSFiles(escapedAst, config, fileName)
+    const reason = generateReasonFile(escapedAst, config, modules, fileName)
 
     return { ...css, ...reason }
   }
@@ -428,21 +434,4 @@ function stringifyDeclaration({ property, value, media }) {
   }
 
   return 'unsafe("' + hyphenateProperty(property) + '", ' + value + ')'
-}
-
-function getVariablesFromAST(ast) {
-  const vars = []
-  traverse(ast, [
-    {
-      Variable: {
-        enter(path) {
-          if (!path.node.environment) {
-            vars.push(path.node.value)
-          }
-        },
-      },
-    },
-  ])
-
-  return vars.filter((va, index) => vars.indexOf(va) === index)
 }

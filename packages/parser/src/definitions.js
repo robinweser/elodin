@@ -99,7 +99,7 @@ export default {
     alignItems: [
       matchesKeywords('flexStart', 'flexEnd', 'center', 'stretch', 'baseline'),
     ],
-    alignItems: [
+    alignContent: [
       matchesKeywords(
         'flexStart',
         'flexEnd',

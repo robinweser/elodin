@@ -1,0 +1,80 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Escaping keywords should return a capitalized string 1`] = `
+Object {
+  "body": Array [
+    Object {
+      "body": Array [
+        Object {
+          "type": "Identifier",
+          "value": "Primary",
+        },
+        Object {
+          "type": "Identifier",
+          "value": "Secondary_",
+        },
+      ],
+      "name": "Type_",
+      "type": "Variant",
+    },
+    Object {
+      "body": Array [
+        Object {
+          "dynamic": true,
+          "property": "color",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "environment": false,
+            "type": "Variable",
+            "value": "color_",
+          },
+        },
+        Object {
+          "dynamic": true,
+          "property": "backgroundColor",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "environment": false,
+            "type": "Variable",
+            "value": "bgColor",
+          },
+        },
+        Object {
+          "body": Array [
+            Object {
+              "dynamic": false,
+              "property": "color",
+              "raw": false,
+              "type": "Declaration",
+              "value": Object {
+                "alpha": 1,
+                "blue": 255,
+                "format": "keyword",
+                "green": 0,
+                "red": 0,
+                "type": "Color",
+              },
+            },
+          ],
+          "operator": "=",
+          "property": Object {
+            "type": "Identifier",
+            "value": "Type",
+          },
+          "type": "Conditional",
+          "value": Object {
+            "type": "Identifier",
+            "value": "Primary",
+          },
+        },
+      ],
+      "format": "view",
+      "name": "Button",
+      "type": "Style",
+    },
+  ],
+  "type": "File",
+}
+`;

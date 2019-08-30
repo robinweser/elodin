@@ -8,13 +8,15 @@ import getModuleName from './getModuleName'
 import getArrayCombinations from './getArrayCombinations'
 import getValueCombinations from './getValueCombinations'
 import stringifyCSSRule from './stringifyCSSRule'
-import flattenVariables from './flattenVariables'
+import getVariablesFromAST from './getVariablesFromAST'
+import escapeKeywords from './escapeKeywords'
 import generateCSSClasses from './generateCSSClasses'
 import generateCSSValue from './generateCSSValue'
 import generateCSSMediaQueryFromNode from './generateCSSMediaQueryFromNode'
 
 export {
   hash,
+  escapeKeywords,
   capitalizeString,
   uncapitalizeString,
   isPseudoClass,
@@ -24,7 +26,7 @@ export {
   getArrayCombinations,
   getValueCombinations,
   stringifyCSSRule,
-  flattenVariables,
+  getVariablesFromAST,
   generateCSSClasses,
   generateCSSValue,
   generateCSSMediaQueryFromNode,

@@ -13,7 +13,7 @@ Object {
 open Css;
 
 [@bs.deriving jsConverter]
-type type =
+type type_ =
   | Primary
   | Secondary
 
@@ -23,13 +23,13 @@ type mode =
   | Light
   | Semi
 
-let buttonStyle = (~borderWidth:string) => style([unsafe(\\"border-width\\", borderWidth)])
-let getButtonStyleVariants = (~borderWidth:string, ~type, ~mode, ()) => {
+let buttonStyle = (~borderWidth:string, ~paddingLeft:string, ~paddingRight:string, ~padLeft:string) => style([unsafe(\\"border-width\\", borderWidth)])
+let getButtonStyleVariants = (~borderWidth:string, ~paddingLeft:string, ~paddingRight:string, ~padLeft:string, ~type_, ~mode, ()) => {
     let buttonStylePrimary = style([unsafe(\\"padding-left\\", paddingLeft),
       hover([unsafe(\\"padding-right\\", paddingRight)])]);
     let buttonStylePrimaryDark = style([unsafe(\\"padding-left\\", padLeft)]);
 
-switch (type, mode) {
+switch (type_, mode) {
     | (Some(Primary), Some(Dark)) => [buttonStylePrimary,buttonStylePrimaryDark]
     | (Some(Primary), Some(Light)) => [buttonStylePrimary]
     | (Some(Primary), Some(Semi)) => [buttonStylePrimary]
@@ -45,31 +45,31 @@ switch (type, mode) {
     }
   }
 
-let getButtonVariants = (~type, ~mode, ()) => {
-  switch (type, mode) {
-    | (Some(Primary), Some(Dark)) => \\"_1lkzl71__Type-Primary _1lkzl71__Mode-Dark _1lkzl71__Type-Primary__Mode-Dark\\"
-    | (Some(Primary), Some(Light)) => \\"_1lkzl71__Type-Primary _1lkzl71__Mode-Light _1lkzl71__Type-Primary__Mode-Light\\"
-    | (Some(Primary), Some(Semi)) => \\"_1lkzl71__Type-Primary _1lkzl71__Mode-Semi _1lkzl71__Type-Primary__Mode-Semi\\"
-    | (Some(Primary), None) => \\"_1lkzl71__Type-Primary\\"
-    | (Some(Secondary), Some(Dark)) => \\"_1lkzl71__Type-Secondary _1lkzl71__Mode-Dark _1lkzl71__Type-Secondary__Mode-Dark\\"
-    | (Some(Secondary), Some(Light)) => \\"_1lkzl71__Type-Secondary _1lkzl71__Mode-Light _1lkzl71__Type-Secondary__Mode-Light\\"
-    | (Some(Secondary), Some(Semi)) => \\"_1lkzl71__Type-Secondary _1lkzl71__Mode-Semi _1lkzl71__Type-Secondary__Mode-Semi\\"
-    | (Some(Secondary), None) => \\"_1lkzl71__Type-Secondary\\"
-    | (None, Some(Dark)) => \\"_1lkzl71__Mode-Dark\\"
-    | (None, Some(Light)) => \\"_1lkzl71__Mode-Light\\"
-    | (None, Some(Semi)) => \\"_1lkzl71__Mode-Semi\\"
-    | (None, None) => \\"_1lkzl71\\"
+let getButtonVariants = (~type_, ~mode, ()) => {
+  switch (type_, mode) {
+    | (Some(Primary), Some(Dark)) => \\"_1a6mix7__Type_-Primary _1a6mix7__Mode-Dark _1a6mix7__Type_-Primary__Mode-Dark\\"
+    | (Some(Primary), Some(Light)) => \\"_1a6mix7__Type_-Primary _1a6mix7__Mode-Light _1a6mix7__Type_-Primary__Mode-Light\\"
+    | (Some(Primary), Some(Semi)) => \\"_1a6mix7__Type_-Primary _1a6mix7__Mode-Semi _1a6mix7__Type_-Primary__Mode-Semi\\"
+    | (Some(Primary), None) => \\"_1a6mix7__Type_-Primary\\"
+    | (Some(Secondary), Some(Dark)) => \\"_1a6mix7__Type_-Secondary _1a6mix7__Mode-Dark _1a6mix7__Type_-Secondary__Mode-Dark\\"
+    | (Some(Secondary), Some(Light)) => \\"_1a6mix7__Type_-Secondary _1a6mix7__Mode-Light _1a6mix7__Type_-Secondary__Mode-Light\\"
+    | (Some(Secondary), Some(Semi)) => \\"_1a6mix7__Type_-Secondary _1a6mix7__Mode-Semi _1a6mix7__Type_-Secondary__Mode-Semi\\"
+    | (Some(Secondary), None) => \\"_1a6mix7__Type_-Secondary\\"
+    | (None, Some(Dark)) => \\"_1a6mix7__Mode-Dark\\"
+    | (None, Some(Light)) => \\"_1a6mix7__Mode-Light\\"
+    | (None, Some(Semi)) => \\"_1a6mix7__Mode-Semi\\"
+    | (None, None) => \\"_1a6mix7\\"
   }
 }
 
-let button = (~borderWidth:string, ~type=?, ~mode=?, ()) => \\"_elo_view _1lkzl71\\" ++ \\" \\" ++ getButtonVariants(~type, ~mode, ()) ++ \\" \\" ++ merge([buttonStyle(~borderWidth), ...getButtonStyleVariants(~borderWidth, ~type, ~mode, ())])
+let button = (~borderWidth:string, ~paddingLeft:string, ~paddingRight:string, ~padLeft:string, ~type_=?, ~mode=?, ()) => \\"_elo_view _1a6mix7\\" ++ \\" \\" ++ getButtonVariants(~type_, ~mode, ()) ++ \\" \\" ++ merge([buttonStyle(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft), ...getButtonStyleVariants(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_, ~mode, ())])
 
 let labelStyle = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~mediaHoverFontSize:string) => style([unsafe(\\"line-height\\", lineHeight),
     hover([unsafe(\\"font-size\\", fontSize)]),
     media(\\"(min-width: 320px) and (max-width: 320px)\\", [unsafe(\\"font-size\\", mediaFontSize),
 hover([unsafe(\\"font-size\\", mediaHoverFontSize)])])])
-let getLabelStyleVariants = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~mediaHoverFontSize:string, ~type, ~mode, ()) => {
-    switch (type, mode) {
+let getLabelStyleVariants = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~mediaHoverFontSize:string, ~type_, ~mode, ()) => {
+    switch (type_, mode) {
     | (Some(Primary), Some(Dark)) => []
     | (Some(Primary), Some(Light)) => []
     | (Some(Primary), Some(Semi)) => []
@@ -85,16 +85,16 @@ let getLabelStyleVariants = (~lineHeight:string, ~fontSize:string, ~mediaFontSiz
     }
   }
 
-let getLabelVariants = (~type, ~mode, ()) => {
-  switch (type, mode) {
-    | (Some(Primary), Some(Dark)) => \\"_vqhb4f__Type-Primary _vqhb4f__Mode-Dark _vqhb4f__Type-Primary__Mode-Dark\\"
-    | (Some(Primary), Some(Light)) => \\"_vqhb4f__Type-Primary _vqhb4f__Mode-Light _vqhb4f__Type-Primary__Mode-Light\\"
-    | (Some(Primary), Some(Semi)) => \\"_vqhb4f__Type-Primary _vqhb4f__Mode-Semi _vqhb4f__Type-Primary__Mode-Semi\\"
-    | (Some(Primary), None) => \\"_vqhb4f__Type-Primary\\"
-    | (Some(Secondary), Some(Dark)) => \\"_vqhb4f__Type-Secondary _vqhb4f__Mode-Dark _vqhb4f__Type-Secondary__Mode-Dark\\"
-    | (Some(Secondary), Some(Light)) => \\"_vqhb4f__Type-Secondary _vqhb4f__Mode-Light _vqhb4f__Type-Secondary__Mode-Light\\"
-    | (Some(Secondary), Some(Semi)) => \\"_vqhb4f__Type-Secondary _vqhb4f__Mode-Semi _vqhb4f__Type-Secondary__Mode-Semi\\"
-    | (Some(Secondary), None) => \\"_vqhb4f__Type-Secondary\\"
+let getLabelVariants = (~type_, ~mode, ()) => {
+  switch (type_, mode) {
+    | (Some(Primary), Some(Dark)) => \\"_vqhb4f__Type_-Primary _vqhb4f__Mode-Dark _vqhb4f__Type_-Primary__Mode-Dark\\"
+    | (Some(Primary), Some(Light)) => \\"_vqhb4f__Type_-Primary _vqhb4f__Mode-Light _vqhb4f__Type_-Primary__Mode-Light\\"
+    | (Some(Primary), Some(Semi)) => \\"_vqhb4f__Type_-Primary _vqhb4f__Mode-Semi _vqhb4f__Type_-Primary__Mode-Semi\\"
+    | (Some(Primary), None) => \\"_vqhb4f__Type_-Primary\\"
+    | (Some(Secondary), Some(Dark)) => \\"_vqhb4f__Type_-Secondary _vqhb4f__Mode-Dark _vqhb4f__Type_-Secondary__Mode-Dark\\"
+    | (Some(Secondary), Some(Light)) => \\"_vqhb4f__Type_-Secondary _vqhb4f__Mode-Light _vqhb4f__Type_-Secondary__Mode-Light\\"
+    | (Some(Secondary), Some(Semi)) => \\"_vqhb4f__Type_-Secondary _vqhb4f__Mode-Semi _vqhb4f__Type_-Secondary__Mode-Semi\\"
+    | (Some(Secondary), None) => \\"_vqhb4f__Type_-Secondary\\"
     | (None, Some(Dark)) => \\"_vqhb4f__Mode-Dark\\"
     | (None, Some(Light)) => \\"_vqhb4f__Mode-Light\\"
     | (None, Some(Semi)) => \\"_vqhb4f__Mode-Semi\\"
@@ -102,27 +102,27 @@ let getLabelVariants = (~type, ~mode, ()) => {
   }
 }
 
-let label = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~mediaHoverFontSize:string, ~type=?, ~mode=?, ()) => \\"_elo_text _vqhb4f\\" ++ \\" \\" ++ getLabelVariants(~type, ~mode, ()) ++ \\" \\" ++ merge([labelStyle(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize), ...getLabelStyleVariants(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize, ~type, ~mode, ())])
+let label = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~mediaHoverFontSize:string, ~type_=?, ~mode=?, ()) => \\"_elo_text _vqhb4f\\" ++ \\" \\" ++ getLabelVariants(~type_, ~mode, ()) ++ \\" \\" ++ merge([labelStyle(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize), ...getLabelStyleVariants(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize, ~type_, ~mode, ())])
 ",
-  "RootStyleButton.elo.css": "._1lkzl71 {
+  "RootStyleButton.elo.css": "._1a6mix7 {
   background-color: red;
   padding-left: 10px;
   border: 0px
 }
 
-._1lkzl71__Type-Primary {
+._1a6mix7__Type_-Primary {
   background-color: red
 }
 
-._1lkzl71__Type-Primary:hover {
+._1a6mix7__Type_-Primary:hover {
   padding-left: 10px
 }
 
-._1lkzl71__Type-Primary__Mode-Dark {
+._1a6mix7__Type_-Primary__Mode-Dark {
   background-color: blue
 }
 
-._1lkzl71__Mode-Light {
+._1a6mix7__Mode-Light {
   background-color: green
 }",
   "RootStyleLabel.elo.css": "._vqhb4f:hover {

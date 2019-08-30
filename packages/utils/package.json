@@ -17,6 +17,9 @@
   "repository": "https://github.com/rofrischmann/elodin.git",
   "author": "rofrischmann <robin@rofrischmann.de>",
   "license": "MIT",
+  "peerDependencies": {
+    "@elodin/core": "^0.0.16"
+  },
   "dependencies": {
     "color": "^3.1.2",
     "css-in-js-utils": "^3.0.0"

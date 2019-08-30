@@ -35,6 +35,11 @@ text Label {
 
   it('should correctly parse conditionals', () => {
     const file = `
+    variant Type = {
+      Dark
+      Light
+    }
+
 view Button {
   backgroundColor: red
 
