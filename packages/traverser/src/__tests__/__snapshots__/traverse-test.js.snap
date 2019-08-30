@@ -59,11 +59,11 @@ Object {
 
 exports[`Traversing ast nodes should correctly traverse nodes 2`] = `
 Array [
-  "Type",
-  "TYPE",
-  "TYPE",
   "Primary",
   "PRIMARY",
   "PRIMARY",
+  "Type",
+  "TYPE",
+  "TYPE",
 ]
 `;
