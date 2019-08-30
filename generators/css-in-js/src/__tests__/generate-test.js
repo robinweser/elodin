@@ -22,13 +22,21 @@ view Button {
   __border: 0
   borderWidth: $borderWidth
   [Type=Primary] {
-    color: red
+    backgroundColor: red
+    paddingLeft: $paddingLeft
+
+    [@hover] {
+      paddingLeft: 10
+      paddingRight: $paddingRight
+    }
     [Mode=Dark] {
-      color: blue
+      backgroundColor: blue
+      paddingLeft: $padLeft
     }
   }
   [Mode=Light] {
-    color: green
+    backgroundColor: green
+
   }
 }
 
@@ -43,7 +51,7 @@ text Label {
   [@minWidth=320] {
     color: green
     fontSize: $mediaFontSize
-    [@hover]{
+    [@hover] {
       fontSize: $mediaHoverFontSize
       color: blue
     }

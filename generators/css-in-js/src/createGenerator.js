@@ -93,9 +93,11 @@ function generateJS(ast, { devMode, dynamicImport }, adapter) {
   return styles.reduce((files, module) => {
     const style = generateStyle(module.body)
     const classNameMap = generateClassNameMap(module.body, variants)
+    const variantStyleMap = generateVariantStyleMap(module.body, variants)
 
     files[module.name + '.elo.js'] = adapter({
       style,
+      variantStyleMap,
       moduleName: module.name,
       dynamicImport,
       classNameMap,
@@ -119,12 +121,20 @@ function generateClassNameMap(
   variants,
   classes = {},
   variations = {},
-  modifier = ''
+  modifier = []
 ) {
-  const base = nodes.filter(node => node.type === 'Declaration')
   const nesting = nodes.filter(node => node.type !== 'Declaration')
+  const variantOrder = variants.map(variant => variant.name)
 
-  classes[modifier] = variations
+  // ensure the variant modifier order is always deterministic
+  classes[
+    modifier
+      .sort((a, b) =>
+        variantOrder.indexOf(a[0]) > variantOrder.indexOf(b[0]) ? 1 : -1
+      )
+      .map(([name, value]) => '__' + name + '-' + value)
+      .join('')
+  ] = variations
 
   nesting.forEach(nest => {
     if (nest.property.type === 'Identifier') {
@@ -147,7 +157,7 @@ function generateClassNameMap(
                 ...variations,
                 [variant.name]: variation.value,
               },
-              modifier + '__' + variant.name + '-' + variation.value
+              [...modifier, [variant.name, variation.value]]
             )
           }
         }
@@ -158,6 +168,58 @@ function generateClassNameMap(
   })
 
   return classes
+}
+
+function generateVariantStyleMap(
+  nodes,
+  variants,
+  styles = {},
+  style = [],
+  modifier = []
+) {
+  const nesting = nodes.filter(node => node.type !== 'Declaration')
+  const variantOrder = variants.map(variant => variant.name)
+
+  if (style.length > 0) {
+    styles[
+      modifier
+        .sort((a, b) =>
+          variantOrder.indexOf(a[0]) > variantOrder.indexOf(b[0]) ? 1 : -1
+        )
+        .map(([name, value]) => '__' + name + '-' + value)
+        .join('')
+    ] = style
+  }
+
+  nesting.forEach(nest => {
+    if (nest.property.type === 'Identifier') {
+      const variant = variants.find(
+        variant => variant.name === nest.property.value
+      )
+
+      if (variant) {
+        if (nest.value.type === 'Identifier') {
+          const variation = variant.body.find(
+            variant => variant.value === nest.value.value
+          )
+
+          if (variation) {
+            generateVariantStyleMap(
+              nest.body,
+              variants,
+              styles,
+              generateStyle(nest.body),
+              [...modifier, [variant.name, variation.value]]
+            )
+          }
+        }
+      } else {
+        // TODO: throw
+      }
+    }
+  })
+
+  return styles
 }
 
 function generateStyle(nodes) {

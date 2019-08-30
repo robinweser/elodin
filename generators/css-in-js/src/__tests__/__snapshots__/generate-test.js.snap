@@ -2,27 +2,31 @@
 
 exports[`Compiling to CSS and JavaScript should return a map of files 1`] = `
 Object {
-  "Button.elo.css": "._1p38iz4 {
+  "Button.elo.css": "._1lkzl71 {
   background-color: red;
   padding-left: 10px;
   border: 0px
 }
 
-._1p38iz4__Type-Primary {
-  color: red
+._1lkzl71__Type-Primary {
+  background-color: red
 }
 
-._1p38iz4__Type-Primary__Mode-Dark {
-  color: blue
+._1lkzl71__Type-Primary:hover {
+  padding-left: 10px
 }
 
-._1p38iz4__Mode-Light {
-  color: green
+._1lkzl71__Type-Primary__Mode-Dark {
+  background-color: blue
+}
+
+._1lkzl71__Mode-Light {
+  background-color: green
 }",
   "Button.elo.js": "import './Button.elo.css'
-import { getClassNameFromVariantMap } from '@elodin/runtime'
+import { getClassNameFromVariantMap, getDynamicStyleFromVariantMap } from '@elodin/runtime'
 
-const variantMap = {
+const variantClassNameMap = {
   \\"\\": {},
   \\"__Type-Primary\\": {
     \\"Type\\": \\"Primary\\"
@@ -36,10 +40,21 @@ const variantMap = {
   }
 }
 
+const variantStyleMap = {
+'__Type-Primary': props => ({
+  \\"paddingLeft\\":props.paddingLeft,
+  \\":hover\\":{\\"paddingRight\\":props.paddingRight}
+}),
+'__Type-Primary__Mode-Dark': props => ({
+  \\"paddingLeft\\":props.padLeft
+})
+}
+
 export function Button(props = {}) {
   return {
-    _className: '_elo_view ' + getClassNameFromVariantMap('_1p38iz4', variantMap, props),
-    \\"borderWidth\\":props.borderWidth
+    _className: '_elo_view ' + getClassNameFromVariantMap('_1lkzl71', variantClassNameMap, props),
+    \\"borderWidth\\":props.borderWidth,
+    ...getDynamicStyleFromVariantMap(variantStyleMap, props)
   }
 }",
   "Label.elo.css": "._1edorjp:hover {
@@ -66,26 +81,30 @@ export {
 
 exports[`Compiling to CSS and JavaScript should use the given adapter 1`] = `
 Object {
-  "Button.elo.css": "._1p38iz4 {
+  "Button.elo.css": "._1lkzl71 {
   background-color: red;
   padding-left: 10px;
   border: 0px
 }
 
-._1p38iz4__Type-Primary {
-  color: red
+._1lkzl71__Type-Primary {
+  background-color: red
 }
 
-._1p38iz4__Type-Primary__Mode-Dark {
-  color: blue
+._1lkzl71__Type-Primary:hover {
+  padding-left: 10px
 }
 
-._1p38iz4__Mode-Light {
-  color: green
+._1lkzl71__Type-Primary__Mode-Dark {
+  background-color: blue
+}
+
+._1lkzl71__Mode-Light {
+  background-color: green
 }",
   "Button.elo.js": "import './Button.elo.css'
+import { getClassNameFromVariantMap, getDynamicStyleFromVariantMap } from '@elodin/runtime'
 import { createComponent } from 'react-fela'
-import { getClassNameFromVariantMap } from '@elodin/runtime'
 
 const variantMap = {
   \\"\\": {},
@@ -101,10 +120,21 @@ const variantMap = {
   }
 }
 
+const variantStyleMap = {
+'__Type-Primary': props => ({
+  \\"paddingLeft\\":props.paddingLeft,
+  \\":hover\\":{\\"paddingRight\\":props.paddingRight}
+}),
+'__Type-Primary__Mode-Dark': props => ({
+  \\"paddingLeft\\":props.padLeft
+})
+}
+
 function ButtonStyle(props  = {}) {
   return {
-    _className: '_elo_view ' + getClassNameFromVariantMap('_1p38iz4', variantMap, props),
-    \\"borderWidth\\":props.borderWidth
+    _className: '_elo_view ' + getClassNameFromVariantMap('_1lkzl71', variantMap, props),
+    \\"borderWidth\\":props.borderWidth,
+    ...getDynamicStyleFromVariantMap(variantStyleMap, props)
   }
 }
 
