@@ -61,7 +61,7 @@ Object {
           "operator": "=",
           "property": Object {
             "type": "Identifier",
-            "value": "Type",
+            "value": "Type_",
           },
           "type": "Conditional",
           "value": Object {
