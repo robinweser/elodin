@@ -828,10 +828,10 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@elodin/cli@^0.0.13":
-  version "0.0.13"
-  resolved "https://registry.yarnpkg.com/@elodin/cli/-/cli-0.0.13.tgz#8e9e291791a106fc4f597fe7b72e07ce712a0529"
-  integrity sha512-7rFiq8URvqIRY0VZVdOUVhBMErfb/YZf8WPiHjpt8YrXupw75j+ylAmTghg8GRk/ZtaE2IAOLIgnHwlLAM7HPA==
+"@elodin/cli@^0.0.18":
+  version "0.0.18"
+  resolved "https://registry.yarnpkg.com/@elodin/cli/-/cli-0.0.18.tgz#f7db6e6be80c88c0493036a7c4086247f6d3f5e3"
+  integrity sha512-hXchIhNlDbTQ/5IDw2f5vL4Cv/GhoufcqvYwG6w6264RMuIhZeltEaZTgGvky89bZDTkVHmfgkphI2tB38ESmw==
   dependencies:
     "@babel/plugin-transform-async-to-generator" "^7.2.0"
     commander "^2.8.1"
@@ -844,50 +844,66 @@
     slash "^2.0.0"
     source-map "^0.5.0"
 
-"@elodin/core@^0.0.13":
-  version "0.0.13"
-  resolved "https://registry.yarnpkg.com/@elodin/core/-/core-0.0.13.tgz#75f7c921efb88c0884a95e27f9ade9a4258dc91e"
-  integrity sha512-SIOCmwwyVWAgD1lmoreotsH2G2ieO+5A/dqiifwNtZkAec+JIYJvnpKrqh7mHnxcJrK/4TR5K+BC8XakAZNf3g==
+"@elodin/core@^0.0.18":
+  version "0.0.18"
+  resolved "https://registry.yarnpkg.com/@elodin/core/-/core-0.0.18.tgz#6843d20643fedc6d8f70344d718ee828bad69971"
+  integrity sha512-zQQhWhPdpzxsa3fEyS9BddFoXdB2zNlUKxeTa+8Auretve6mPeGMsAM1G4OudmMkz0Gq6WPNiL8Dw5NnhUs5nQ==
   dependencies:
-    "@elodin/parser" "^0.0.13"
-    "@elodin/traverser" "^0.0.13"
-    "@elodin/types" "^0.0.13"
+    "@elodin/parser" "^0.0.18"
+    "@elodin/traverser" "^0.0.18"
+    "@elodin/types" "^0.0.18"
     read-transform-write "^2.1.0"
 
-"@elodin/generator-css-in-js@^0.0.13":
-  version "0.0.13"
-  resolved "https://registry.yarnpkg.com/@elodin/generator-css-in-js/-/generator-css-in-js-0.0.13.tgz#e1d79a257e53c80e2c9175377ae826274fa6d701"
-  integrity sha512-vsM3ZANFZxR1RHz8GwG+oZdF/cZP0ne6ZoSYWBqN4DXxXwPTLFrscdrkPBXLcjNDN3gPQwjUfdsimIhQBaxkxg==
+"@elodin/generator-css-in-js@^0.0.18":
+  version "0.0.18"
+  resolved "https://registry.yarnpkg.com/@elodin/generator-css-in-js/-/generator-css-in-js-0.0.18.tgz#2bdd4de9f72ab9424a2cf6291bfb66b63efc6c73"
+  integrity sha512-H9tEiEN0wDn1nZ7BNMAxFFJSVB9w4T1I3E39I1CjotZU/ZotqxBhpVIUZrtmFuS3IUndxMkdfqLwSto4uLMGXQ==
   dependencies:
-    "@elodin/runtime" "^0.0.13"
-    color "^3.1.2"
+    "@elodin/runtime" "^0.0.18"
+    "@elodin/utils" "^0.0.18"
     css-in-js-utils "^3.0.0"
 
-"@elodin/parser@^0.0.13":
-  version "0.0.13"
-  resolved "https://registry.yarnpkg.com/@elodin/parser/-/parser-0.0.13.tgz#f2498c3f25ee1054b13f8543e6b44b5470787f78"
-  integrity sha512-LT6nHlhgYbEZrJ5mIdtEZu2d+7Dg4luUOerzmf7xnC06pdBYMjVgmj6PZYSjM+da30IuGJ9hXRIyOoMIJsROdQ==
+"@elodin/generator-reason@^0.0.18":
+  version "0.0.18"
+  resolved "https://registry.yarnpkg.com/@elodin/generator-reason/-/generator-reason-0.0.18.tgz#197e9b29ae875b6c0f249bad6161aab09369aa90"
+  integrity sha512-MHR9GvdVY3Djm+DA5VyATOR22IxEuQlrl6bXy7GAVogmSsWulbKVTbgzZNTNUhZlAAPm+vP5Mw0F9W+Pjy62XA==
+  dependencies:
+    "@elodin/utils" "^0.0.18"
+    css-in-js-utils "^3.0.0"
+
+"@elodin/parser@^0.0.18":
+  version "0.0.18"
+  resolved "https://registry.yarnpkg.com/@elodin/parser/-/parser-0.0.18.tgz#c539fb6dac22c9b30892d78f2a85a1351e2b5ed5"
+  integrity sha512-Ir+PRNqJOh6kgRJsqGmT8pFaiK5RlmL2hoHgdxOBIATacE6XackRNcTyFeXxZ+wkPlzzQVjjgnQLFJfLaVSr6g==
   dependencies:
     color "^3.1.2"
     tokenize-sync "^2.0.0"
 
-"@elodin/runtime@^0.0.13":
-  version "0.0.13"
-  resolved "https://registry.yarnpkg.com/@elodin/runtime/-/runtime-0.0.13.tgz#f08c41e5e9421b98d231a0013acd4d2c268d7adf"
-  integrity sha512-GRfCfa8HiiZftSpdeklukGjbiw5ddVwi09XcR7e3yyena8L/SWyzHfsQyrHUJDaqhygXdVP7DD7hQvnsjlucaQ==
+"@elodin/runtime@^0.0.18":
+  version "0.0.18"
+  resolved "https://registry.yarnpkg.com/@elodin/runtime/-/runtime-0.0.18.tgz#73f1f9974dbbc137ba6990649f19cae40f769942"
+  integrity sha512-5NVJizUWeFsrlgaQtxtZ+npgc9UO/GO+2gae+nVSK4QiVdJioAyS07+Q+rMWdT5LThPNsr3Byy9pFAvePgD+JA==
 
-"@elodin/traverser@^0.0.13":
-  version "0.0.13"
-  resolved "https://registry.yarnpkg.com/@elodin/traverser/-/traverser-0.0.13.tgz#6a3807bd2276b9a94084c54d6eb77cffd897d107"
-  integrity sha512-kw/kGsttpn1/AQ77KoDJCtV18eo6RxGYzeNSGphoSLcS37qW+dQmCs9tZChPF5VbeiEa+FjWRCrvgU6TCk+epQ==
+"@elodin/traverser@^0.0.18":
+  version "0.0.18"
+  resolved "https://registry.yarnpkg.com/@elodin/traverser/-/traverser-0.0.18.tgz#772a2c25a28e086017bc9bfeffb5b6222193da01"
+  integrity sha512-v6mZ5iMAMlY8ILMI450E3LEIzW3oSi2IRx4HpivyyFdWj2ZSQL4YyuhV2P7vsToV7nzBhlKxne8thtNnWOU9lg==
   dependencies:
-    "@elodin/parser" "^0.0.13"
-    "@elodin/types" "^0.0.13"
+    "@elodin/parser" "^0.0.18"
+    "@elodin/types" "^0.0.18"
 
-"@elodin/types@^0.0.13":
-  version "0.0.13"
-  resolved "https://registry.yarnpkg.com/@elodin/types/-/types-0.0.13.tgz#4cea9ee9043954ad834986eab55bc1c5522172c0"
-  integrity sha512-2+gd3/kvDxA4SUqeHMDM2y/vRpV05RJ/SUGndJ6NMBDU1bfjDQPoS32ynEfE8sacu0AWDsBavkIxqGjj1e1qwQ==
+"@elodin/types@^0.0.18":
+  version "0.0.18"
+  resolved "https://registry.yarnpkg.com/@elodin/types/-/types-0.0.18.tgz#2d90613d597ea8c3527d3f1ef1c0f988e266ae28"
+  integrity sha512-joxKb63MLFLyvNWByAFi477jmYXGfMNi74friuhyAlH+H/OBxHEb45P50ZERaRvKdh9PAwNgq/ENpPsrxz0GKw==
+
+"@elodin/utils@^0.0.18":
+  version "0.0.18"
+  resolved "https://registry.yarnpkg.com/@elodin/utils/-/utils-0.0.18.tgz#1685d6118da9f2edd0682bae706dbb3b678853f3"
+  integrity sha512-KDxSVlNdC1LkET8lnH0l1DBaB8VTtpo2cWx3PwugvqMVW6D29a/wHz5eeSg6+8MkNSCa5rJPwKo+eoDhxSwrBg==
+  dependencies:
+    color "^3.1.2"
+    css-in-js-utils "^3.0.0"
 
 "@mdx-js/loader@^0.15.0":
   version "0.15.7"
@@ -3715,9 +3731,9 @@ mississippi@^3.0.0:
     through2 "^2.0.0"
 
 mixin-deep@^1.2.0:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/mixin-deep/-/mixin-deep-1.3.1.tgz#a49e7268dce1a0d9698e45326c5626df3543d0fe"
-  integrity sha512-8ZItLHeEgaqEvd5lYBXfm4EZSFCX29Jb9K+lAHhDKzReKBQKj3R+7NOF6tjqYi9t4oI8VUfaWITJQm86wnXGNQ==
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/mixin-deep/-/mixin-deep-1.3.2.tgz#1120b43dc359a785dce65b55b82e257ccf479566"
+  integrity sha512-WRoDn//mXBiJ1H40rqa3vH0toePwSsGb45iInWlTySa+Uu4k3tYUSxa2v1KqAiLtvlrSzaExqS1gtk96A9zvEA==
   dependencies:
     for-in "^1.0.2"
     is-extendable "^1.0.1"
