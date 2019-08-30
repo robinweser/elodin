@@ -2,9 +2,13 @@ import { traverse } from '@elodin/core'
 
 export default function escapeKeywords(
   ast,
-  keywords = [],
+  baseKeywords = [],
   caseSensitive = false
 ) {
+  const keywords = baseKeywords.map(keyword =>
+    caseSensitive ? keyword : keyword.toLowerCase()
+  )
+
   return traverse(ast, [
     {
       Variant: {
