@@ -15,15 +15,15 @@ open Css;
 [@bs.deriving jsConverter]
 type type_ =
   | Primary
-  | Secondary
+  | Secondary;
 
 [@bs.deriving jsConverter]
 type mode =
   | Dark
   | Light
-  | Semi
+  | Semi;
 
-let buttonStyle = (~borderWidth:string, ~paddingLeft:string, ~paddingRight:string, ~padLeft:string) => style([unsafe(\\"border-width\\", borderWidth)])
+let buttonStyle = (~borderWidth:string, ~paddingLeft:string, ~paddingRight:string, ~padLeft:string) => style([unsafe(\\"border-width\\", borderWidth)]);
 let getButtonStyleVariants = (~borderWidth:string, ~paddingLeft:string, ~paddingRight:string, ~padLeft:string, ~type_, ~mode, ()) => {
     let buttonStylePrimary = style([unsafe(\\"padding-left\\", paddingLeft),
       hover([unsafe(\\"padding-right\\", paddingRight)])]);
@@ -43,7 +43,7 @@ switch (type_, mode) {
     | (None, Some(Semi)) => []
     | (None, None) => []
     }
-  }
+  };
 
 let getButtonVariants = (~type_, ~mode, ()) => {
   switch (type_, mode) {
@@ -60,14 +60,14 @@ let getButtonVariants = (~type_, ~mode, ()) => {
     | (None, Some(Semi)) => \\"_1a6mix7__Mode-Semi\\"
     | (None, None) => \\"_1a6mix7\\"
   }
-}
+};
 
-let button = (~borderWidth:string, ~paddingLeft:string, ~paddingRight:string, ~padLeft:string, ~type_=?, ~mode=?, ()) => \\"_elo_view _1a6mix7\\" ++ \\" \\" ++ getButtonVariants(~type_, ~mode, ()) ++ \\" \\" ++ merge([buttonStyle(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft), ...getButtonStyleVariants(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_, ~mode, ())])
+let button = (~borderWidth:string, ~paddingLeft:string, ~paddingRight:string, ~padLeft:string, ~type_=?, ~mode=?, ()) => \\"_elo_view _1a6mix7\\" ++ \\" \\" ++ getButtonVariants(~type_, ~mode, ()) ++ \\" \\" ++ merge([buttonStyle(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft), ...getButtonStyleVariants(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_, ~mode, ())]);
 
 let labelStyle = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~mediaHoverFontSize:string) => style([unsafe(\\"line-height\\", lineHeight),
     hover([unsafe(\\"font-size\\", fontSize)]),
     media(\\"(min-width: 320px) and (max-width: 320px)\\", [unsafe(\\"font-size\\", mediaFontSize),
-hover([unsafe(\\"font-size\\", mediaHoverFontSize)])])])
+hover([unsafe(\\"font-size\\", mediaHoverFontSize)])])]);
 let getLabelStyleVariants = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~mediaHoverFontSize:string, ~type_, ~mode, ()) => {
     switch (type_, mode) {
     | (Some(Primary), Some(Dark)) => []
@@ -83,7 +83,7 @@ let getLabelStyleVariants = (~lineHeight:string, ~fontSize:string, ~mediaFontSiz
     | (None, Some(Semi)) => []
     | (None, None) => []
     }
-  }
+  };
 
 let getLabelVariants = (~type_, ~mode, ()) => {
   switch (type_, mode) {
@@ -100,9 +100,9 @@ let getLabelVariants = (~type_, ~mode, ()) => {
     | (None, Some(Semi)) => \\"_vqhb4f__Mode-Semi\\"
     | (None, None) => \\"_vqhb4f\\"
   }
-}
+};
 
-let label = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~mediaHoverFontSize:string, ~type_=?, ~mode=?, ()) => \\"_elo_text _vqhb4f\\" ++ \\" \\" ++ getLabelVariants(~type_, ~mode, ()) ++ \\" \\" ++ merge([labelStyle(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize), ...getLabelStyleVariants(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize, ~type_, ~mode, ())])
+let label = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~mediaHoverFontSize:string, ~type_=?, ~mode=?, ()) => \\"_elo_text _vqhb4f\\" ++ \\" \\" ++ getLabelVariants(~type_, ~mode, ()) ++ \\" \\" ++ merge([labelStyle(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize), ...getLabelStyleVariants(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize, ~type_, ~mode, ())]);
 ",
   "RootStyleButton.elo.css": "._1a6mix7 {
   background-color: red;

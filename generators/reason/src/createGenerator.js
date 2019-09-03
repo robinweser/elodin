@@ -78,7 +78,8 @@ function generateReasonFile(
         `type ` +
         variant.toLowerCase() +
         ` =\n  ` +
-        variantMap[variant].map(val => '| ' + val).join('\n  ')
+        variantMap[variant].map(val => '| ' + val).join('\n  ') +
+        ';'
     )
     .join('\n\n')
 
@@ -230,7 +231,7 @@ function generateModules(ast, { devMode }) {
       )
       .join('\n    ')}
     }
-  }`
+  };`
 
       variantSwitch = `let get${module.name}Variants = (${variantNames
         .map(variant => '~' + variant.toLowerCase())
@@ -261,7 +262,7 @@ function generateModules(ast, { devMode }) {
           '"'
       )
       .join('\n    ')}\n  }
-}`
+};`
     }
 
     const baseStyle =
@@ -272,7 +273,7 @@ function generateModules(ast, { devMode }) {
           variables.map(variable => '~' + variable + ':string').join(', ') +
           ') => style([' +
           style.map(stringifyDeclaration).join(',\n    ') +
-          '])'
+          ']);'
         : ''
 
     rules.push(
@@ -319,8 +320,8 @@ function generateModules(ast, { devMode }) {
                   .join(', ') +
                 ', ())'
               : '') +
-            '])'
-          : '')
+            ']);'
+          : ';')
     )
 
     return rules
