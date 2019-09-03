@@ -63,7 +63,7 @@ var properties = [
   'color',
 ]
 
-var values = {
+var valueMap = {
   direction: ['ltr', 'rtl'],
   position: ['relative', 'absolute'],
   display: ['show', 'hide'],
@@ -89,10 +89,44 @@ var values = {
     'spaceAround',
   ],
   fontStyle: ['normal', 'italic'],
-  textAlign: ['auto', 'justify,', 'center', 'left', 'right'],
+  textAlign: ['auto', 'justify', 'center', 'left', 'right'],
   textDecorationLine: ['none', 'underline', 'lineThrough'],
 }
 
+const values = [
+  'ltr',
+  'rtl',
+  'relative',
+  'absolute',
+  'show',
+  'hide',
+  'solid',
+  'dotted',
+  'dashed',
+  'nowrap',
+  'wrap',
+  'row',
+  'rowReverse',
+  'column',
+  'columnReverse',
+  'flexStart',
+  'flexEnd',
+  'center',
+  'spaceBetween',
+  'spaceAround',
+  'spaceEvenly',
+  'auto',
+  'stretch',
+  'baseline',
+  'normal',
+  'italic',
+  'justify',
+  'left',
+  'right',
+  'none',
+  'underline',
+  'lineThrough',
+]
 var functions = ['rgb', 'hsl', 'rgba', 'hsla', 'hex', 'percentage']
 var keywords = ['view', 'text', 'variant', 'fragment']
 var mediaQueries = ['viewportWidth', 'viewportHeight']
@@ -139,18 +173,33 @@ vscode.languages.registerCompletionItemProvider(
   { language: 'elodin' },
   {
     provideCompletionItems(document, position, token, context) {
-      return [
-        ...properties,
-        ...keywords,
-        ...functions,
-        ...mediaQueries,
-        ...pseudoClasses,
-        ...pseudoElements,
-      ].map(function(p) {
-        return new vscode.CompletionItem(p)
-      })
+      var textBefore = document
+        .lineAt(position)
+        .text.substr(0, position.character - 1)
+      var splitted = textBefore.split(' ').pop()
+
+      if (valueMap[splitted]) {
+        return valueMap[splitted].map(function(p) {
+          return new vscode.CompletionItem(p)
+        })
+      }
     },
-  }
+  },
+  ':'
+)
+
+vscode.languages.registerCompletionItemProvider(
+  { language: 'elodin' },
+  {
+    provideCompletionItems(document, position, token, context) {
+      return [...mediaQueries, ...pseudoClasses, ...pseudoElements].map(
+        function(p) {
+          return new vscode.CompletionItem(p)
+        }
+      )
+    },
+  },
+  '@'
 )
 
 vscode.languages.registerCompletionItemProvider(
@@ -159,15 +208,33 @@ vscode.languages.registerCompletionItemProvider(
     provideCompletionItems(document, position, token, context) {
       var textBefore = document
         .lineAt(position)
-        .text.substr(0, position.character - 1)
-      var splitted = textBefore.split(' ').pop()
+        .text.substr(0, position.character)
+        .trim()
 
-      if (values[splitted]) {
-        return values[splitted].map(function(p) {
-          return new vscode.CompletionItem(p)
-        })
+      if (textBefore.charAt(textBefore.length - 1) === ':') {
+        var splitted = textBefore
+          .substr(0, textBefore.length - 1)
+          .split(' ')
+          .pop()
+
+        if (valueMap[splitted]) {
+          return valueMap[splitted].map(function(p) {
+            return new vscode.CompletionItem(p)
+          })
+        }
       }
+
+      return [
+        ...properties,
+        ...keywords,
+        ...functions,
+        ...values,
+        ...mediaQueries,
+        ...pseudoClasses,
+        ...pseudoElements,
+      ].map(function(p) {
+        return new vscode.CompletionItem(p)
+      })
     },
-  },
-  ':'
+  }
 )
