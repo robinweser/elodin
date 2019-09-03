@@ -17,28 +17,44 @@
           "match": "(view|variant|fragment|text)(?=\\s+)"
         },
         {
-          "name": "entity.name.class",
-          "match": "([A-Z]+[A-Za-z]*)(?=(\\s*\\{))"
+          "name": "entity.name.function.elodin",
+          "match": "([a-z]+)(?=(\\s*\\())"
         },
         {
-          "name": "constant.character.elodin",
-          "match": "(\\s+)([A-Z]+[A-Za-z]*\\s+)(?!\\{)"
+          "name": "constant.variable.elodin",
+          "match": "([a-z]+[A-Za-z]*)"
+        },
+        {
+          "name": "entity.name.class.elodin",
+          "match": "([A-Z]+[A-Za-z]*)(?=(\\s*\\=))"
+        },
+        {
+          "name": "entity.name.class.elodin",
+          "match": "(?<=variant)\\s*([A-Z]+[A-Za-z]*)"
+        },
+        {
+          "name": "entity.name.class.elodin",
+          "match": "(?<=\\[)\\s*([A-Z]+[A-Za-z]*)"
+        },
+        {
+          "name": "entity.name.class.elodin",
+          "match": "(?<=view)\\s*([A-Z]+[A-Za-z]*)"
+        },
+        {
+          "name": "entity.name.class.elodin",
+          "match": "(?<=text)\\s*([A-Z]+[A-Za-z]*)"
         },
         {
           "name": "constant.character.elodin",
           "match": "([A-Z]+[A-Za-z]*)(?=\\s*\\])"
         },
         {
-          "name": "entity.name.class",
-          "match": "([A-Z]+[A-Za-z]*)(?=(\\s*\\=))"
+          "name": "constant.character.elodin",
+          "match": "([A-Z]+[A-Za-z]*)"
         },
         {
           "name": "emphasis.raw.elodin",
           "match": "(__[a-zA-Z]+)"
-        },
-        {
-          "name": "entity.name.function.elodin",
-          "match": "([a-z]+)(?=(\\s*\\())"
         },
         {
           "name": "constant.numeric.elodin",
@@ -46,11 +62,7 @@
         },
         {
           "name": "variable.language.elodin",
-          "match": "(\\$[a-zA-Z]+)"
-        },
-        {
-          "name": "variable.language.elodin",
-          "match": "(\\@[a-zA-Z]+)"
+          "match": "((\\$|\\@)[a-zA-Z]+)"
         }
       ]
     },
