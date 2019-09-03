@@ -1,0 +1,41 @@
+{
+  "private": true,
+  "publisher": "robinweser",
+  "name": "language-elodin",
+  "displayName": "language-elodin",
+  "description": "Language support for Elodin",
+  "repository": "https://github.com/robinweser/elodin/tree/master/packages/language-elodin",
+  "version": "0.0.19",
+  "main": "index.js",
+  "engines": {
+    "vscode": "^1.37.0"
+  },
+  "activationEvents": [
+    "*"
+  ],
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "elodin",
+        "aliases": [
+          "Elodin",
+          "elodin"
+        ],
+        "extensions": [
+          ".elo"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "elodin",
+        "scopeName": "source.elo",
+        "path": "./syntaxes/elodin.tmLanguage.json"
+      }
+    ]
+  }
+}

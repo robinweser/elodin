@@ -1,0 +1,69 @@
+{
+  "name": "Elodin",
+  "scopeName": "source.elo",
+  "patterns": [
+    {
+      "include": "#keywords"
+    },
+    {
+      "include": "#strings"
+    }
+  ],
+  "repository": {
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.elodin",
+          "match": "(view|variant|fragment|text)(?=\\s+)"
+        },
+        {
+          "name": "entity.name.class",
+          "match": "([A-Z]+[A-Za-z]*)(?=(\\s*\\{))"
+        },
+        {
+          "name": "constant.character.elodin",
+          "match": "(\\s+)([A-Z]+[A-Za-z]*\\s+)(?!\\{)"
+        },
+        {
+          "name": "constant.character.elodin",
+          "match": "([A-Z]+[A-Za-z]*)(?=\\s*\\])"
+        },
+        {
+          "name": "entity.name.class",
+          "match": "([A-Z]+[A-Za-z]*)(?=(\\s*\\=))"
+        },
+        {
+          "name": "emphasis.raw.elodin",
+          "match": "(__[a-zA-Z]+)"
+        },
+        {
+          "name": "entity.name.function.elodin",
+          "match": "([a-z]+)(?=(\\s*\\())"
+        },
+        {
+          "name": "constant.numeric.elodin",
+          "match": "(\\d+)"
+        },
+        {
+          "name": "variable.language.elodin",
+          "match": "(\\$[a-zA-Z]+)"
+        },
+        {
+          "name": "variable.language.elodin",
+          "match": "(\\@[a-zA-Z]+)"
+        }
+      ]
+    },
+    "strings": {
+      "name": "string.quoted.double.elodin",
+      "begin": "\"",
+      "end": "\"",
+      "patterns": [
+        {
+          "name": "constant.character.escape.elodin",
+          "match": "\\\\."
+        }
+      ]
+    }
+  }
+}
