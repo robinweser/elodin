@@ -122,7 +122,7 @@ export default {
         value.value % 100 === 0,
       // matchesKeywords('normal', 'bold'),
     ],
-    textAlign: [matchesKeywords('auto', 'justify,', 'center', 'left', 'right')],
+    textAlign: [matchesKeywords('auto', 'justify', 'center', 'left', 'right')],
     textDecorationLine: [matchesKeywords('none', 'underline', 'lineThrough')],
     fontFamily: [isString],
     letterSpacing: [isNumber],
