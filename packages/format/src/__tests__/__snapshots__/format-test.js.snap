@@ -18,7 +18,7 @@ view Button {
   [Type=Primary] {
     paddingLeft: 20
     [Mode=Dark] {
-      backgroundColor: rgb(0 128 0)
+      backgroundColor: green
     }
   }
 }
@@ -26,13 +26,14 @@ view Button {
 text Label {
   lineHeight: $lineHeight
   fontSize: 20
+  color: rgb(200 120 0)
   [@hover] {
-    color: rgb(255 0 0)
+    color: rgba(255 0 120 percentage(50))
   }
   [@minWidth=320] {
-    color: rgb(0 0 255)
+    color: hex(F3F3F3)
     [@hover] {
-      color: rgb(0 128 0)
+      color: green
     }
   }
 }"
@@ -57,7 +58,7 @@ view Button {
   [Type=Primary] {
     paddingLeft: 20
     [Mode=Dark] {
-      backgroundColor: rgb(0 128 0)
+      backgroundColor: green
     }
   }
 }
@@ -65,13 +66,14 @@ view Button {
 text Label {
   lineHeight: $lineHeight
   fontSize: 20
+  color: rgb(200 120 0)
   [@hover] {
-    color: rgb(255 0 0)
+    color: rgba(255 0 120 percentage(50))
   }
   [@minWidth=320] {
-    color: rgb(0 0 255)
+    color: hex(F3F3F3)
     [@hover] {
-      color: rgb(0 128 0)
+      color: green
     }
   }
 }",

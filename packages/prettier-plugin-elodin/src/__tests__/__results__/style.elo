@@ -1,5 +1,5 @@
 view Button {
   paddingLeft: 10
   justifyContent: $jC
-  backgroundColor: rgb(0 0 255)
+  backgroundColor: blue
 }

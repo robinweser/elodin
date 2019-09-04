@@ -52,21 +52,7 @@ let labelStyle = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~
     hover([unsafe(\\"font-size\\", fontSize)]),
     media(\\"(min-width: 320px) and (max-width: 320px)\\", [unsafe(\\"font-size\\", mediaFontSize),
 hover([unsafe(\\"font-size\\", mediaHoverFontSize)])])]);
-let getLabelStyleVariants = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~mediaHoverFontSize:string, ~mode, ()) => {
-    switch (type_, mode) {
-    | (Some(Mode)) => []
-    | (None) => []
-    }
-  };
-
-let getLabelVariants = (~mode, ()) => {
-  switch (type_, mode) {
-    | (Some(Mode)) => \\"_1ni3jjq__Mode-Mode\\"
-    | (None) => \\"_1ni3jjq\\"
-  }
-};
-
-let label = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~mediaHoverFontSize:string, ~mode, ()) => \\"_elo_text _1ni3jjq\\" ++ \\" \\" ++ getLabelVariants(~mode, ()) ++ \\" \\" ++ merge([labelStyle(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize), ...getLabelStyleVariants(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize, ~mode, ())]);
+let label = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~mediaHoverFontSize:string, ()) => \\"_elo_text _vqhb4f\\" ++ \\" \\" ++ merge([labelStyle(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize)]);
 ",
   "RootStyleButton.elo.css": "._1a6mix7 {
   background-color: red;
@@ -89,22 +75,18 @@ let label = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~media
 ._1a6mix7__Mode-Light {
   background-color: green
 }",
-  "RootStyleLabel.elo.css": "._1ni3jjq:hover {
+  "RootStyleLabel.elo.css": "._vqhb4f:hover {
   color: red
 }
 
-._1ni3jjq__Mode-Dark {
-  color: blue
-}
-
 @media (min-width: 320px) and (max-width: 320px) {
-  ._1ni3jjq {
+  ._vqhb4f {
     color: green
   }
 }
 
 @media (min-width: 320px) and (max-width: 320px) {
-  ._1ni3jjq:hover {
+  ._vqhb4f:hover {
     color: blue
   }
 }",
