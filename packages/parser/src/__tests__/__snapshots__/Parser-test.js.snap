@@ -2,1136 +2,378 @@
 
 exports[`Parsing elodin syntax should correctly parse conditionals 1`] = `
 Object {
-  "ast": Object {
-    "body": Array [
-      Object {
-        "body": undefined,
-        "name": "Type",
-        "type": "Variant",
-      },
-    ],
-    "type": "File",
-  },
-  "errors": Array [
+  "body": Array [
     Object {
-      "message": "A variant must at least have 1 variation.",
-      "type": "SYNTAX_ERROR",
+      "body": Array [
+        Object {
+          "type": "Identifier",
+          "value": "Dark",
+        },
+        Object {
+          "type": "Identifier",
+          "value": "Light",
+        },
+      ],
+      "name": "Type",
+      "type": "Variant",
+    },
+    Object {
+      "body": Array [
+        Object {
+          "dynamic": false,
+          "property": "backgroundColor",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "alpha": 1,
+            "blue": 0,
+            "format": "keyword",
+            "green": 0,
+            "red": 255,
+            "type": "Color",
+          },
+        },
+        Object {
+          "body": Array [
+            Object {
+              "dynamic": false,
+              "property": "backgroundColor",
+              "raw": false,
+              "type": "Declaration",
+              "value": Object {
+                "alpha": 1,
+                "blue": 255,
+                "format": "keyword",
+                "green": 0,
+                "red": 0,
+                "type": "Color",
+              },
+            },
+          ],
+          "operator": "=",
+          "property": Object {
+            "type": "Identifier",
+            "value": "Type",
+          },
+          "type": "Conditional",
+          "value": Object {
+            "type": "Identifier",
+            "value": "Primary",
+          },
+        },
+      ],
+      "format": "view",
+      "name": "Button",
+      "type": "Style",
     },
   ],
-  "tokens": Array [
-    Object {
-      "end": 7,
-      "start": 0,
-      "type": "identifier",
-      "value": "variant",
-    },
-    Object {
-      "end": 12,
-      "start": 8,
-      "type": "identifier",
-      "value": "Type",
-    },
-    Object {
-      "end": 14,
-      "start": 13,
-      "type": "comparison",
-      "value": "=",
-    },
-    Object {
-      "end": 16,
-      "start": 15,
-      "type": "curly_bracket",
-      "value": "{",
-    },
-    Object {
-      "end": 27,
-      "start": 23,
-      "type": "identifier",
-      "value": "Dark",
-    },
-    Object {
-      "end": 39,
-      "start": 34,
-      "type": "identifier",
-      "value": "Light",
-    },
-    Object {
-      "end": 45,
-      "start": 44,
-      "type": "curly_bracket",
-      "value": "}",
-    },
-    Object {
-      "end": 51,
-      "start": 47,
-      "type": "identifier",
-      "value": "view",
-    },
-    Object {
-      "end": 58,
-      "start": 52,
-      "type": "identifier",
-      "value": "Button",
-    },
-    Object {
-      "end": 60,
-      "start": 59,
-      "type": "curly_bracket",
-      "value": "{",
-    },
-    Object {
-      "end": 78,
-      "start": 63,
-      "type": "identifier",
-      "value": "backgroundColor",
-    },
-    Object {
-      "end": 79,
-      "start": 78,
-      "type": "colon",
-      "value": ":",
-    },
-    Object {
-      "end": 83,
-      "start": 80,
-      "type": "identifier",
-      "value": "red",
-    },
-    Object {
-      "end": 88,
-      "start": 87,
-      "type": "square_bracket",
-      "value": "[",
-    },
-    Object {
-      "end": 92,
-      "start": 88,
-      "type": "identifier",
-      "value": "Type",
-    },
-    Object {
-      "end": 93,
-      "start": 92,
-      "type": "comparison",
-      "value": "=",
-    },
-    Object {
-      "end": 100,
-      "start": 93,
-      "type": "identifier",
-      "value": "Primary",
-    },
-    Object {
-      "end": 101,
-      "start": 100,
-      "type": "square_bracket",
-      "value": "]",
-    },
-    Object {
-      "end": 103,
-      "start": 102,
-      "type": "curly_bracket",
-      "value": "{",
-    },
-    Object {
-      "end": 113,
-      "start": 108,
-      "type": "identifier",
-      "value": "color",
-    },
-    Object {
-      "end": 114,
-      "start": 113,
-      "type": "colon",
-      "value": ":",
-    },
-    Object {
-      "end": 118,
-      "start": 115,
-      "type": "identifier",
-      "value": "red",
-    },
-    Object {
-      "end": 122,
-      "start": 121,
-      "type": "curly_bracket",
-      "value": "}",
-    },
-    Object {
-      "end": 124,
-      "start": 123,
-      "type": "curly_bracket",
-      "value": "}",
-    },
-    Object {
-      "type": "end_token",
-    },
-  ],
+  "type": "File",
 }
 `;
 
 exports[`Parsing elodin syntax should correctly parse env condition 1`] = `
 Object {
-  "ast": Object {
-    "body": Array [
-      Object {
-        "body": Array [
-          Object {
-            "body": Array [
-              Object {
-                "dynamic": false,
-                "property": "color",
-                "raw": false,
-                "type": "Declaration",
-                "value": Object {
-                  "alpha": 1,
-                  "blue": 0,
-                  "format": "keyword",
-                  "green": 0,
-                  "red": 255,
-                  "type": "Color",
-                },
+  "body": Array [
+    Object {
+      "body": Array [
+        Object {
+          "body": Array [
+            Object {
+              "dynamic": false,
+              "property": "backgroundColor",
+              "raw": false,
+              "type": "Declaration",
+              "value": Object {
+                "alpha": 1,
+                "blue": 0,
+                "format": "keyword",
+                "green": 0,
+                "red": 255,
+                "type": "Color",
               },
-            ],
-            "boolean": true,
-            "property": Object {
-              "environment": true,
-              "type": "Variable",
-              "value": "hover",
             },
-            "type": "Conditional",
+          ],
+          "boolean": true,
+          "property": Object {
+            "environment": true,
+            "type": "Variable",
+            "value": "hover",
           },
-          Object {
-            "body": Array [
-              Object {
-                "dynamic": false,
-                "property": "color",
-                "raw": false,
-                "type": "Declaration",
-                "value": Object {
-                  "alpha": 1,
-                  "blue": 255,
-                  "format": "keyword",
-                  "green": 0,
-                  "red": 0,
-                  "type": "Color",
-                },
+          "type": "Conditional",
+        },
+        Object {
+          "body": Array [
+            Object {
+              "dynamic": false,
+              "property": "backgroundColor",
+              "raw": false,
+              "type": "Declaration",
+              "value": Object {
+                "alpha": 1,
+                "blue": 255,
+                "format": "keyword",
+                "green": 0,
+                "red": 0,
+                "type": "Color",
               },
-              Object {
-                "body": Array [
-                  Object {
-                    "dynamic": false,
-                    "property": "color",
-                    "raw": false,
-                    "type": "Declaration",
-                    "value": Object {
-                      "alpha": 1,
-                      "blue": 0,
-                      "format": "keyword",
-                      "green": 128,
-                      "red": 0,
-                      "type": "Color",
-                    },
+            },
+            Object {
+              "body": Array [
+                Object {
+                  "dynamic": false,
+                  "property": "backgroundColor",
+                  "raw": false,
+                  "type": "Declaration",
+                  "value": Object {
+                    "alpha": 1,
+                    "blue": 0,
+                    "format": "keyword",
+                    "green": 128,
+                    "red": 0,
+                    "type": "Color",
                   },
-                ],
-                "boolean": true,
-                "property": Object {
-                  "environment": true,
-                  "type": "Variable",
-                  "value": "hover",
                 },
-                "type": "Conditional",
+              ],
+              "boolean": true,
+              "property": Object {
+                "environment": true,
+                "type": "Variable",
+                "value": "hover",
               },
-            ],
-            "operator": "=",
-            "property": Object {
-              "environment": true,
-              "type": "Variable",
-              "value": "minWidth",
+              "type": "Conditional",
             },
-            "type": "Conditional",
-            "value": Object {
-              "negative": false,
-              "type": "Integer",
-              "value": 320,
-            },
+          ],
+          "operator": ">=",
+          "property": Object {
+            "environment": true,
+            "type": "Variable",
+            "value": "viewportWidth",
           },
-        ],
-        "format": "view",
-        "name": "Button",
-        "type": "Style",
-      },
-    ],
-    "type": "File",
-  },
-  "errors": Array [
-    Object {
-      "message": "color: undefined
-^-------
-The property color is an invalid view property.
-In Button
-",
-      "type": "INVALID_PROPERTY",
-    },
-    Object {
-      "message": "color: undefined
-^-------
-The property color is an invalid view property.
-In Button
-",
-      "type": "INVALID_PROPERTY",
-    },
-    Object {
-      "message": "color: undefined
-^-------
-The property color is an invalid view property.
-In Button
-",
-      "type": "INVALID_PROPERTY",
+          "type": "Conditional",
+          "value": Object {
+            "negative": false,
+            "type": "Integer",
+            "value": 320,
+          },
+        },
+      ],
+      "format": "view",
+      "name": "Button",
+      "type": "Style",
     },
   ],
-  "tokens": Array [
-    Object {
-      "end": 4,
-      "start": 0,
-      "type": "identifier",
-      "value": "view",
-    },
-    Object {
-      "end": 11,
-      "start": 5,
-      "type": "identifier",
-      "value": "Button",
-    },
-    Object {
-      "end": 13,
-      "start": 12,
-      "type": "curly_bracket",
-      "value": "{",
-    },
-    Object {
-      "end": 17,
-      "start": 16,
-      "type": "square_bracket",
-      "value": "[",
-    },
-    Object {
-      "end": 18,
-      "start": 17,
-      "type": "variable",
-      "value": "@",
-    },
-    Object {
-      "end": 23,
-      "start": 18,
-      "type": "identifier",
-      "value": "hover",
-    },
-    Object {
-      "end": 24,
-      "start": 23,
-      "type": "square_bracket",
-      "value": "]",
-    },
-    Object {
-      "end": 26,
-      "start": 25,
-      "type": "curly_bracket",
-      "value": "{",
-    },
-    Object {
-      "end": 36,
-      "start": 31,
-      "type": "identifier",
-      "value": "color",
-    },
-    Object {
-      "end": 37,
-      "start": 36,
-      "type": "colon",
-      "value": ":",
-    },
-    Object {
-      "end": 41,
-      "start": 38,
-      "type": "identifier",
-      "value": "red",
-    },
-    Object {
-      "end": 45,
-      "start": 44,
-      "type": "curly_bracket",
-      "value": "}",
-    },
-    Object {
-      "end": 50,
-      "start": 49,
-      "type": "square_bracket",
-      "value": "[",
-    },
-    Object {
-      "end": 51,
-      "start": 50,
-      "type": "variable",
-      "value": "@",
-    },
-    Object {
-      "end": 59,
-      "start": 51,
-      "type": "identifier",
-      "value": "minWidth",
-    },
-    Object {
-      "end": 60,
-      "start": 59,
-      "type": "comparison",
-      "value": "=",
-    },
-    Object {
-      "end": 63,
-      "start": 60,
-      "type": "number",
-      "value": "320",
-    },
-    Object {
-      "end": 64,
-      "start": 63,
-      "type": "square_bracket",
-      "value": "]",
-    },
-    Object {
-      "end": 66,
-      "start": 65,
-      "type": "curly_bracket",
-      "value": "{",
-    },
-    Object {
-      "end": 76,
-      "start": 71,
-      "type": "identifier",
-      "value": "color",
-    },
-    Object {
-      "end": 77,
-      "start": 76,
-      "type": "colon",
-      "value": ":",
-    },
-    Object {
-      "end": 82,
-      "start": 78,
-      "type": "identifier",
-      "value": "blue",
-    },
-    Object {
-      "end": 88,
-      "start": 87,
-      "type": "square_bracket",
-      "value": "[",
-    },
-    Object {
-      "end": 89,
-      "start": 88,
-      "type": "variable",
-      "value": "@",
-    },
-    Object {
-      "end": 94,
-      "start": 89,
-      "type": "identifier",
-      "value": "hover",
-    },
-    Object {
-      "end": 95,
-      "start": 94,
-      "type": "square_bracket",
-      "value": "]",
-    },
-    Object {
-      "end": 97,
-      "start": 96,
-      "type": "curly_bracket",
-      "value": "{",
-    },
-    Object {
-      "end": 109,
-      "start": 104,
-      "type": "identifier",
-      "value": "color",
-    },
-    Object {
-      "end": 110,
-      "start": 109,
-      "type": "colon",
-      "value": ":",
-    },
-    Object {
-      "end": 116,
-      "start": 111,
-      "type": "identifier",
-      "value": "green",
-    },
-    Object {
-      "end": 122,
-      "start": 121,
-      "type": "curly_bracket",
-      "value": "}",
-    },
-    Object {
-      "end": 126,
-      "start": 125,
-      "type": "curly_bracket",
-      "value": "}",
-    },
-    Object {
-      "end": 128,
-      "start": 127,
-      "type": "curly_bracket",
-      "value": "}",
-    },
-    Object {
-      "type": "end_token",
-    },
-  ],
+  "type": "File",
 }
 `;
 
 exports[`Parsing elodin syntax should correctly parse fragments 1`] = `
 Object {
-  "ast": Object {
-    "body": Array [
-      Object {
-        "body": Array [
-          Object {
-            "dynamic": false,
-            "property": "flexDirection",
-            "raw": false,
-            "type": "Declaration",
-            "value": Object {
-              "type": "Identifier",
-              "value": "row",
-            },
-          },
-          Object {
-            "dynamic": false,
-            "property": "alignSelf",
-            "raw": false,
-            "type": "Declaration",
-            "value": Object {
-              "type": "Identifier",
-              "value": "stretch",
-            },
-          },
-          Object {
-            "dynamic": false,
-            "property": "flexGrow",
-            "raw": false,
-            "type": "Declaration",
-            "value": Object {
-              "negative": false,
-              "type": "Integer",
-              "value": 0,
-            },
-          },
-          Object {
-            "dynamic": false,
-            "property": "flexShrink",
-            "raw": false,
-            "type": "Declaration",
-            "value": Object {
-              "negative": false,
-              "type": "Integer",
-              "value": 1,
-            },
-          },
-          Object {
-            "dynamic": false,
-            "property": "flexBasis",
-            "raw": false,
-            "type": "Declaration",
-            "value": Object {
-              "type": "Identifier",
-              "value": "auto",
-            },
-          },
-        ],
-        "name": "Flex",
-        "type": "Fragment",
-      },
-    ],
-    "type": "File",
-  },
-  "errors": Array [
+  "body": Array [
     Object {
-      "message": "flexBasis: auto
-           ^-------
-The value auto is an invalid value for the property flexBasis.
-In Flex
-",
-      "type": "INVALID_VALUE",
+      "body": Array [
+        Object {
+          "dynamic": false,
+          "property": "flexDirection",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "type": "Identifier",
+            "value": "row",
+          },
+        },
+        Object {
+          "dynamic": false,
+          "property": "alignSelf",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "type": "Identifier",
+            "value": "stretch",
+          },
+        },
+        Object {
+          "dynamic": false,
+          "property": "flexGrow",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "negative": false,
+            "type": "Integer",
+            "value": 0,
+          },
+        },
+        Object {
+          "dynamic": false,
+          "property": "flexShrink",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "negative": false,
+            "type": "Integer",
+            "value": 1,
+          },
+        },
+        Object {
+          "dynamic": false,
+          "property": "flexBasis",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "negative": false,
+            "type": "Integer",
+            "value": 50,
+          },
+        },
+      ],
+      "name": "Flex",
+      "type": "Fragment",
     },
   ],
-  "tokens": Array [
-    Object {
-      "end": 8,
-      "start": 0,
-      "type": "identifier",
-      "value": "fragment",
-    },
-    Object {
-      "end": 13,
-      "start": 9,
-      "type": "identifier",
-      "value": "Flex",
-    },
-    Object {
-      "end": 15,
-      "start": 14,
-      "type": "curly_bracket",
-      "value": "{",
-    },
-    Object {
-      "end": 31,
-      "start": 18,
-      "type": "identifier",
-      "value": "flexDirection",
-    },
-    Object {
-      "end": 32,
-      "start": 31,
-      "type": "colon",
-      "value": ":",
-    },
-    Object {
-      "end": 36,
-      "start": 33,
-      "type": "identifier",
-      "value": "row",
-    },
-    Object {
-      "end": 48,
-      "start": 39,
-      "type": "identifier",
-      "value": "alignSelf",
-    },
-    Object {
-      "end": 49,
-      "start": 48,
-      "type": "colon",
-      "value": ":",
-    },
-    Object {
-      "end": 57,
-      "start": 50,
-      "type": "identifier",
-      "value": "stretch",
-    },
-    Object {
-      "end": 68,
-      "start": 60,
-      "type": "identifier",
-      "value": "flexGrow",
-    },
-    Object {
-      "end": 69,
-      "start": 68,
-      "type": "colon",
-      "value": ":",
-    },
-    Object {
-      "end": 71,
-      "start": 70,
-      "type": "number",
-      "value": "0",
-    },
-    Object {
-      "end": 84,
-      "start": 74,
-      "type": "identifier",
-      "value": "flexShrink",
-    },
-    Object {
-      "end": 85,
-      "start": 84,
-      "type": "colon",
-      "value": ":",
-    },
-    Object {
-      "end": 87,
-      "start": 86,
-      "type": "number",
-      "value": "1",
-    },
-    Object {
-      "end": 99,
-      "start": 90,
-      "type": "identifier",
-      "value": "flexBasis",
-    },
-    Object {
-      "end": 100,
-      "start": 99,
-      "type": "colon",
-      "value": ":",
-    },
-    Object {
-      "end": 105,
-      "start": 101,
-      "type": "identifier",
-      "value": "auto",
-    },
-    Object {
-      "end": 107,
-      "start": 106,
-      "type": "curly_bracket",
-      "value": "}",
-    },
-    Object {
-      "type": "end_token",
-    },
-  ],
+  "type": "File",
 }
 `;
 
 exports[`Parsing elodin syntax should correctly parse multiple styles 1`] = `
 Object {
-  "ast": Object {
-    "body": Array [
-      Object {
-        "body": Array [
-          Object {
-            "dynamic": false,
-            "property": "backgroundColor",
-            "raw": false,
-            "type": "Declaration",
-            "value": Object {
-              "alpha": 1,
-              "blue": 0,
-              "format": "keyword",
-              "green": 0,
-              "red": 255,
-              "type": "Color",
-            },
+  "body": Array [
+    Object {
+      "body": Array [
+        Object {
+          "dynamic": false,
+          "property": "backgroundColor",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "alpha": 1,
+            "blue": 0,
+            "format": "keyword",
+            "green": 0,
+            "red": 255,
+            "type": "Color",
           },
-          Object {
-            "dynamic": false,
-            "property": "paddingLeft",
-            "raw": false,
-            "type": "Declaration",
-            "value": Object {
-              "negative": false,
-              "type": "Integer",
-              "value": 10,
-            },
+        },
+        Object {
+          "dynamic": false,
+          "property": "paddingLeft",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "negative": false,
+            "type": "Integer",
+            "value": 10,
           },
-        ],
-        "format": "view",
-        "name": "Button",
-        "type": "Style",
-      },
-      Object {
-        "body": Array [
-          Object {
-            "dynamic": false,
-            "property": "lineHeight",
-            "raw": false,
-            "type": "Declaration",
-            "value": Object {
-              "negative": false,
-              "type": "Integer",
-              "value": 2,
-            },
+        },
+      ],
+      "format": "view",
+      "name": "Button",
+      "type": "Style",
+    },
+    Object {
+      "body": Array [
+        Object {
+          "dynamic": false,
+          "property": "lineHeight",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "negative": false,
+            "type": "Integer",
+            "value": 2,
           },
-        ],
-        "format": "text",
-        "name": "Label",
-        "type": "Style",
-      },
-    ],
-    "type": "File",
-  },
-  "errors": Array [],
-  "tokens": Array [
-    Object {
-      "end": 4,
-      "start": 0,
-      "type": "identifier",
-      "value": "view",
-    },
-    Object {
-      "end": 11,
-      "start": 5,
-      "type": "identifier",
-      "value": "Button",
-    },
-    Object {
-      "end": 13,
-      "start": 12,
-      "type": "curly_bracket",
-      "value": "{",
-    },
-    Object {
-      "end": 31,
-      "start": 16,
-      "type": "identifier",
-      "value": "backgroundColor",
-    },
-    Object {
-      "end": 32,
-      "start": 31,
-      "type": "colon",
-      "value": ":",
-    },
-    Object {
-      "end": 36,
-      "start": 33,
-      "type": "identifier",
-      "value": "red",
-    },
-    Object {
-      "end": 50,
-      "start": 39,
-      "type": "identifier",
-      "value": "paddingLeft",
-    },
-    Object {
-      "end": 51,
-      "start": 50,
-      "type": "colon",
-      "value": ":",
-    },
-    Object {
-      "end": 54,
-      "start": 52,
-      "type": "number",
-      "value": "10",
-    },
-    Object {
-      "end": 56,
-      "start": 55,
-      "type": "curly_bracket",
-      "value": "}",
-    },
-    Object {
-      "end": 62,
-      "start": 58,
-      "type": "identifier",
-      "value": "text",
-    },
-    Object {
-      "end": 68,
-      "start": 63,
-      "type": "identifier",
-      "value": "Label",
-    },
-    Object {
-      "end": 70,
-      "start": 69,
-      "type": "curly_bracket",
-      "value": "{",
-    },
-    Object {
-      "end": 83,
-      "start": 73,
-      "type": "identifier",
-      "value": "lineHeight",
-    },
-    Object {
-      "end": 84,
-      "start": 83,
-      "type": "colon",
-      "value": ":",
-    },
-    Object {
-      "end": 86,
-      "start": 85,
-      "type": "number",
-      "value": "2",
-    },
-    Object {
-      "end": 88,
-      "start": 87,
-      "type": "curly_bracket",
-      "value": "}",
-    },
-    Object {
-      "type": "end_token",
+        },
+      ],
+      "format": "text",
+      "name": "Label",
+      "type": "Style",
     },
   ],
+  "type": "File",
 }
 `;
 
 exports[`Parsing elodin syntax should correctly parse styles 1`] = `
 Object {
-  "ast": Object {
-    "body": Array [
-      Object {
-        "body": Array [
-          Object {
-            "dynamic": false,
-            "property": "backgroundColor",
-            "raw": false,
-            "type": "Declaration",
-            "value": Object {
-              "alpha": 1,
-              "blue": 0,
-              "format": "keyword",
-              "green": 0,
-              "red": 255,
-              "type": "Color",
-            },
+  "body": Array [
+    Object {
+      "body": Array [
+        Object {
+          "dynamic": false,
+          "property": "backgroundColor",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "alpha": 1,
+            "blue": 0,
+            "format": "keyword",
+            "green": 0,
+            "red": 255,
+            "type": "Color",
           },
-          Object {
-            "dynamic": false,
-            "property": "borderColor",
-            "raw": false,
-            "type": "Declaration",
-            "value": Object {
-              "alpha": 1,
-              "blue": 255,
-              "format": "rgb",
-              "green": 255,
-              "red": 255,
-              "type": "Color",
-            },
+        },
+        Object {
+          "dynamic": false,
+          "property": "borderColor",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "alpha": 1,
+            "blue": 255,
+            "format": "rgb",
+            "green": 255,
+            "red": 255,
+            "type": "Color",
           },
-          Object {
-            "dynamic": false,
-            "property": "paddingLeft",
-            "raw": false,
-            "type": "Declaration",
-            "value": Object {
-              "negative": false,
-              "type": "Integer",
-              "value": 15,
-            },
+        },
+        Object {
+          "dynamic": false,
+          "property": "paddingLeft",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "negative": false,
+            "type": "Integer",
+            "value": 15,
           },
-          Object {
-            "dynamic": false,
-            "property": "marginTop",
-            "raw": false,
-            "type": "Declaration",
-            "value": Object {
-              "fractional": 2,
-              "integer": 1,
-              "negative": false,
-              "type": "Float",
-            },
+        },
+        Object {
+          "dynamic": false,
+          "property": "marginTop",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "fractional": 2,
+            "integer": 1,
+            "negative": false,
+            "type": "Float",
           },
-          Object {
-            "dynamic": true,
-            "property": "borderWidth",
-            "raw": false,
-            "type": "Declaration",
-            "value": Object {
-              "environment": false,
-              "type": "Variable",
-              "value": "width",
-            },
+        },
+        Object {
+          "dynamic": true,
+          "property": "borderWidth",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "environment": false,
+            "type": "Variable",
+            "value": "width",
           },
-          Object {
-            "dynamic": false,
-            "property": "animationName",
-            "raw": true,
-            "type": "Declaration",
-            "value": Object {
-              "type": "Identifier",
-              "value": "keyframe",
-            },
+        },
+        Object {
+          "dynamic": false,
+          "property": "animationName",
+          "raw": true,
+          "type": "Declaration",
+          "value": Object {
+            "type": "Identifier",
+            "value": "keyframe",
           },
-        ],
-        "format": "view",
-        "name": "Button",
-        "type": "Style",
-      },
-    ],
-    "type": "File",
-  },
-  "errors": Array [],
-  "tokens": Array [
-    Object {
-      "end": 4,
-      "start": 0,
-      "type": "identifier",
-      "value": "view",
-    },
-    Object {
-      "end": 11,
-      "start": 5,
-      "type": "identifier",
-      "value": "Button",
-    },
-    Object {
-      "end": 13,
-      "start": 12,
-      "type": "curly_bracket",
-      "value": "{",
-    },
-    Object {
-      "end": 31,
-      "start": 16,
-      "type": "identifier",
-      "value": "backgroundColor",
-    },
-    Object {
-      "end": 32,
-      "start": 31,
-      "type": "colon",
-      "value": ":",
-    },
-    Object {
-      "end": 36,
-      "start": 33,
-      "type": "identifier",
-      "value": "red",
-    },
-    Object {
-      "end": 50,
-      "start": 39,
-      "type": "identifier",
-      "value": "borderColor",
-    },
-    Object {
-      "end": 51,
-      "start": 50,
-      "type": "colon",
-      "value": ":",
-    },
-    Object {
-      "end": 55,
-      "start": 52,
-      "type": "identifier",
-      "value": "rgb",
-    },
-    Object {
-      "end": 56,
-      "start": 55,
-      "type": "round_bracket",
-      "value": "(",
-    },
-    Object {
-      "end": 59,
-      "start": 56,
-      "type": "number",
-      "value": "255",
-    },
-    Object {
-      "end": 63,
-      "start": 60,
-      "type": "number",
-      "value": "255",
-    },
-    Object {
-      "end": 67,
-      "start": 64,
-      "type": "number",
-      "value": "255",
-    },
-    Object {
-      "end": 68,
-      "start": 67,
-      "type": "round_bracket",
-      "value": ")",
-    },
-    Object {
-      "end": 82,
-      "start": 71,
-      "type": "identifier",
-      "value": "paddingLeft",
-    },
-    Object {
-      "end": 83,
-      "start": 82,
-      "type": "colon",
-      "value": ":",
-    },
-    Object {
-      "end": 86,
-      "start": 84,
-      "type": "number",
-      "value": "15",
-    },
-    Object {
-      "end": 98,
-      "start": 89,
-      "type": "identifier",
-      "value": "marginTop",
-    },
-    Object {
-      "end": 99,
-      "start": 98,
-      "type": "colon",
-      "value": ":",
-    },
-    Object {
-      "end": 101,
-      "start": 100,
-      "type": "number",
-      "value": "1",
-    },
-    Object {
-      "end": 102,
-      "start": 101,
-      "type": "floating_point",
-      "value": ".",
-    },
-    Object {
-      "end": 103,
-      "start": 102,
-      "type": "number",
-      "value": "2",
-    },
-    Object {
-      "end": 117,
-      "start": 106,
-      "type": "identifier",
-      "value": "borderWidth",
-    },
-    Object {
-      "end": 118,
-      "start": 117,
-      "type": "colon",
-      "value": ":",
-    },
-    Object {
-      "end": 120,
-      "start": 119,
-      "type": "variable",
-      "value": "$",
-    },
-    Object {
-      "end": 125,
-      "start": 120,
-      "type": "identifier",
-      "value": "width",
-    },
-    Object {
-      "end": 143,
-      "start": 128,
-      "type": "identifier",
-      "value": "__animationName",
-    },
-    Object {
-      "end": 144,
-      "start": 143,
-      "type": "colon",
-      "value": ":",
-    },
-    Object {
-      "end": 153,
-      "start": 145,
-      "type": "identifier",
-      "value": "keyframe",
-    },
-    Object {
-      "end": 155,
-      "start": 154,
-      "type": "curly_bracket",
-      "value": "}",
-    },
-    Object {
-      "type": "end_token",
+        },
+      ],
+      "format": "view",
+      "name": "Button",
+      "type": "Style",
     },
   ],
+  "type": "File",
 }
 `;

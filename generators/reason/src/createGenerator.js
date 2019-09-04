@@ -9,6 +9,7 @@ import {
   getModuleName,
   stringifyCSSRule,
   getVariablesFromAST,
+  getVariantsFromAST,
   escapeKeywords,
   generateCSSMediaQueryFromNode,
   generateCSSClasses,
@@ -145,10 +146,11 @@ function generateModules(ast, { devMode }) {
     const variables = getVariablesFromAST(module)
     const variantStyleMap = generateVariantStyleMap(module.body, variants)
 
+    const usedVariants = getVariantsFromAST(module)
+    const variantNames = Object.keys(usedVariants)
+
     const className =
       '_elo_' + module.format + ' ' + getModuleName(module, devMode)
-
-    const variantNames = Object.keys(variantMap)
 
     let dynamicStyle =
       variables.length > 0
@@ -174,7 +176,7 @@ function generateModules(ast, { devMode }) {
 
     if (variantNames.length > 0) {
       const combinations = getArrayCombinations(
-        ...variantNames.map(variant => [...variantMap[variant], 'None'])
+        ...variantNames.map(variant => [...usedVariants[variant], 'None'])
       )
 
       const combis = combinations.reduce((matches, combination) => {
@@ -211,8 +213,8 @@ function generateModules(ast, { devMode }) {
           .map(variable => '~' + variable + ':string')
           .join(', ') +
           (variables.length > 0 && variants.length > 0 ? ', ' : '') +
-          variants
-            .map(({ name }) => '~' + name.toLowerCase())
+          variantNames
+            .map(name => '~' + name.toLowerCase())
             .join(', ')}, ()) => {
     ${dynamicStyle ? dynamicStyle + '\n\n' : ''}switch (${Object.keys(
           variantMap
@@ -293,17 +295,17 @@ function generateModules(ast, { devMode }) {
         // TODO: deduplicate
         // TODO: add typings
         variables.map(variable => '~' + variable + ':string').join(', ') +
-        (variables.length > 0 && variants.length > 0 ? ', ' : '') +
-        variants.map(({ name }) => '~' + name.toLowerCase() + '=?').join(', ') +
-        (variables.length > 0 || variants.length > 0
+        (variables.length > 0 && variantNames.length > 0 ? ', ' : '') +
+        variantNames.map(name => '~' + name.toLowerCase()) +
+        (variables.length > 0 || variantNames.length > 0
           ? ', ()) => "'
           : ') => "') +
         className +
-        (variants.length > 0
+        (variantNames.length > 0 && variables.length > 0
           ? '" ++ " " ++ get' +
             module.name +
             'Variants(' +
-            variants.map(({ name }) => '~' + name.toLowerCase()).join(', ') +
+            variantNames.map(name => '~' + name.toLowerCase()).join(', ') +
             ', ())'
           : '"') +
         (style.length > 0 || variantStyleSwitch
@@ -320,10 +322,8 @@ function generateModules(ast, { devMode }) {
                 module.name +
                 'StyleVariants(' +
                 variables.map(variable => '~' + variable).join(', ') +
-                (variables.length > 0 && variants.length > 0 ? ', ' : '') +
-                variants
-                  .map(({ name }) => '~' + name.toLowerCase())
-                  .join(', ') +
+                (variables.length > 0 && variantNames.length > 0 ? ', ' : '') +
+                variantNames.map(name => '~' + name.toLowerCase()).join(', ') +
                 ', ())'
               : '') +
             ']);'

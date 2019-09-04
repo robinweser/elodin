@@ -14,7 +14,8 @@ view Button {
 
     const parser = new Parser()
 
-    expect(parser.parse(file)).toMatchSnapshot()
+    expect(parser.parse(file).errors.length).toBe(0)
+    expect(parser.parse(file).ast).toMatchSnapshot()
   })
 
   it('should correctly parse multiple styles', () => {
@@ -30,12 +31,13 @@ text Label {
 
     const parser = new Parser()
 
-    expect(parser.parse(file)).toMatchSnapshot()
+    expect(parser.parse(file).errors.length).toBe(0)
+    expect(parser.parse(file).ast).toMatchSnapshot()
   })
 
   it('should correctly parse conditionals', () => {
     const file = `
-    variant Type = {
+    variant Type {
       Dark
       Light
     }
@@ -44,13 +46,14 @@ view Button {
   backgroundColor: red
 
   [Type=Primary] {
-    color: red
+    backgroundColor: blue
   }
 }`
 
     const parser = new Parser()
 
-    expect(parser.parse(file)).toMatchSnapshot()
+    expect(parser.parse(file).errors.length).toBe(0)
+    expect(parser.parse(file).ast).toMatchSnapshot()
   })
 
   it('should correctly parse fragments', () => {
@@ -60,31 +63,33 @@ fragment Flex {
   alignSelf: stretch
   flexGrow: 0
   flexShrink: 1
-  flexBasis: auto
+  flexBasis: 50
 }`
 
     const parser = new Parser()
 
-    expect(parser.parse(file)).toMatchSnapshot()
+    expect(parser.parse(file).errors.length).toBe(0)
+    expect(parser.parse(file).ast).toMatchSnapshot()
   })
 
   it('should correctly parse env condition', () => {
     const file = `
 view Button {
   [@hover] {
-    color: red
+    backgroundColor: red
   }
 
-  [@minWidth=320] {
-    color: blue
+  [@viewportWidth>=320] {
+    backgroundColor: blue
     [@hover] {
-      color: green
+      backgroundColor: green
     }
   }
 }`
 
     const parser = new Parser()
 
-    expect(parser.parse(file)).toMatchSnapshot()
+    expect(parser.parse(file).errors.length).toBe(0)
+    expect(parser.parse(file).ast).toMatchSnapshot()
   })
 })

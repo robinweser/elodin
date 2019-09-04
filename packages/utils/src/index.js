@@ -9,6 +9,7 @@ import getArrayCombinations from './getArrayCombinations'
 import getValueCombinations from './getValueCombinations'
 import stringifyCSSRule from './stringifyCSSRule'
 import getVariablesFromAST from './getVariablesFromAST'
+import getVariantsFromAST from './getVariantsFromAST'
 import escapeKeywords from './escapeKeywords'
 import generateCSSClasses from './generateCSSClasses'
 import generateCSSValue from './generateCSSValue'
@@ -27,6 +28,7 @@ export {
   getValueCombinations,
   stringifyCSSRule,
   getVariablesFromAST,
+  getVariantsFromAST,
   generateCSSClasses,
   generateCSSValue,
   generateCSSMediaQueryFromNode,
