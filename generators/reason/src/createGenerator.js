@@ -71,6 +71,8 @@ function generateReasonFile(
     return flatVariants
   }, {})
 
+  const allVariables = getVariablesFromAST(ast)
+
   const variantTypes = Object.keys(variantMap)
     .map(
       variant =>
@@ -89,8 +91,7 @@ function generateReasonFile(
         .map(cssFile => '[%bs.raw {|\n  ' + cssFile + '\n|}];')
         .join('\n\n') +
       '\n\n' +
-      'open Css;' +
-      '\n\n' +
+      (allVariables.length > 0 ? 'open Css;' + '\n\n' : '') +
       variantTypes +
       '\n\n' +
       modules.join('\n\n') +
