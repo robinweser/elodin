@@ -21,12 +21,13 @@ view Button{justifyContent: flexStart
 lineHeight:   $lineHeight
     fontSize: 20
 
+    color: rgb(200 120 0)
      [@hover] {
-       color:red
+       color: rgba(255 0 120 percentage(50))
      }
 
      [@minWidth=320] {
-       color:blue [@hover] {
+       color:hex(f3f3f3) [@hover] {
          color: green
        }
      }

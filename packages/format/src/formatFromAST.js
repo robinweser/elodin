@@ -1,3 +1,5 @@
+import color from 'color'
+
 const defaultConfig = {
   lineSpace: '\n\n',
   ident: '  ',
@@ -109,20 +111,45 @@ export default function formatFromAST(node, customConfig = {}, level = 1) {
       return '"' + node.value + '"'
 
     case 'Color':
-      if (node.alpha < 1) {
-        return (
-          'rgba(' +
-          [
-            node.red,
-            node.green,
-            node.blue,
-            'percentage(' + node.alpha * 100 + ')',
-          ].join(' ') +
-          ')'
-        )
-      } else {
-        return 'rgb(' + [node.red, node.green, node.blue].join(' ') + ')'
+      const { format, red, blue, green, alpha } = node
+      const colorValue = color.rgb(red, green, blue, alpha)
+
+      if (format === 'hex') {
+        return 'hex(' + colorValue.hex().substr(1) + ')'
       }
+
+      if (format === 'keyword') {
+        // TODO: check APIs
+        return colorValue.keyword()
+      }
+
+      if (node.alpha < 1) {
+        if (format === 'rgb') {
+          return (
+            'rgba(' +
+            [
+              node.red,
+              node.green,
+              node.blue,
+              'percentage(' + node.alpha * 100 + ')',
+            ].join(' ') +
+            ')'
+          )
+        } else {
+          'hsla(' +
+            [
+              node.hue,
+              node.saturation,
+              node.lumination,
+              'percentage(' + node.alpha * 100 + ')',
+            ].join(' ') +
+            ')'
+        }
+      }
+
+      return colorValue[format]()
+        .string()
+        .replace(/,/g, '')
 
     default:
       throw new Error('Unknown node: ', node.type)
