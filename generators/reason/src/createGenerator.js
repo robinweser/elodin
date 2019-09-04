@@ -149,21 +149,24 @@ function generateModules(ast, { devMode }) {
 
     const variantNames = Object.keys(variantMap)
 
-    let dynamicStyle = variantStyleMap
-      .map(
-        vari =>
-          'let ' +
-          uncapitalizeString(module.name) +
-          'Style' +
-          Object.keys(vari.variants)
-            .map(variant => vari.variants[variant])
-            .join('') +
-          ' = ' +
-          'style([' +
-          vari.style.map(stringifyDeclaration).join(',\n      ') +
-          ']);'
-      )
-      .join('\n    ')
+    let dynamicStyle =
+      variables.length > 0
+        ? variantStyleMap
+            .map(
+              vari =>
+                'let ' +
+                uncapitalizeString(module.name) +
+                'Style' +
+                Object.keys(vari.variants)
+                  .map(variant => vari.variants[variant])
+                  .join('') +
+                ' = ' +
+                'style([' +
+                vari.style.map(stringifyDeclaration).join(',\n      ') +
+                ']);'
+            )
+            .join('\n    ')
+        : undefined
 
     let variantSwitch = ''
     let variantStyleSwitch = ''
@@ -200,20 +203,21 @@ function generateModules(ast, { devMode }) {
         return matches
       }, [])
 
-      variantStyleSwitch = `let get${
-        module.name
-      }StyleVariants = (${variables
-        .map(variable => '~' + variable + ':string')
-        .join(', ') +
-        (variables.length > 0 && variants.length > 0 ? ', ' : '') +
-        variants
-          .map(({ name }) => '~' + name.toLowerCase())
-          .join(', ')}, ()) => {
+      if (variables.length > 0) {
+        variantStyleSwitch = `let get${
+          module.name
+        }StyleVariants = (${variables
+          .map(variable => '~' + variable + ':string')
+          .join(', ') +
+          (variables.length > 0 && variants.length > 0 ? ', ' : '') +
+          variants
+            .map(({ name }) => '~' + name.toLowerCase())
+            .join(', ')}, ()) => {
     ${dynamicStyle ? dynamicStyle + '\n\n' : ''}switch (${Object.keys(
-        variantMap
-      )
-        .map(v => v.toLowerCase())
-        .join(', ')}) {
+          variantMap
+        )
+          .map(v => v.toLowerCase())
+          .join(', ')}) {
     ${combis
       // .filter(({ style }) => style.length > 0)
       .map(
@@ -232,6 +236,7 @@ function generateModules(ast, { devMode }) {
       .join('\n    ')}
     }
   };`
+      }
 
       variantSwitch = `let get${module.name}Variants = (${variantNames
         .map(variant => '~' + variant.toLowerCase())
