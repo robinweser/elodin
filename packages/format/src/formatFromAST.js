@@ -5,6 +5,8 @@ const defaultConfig = {
   ident: '  ',
 }
 
+const sortDeclarations = (a, b) => (a.raw ? -1 : b.raw ? 1 : 0)
+
 export default function formatFromAST(node, customConfig = {}, level = 1) {
   const config = {
     ...defaultConfig,
@@ -38,7 +40,10 @@ export default function formatFromAST(node, customConfig = {}, level = 1) {
         node.name +
         ' {\n' +
         ident +
-        node.body.map(generate).join('\n' + ident) +
+        node.body
+          .sort(sortDeclarations)
+          .map(generate)
+          .join('\n' + ident) +
         '\n}'
       )
 
@@ -58,7 +63,10 @@ export default function formatFromAST(node, customConfig = {}, level = 1) {
         node.name +
         ' {\n' +
         ident +
-        node.body.map(generate).join('\n' + ident) +
+        node.body
+          .sort(sortDeclarations)
+          .map(generate)
+          .join('\n' + ident) +
         '\n}'
       )
 
@@ -73,6 +81,7 @@ export default function formatFromAST(node, customConfig = {}, level = 1) {
         '] {\n' +
         ident.repeat(newLevel) +
         node.body
+          .sort(sortDeclarations)
           .map(generateWithLevel(newLevel))
           .join('\n' + ident.repeat(newLevel)) +
         '\n' +

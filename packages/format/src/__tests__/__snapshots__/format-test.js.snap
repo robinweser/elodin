@@ -12,12 +12,13 @@ fragment Flex {
 }
 
 view Button {
-  justifyContent: flexStart
   __borderWidth: .3
+  justifyContent: flexStart
   backgroundColor: rgb(255 200 155)
   [Type=Primary] {
     paddingLeft: 20
     [Mode=Dark] {
+      __paddingLeft: 10
       backgroundColor: green
     }
   }
@@ -52,12 +53,13 @@ fragment Flex {
 }
 
 view Button {
-  justifyContent: flexStart
   __borderWidth: .3
+  justifyContent: flexStart
   backgroundColor: rgb(255 200 155)
   [Type=Primary] {
     paddingLeft: 20
     [Mode=Dark] {
+      __paddingLeft: 10
       backgroundColor: green
     }
   }
