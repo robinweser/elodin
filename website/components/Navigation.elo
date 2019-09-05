@@ -1,0 +1,16 @@
+view Navigation {
+  flexBasis: 300
+  flexShrink: 0
+  paddingTop: 20
+  paddingBottom: 20
+  backgroundColor: rgb(240 240 240)
+}
+
+view NavigationItem {
+  padding: 10
+  paddingLeft: 20
+}
+
+text NavigationItemText {
+  fontSize: 16
+}

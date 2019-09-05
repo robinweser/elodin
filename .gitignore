@@ -21,10 +21,12 @@ Thumbs.db
 *.sw?
 *.vi
 
-**/*.elo.*
+*.elo.*
+*.bs.js
+*Style.re
 
-**/node_modules
-**/lib
-**/es 
-**/coverage 
-**/.next
+node_modules
+lib
+es 
+coverage 
+.next

@@ -1,0 +1,28 @@
+{
+  "name": "elodin.dev",
+  "sources": [
+    {
+      "dir": "components",
+      "subdirs": true
+    },
+    {
+      "dir": "pages",
+      "subdirs": true
+    },
+    {
+      "dir": "bindings",
+      "subdirs": true
+    }
+  ],
+  "bs-dependencies": ["reason-react", "@tavata/ui"],
+  "reason": {
+    "react-jsx": 3
+  },
+  "package-specs": {
+    "module": "es6",
+    "in-source": true
+  },
+  "suffix": ".bs.js",
+  "bsc-flags": ["-bs-super-errors"],
+  "refmt": 3
+}

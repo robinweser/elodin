@@ -1,0 +1,26 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+div {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  align-self: stretch;
+  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-shrink: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system;
+  overscroll-behavior: none;
+  overflow: auto;
+  font-size: 16px;
+}

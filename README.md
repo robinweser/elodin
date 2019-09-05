@@ -4,53 +4,138 @@
 
 Elodin is a small styling language that aims to provide a universal way to author user interface styles. It uses a single file format that compiles to several different plattforms, languages, frameworks and libraries.
 
-<img alt="npm downloads" src="https://img.shields.io/npm/dm/@elodin/core.svg">
+<img alt="License" src="https://img.shields.io/badge/license-MIT-brightgreen.svg"></a> <a href="https://spectrum.chat/elodin"><img alt="Spectrum" src="https://img.shields.io/badge/support-spectrum-brightgreen.svg"></a> <img alt="npm downloads" src="https://img.shields.io/npm/dm/@elodin/core.svg">
 
-## Why?
+## Features
 
-Gone are the days where products only target a specific platform. Nowadays our customers expect us to support all kind of platforms, devices and system. We have browser apps, mobile apps, tv apps, VR apps and even embedded apps e.g. in cars.
-Given their different requirements, capabilities and technological background, we use very different languages, libraries and tools to built those apps. While this accounts for performant and high-quality apps on all platforms, it also leads to duplicate implementations of a similar UI without a way to reuse the underlying primitives.<br>
-Yet, most platforms share quite a lot visual properties. After all, we want to implement a similar visual experience everywhere to create a seamless user experience across platforms.<br>
-That's where Elodin enters the game. It provides an easy-to-use declarative format to define primitive style components, which then compiles to native applicable code for all kind of different platforms.
+- **Automatic code-splitting**: Elodin styles are authored on component-base and automatically split into different files per component.
 
-## How?
+- **Type-safe properties**: The compiler will validate every property-value pair and throw on invalid rules.
 
-Elodin defines a set of style properties that many platforms have in common. During compilation, all components are parsed into an AST where all properties are strongly validated to match their provided types. This AST is then used to generate native platform-specific code using so called generators. Each generator targets a specific platform and has many different configuration options in order to satisfy as much requirements as possible.
+- **Write once, use everywhere**: Elodin compiles to a variety of different languages, platforms and libraries without. One file for all targets!
 
-## The Gist
+- **Quick learning-curve**: The syntax is a mix of CSS and JavaScript with some concepts from ReasonML.
+
+## Example
+
+> **Note**: This example uses the [generator-css-in-js]() with the [fela]() adapter which is just one of many possible targets. Depending on the configuration the output will vary a lot.
 
 ```
+variant Mode {
+  Dark
+  Light
+}
+
 view Header {
-  backgroundColor: rgb(100 100 100)
-  height: percentage(80)
+  height: $height
   justifyContent: center
   alignItems: flexEnd
   paddingBottom: 10
   paddingTop: 10
-  flexGrow: 1
+
+  [Mode=Dark] {
+    backgroundColor: black
+  }
+
+  [Mode=Light] {
+    backgroundColor: white
+  }
 }
 
-text HeaderText {
-  lineHeight: 1.2
-  textAlign: center
-  fontSize: 20
+text Label {
+  fontSize: 15
+  color: rgb(255 0 255)
+}
+```
+
+This compiles to the following files where `_hash` is just a placeholder for an auto-generated unique class name.
+
+**Header.elo.css**
+
+```css
+._hash {
+  justify-content: center;
+  align-items: flex-end;
+  padding-bottom: 10;
+  padding-top: 10;
+}
+
+._hash__Mode-Dark {
+  background-color: black;
+}
+
+._hash__Mode-Light {
+  background-color: white;
+}
+```
+
+**Label.elo.css**
+
+```css
+._hash {
+  font-size: 15px;
+  color: rgb(255, 0, 255);
+}
+```
+
+**Header.elo.js**
+
+```js
+import './Header.elo.css'
+import { getClassNameFromVariantMap } from '@elodin/runtime'
+
+const variantClassNameMap = {
+  '': {},
+  '__Mode-Dark': {
+    Mode: 'Dark',
+  },
+  '__Mode-Light': {
+    Mode: 'Light',
+  },
+}
+
+export default function Header(props) {
+  return {
+    _className:
+      '_elo_view _hash ' +
+      getClassNameFromVariantMap(variantClassNameMap, props),
+    height: props.height,
+  }
+}
+```
+
+**Label.elo.js**
+
+```js
+import './Label.elo.css'
+
+export default function Label() {
+  return {
+    _className: '_elo_text _hash',
+  }
 }
 ```
 
 ## Documentation
 
-To be done.
-
-<!-- - [Setup]()
+- [Setup]()
 - [Introduction]()
 - [Language]()
 - [Usage Guides]()
-- [API Reference]() -->
+- [API Reference]()
 
 ## Examples
 
 - Web
   - [React](examples/react)
+  - [Reason](examples/reason)
+- Mobile
+  - [React Native](examples/react-native)
+
+## Tooling
+
+- [VS Code Language Plugin](https://marketplace.visualstudio.com/items?itemName=robinweser.language-elodin)
+- [Prettier Plugin](../packages/pretter-plugin-elodin)
 
 ## Contributing
 
@@ -62,4 +147,4 @@ Also, please read our [code of conduct](.github/CODE_OF_CONDUCT.md).
 
 Elodin is licensed under the [MIT License](http://opensource.org/licenses/MIT).<br>
 Documentation is licensed under [Creative Common License](http://creativecommons.org/licenses/by/4.0/).<br>
-Created with ♥ by [@weser.io](http://weser.io).
+Created with ♥ by [Robin Weser](http://weser.io).

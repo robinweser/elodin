@@ -1,0 +1,18 @@
+view Layout {
+  maxWidth: 1200
+  width: percentage(100)
+  flexDirection: row
+  paddingLeft: 320
+}
+
+view Row {
+  flexDirection: row
+  flexGrow: 1
+  flexShrink: 1
+}
+
+view Content {
+  __overflow: auto
+  flexGrow: 1
+  padding: 30
+}

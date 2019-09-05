@@ -1,0 +1,20 @@
+view Header {
+  paddingTop: 12
+  paddingBottom: 12
+  backgroundColor: rgb(230 230 230)
+  flexDirection: row
+}
+
+view NavItem {
+  paddingLeft: 10
+  paddingRight: 10
+}
+
+text NavItemLink {
+  fontSize: 18
+  textDecorationLine: none
+  color: black
+  [@hover] {
+    color: rgb(100 100 100)
+  }
+}
