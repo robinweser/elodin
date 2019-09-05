@@ -73,8 +73,8 @@ function generateReasonFile(
   }, {})
 
   const allVariables = getVariablesFromAST(ast)
-
   const variantTypes = Object.keys(variantMap)
+
     .map(
       variant =>
         '[@bs.deriving jsConverter]\n' +
@@ -206,7 +206,7 @@ function generateModules(ast, { devMode }) {
         return matches
       }, [])
 
-      if (variables.length > 0) {
+      if (variables.length > 0 && dynamicStyle) {
         variantStyleSwitch = `let get${
           module.name
         }StyleVariants = (${variables
@@ -216,9 +216,7 @@ function generateModules(ast, { devMode }) {
           variantNames
             .map(name => '~' + name.toLowerCase())
             .join(', ')}, ()) => {
-    ${dynamicStyle ? dynamicStyle + '\n\n' : ''}switch (${Object.keys(
-          variantMap
-        )
+    ${dynamicStyle + '\n\n'}switch (${variantNames
           .map(v => v.toLowerCase())
           .join(', ')}) {
     ${combis
@@ -244,9 +242,7 @@ function generateModules(ast, { devMode }) {
       variantSwitch = `let get${module.name}Variants = (${variantNames
         .map(variant => '~' + variant.toLowerCase())
         .join(', ')}, ()) => {
-  switch (${Object.keys(variantMap)
-    .map(v => v.toLowerCase())
-    .join(', ')}) {
+  switch (${variantNames.map(v => v.toLowerCase()).join(', ')}) {
     ${combinations
       // .filter(combination => combination.find(comp => comp !== 'None'))
       .map(
