@@ -8,13 +8,10 @@ Elodin is a small styling language that aims to provide a universal way to autho
 
 ## Features
 
-- **Automatic code-splitting**: Elodin styles are authored on component-base and automatically split into different files per component.
-
-- **Type-safe properties**: The compiler will validate every property-value pair and throw on invalid rules.
-
-- **Write once, use everywhere**: Elodin compiles to a variety of different languages, platforms and libraries without. One file for all targets!
-
-- **Quick learning-curve**: The syntax is a mix of CSS and JavaScript with some concepts from ReasonML.
+- **Automatic code-splitting**:<br>Elodin styles are authored on component-base and automatically split into different files per component.
+- **Type-safe properties**: <br>The compiler will validate every property-value pair and throw on invalid rules.
+- **Write once, use everywhere**: <br>Elodin compiles to a variety of different languages, platforms and libraries without. One file for all targets!
+- **Quick learning-curve**:<br>The syntax is a mix of CSS and JavaScript with some concepts from ReasonML and thus already familiar to many developers.
 
 ## Example
 
