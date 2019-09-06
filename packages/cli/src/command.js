@@ -12,11 +12,14 @@ import * as util from './util'
 export default async function({ cliOptions, elodinOptions }) {
   let config
 
+  const configPath = path.join(process.cwd(), elodinOptions.configFile)
   try {
-    config = require(path.join(process.cwd(), elodinOptions.configFile))
+    config = require(configPath)
   } catch (e) {
     console.error(
-      '[ERROR] An elodin configuration must be passed. Start by creating a elodin.config.js file.'
+      `[ERROR] Tried to find the elodin config file at ${configPath}. 
+An elodin configuration must be passed.
+Start by creating a elodin.config.js file.`
     )
     return false
   }

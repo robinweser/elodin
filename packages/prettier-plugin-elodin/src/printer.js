@@ -2,6 +2,10 @@ export default function print(path) {
   const node = path.getValue()
 
   if (node.ast_type === 'elodin-ast') {
+    if (node.error) {
+      throw new Error(JSON.stringify(node.error, null, 2))
+    }
+
     return node.body
   }
 
