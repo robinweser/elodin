@@ -14,7 +14,7 @@ view Button{justifyContent: flexStart
       __borderWidth: .3
        backgroundColor: rgb(  255  200   155  )
 
-  [ Type =   Primary  ] {  paddingLeft: 20[Mode=Dark]{ backgroundColor:green}}
+  [ Type =   Primary  ] {  paddingLeft: 20[Mode=Dark]{ backgroundColor:green __paddingLeft: 10}}
   }
 
    text    Label {
