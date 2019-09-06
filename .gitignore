@@ -24,6 +24,7 @@ Thumbs.db
 *.elo.*
 *.bs.js
 *Style.re
+.bsb.lock
 
 node_modules
 lib

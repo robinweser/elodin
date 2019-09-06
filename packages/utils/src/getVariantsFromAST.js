@@ -19,7 +19,7 @@ export default function getVariantsFromAST(ast) {
             ) {
               vars[path.node.property.value] = [
                 ...vars[path.node.property.value],
-                path.node.property.value,
+                path.node.value.value,
               ]
             }
           }
