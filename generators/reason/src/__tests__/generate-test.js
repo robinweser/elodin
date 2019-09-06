@@ -45,9 +45,6 @@ text Label {
     fontSize: $fontSize
   }
 
-  [Mode=Light] {
-    fontSize: 14
-  }
   [@viewportWidth=320] {
     color: green
     fontSize: $mediaFontSize
