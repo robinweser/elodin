@@ -1,0 +1,80 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Replacing variables should correctly replace variables 1`] = `
+Object {
+  "body": Array [
+    Object {
+      "body": Array [
+        Object {
+          "dynamic": false,
+          "property": "backgroundColor",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "alpha": 1,
+            "blue": 0,
+            "format": "hex",
+            "green": 0,
+            "red": 255,
+            "type": "Color",
+          },
+        },
+        Object {
+          "dynamic": false,
+          "property": "borderBottomColor",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "alpha": 1,
+            "blue": 50,
+            "format": "hex",
+            "green": 100,
+            "red": 255,
+            "type": "Color",
+          },
+        },
+      ],
+      "format": "view",
+      "name": "Button",
+      "type": "Style",
+    },
+  ],
+  "type": "File",
+}
+`;
+
+exports[`Replacing variables should work with custom selectors 1`] = `
+Object {
+  "body": Array [
+    Object {
+      "body": Array [
+        Object {
+          "dynamic": false,
+          "property": "paddingLeft",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "negative": false,
+            "type": "Integer",
+            "value": 10,
+          },
+        },
+        Object {
+          "dynamic": false,
+          "property": "backgroundColor",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "type": "Identifier",
+            "value": "red",
+          },
+        },
+      ],
+      "format": "view",
+      "name": "Button",
+      "type": "Style",
+    },
+  ],
+  "type": "File",
+}
+`;
