@@ -14,8 +14,8 @@
     "test": "echo 1",
     "coverage": "yarn test --coverage"
   },
-  "repository": "https://github.com/rofrischmann/elodin.git",
-  "author": "rofrischmann <robin@rofrischmann.de>",
+  "repository": "https://github.com/robinweser/elodin.git",
+  "author": "robinweser <contact@weser.io>",
   "license": "MIT",
   "bin": {
     "elodin": "./bin/elodin.js"

@@ -14,8 +14,8 @@
     "test": "cross-env BABEL_ENV=commonjs jest",
     "coverage": "yarn test --coverage"
   },
-  "repository": "https://github.com/rofrischmann/elodin.git",
-  "author": "rofrischmann <robin@rofrischmann.de>",
+  "repository": "https://github.com/robinweser/elodin.git",
+  "author": "robinweser <contact@weser.io>",
   "license": "MIT",
   "dependencies": {
     "@elodin/parser": "^0.0.22",
