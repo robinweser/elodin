@@ -30,7 +30,7 @@ export default function createGenerator(customConfig = {}) {
     ...customConfig,
   }
 
-  return function generate(ast, path = '') {
+  function generate(ast, path = '') {
     const fileName = path
       .split('/')
       .pop()
@@ -47,6 +47,13 @@ export default function createGenerator(customConfig = {}) {
 
     return { ...css, ...reason }
   }
+
+  generate.filePattern = [
+    generateFileName('*', '') + '.re',
+    generateFileName('*', '') + '.bs.js',
+  ]
+  
+  return generate
 }
 
 function generateReasonFile(
