@@ -311,7 +311,7 @@ function generateModules(ast, { devMode, generateResetClassName }) {
           ? ', ()) => "'
           : ') => "') +
         className +
-        (variantNames.length > 0 && variables.length > 0
+        (variantNames.length > 0
           ? '" ++ " " ++ get' +
             module.name +
             'Variants(' +
