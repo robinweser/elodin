@@ -1,6 +1,6 @@
 {
   "name": "@elodin/cli",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "main": "lib/index.js",
   "module": "es/index.js",
   "publishConfig": {
