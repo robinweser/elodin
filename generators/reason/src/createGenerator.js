@@ -21,6 +21,7 @@ import { baseReset, rootReset } from './getReset'
 
 const defaultConfig = {
   devMode: false,
+  generateResetClassName: type => '_elo_' + type,
   generateFileName: (fileName, moduleName) =>
     capitalizeString(fileName) + moduleName + 'Style',
 }
@@ -49,11 +50,11 @@ export default function createGenerator(customConfig = {}) {
     return { ...css, ...reason }
   }
 
-
   generate.filePattern = [
     config.generateFileName('*', '') + '.re',
     config.generateFileName('*', '') + '.bs.js',
   ]
+
   generate.baseReset = baseReset(config.generateResetClassName)
   generate.rootReset = rootReset(config.rootNode)
 
@@ -141,7 +142,7 @@ function generateCSSFiles(ast, { devMode, generateFileName }, fileName) {
   }, {})
 }
 
-function generateModules(ast, { devMode }) {
+function generateModules(ast, { devMode, generateResetClassName }) {
   // TODO: include fragments
   const styles = ast.body.filter(node => node.type === 'Style')
   const variants = ast.body.filter(node => node.type === 'Variant')
@@ -161,7 +162,7 @@ function generateModules(ast, { devMode }) {
     const variantNames = Object.keys(usedVariants)
 
     const className =
-      config.generateResetClassName(module.format) +
+      generateResetClassName(module.format) +
       ' ' +
       getModuleName(module, devMode)
 

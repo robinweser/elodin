@@ -3,8 +3,7 @@ const textResetStyle = `display:inline`
 
 const rootResetStyle = `${viewResetStyle};position:fixed;top:0;bottom:0;left:0;right:0`
 
-const defaultGenerateClassName = type => '_elo_' + type
-export function baseReset(generateClassName = defaultGenerateClassName) {
+export function baseReset(generateClassName) {
   const viewClassName = generateClassName('view')
   const textClassName = generateClassName('text')
 
