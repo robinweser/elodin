@@ -306,7 +306,7 @@ function generateModules(ast, { devMode, generateResetClassName }) {
         // TODO: add typings
         variables.map(variable => '~' + variable + ':string').join(', ') +
         (variables.length > 0 && variantNames.length > 0 ? ', ' : '') +
-        variantNames.map(name => '~' + name.toLowerCase()) +
+        variantNames.map(name => '~' + name.toLowerCase() + '=?').join(', ') +
         (variables.length > 0 || variantNames.length > 0
           ? ', ()) => "'
           : ') => "') +

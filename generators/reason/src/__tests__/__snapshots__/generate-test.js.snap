@@ -50,20 +50,13 @@ let getButtonVariants = (~type_, ~mode, ()) => {
   }
 };
 
-let button = (~borderWidth:string, ~paddingLeft:string, ~paddingRight:string, ~padLeft:string, ~type_,~mode, ()) => \\"_elo_view _1a6mix7\\" ++ \\" \\" ++ getButtonVariants(~type_, ~mode, ()) ++ \\" \\" ++ merge([buttonStyle(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft), ...getButtonStyleVariants(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_, ~mode, ())]);
+let button = (~borderWidth:string, ~paddingLeft:string, ~paddingRight:string, ~padLeft:string, ~type_=?, ~mode=?, ()) => \\"_elo_view _1a6mix7\\" ++ \\" \\" ++ getButtonVariants(~type_, ~mode, ()) ++ \\" \\" ++ merge([buttonStyle(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft), ...getButtonStyleVariants(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_, ~mode, ())]);
 
 let labelStyle = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~mediaHoverFontSize:string) => style([unsafe(\\"line-height\\", lineHeight),
     hover([unsafe(\\"font-size\\", fontSize)]),
     media(\\"(min-width: 320px) and (max-width: 320px)\\", [unsafe(\\"font-size\\", mediaFontSize),
 hover([unsafe(\\"font-size\\", mediaHoverFontSize)])])]);
-let getLabelVariants = (~mode, ()) => {
-  switch (mode) {
-    | (Some(Light)) => \\"_10wxg68__Mode-Light\\"
-    | (None) => \\"_10wxg68\\"
-  }
-};
-
-let label = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~mediaHoverFontSize:string, ~mode, ()) => \\"_elo_text _10wxg68\\" ++ \\" \\" ++ getLabelVariants(~mode, ()) ++ \\" \\" ++ merge([labelStyle(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize)]);
+let label = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~mediaHoverFontSize:string, ()) => \\"_elo_text _vqhb4f\\" ++ \\" \\" ++ merge([labelStyle(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize)]);
 ",
   "RootStyleButton.elo.css": "._1a6mix7 {
   background-color: red;
@@ -86,22 +79,18 @@ let label = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~media
 ._1a6mix7__Mode-Light {
   background-color: green
 }",
-  "RootStyleLabel.elo.css": "._10wxg68:hover {
+  "RootStyleLabel.elo.css": "._vqhb4f:hover {
   color: red
 }
 
-._10wxg68__Mode-Light {
-  font-size: 14px
-}
-
 @media (min-width: 320px) and (max-width: 320px) {
-  ._10wxg68 {
+  ._vqhb4f {
     color: green
   }
 }
 
 @media (min-width: 320px) and (max-width: 320px) {
-  ._10wxg68:hover {
+  ._vqhb4f:hover {
     color: blue
   }
 }",
