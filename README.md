@@ -1,17 +1,16 @@
-# The Elodin Styling Language
+# ELodin
 
 > **Warning**: Elodin is still WIP and experimental. It is not recommended to use it in production yet. There might be unknown bugs and the APIs might change rapidly.
 
-Elodin is a small styling language that aims to provide a universal way to author user interface styles. It uses a single file format that compiles to several different plattforms, languages, frameworks and libraries.
+Elodin is a small styling language that aims to provide a universal way to author user interface styles.
+
+- **Component-based**:<br>Elodin styles are authored on component-base and fully encapsulated from other styles accounting for predictable styling without side-effects. It also enables automatic code-splitting where each component is rendered to a new file.
+- **Quick learning-curve**:<br>The syntax is a mix of CSS and JavaScript with some concepts from ReasonML and thus already familiar to many developers. It is declarative and unlike CSS only supports **one** value per property.
+- **Write once, use everywhere**:<br>Elodin compiles to a variety of different languages, platforms and libraries without having to change a single line. It's truly one file for all targets!
+- **Type-safe properties**:<br>The compiler will validate every property-value pair and throw on invalid rules resulting in solid code and bulletproof output. If it compiles, it works!
 
 <img alt="License" src="https://img.shields.io/badge/license-MIT-brightgreen.svg"></a> <a href="https://spectrum.chat/elodin"><img alt="Spectrum" src="https://img.shields.io/badge/support-spectrum-brightgreen.svg"></a> <img alt="npm downloads" src="https://img.shields.io/npm/dm/@elodin/core.svg">
 
-## Features
-
-- **Automatic code-splitting**:<br>Elodin styles are authored on component-base and automatically split into different files per component.
-- **Type-safe properties**: <br>The compiler will validate every property-value pair and throw on invalid rules.
-- **Write once, use everywhere**: <br>Elodin compiles to a variety of different languages, platforms and libraries without. One file for all targets!
-- **Quick learning-curve**:<br>The syntax is a mix of CSS and JavaScript with some concepts from ReasonML and thus already familiar to many developers.
 
 ## Example
 
