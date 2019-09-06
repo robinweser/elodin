@@ -38,11 +38,11 @@ view Button {
 }
 
 text Label {
-  
+  lineHeight: $lineHeight
 
   [@hover] {
     color: red
-
+    fontSize: $fontSize
   }
 
   [Mode=Light] {
@@ -50,9 +50,9 @@ text Label {
   }
   [@viewportWidth=320] {
     color: green
-
+    fontSize: $mediaFontSize
     [@hover] {
-
+      fontSize: $mediaHoverFontSize
       color: blue
     }
   }
