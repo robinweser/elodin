@@ -17,6 +17,7 @@ import {
 import { isUnitlessProperty, hyphenateProperty } from 'css-in-js-utils'
 
 import keywords from './keywords'
+import { baseReset, rootReset } from './getReset'
 
 const defaultConfig = {
   devMode: false,
@@ -30,7 +31,7 @@ export default function createGenerator(customConfig = {}) {
     ...customConfig,
   }
 
-  return function generate(ast, path = '') {
+  function generate(ast, path = '') {
     const fileName = path
       .split('/')
       .pop()
@@ -47,6 +48,9 @@ export default function createGenerator(customConfig = {}) {
 
     return { ...css, ...reason }
   }
+
+  generate.baseReset = baseReset(config.generateResetClassName)
+  generate.rootReset = rootReset(config.rootNode)
 }
 
 function generateReasonFile(
@@ -150,7 +154,9 @@ function generateModules(ast, { devMode }) {
     const variantNames = Object.keys(usedVariants)
 
     const className =
-      '_elo_' + module.format + ' ' + getModuleName(module, devMode)
+      config.generateResetClassName(module.format) +
+      ' ' +
+      getModuleName(module, devMode)
 
     let dynamicStyle =
       variables.length > 0
