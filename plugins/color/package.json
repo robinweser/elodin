@@ -1,5 +1,5 @@
 {
-  "name": "@elodin/generator-reason",
+  "name": "@elodin/plugin-color",
   "version": "0.0.22",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -17,14 +17,11 @@
   "repository": "https://github.com/robinweser/elodin.git",
   "author": "robinweser <contact@weser.io>",
   "license": "MIT",
-  "dependencies": {
-    "@elodin/utils": "^0.0.22",
-    "css-in-js-utils": "^3.0.0"
-  },
   "devDependencies": {
     "@babel/cli": "^7.2.0",
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.0",
+    "@elodin/core": "^0.0.22",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "cross-env": "^5.2.0",
