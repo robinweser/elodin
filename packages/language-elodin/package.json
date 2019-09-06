@@ -7,6 +7,9 @@
   "repository": "https://github.com/robinweser/elodin/tree/master/packages/language-elodin",
   "version": "0.0.22",
   "main": "index.js",
+  "scripts": {
+    "release": "vsce package && vsce publish"
+  },
   "engines": {
     "vscode": "^1.37.0"
   },
