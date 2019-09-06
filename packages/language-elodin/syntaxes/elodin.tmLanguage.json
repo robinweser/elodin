@@ -13,8 +13,12 @@
     "keywords": {
       "patterns": [
         {
+          "name": "constant.variable.elodin",
+          "match": "(?<=hex\\()\\s*([A-Fa-f0-9]+)"
+        },
+        {
           "name": "keyword.control.elodin",
-          "match": "(view|variant|fragment|text)(?=\\s+)"
+          "match": "(view|variant|fragment|text)"
         },
         {
           "name": "entity.name.function.elodin",

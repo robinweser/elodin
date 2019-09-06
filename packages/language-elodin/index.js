@@ -173,6 +173,10 @@ vscode.languages.registerCompletionItemProvider(
   { language: 'elodin' },
   {
     provideCompletionItems(document, position, token, context) {
+      if (context.triggerCharacter !== ':') {
+        return []
+      }
+
       var textBefore = document
         .lineAt(position)
         .text.substr(0, position.character - 1)
@@ -192,6 +196,9 @@ vscode.languages.registerCompletionItemProvider(
   { language: 'elodin' },
   {
     provideCompletionItems(document, position, token, context) {
+      if (context.triggerCharacter !== '@') {
+        return []
+      }
       return [...mediaQueries, ...pseudoClasses, ...pseudoElements].map(
         function(p) {
           return new vscode.CompletionItem(p)
@@ -206,10 +213,17 @@ vscode.languages.registerCompletionItemProvider(
   { language: 'elodin' },
   {
     provideCompletionItems(document, position, token, context) {
-      var textBefore = document
+      if (
+        context.triggerCharacter === ':' ||
+        context.triggerCharacter === '@'
+      ) {
+        return []
+      }
+
+      const textToChar = document
         .lineAt(position)
         .text.substr(0, position.character)
-        .trim()
+      var textBefore = textToChar.trim()
 
       if (textBefore.charAt(textBefore.length - 1) === ':') {
         var splitted = textBefore
@@ -227,11 +241,11 @@ vscode.languages.registerCompletionItemProvider(
       return [
         ...properties,
         ...keywords,
-        ...functions,
         ...values,
         ...mediaQueries,
         ...pseudoClasses,
         ...pseudoElements,
+        ...functions,
       ].map(function(p) {
         return new vscode.CompletionItem(p)
       })
