@@ -1,13 +1,13 @@
 ####{BSB GENERATED: NO EDIT
-FLG -ppx '/Users/weezer/Code/elodin/website/node_modules/bs-platform/lib/bsppx.exe -bs-jsx 3'
-S /Users/weezer/Code/elodin/website/node_modules/bs-platform/lib/ocaml
-B /Users/weezer/Code/elodin/website/node_modules/bs-platform/lib/ocaml
+FLG -ppx '/Users/weezer/Code/elodin/node_modules/bs-platform/lib/bsppx.exe -bs-jsx 3'
+S /Users/weezer/Code/elodin/node_modules/bs-platform/lib/ocaml
+B /Users/weezer/Code/elodin/node_modules/bs-platform/lib/ocaml
 FLG -nostdlib -color always
 FLG -w -30-40+6+7+27+32..39+44+45+101
-S /Users/weezer/Code/elodin/website/node_modules/reason-react/lib/ocaml
-B /Users/weezer/Code/elodin/website/node_modules/reason-react/lib/ocaml
-S /Users/weezer/Code/elodin/website/node_modules/@tavata/ui/lib/ocaml
-B /Users/weezer/Code/elodin/website/node_modules/@tavata/ui/lib/ocaml
+S /Users/weezer/Code/elodin/node_modules/reason-react/lib/ocaml
+B /Users/weezer/Code/elodin/node_modules/reason-react/lib/ocaml
+S /Users/weezer/Code/elodin/node_modules/@tavata/ui/lib/ocaml
+B /Users/weezer/Code/elodin/node_modules/@tavata/ui/lib/ocaml
 S bindings
 B lib/bs/bindings
 S pages

@@ -49,6 +49,11 @@ export default function createGenerator(customConfig = {}) {
     return { ...css, ...reason }
   }
 
+
+  generate.filePattern = [
+    config.generateFileName('*', '') + '.re',
+    config.generateFileName('*', '') + '.bs.js',
+  ]
   generate.baseReset = baseReset(config.generateResetClassName)
   generate.rootReset = rootReset(config.rootNode)
 

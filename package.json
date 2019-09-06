@@ -21,7 +21,7 @@
     "plugins/*",
     "examples/*",
     "runtimes/*",
-    "docs"
+    "website"
   ],
   "devDependencies": {
     "lerna": "^3.6.0",
