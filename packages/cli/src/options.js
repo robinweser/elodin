@@ -38,6 +38,7 @@ import pkg from '../package.json'
 // )
 commander.option('--config [path]', 'Path to a elodin.config.js file to use')
 commander.option('-w, --watch', 'Recompile files on changes')
+commander.option('--clean', 'Remove old files before compilation')
 commander.option('--skip-initial-build', 'Do not compile files before watching')
 
 // commander.option(
@@ -118,6 +119,7 @@ export default function parseArgv(args) {
       filename: opts.filename,
       filenames,
       watch: opts.watch,
+      clean: opts.clean,
       skipInitialBuild: opts.skipInitialBuild,
     },
   }

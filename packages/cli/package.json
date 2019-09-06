@@ -14,8 +14,8 @@
     "test": "echo 1",
     "coverage": "yarn test --coverage"
   },
-  "repository": "https://github.com/rofrischmann/elodin.git",
-  "author": "rofrischmann <robin@rofrischmann.de>",
+  "repository": "https://github.com/robinweser/elodin.git",
+  "author": "robinweser <contact@weser.io>",
   "license": "MIT",
   "bin": {
     "elodin": "./bin/elodin.js"
@@ -29,6 +29,7 @@
     "lodash": "^4.17.10",
     "mkdirp": "^0.5.1",
     "output-file-sync": "^2.0.0",
+    "rimraf": "^3.0.0",
     "slash": "^2.0.0",
     "source-map": "^0.5.0"
   },

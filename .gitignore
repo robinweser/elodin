@@ -26,6 +26,7 @@ Thumbs.db
 *Style.re
 .bsb.lock
 
+.merlin
 node_modules
 lib
 es 

@@ -49,10 +49,10 @@ export default function createGenerator(customConfig = {}) {
   }
 
   generate.filePattern = [
-    generateFileName('*', '') + '.re',
-    generateFileName('*', '') + '.bs.js',
+    config.generateFileName('*', '') + '.re',
+    config.generateFileName('*', '') + '.bs.js',
   ]
-  
+
   return generate
 }
 

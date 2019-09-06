@@ -2,6 +2,7 @@ import '@babel/polyfill'
 import defaults from 'lodash/defaults'
 import outputFileSync from 'output-file-sync'
 import { sync as mkdirpSync } from 'mkdirp'
+import rimraf from 'rimraf'
 import slash from 'slash'
 import path from 'path'
 import fs from 'fs'
@@ -21,6 +22,21 @@ export default async function({ cliOptions, elodinOptions }) {
   }
 
   const filenames = cliOptions.filenames
+
+  if (cliOptions.clean) {
+    if (config.generator.filePattern) {
+      try {
+        config.generator.filePattern
+          .map(v => process.cwd() + '/**/' + v)
+          .map(path => rimraf.sync(path))
+
+        console.log('Successfully cleaned all files.')
+      } catch (e) {
+        console.log(e)
+        // TODO: throw sth
+      }
+    }
+  }
 
   async function walk(filenames) {
     const _filenames = []
