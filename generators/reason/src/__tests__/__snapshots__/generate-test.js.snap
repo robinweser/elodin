@@ -30,18 +30,22 @@ let getButtonStyleVariants = (~borderWidth:string, ~paddingLeft:string, ~padding
     let buttonStylePrimaryDark = style([unsafe(\\"padding-left\\", padLeft)]);
 
 switch (type_, mode) {
-    | (Some(Type_), Some(Mode)) => []
-    | (Some(Type_), None) => []
-    | (None, Some(Mode)) => []
+    | (Some(Primary), Some(Dark)) => [buttonStylePrimary,buttonStylePrimaryDark]
+    | (Some(Primary), Some(Light)) => [buttonStylePrimary]
+    | (Some(Primary), None) => [buttonStylePrimary]
+    | (None, Some(Dark)) => []
+    | (None, Some(Light)) => []
     | (None, None) => []
     }
   };
 
 let getButtonVariants = (~type_, ~mode, ()) => {
   switch (type_, mode) {
-    | (Some(Type_), Some(Mode)) => \\"_1a6mix7__Type_-Type_ _1a6mix7__Mode-Mode _1a6mix7__Type_-Type___Mode-Mode\\"
-    | (Some(Type_), None) => \\"_1a6mix7__Type_-Type_\\"
-    | (None, Some(Mode)) => \\"_1a6mix7__Mode-Mode\\"
+    | (Some(Primary), Some(Dark)) => \\"_1a6mix7__Type_-Primary _1a6mix7__Mode-Dark _1a6mix7__Type_-Primary__Mode-Dark\\"
+    | (Some(Primary), Some(Light)) => \\"_1a6mix7__Type_-Primary _1a6mix7__Mode-Light _1a6mix7__Type_-Primary__Mode-Light\\"
+    | (Some(Primary), None) => \\"_1a6mix7__Type_-Primary\\"
+    | (None, Some(Dark)) => \\"_1a6mix7__Mode-Dark\\"
+    | (None, Some(Light)) => \\"_1a6mix7__Mode-Light\\"
     | (None, None) => \\"_1a6mix7\\"
   }
 };
@@ -52,7 +56,14 @@ let labelStyle = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~
     hover([unsafe(\\"font-size\\", fontSize)]),
     media(\\"(min-width: 320px) and (max-width: 320px)\\", [unsafe(\\"font-size\\", mediaFontSize),
 hover([unsafe(\\"font-size\\", mediaHoverFontSize)])])]);
-let label = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~mediaHoverFontSize:string, ()) => \\"_elo_text _vqhb4f\\" ++ \\" \\" ++ merge([labelStyle(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize)]);
+let getLabelVariants = (~mode, ()) => {
+  switch (mode) {
+    | (Some(Light)) => \\"_10wxg68__Mode-Light\\"
+    | (None) => \\"_10wxg68\\"
+  }
+};
+
+let label = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~mediaHoverFontSize:string, ~mode, ()) => \\"_elo_text _10wxg68\\" ++ \\" \\" ++ getLabelVariants(~mode, ()) ++ \\" \\" ++ merge([labelStyle(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize)]);
 ",
   "RootStyleButton.elo.css": "._1a6mix7 {
   background-color: red;
@@ -75,18 +86,22 @@ let label = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~media
 ._1a6mix7__Mode-Light {
   background-color: green
 }",
-  "RootStyleLabel.elo.css": "._vqhb4f:hover {
+  "RootStyleLabel.elo.css": "._10wxg68:hover {
   color: red
 }
 
+._10wxg68__Mode-Light {
+  font-size: 14px
+}
+
 @media (min-width: 320px) and (max-width: 320px) {
-  ._vqhb4f {
+  ._10wxg68 {
     color: green
   }
 }
 
 @media (min-width: 320px) and (max-width: 320px) {
-  ._vqhb4f:hover {
+  ._10wxg68:hover {
     color: blue
   }
 }",
