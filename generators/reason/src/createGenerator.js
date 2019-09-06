@@ -51,6 +51,8 @@ export default function createGenerator(customConfig = {}) {
 
   generate.baseReset = baseReset(config.generateResetClassName)
   generate.rootReset = rootReset(config.rootNode)
+
+  return generate
 }
 
 function generateReasonFile(
