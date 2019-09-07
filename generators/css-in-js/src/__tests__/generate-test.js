@@ -17,9 +17,9 @@ variant Mode {
 }
 
 view Button {
+  __border: 0
   backgroundColor: red
   paddingLeft: 10
-  __border: 0
   borderWidth: $borderWidth
   [Type=Primary] {
     backgroundColor: red
@@ -36,7 +36,6 @@ view Button {
   }
   [Mode=Light] {
     backgroundColor: green
-
   }
 }
 
@@ -65,6 +64,17 @@ describe('Compiling to CSS and JavaScript', () => {
     expect(
       createGenerator({
         adapter: felaAdapter,
+      })(ast, 'index.elo')
+    ).toMatchSnapshot()
+  })
+
+  it('should return a map of files in devMode', () => {
+    const { ast } = parse(file)
+
+    expect(
+      createGenerator({
+        adapter: felaAdapter,
+        devMode: true,
       })(ast, 'index.elo')
     ).toMatchSnapshot()
   })

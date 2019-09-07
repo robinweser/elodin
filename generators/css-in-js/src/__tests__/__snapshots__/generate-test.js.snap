@@ -2,25 +2,104 @@
 
 exports[`Compiling to CSS and JavaScript should return a map of files 1`] = `
 Object {
-  "Button.elo.css": "._1lkzl71 {
+  "Button.elo.css": "._1hqkjic {
+  border: 0px;
   background-color: red;
-  padding-left: 10px;
-  border: 0px
-}
-
-._1lkzl71__Type-Primary {
-  background-color: red
-}
-
-._1lkzl71__Type-Primary:hover {
   padding-left: 10px
 }
 
-._1lkzl71__Type-Primary__Mode-Dark {
+._1hqkjic_0-0 {
+  background-color: red
+}
+
+._1hqkjic_0-0:hover {
+  padding-left: 10px
+}
+
+._1hqkjic_0-0_1-0 {
   background-color: blue
 }
 
-._1lkzl71__Mode-Light {
+._1hqkjic_1-1 {
+  background-color: green
+}",
+  "Button.elo.js": "import './Button.elo.css'
+import { getClassNameFromVariantMap, getDynamicStyleFromVariantMap } from '@elodin/runtime'
+
+const variantClassNameMap = {
+  \\"\\": {},
+  \\"_0-0\\": {
+    \\"Type\\": \\"Primary\\"
+  },
+  \\"_0-0_1-0\\": {
+    \\"Type\\": \\"Primary\\",
+    \\"Mode\\": \\"Dark\\"
+  },
+  \\"_1-1\\": {
+    \\"Mode\\": \\"Light\\"
+  }
+}
+
+const variantStyleMap = {
+'__Type-Primary': props => ({
+  \\"paddingLeft\\":props.paddingLeft,
+  \\":hover\\":{\\"paddingRight\\":props.paddingRight}
+}),
+'__Type-Primary__Mode-Dark': props => ({
+  \\"paddingLeft\\":props.padLeft
+})
+}
+
+export function Button(props = {}) {
+  return {
+    _className: '_elo_view ' + getClassNameFromVariantMap('_1hqkjic', variantClassNameMap, props),
+    \\"borderWidth\\":props.borderWidth,
+    ...getDynamicStyleFromVariantMap(variantStyleMap, props)
+  }
+}",
+  "Label.elo.css": "._1edorjp:hover {
+  color: red
+}",
+  "Label.elo.js": "import './Label.elo.css'
+
+export function Label(props = {}) {
+  return {
+    _className: '_elo_text _1edorjp',
+    \\"lineHeight\\":props.lineHeight,
+    \\":hover\\":{\\"fontSize\\":props.fontSize}
+  }
+}",
+  "index.elo.js": "import { Button } from './Button.elo.js'
+import { Label } from './Label.elo.js'
+
+export {
+  Button,
+  Label
+}",
+}
+`;
+
+exports[`Compiling to CSS and JavaScript should return a map of files in devMode 1`] = `
+Object {
+  "Button.elo.css": ".Button_1hqkjic {
+  border: 0px;
+  background-color: red;
+  padding-left: 10px
+}
+
+.Button_1hqkjic__Type-Primary {
+  background-color: red
+}
+
+.Button_1hqkjic__Type-Primary:hover {
+  padding-left: 10px
+}
+
+.Button_1hqkjic__Type-Primary__Mode-Dark {
+  background-color: blue
+}
+
+.Button_1hqkjic__Mode-Light {
   background-color: green
 }",
   "Button.elo.js": "import './Button.elo.css'
@@ -52,19 +131,19 @@ const variantStyleMap = {
 
 export function Button(props = {}) {
   return {
-    _className: '_elo_view ' + getClassNameFromVariantMap('_1lkzl71', variantClassNameMap, props),
+    _className: '_elo_view ' + getClassNameFromVariantMap('Button_1hqkjic', variantClassNameMap, props),
     \\"borderWidth\\":props.borderWidth,
     ...getDynamicStyleFromVariantMap(variantStyleMap, props)
   }
 }",
-  "Label.elo.css": "._1edorjp:hover {
+  "Label.elo.css": ".Label_1edorjp:hover {
   color: red
 }",
   "Label.elo.js": "import './Label.elo.css'
 
 export function Label(props = {}) {
   return {
-    _className: '_elo_text _1edorjp',
+    _className: '_elo_text Label_1edorjp',
     \\"lineHeight\\":props.lineHeight,
     \\":hover\\":{\\"fontSize\\":props.fontSize}
   }
@@ -81,25 +160,25 @@ export {
 
 exports[`Compiling to CSS and JavaScript should use the given adapter 1`] = `
 Object {
-  "Button.elo.css": "._1lkzl71 {
+  "Button.elo.css": "._1hqkjic {
+  border: 0px;
   background-color: red;
-  padding-left: 10px;
-  border: 0px
-}
-
-._1lkzl71__Type-Primary {
-  background-color: red
-}
-
-._1lkzl71__Type-Primary:hover {
   padding-left: 10px
 }
 
-._1lkzl71__Type-Primary__Mode-Dark {
+._1hqkjic_0-0 {
+  background-color: red
+}
+
+._1hqkjic_0-0:hover {
+  padding-left: 10px
+}
+
+._1hqkjic_0-0_1-0 {
   background-color: blue
 }
 
-._1lkzl71__Mode-Light {
+._1hqkjic_1-1 {
   background-color: green
 }",
   "Button.elo.js": "import './Button.elo.css'
@@ -108,14 +187,14 @@ import { createComponent } from 'react-fela'
 
 const variantMap = {
   \\"\\": {},
-  \\"__Type-Primary\\": {
+  \\"_0-0\\": {
     \\"Type\\": \\"Primary\\"
   },
-  \\"__Type-Primary__Mode-Dark\\": {
+  \\"_0-0_1-0\\": {
     \\"Type\\": \\"Primary\\",
     \\"Mode\\": \\"Dark\\"
   },
-  \\"__Mode-Light\\": {
+  \\"_1-1\\": {
     \\"Mode\\": \\"Light\\"
   }
 }
@@ -132,7 +211,7 @@ const variantStyleMap = {
 
 function ButtonStyle(props  = {}) {
   return {
-    _className: '_elo_view ' + getClassNameFromVariantMap('_1lkzl71', variantMap, props),
+    _className: '_elo_view ' + getClassNameFromVariantMap('_1hqkjic', variantMap, props),
     \\"borderWidth\\":props.borderWidth,
     ...getDynamicStyleFromVariantMap(variantStyleMap, props)
   }

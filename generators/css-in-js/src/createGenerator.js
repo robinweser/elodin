@@ -5,6 +5,7 @@ import {
   generateCSSClasses,
   generateCSSMediaQueryFromNode,
   getModuleName,
+  getVariantsFromAST,
   stringifyCSSRule,
 } from '@elodin/utils'
 import { isUnitlessProperty, hyphenateProperty } from 'css-in-js-utils'
@@ -62,7 +63,18 @@ function generateCSS(ast, { devMode }) {
   const variants = ast.body.filter(node => node.type === 'Variant')
 
   return styles.reduce((files, module) => {
-    const classes = generateCSSClasses(module.body, variants)
+    const usedVariants = getVariantsFromAST(module)
+    const variantMap = variants.reduce((flatVariants, variant) => {
+      if (usedVariants[variant.name]) {
+        flatVariants[variant.name] = variant.body.map(
+          variation => variation.value
+        )
+      }
+
+      return flatVariants
+    }, {})
+
+    const classes = generateCSSClasses(module.body, variantMap, devMode)
 
     files[module.name + '.elo.css'] = classes
       .filter(selector => selector.declarations.length > 0)
@@ -91,8 +103,19 @@ function generateJS(ast, { devMode, dynamicImport }, adapter) {
   const variants = ast.body.filter(node => node.type === 'Variant')
 
   return styles.reduce((files, module) => {
+    const usedVariants = getVariantsFromAST(module)
+    const variantMap = variants.reduce((flatVariants, variant) => {
+      if (usedVariants[variant.name]) {
+        flatVariants[variant.name] = variant.body.map(
+          variation => variation.value
+        )
+      }
+
+      return flatVariants
+    }, {})
+
     const style = generateStyle(module.body)
-    const classNameMap = generateClassNameMap(module.body, variants)
+    const classNameMap = generateClassNameMap(module.body, variantMap, devMode)
     const variantStyleMap = generateVariantStyleMap(module.body, variants)
 
     files[module.name + '.elo.js'] = adapter({
@@ -103,13 +126,7 @@ function generateJS(ast, { devMode, dynamicImport }, adapter) {
       classNameMap,
       resetClassName: '_elo_' + module.format,
       className: getModuleName(module, devMode),
-      variants: variants.reduce((flatVariants, variant) => {
-        flatVariants[variant.name] = variant.body.map(
-          variation => variation.value
-        )
-
-        return flatVariants
-      }, {}),
+      variants: variantMap,
     })
 
     return files
@@ -118,46 +135,50 @@ function generateJS(ast, { devMode, dynamicImport }, adapter) {
 
 function generateClassNameMap(
   nodes,
-  variants,
+  variantMap,
+  devMode,
   classes = {},
   variations = {},
   modifier = []
 ) {
   const nesting = nodes.filter(node => node.type !== 'Declaration')
-  const variantOrder = variants.map(variant => variant.name)
-
+  const variantOrder = Object.keys(variantMap)
   // ensure the variant modifier order is always deterministic
   classes[
     modifier
       .sort((a, b) =>
         variantOrder.indexOf(a[0]) > variantOrder.indexOf(b[0]) ? 1 : -1
       )
-      .map(([name, value]) => '__' + name + '-' + value)
+      .map(([name, value]) =>
+        devMode
+          ? '__' + name + '-' + value
+          : '_' +
+            variantOrder.indexOf(name) +
+            '-' +
+            variantMap[name].indexOf(value)
+      )
       .join('')
   ] = variations
 
   nesting.forEach(nest => {
     if (nest.property.type === 'Identifier') {
-      const variant = variants.find(
-        variant => variant.name === nest.property.value
-      )
+      const variant = variantMap[nest.property.value]
 
       if (variant) {
         if (nest.value.type === 'Identifier') {
-          const variation = variant.body.find(
-            variant => variant.value === nest.value.value
-          )
+          const variation = variant.indexOf(nest.value.value) !== -1
 
           if (variation) {
             generateClassNameMap(
               nest.body,
-              variants,
+              variantMap,
+              devMode,
               classes,
               {
                 ...variations,
-                [variant.name]: variation.value,
+                [nest.property.value]: nest.value.value,
               },
-              [...modifier, [variant.name, variation.value]]
+              [...modifier, [nest.property.value, nest.value.value]]
             )
           }
         }
