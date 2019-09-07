@@ -21,6 +21,7 @@ import { baseReset, rootReset } from './getReset'
 
 const defaultConfig = {
   devMode: false,
+  rootNode: 'body',
   generateResetClassName: type => '_elo_' + type,
   generateFileName: (fileName, moduleName) =>
     capitalizeString(fileName) + moduleName + 'Style',
@@ -53,6 +54,7 @@ export default function createGenerator(customConfig = {}) {
   generate.filePattern = [
     config.generateFileName('*', '') + '.re',
     config.generateFileName('*', '') + '.bs.js',
+    '*.elo.css',
   ]
 
   generate.baseReset = baseReset(config.generateResetClassName)
