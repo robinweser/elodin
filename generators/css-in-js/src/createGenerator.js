@@ -10,17 +10,22 @@ import {
 } from '@elodin/utils'
 import { isUnitlessProperty, hyphenateProperty } from 'css-in-js-utils'
 
-export default function createGenerator({
-  adapter,
-  devMode = false,
-  rootNode = 'body',
-  dynamicImport = false,
-} = {}) {
+import { baseReset, rootReset } from './getReset'
+
+const defaultConfig = {
+  devMode: false,
+  rootNode: 'body',
+  dynamicImport: false,
+  generateResetClassName: type => '_elo_' + type,
+}
+
+export default function createGenerator(customConfig = {}) {
   const config = {
-    devMode,
-    rootNode,
-    dynamicImport,
+    ...defaultConfig,
+    ...customConfig,
   }
+
+  const { adapter, generateResetClassName, rootNode } = config
 
   if (!adapter) {
     throw new Error(
@@ -28,13 +33,19 @@ export default function createGenerator({
     )
   }
 
-  return function generate(ast, fileName) {
+  function generate(ast, fileName) {
     const css = generateCSS(ast, config)
     const js = generateJS(ast, config, adapter)
     const root = generateRoot(ast, config)
 
     return { [fileName + '.js']: root, ...css, ...js }
   }
+  generate.filePattern = ['*.elo.js', '*.elo.css']
+
+  generate.baseReset = baseReset(generateResetClassName)
+  generate.rootReset = rootReset(rootNode)
+
+  return generate
 }
 
 function generateRoot(ast) {
