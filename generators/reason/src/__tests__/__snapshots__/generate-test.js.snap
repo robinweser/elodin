@@ -32,31 +32,52 @@ let getButtonStyleVariants = (~borderWidth:string, ~paddingLeft:string, ~padding
 switch (type_, mode) {
     | (Some(Primary), Some(Dark)) => [buttonStylePrimary,buttonStylePrimaryDark]
     | (Some(Primary), Some(Light)) => [buttonStylePrimary]
+    | (Some(Primary), Some(Semi)) => [buttonStylePrimary]
     | (Some(Primary), None) => [buttonStylePrimary]
+    | (Some(Secondary), Some(Dark)) => []
+    | (Some(Secondary), Some(Light)) => []
+    | (Some(Secondary), Some(Semi)) => []
+    | (Some(Secondary), None) => []
     | (None, Some(Dark)) => []
     | (None, Some(Light)) => []
+    | (None, Some(Semi)) => []
     | (None, None) => []
     }
   };
 
 let getButtonVariants = (~type_, ~mode, ()) => {
   switch (type_, mode) {
-    | (Some(Primary), Some(Dark)) => \\"_1a6mix7__Type_-Primary _1a6mix7__Mode-Dark _1a6mix7__Type_-Primary__Mode-Dark\\"
-    | (Some(Primary), Some(Light)) => \\"_1a6mix7__Type_-Primary _1a6mix7__Mode-Light _1a6mix7__Type_-Primary__Mode-Light\\"
-    | (Some(Primary), None) => \\"_1a6mix7__Type_-Primary\\"
-    | (None, Some(Dark)) => \\"_1a6mix7__Mode-Dark\\"
-    | (None, Some(Light)) => \\"_1a6mix7__Mode-Light\\"
-    | (None, None) => \\"_1a6mix7\\"
+    | (Some(Primary), Some(Dark)) => \\" _1a6mix7_0-0 _1a6mix7_1-0 _1a6mix7_0-0_1-0\\"
+    | (Some(Primary), Some(Light)) => \\" _1a6mix7_0-0 _1a6mix7_1-1 _1a6mix7_0-0_1-1\\"
+    | (Some(Primary), Some(Semi)) => \\"\\"
+    | (Some(Primary), None) => \\" _1a6mix7_0-0\\"
+    | (Some(Secondary), Some(Dark)) => \\"\\"
+    | (Some(Secondary), Some(Light)) => \\"\\"
+    | (Some(Secondary), Some(Semi)) => \\"\\"
+    | (Some(Secondary), None) => \\"\\"
+    | (None, Some(Dark)) => \\" _1a6mix7_1-0\\"
+    | (None, Some(Light)) => \\" _1a6mix7_1-1\\"
+    | (None, Some(Semi)) => \\"\\"
+    | (None, None) => \\"\\"
   }
 };
 
-let button = (~borderWidth:string, ~paddingLeft:string, ~paddingRight:string, ~padLeft:string, ~type_=?, ~mode=?, ()) => \\"_elo_view _1a6mix7\\" ++ \\" \\" ++ getButtonVariants(~type_, ~mode, ()) ++ \\" \\" ++ merge([buttonStyle(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft), ...getButtonStyleVariants(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_, ~mode, ())]);
+let button = (~borderWidth:string, ~paddingLeft:string, ~paddingRight:string, ~padLeft:string, ~type_=?, ~mode=?, ()) => \\"_elo_view _1a6mix7\\" ++ getButtonVariants(~type_, ~mode, ()) ++ \\" \\" ++ merge([buttonStyle(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft), ...getButtonStyleVariants(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_, ~mode, ())]);
 
 let labelStyle = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~mediaHoverFontSize:string) => style([unsafe(\\"line-height\\", lineHeight),
     hover([unsafe(\\"font-size\\", fontSize)]),
     media(\\"(min-width: 320px) and (max-width: 320px)\\", [unsafe(\\"font-size\\", mediaFontSize),
 hover([unsafe(\\"font-size\\", mediaHoverFontSize)])])]);
-let label = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~mediaHoverFontSize:string, ()) => \\"_elo_text _vqhb4f\\" ++ \\" \\" ++ merge([labelStyle(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize)]);
+let getLabelVariants = (~mode, ()) => {
+  switch (mode) {
+    | (Some(Dark)) => \\"\\"
+    | (Some(Light)) => \\" _m7rm99_0-1\\"
+    | (Some(Semi)) => \\"\\"
+    | (None) => \\"\\"
+  }
+};
+
+let label = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~mediaHoverFontSize:string, ~mode=?, ()) => \\"_elo_text _m7rm99\\" ++ getLabelVariants(~mode, ()) ++ \\" \\" ++ merge([labelStyle(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize)]);
 ",
   "RootStyleButton.elo.css": "._1a6mix7 {
   background-color: red;
@@ -64,33 +85,159 @@ let label = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~media
   border: 0px
 }
 
-._1a6mix7__Type_-Primary {
+._1a6mix7_0-0 {
   background-color: red
 }
 
-._1a6mix7__Type_-Primary:hover {
+._1a6mix7_0-0:hover {
   padding-left: 10px
 }
 
-._1a6mix7__Type_-Primary__Mode-Dark {
+._1a6mix7_0-0_1-0 {
   background-color: blue
 }
 
-._1a6mix7__Mode-Light {
+._1a6mix7_1-1 {
   background-color: green
 }",
-  "RootStyleLabel.elo.css": "._vqhb4f:hover {
+  "RootStyleLabel.elo.css": "._m7rm99:hover {
   color: red
 }
 
+._m7rm99_0-1 {
+  font-size: 16px
+}
+
 @media (min-width: 320px) and (max-width: 320px) {
-  ._vqhb4f {
+  ._m7rm99 {
     color: green
   }
 }
 
 @media (min-width: 320px) and (max-width: 320px) {
-  ._vqhb4f:hover {
+  ._m7rm99:hover {
+    color: blue
+  }
+}",
+}
+`;
+
+exports[`Compiling to ReasonML should return a map of files in devMode 1`] = `
+Object {
+  "RootStyle.re": "[%bs.raw {|
+  require(\\"./RootStyleButton.elo.css\\")
+|}];
+
+[%bs.raw {|
+  require(\\"./RootStyleLabel.elo.css\\")
+|}];
+
+open Css;
+
+[@bs.deriving jsConverter]
+type type_ =
+  | Primary
+  | Secondary;
+
+[@bs.deriving jsConverter]
+type mode =
+  | Dark
+  | Light
+  | Semi;
+
+let buttonStyle = (~borderWidth:string, ~paddingLeft:string, ~paddingRight:string, ~padLeft:string) => style([unsafe(\\"border-width\\", borderWidth)]);
+let getButtonStyleVariants = (~borderWidth:string, ~paddingLeft:string, ~paddingRight:string, ~padLeft:string, ~type_, ~mode, ()) => {
+    let buttonStylePrimary = style([unsafe(\\"padding-left\\", paddingLeft),
+      hover([unsafe(\\"padding-right\\", paddingRight)])]);
+    let buttonStylePrimaryDark = style([unsafe(\\"padding-left\\", padLeft)]);
+
+switch (type_, mode) {
+    | (Some(Primary), Some(Dark)) => [buttonStylePrimary,buttonStylePrimaryDark]
+    | (Some(Primary), Some(Light)) => [buttonStylePrimary]
+    | (Some(Primary), Some(Semi)) => [buttonStylePrimary]
+    | (Some(Primary), None) => [buttonStylePrimary]
+    | (Some(Secondary), Some(Dark)) => []
+    | (Some(Secondary), Some(Light)) => []
+    | (Some(Secondary), Some(Semi)) => []
+    | (Some(Secondary), None) => []
+    | (None, Some(Dark)) => []
+    | (None, Some(Light)) => []
+    | (None, Some(Semi)) => []
+    | (None, None) => []
+    }
+  };
+
+let getButtonVariants = (~type_, ~mode, ()) => {
+  switch (type_, mode) {
+    | (Some(Primary), Some(Dark)) => \\" Button_1a6mix7__Type_-Primary Button_1a6mix7__Mode-Dark Button_1a6mix7__Type_-Primary__Mode-Dark\\"
+    | (Some(Primary), Some(Light)) => \\" Button_1a6mix7__Type_-Primary Button_1a6mix7__Mode-Light Button_1a6mix7__Type_-Primary__Mode-Light\\"
+    | (Some(Primary), Some(Semi)) => \\"\\"
+    | (Some(Primary), None) => \\" Button_1a6mix7__Type_-Primary\\"
+    | (Some(Secondary), Some(Dark)) => \\"\\"
+    | (Some(Secondary), Some(Light)) => \\"\\"
+    | (Some(Secondary), Some(Semi)) => \\"\\"
+    | (Some(Secondary), None) => \\"\\"
+    | (None, Some(Dark)) => \\" Button_1a6mix7__Mode-Dark\\"
+    | (None, Some(Light)) => \\" Button_1a6mix7__Mode-Light\\"
+    | (None, Some(Semi)) => \\"\\"
+    | (None, None) => \\"\\"
+  }
+};
+
+let button = (~borderWidth:string, ~paddingLeft:string, ~paddingRight:string, ~padLeft:string, ~type_=?, ~mode=?, ()) => \\"_elo_view Button_1a6mix7\\" ++ getButtonVariants(~type_, ~mode, ()) ++ \\" \\" ++ merge([buttonStyle(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft), ...getButtonStyleVariants(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_, ~mode, ())]);
+
+let labelStyle = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~mediaHoverFontSize:string) => style([unsafe(\\"line-height\\", lineHeight),
+    hover([unsafe(\\"font-size\\", fontSize)]),
+    media(\\"(min-width: 320px) and (max-width: 320px)\\", [unsafe(\\"font-size\\", mediaFontSize),
+hover([unsafe(\\"font-size\\", mediaHoverFontSize)])])]);
+let getLabelVariants = (~mode, ()) => {
+  switch (mode) {
+    | (Some(Dark)) => \\"\\"
+    | (Some(Light)) => \\" Label_m7rm99__Mode-Light\\"
+    | (Some(Semi)) => \\"\\"
+    | (None) => \\"\\"
+  }
+};
+
+let label = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~mediaHoverFontSize:string, ~mode=?, ()) => \\"_elo_text Label_m7rm99\\" ++ getLabelVariants(~mode, ()) ++ \\" \\" ++ merge([labelStyle(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize)]);
+",
+  "RootStyleButton.elo.css": ".Button_1a6mix7 {
+  background-color: red;
+  padding-left: 10px;
+  border: 0px
+}
+
+.Button_1a6mix7__Type_-Primary {
+  background-color: red
+}
+
+.Button_1a6mix7__Type_-Primary:hover {
+  padding-left: 10px
+}
+
+.Button_1a6mix7__Type_-Primary__Mode-Dark {
+  background-color: blue
+}
+
+.Button_1a6mix7__Mode-Light {
+  background-color: green
+}",
+  "RootStyleLabel.elo.css": ".Label_m7rm99:hover {
+  color: red
+}
+
+.Label_m7rm99__Mode-Light {
+  font-size: 16px
+}
+
+@media (min-width: 320px) and (max-width: 320px) {
+  .Label_m7rm99 {
+    color: green
+  }
+}
+
+@media (min-width: 320px) and (max-width: 320px) {
+  .Label_m7rm99:hover {
     color: blue
   }
 }",

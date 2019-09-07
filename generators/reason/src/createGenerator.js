@@ -119,7 +119,17 @@ function generateCSSFiles(ast, { devMode, generateFileName }, fileName) {
   const generatedFileName = generateFileName(fileName, '')
 
   return styles.reduce((files, module) => {
-    const classes = generateCSSClasses(module.body, variants)
+    const usedVariants = getVariantsFromAST(module)
+    const variantMap = variants.reduce((flatVariants, variant) => {
+      if (usedVariants[variant.name]) {
+        flatVariants[variant.name] = variant.body.map(
+          variation => variation.value
+        )
+      }
+
+      return flatVariants
+    }, {})
+    const classes = generateCSSClasses(module.body, variantMap, devMode)
 
     files[generatedFileName + module.name + '.elo.css'] = classes
       .filter(selector => selector.declarations.length > 0)
@@ -157,7 +167,6 @@ function generateModules(ast, { devMode, generateResetClassName }) {
     const style = generateStyle(module.body)
     const variables = getVariablesFromAST(module)
     const variantStyleMap = generateVariantStyleMap(module.body, variants)
-
     const usedVariants = getVariantsFromAST(module)
     const variantNames = Object.keys(usedVariants)
 
@@ -285,7 +294,12 @@ function generateModules(ast, { devMode, generateResetClassName }) {
                   .map((comb, index) =>
                     comb === 'None'
                       ? ''
-                      : '__' + variantNames[index] + '-' + comb
+                      : devMode
+                      ? '__' + variantNames[index] + '-' + comb
+                      : '_' +
+                        index +
+                        '-' +
+                        variantMap[variantNames[index]].indexOf(comb)
                   )
                   .filter(val => val !== '')
               )

@@ -17,7 +17,8 @@ function getStaticDeclarations(declarations) {
 
 export default function generateCSSClasses(
   nodes,
-  variants,
+  variantMap,
+  devMode,
   classes = [],
   modifier = [],
   pseudo = '',
@@ -25,7 +26,7 @@ export default function generateCSSClasses(
 ) {
   const base = nodes.filter(node => node.type === 'Declaration')
   const nesting = nodes.filter(node => node.type !== 'Declaration')
-  const variantOrder = variants.map(variant => variant.name)
+  const variantOrder = Object.keys(variantMap)
 
   classes.push({
     media,
@@ -35,31 +36,33 @@ export default function generateCSSClasses(
       .sort((a, b) =>
         variantOrder.indexOf(a[0]) > variantOrder.indexOf(b[0]) ? 1 : -1
       )
-      .map(([name, value]) => '__' + name + '-' + value)
+      .map(([name, value]) =>
+        devMode
+          ? '__' + name + '-' + value
+          : '_' +
+            variantOrder.indexOf(name) +
+            '-' +
+            variantMap[name].indexOf(value)
+      )
       .join(''),
     declarations: getStaticDeclarations(base),
   })
 
   nesting.forEach(nest => {
     if (nest.property.type === 'Identifier') {
-      const variant = variants.find(
-        variant => variant.name === nest.property.value
-      )
+      const variant = variantMap[nest.property.value]
 
       if (variant) {
         if (nest.value.type === 'Identifier') {
-          const variation = variant.body.find(
-            variant => variant.value === nest.value.value
-          )
+          const variation = variant.indexOf(nest.value.value) !== -1
 
           if (variation) {
             generateCSSClasses(
               nest.body,
-              variants,
-
+              variantMap,
+              devMode,
               classes,
-              // TODO: variants in deterministic order
-              [...modifier, [variant.name, variation.value]],
+              [...modifier, [nest.property.value, nest.value.value]],
               pseudo,
               media
             )
@@ -78,8 +81,8 @@ export default function generateCSSClasses(
         if (pseudoClass || pseudoElement) {
           generateCSSClasses(
             nest.body,
-            variants,
-
+            variantMap,
+            devMode,
             classes,
             modifier,
             pseudo +
@@ -93,8 +96,8 @@ export default function generateCSSClasses(
       if (isMediaQuery(nest.property.value)) {
         generateCSSClasses(
           nest.body,
-          variants,
-
+          variantMap,
+          devMode,
           classes,
           modifier,
           pseudo,

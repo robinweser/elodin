@@ -32,7 +32,7 @@ view Button {
       paddingLeft: $padLeft
     }
   }
-  
+
   [Mode=Light] {
     backgroundColor: green
   }
@@ -65,5 +65,13 @@ describe('Compiling to ReasonML', () => {
     const { ast } = parse(file)
 
     expect(createGenerator()(ast, 'root.elo')).toMatchSnapshot()
+  })
+
+  it('should return a map of files in devMode', () => {
+    const { ast } = parse(file)
+
+    expect(
+      createGenerator({ devMode: true })(ast, 'root.elo')
+    ).toMatchSnapshot()
   })
 })
