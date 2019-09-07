@@ -32,6 +32,7 @@ view Button {
       paddingLeft: $padLeft
     }
   }
+  
   [Mode=Light] {
     backgroundColor: green
   }
@@ -43,6 +44,10 @@ text Label {
   [@hover] {
     color: red
     fontSize: $fontSize
+  }
+
+  [Mode=Light] {
+    fontSize: 16
   }
 
   [@viewportWidth=320] {

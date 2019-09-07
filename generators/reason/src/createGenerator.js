@@ -190,7 +190,10 @@ function generateModules(ast, { devMode, generateResetClassName }) {
 
     if (variantNames.length > 0) {
       const combinations = getArrayCombinations(
-        ...variantNames.map(variant => [...usedVariants[variant], 'None'])
+        ...Object.keys(usedVariants).map(variant => [
+          ...variantMap[variant],
+          'None',
+        ])
       )
 
       const combis = combinations.reduce((matches, combination) => {
@@ -266,17 +269,30 @@ function generateModules(ast, { devMode, generateResetClassName }) {
             .map(comb => (comb === 'None' ? 'None' : 'Some(' + comb + ')'))
             .join(', ') +
           ') => "' +
-          getModuleName(module, devMode) +
-          getValueCombinations(
-            ...combination
-              .map((comb, index) =>
-                comb === 'None' ? '' : '__' + variantNames[index] + '-' + comb
-              )
-              .filter(val => val !== '')
+          (combination.find(val => val !== 'None') &&
+          combination.reduce(
+            (hasCombination, value, index) =>
+              hasCombination
+                ? value === 'None' ||
+                  usedVariants[variantNames[index]].indexOf(value) !== -1
+                : false,
+            true
           )
-            .filter(set => set.length > 0)
-            .map(set => set.join(''))
-            .join(' ' + getModuleName(module, devMode)) +
+            ? ' ' +
+              getModuleName(module, devMode) +
+              getValueCombinations(
+                ...combination
+                  .map((comb, index) =>
+                    comb === 'None'
+                      ? ''
+                      : '__' + variantNames[index] + '-' + comb
+                  )
+                  .filter(val => val !== '')
+              )
+                .filter(set => set.length > 0)
+                .map(set => set.join(''))
+                .join(' ' + getModuleName(module, devMode))
+            : '') +
           '"'
       )
       .join('\n    ')}\n  }
@@ -312,7 +328,7 @@ function generateModules(ast, { devMode, generateResetClassName }) {
           : ') => "') +
         className +
         (variantNames.length > 0
-          ? '" ++ " " ++ get' +
+          ? '" ++ get' +
             module.name +
             'Variants(' +
             variantNames.map(name => '~' + name.toLowerCase()).join(', ') +
