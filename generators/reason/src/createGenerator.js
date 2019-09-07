@@ -281,11 +281,10 @@ function generateModules(ast, { devMode, generateResetClassName }) {
           (combination.find(val => val !== 'None') &&
           combination.reduce(
             (hasCombination, value, index) =>
-              hasCombination
-                ? value === 'None' ||
-                  usedVariants[variantNames[index]].indexOf(value) !== -1
-                : false,
-            true
+              value === 'None' ||
+              usedVariants[variantNames[index]].indexOf(value) !== -1 ||
+              hasCombination,
+            false
           )
             ? ' ' +
               getModuleName(module, devMode) +

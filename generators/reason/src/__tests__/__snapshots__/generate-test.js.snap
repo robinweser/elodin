@@ -49,15 +49,15 @@ let getButtonVariants = (~type_, ~mode, ()) => {
   switch (type_, mode) {
     | (Some(Primary), Some(Dark)) => \\" _1a6mix7_0-0 _1a6mix7_1-0 _1a6mix7_0-0_1-0\\"
     | (Some(Primary), Some(Light)) => \\" _1a6mix7_0-0 _1a6mix7_1-1 _1a6mix7_0-0_1-1\\"
-    | (Some(Primary), Some(Semi)) => \\"\\"
+    | (Some(Primary), Some(Semi)) => \\" _1a6mix7_0-0 _1a6mix7_1-2 _1a6mix7_0-0_1-2\\"
     | (Some(Primary), None) => \\" _1a6mix7_0-0\\"
-    | (Some(Secondary), Some(Dark)) => \\"\\"
-    | (Some(Secondary), Some(Light)) => \\"\\"
+    | (Some(Secondary), Some(Dark)) => \\" _1a6mix7_0-1 _1a6mix7_1-0 _1a6mix7_0-1_1-0\\"
+    | (Some(Secondary), Some(Light)) => \\" _1a6mix7_0-1 _1a6mix7_1-1 _1a6mix7_0-1_1-1\\"
     | (Some(Secondary), Some(Semi)) => \\"\\"
-    | (Some(Secondary), None) => \\"\\"
+    | (Some(Secondary), None) => \\" _1a6mix7_0-1\\"
     | (None, Some(Dark)) => \\" _1a6mix7_1-0\\"
     | (None, Some(Light)) => \\" _1a6mix7_1-1\\"
-    | (None, Some(Semi)) => \\"\\"
+    | (None, Some(Semi)) => \\" _1a6mix7_1-2\\"
     | (None, None) => \\"\\"
   }
 };
@@ -171,15 +171,15 @@ let getButtonVariants = (~type_, ~mode, ()) => {
   switch (type_, mode) {
     | (Some(Primary), Some(Dark)) => \\" Button_1a6mix7__Type_-Primary Button_1a6mix7__Mode-Dark Button_1a6mix7__Type_-Primary__Mode-Dark\\"
     | (Some(Primary), Some(Light)) => \\" Button_1a6mix7__Type_-Primary Button_1a6mix7__Mode-Light Button_1a6mix7__Type_-Primary__Mode-Light\\"
-    | (Some(Primary), Some(Semi)) => \\"\\"
+    | (Some(Primary), Some(Semi)) => \\" Button_1a6mix7__Type_-Primary Button_1a6mix7__Mode-Semi Button_1a6mix7__Type_-Primary__Mode-Semi\\"
     | (Some(Primary), None) => \\" Button_1a6mix7__Type_-Primary\\"
-    | (Some(Secondary), Some(Dark)) => \\"\\"
-    | (Some(Secondary), Some(Light)) => \\"\\"
+    | (Some(Secondary), Some(Dark)) => \\" Button_1a6mix7__Type_-Secondary Button_1a6mix7__Mode-Dark Button_1a6mix7__Type_-Secondary__Mode-Dark\\"
+    | (Some(Secondary), Some(Light)) => \\" Button_1a6mix7__Type_-Secondary Button_1a6mix7__Mode-Light Button_1a6mix7__Type_-Secondary__Mode-Light\\"
     | (Some(Secondary), Some(Semi)) => \\"\\"
-    | (Some(Secondary), None) => \\"\\"
+    | (Some(Secondary), None) => \\" Button_1a6mix7__Type_-Secondary\\"
     | (None, Some(Dark)) => \\" Button_1a6mix7__Mode-Dark\\"
     | (None, Some(Light)) => \\" Button_1a6mix7__Mode-Light\\"
-    | (None, Some(Semi)) => \\"\\"
+    | (None, Some(Semi)) => \\" Button_1a6mix7__Mode-Semi\\"
     | (None, None) => \\"\\"
   }
 };
