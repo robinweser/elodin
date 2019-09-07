@@ -1,6 +1,6 @@
 {
   "name": "@elodin/plugin-color",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "main": "lib/index.js",
   "module": "es/index.js",
   "publishConfig": {
@@ -21,7 +21,7 @@
     "@babel/cli": "^7.2.0",
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.0",
-    "@elodin/core": "^0.0.25",
+    "@elodin/core": "^0.0.26",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "cross-env": "^5.2.0",

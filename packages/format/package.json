@@ -1,6 +1,6 @@
 {
   "name": "@elodin/format",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "main": "lib/index.js",
   "module": "es/index.js",
   "publishConfig": {
@@ -18,7 +18,7 @@
   "author": "robinweser <contact@weser.io>",
   "license": "MIT",
   "dependencies": {
-    "@elodin/parser": "^0.0.25",
+    "@elodin/parser": "^0.0.26",
     "color": "^3.1.2"
   },
   "devDependencies": {
