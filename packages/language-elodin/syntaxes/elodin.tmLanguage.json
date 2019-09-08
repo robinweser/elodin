@@ -18,7 +18,7 @@
         },
         {
           "name": "keyword.control.elodin",
-          "match": "(view|variant|fragment|text)"
+          "match": "(view|variant|fragment|text)(?=\\s+)"
         },
         {
           "name": "entity.name.function.elodin",

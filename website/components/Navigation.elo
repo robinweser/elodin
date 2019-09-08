@@ -1,16 +1,44 @@
+variant Status {
+  Active
+}
+
 view Navigation {
+  __overflow: auto
+  __display: none
   flexBasis: 300
   flexShrink: 0
   paddingTop: 20
   paddingBottom: 20
   backgroundColor: rgb(240 240 240)
+  [@viewportWidth>=760] {
+    __display: flex
+  }
 }
 
 view NavigationItem {
-  padding: 10
+  padding: 7
   paddingLeft: 20
 }
 
 text NavigationItemText {
-  fontSize: 16
+  textDecorationLine: none
+  color: black
+  [@hover] {
+    color: rgb(70 70 70)
+  }
+  [Status=Active] {
+    color: rgb(0 146 134)
+    [@hover] {
+      color: rgb(0 176 164)
+    }
+  }
+}
+
+text NavigationGroupText {
+  fontWeight: 600
+  fontSize: 18
+}
+
+view NavigationInnerContainer {
+  paddingTop: 10
 }

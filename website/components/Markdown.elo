@@ -1,0 +1,146 @@
+view Paragraph {
+  marginTop: 4
+  marginBottom: 12
+}
+
+text ParagraphText {
+  lineHeight: 1.5
+  color: rgb(50 50 50)
+  fontSize: 18
+}
+
+view Heading {
+  marginTop: 24
+  paddingBottom: 4
+}
+
+text HeadingText {
+  lineHeight: 1.0
+}
+
+view Title {
+  paddingBottom: 30
+}
+
+text TitleText {
+  fontSize: 40
+}
+
+view CodeBox {
+  __overflow: auto
+  backgroundColor: rgb(245 245 245)
+  padding: 14
+  marginTop: 4
+  marginBottom: 6
+}
+
+view InlineCodeBox {
+  __display: inlineFlex
+  backgroundColor: rgb(245 245 245)
+  paddingLeft: 6
+  paddingRight: 6
+}
+
+text Code {
+  __textRendering: "optimizeLegibility"
+  fontSize: 18
+  fontFamily: "Dank Mono, Fira Code, Hack, Consolas, monospace"
+}
+
+text Strong {
+  fontWeight: 500
+  color: black
+}
+
+text Link {
+  lineHeight: 1.2
+  textDecorationLine: none
+  color: rgb(0 146 134)
+  [@hover] {
+    color: rgb(0 176 164)
+  }
+}
+
+view List {
+  marginBottom: 10
+  paddingLeft: 28
+}
+
+text ListText {
+  lineHeight: 1.8
+}
+
+text ListItem {
+  __display: listItem
+  fontSize: 18
+  color: rgb(50 50 50)
+}
+
+view Blockquote {
+  paddingLeft: 9
+  left: -12
+  position: relative
+  borderStyle: solid
+  borderWidth: 0
+  borderLeftWidth: 3
+  borderLeftColor: rgb(100 100 100)
+  marginTop: 5
+  marginBottom: 5
+}
+
+text BlockquoteText {
+  fontStyle: italic
+  color: rgb(100 100 100)
+}
+
+view TableCell {
+  __textAlign: left
+  __fontSize: 18
+  flexDirection: row
+  flexGrow: 1
+  flexBasis: 0
+  padding: 10
+  flexGrow: 1
+  flexBasis: 0
+  borderWidth: 1
+  borderRightWidth: 0
+  borderTopWidth: 0
+  borderStyle: solid
+  borderColor: rgb(210 210 210)
+  [@lastChild] {
+    borderRightWidth: 1
+  }
+}
+
+view Table {
+  flexGrow: 1
+  marginTop: 5
+}
+
+view TableHead {
+  __textAlign: left
+  __fontSize: 18
+  flexGrow: 1
+  flexBasis: 0
+  padding: 10
+  flexGrow: 1
+  flexBasis: 0
+  borderWidth: 1
+  borderRightWidth: 0
+  borderTopWidth: 0
+  borderStyle: solid
+  borderColor: rgb(210 210 210)
+  [@lastChild] {
+    borderRightWidth: 1
+  }
+}
+
+view TableRow {
+  flexDirection: row
+  [@firstChild] {
+    borderWidth: 0
+    borderTopWidth: 1
+    borderStyle: solid
+    borderTopColor: rgb(210 210 210)
+  }
+}

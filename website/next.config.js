@@ -7,8 +7,14 @@ module.exports = withCSS(
     extension: /\.(md|mdx)$/,
   })(
     withTM({
-      pageExtensions: ['js', 'bs.js'],
+      pageExtensions: ['js', 'bs.js', 'md', 'mdx'],
       transpileModules: ['bs-platform', 'reason-react', '@tavata/ui'],
+      webpack: config => {
+        config.node = {
+          fs: 'empty',
+        }
+        return config
+      },
     })
   )
 )

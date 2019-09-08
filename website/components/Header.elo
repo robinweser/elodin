@@ -1,11 +1,16 @@
+variant Status {
+  Active
+}
+
 view Header {
-  paddingTop: 12
-  paddingBottom: 12
-  backgroundColor: rgb(230 230 230)
+  paddingTop: 7
+  paddingBottom: 7
+  backgroundColor: rgb(0 176 164)
   flexDirection: row
 }
 
 view NavItem {
+  justifyContent: center
   paddingLeft: 10
   paddingRight: 10
 }
@@ -13,8 +18,14 @@ view NavItem {
 text NavItemLink {
   fontSize: 18
   textDecorationLine: none
-  color: black
+  color: white
   [@hover] {
-    color: rgb(100 100 100)
+    color: rgb(50 246 234)
+  }
+  [Status=Active] {
+    color: rgb(150 246 234)
+    [@hover] {
+      color: rgb(50 246 234)
+    }
   }
 }

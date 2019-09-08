@@ -16,7 +16,9 @@
   "dependencies": {
     "@elodin/cli": "^0.0.28",
     "@elodin/core": "^0.0.28",
+    "@elodin/format": "^0.0.28",
     "@elodin/generator-css-in-js": "^0.0.28",
+    "@elodin/generator-react-native": "^0.0.28",
     "@elodin/generator-reason": "^0.0.28",
     "@elodin/parser": "^0.0.28",
     "@mdx-js/loader": "^0.17.5",

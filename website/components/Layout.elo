@@ -1,8 +1,9 @@
 view Layout {
-  maxWidth: 1200
+  __margin: raw("0 auto")
+  maxWidth: 1100
   width: percentage(100)
-  flexDirection: row
-  paddingLeft: 320
+  flexGrow: 1
+  flexShrink: 1
 }
 
 view Row {
@@ -13,6 +14,16 @@ view Row {
 
 view Content {
   __overflow: auto
+  flexShrink: 1
   flexGrow: 1
-  padding: 30
+  paddingTop: 30
+  paddingLeft: 30
+  paddingRight: 10
+  paddingBottom: 30
+}
+
+view NavContent {
+  flexGrow: 1
+  maxWidth: 1000
+  paddingBottom: 10
 }
