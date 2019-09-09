@@ -24,4 +24,12 @@ describe('Compiling to CSS and JavaScript', () => {
 
     expect(createGenerator()(ast, 'style.elo')).toMatchSnapshot()
   })
+
+  it('should use a custom importName', () => {
+    const { ast } = parse(file)
+
+    expect(
+      createGenerator({ importName: '@react-pdf/renderer' })(ast, 'style.elo')
+    ).toMatchSnapshot()
+  })
 })

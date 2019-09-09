@@ -2,12 +2,23 @@ import { uncapitalizeString } from '@elodin/utils'
 import { hyphenateProperty } from 'css-in-js-utils'
 import color from 'color'
 
-export default function createGenerator(config = {}) {
-  return function generate(ast, fileName = '') {
+const defaultConfig = {
+  importName: 'react-native',
+}
+
+export default function createGenerator(customConfig = {}) {
+  const config = {
+    ...defaultConfig,
+    ...customConfig,
+  }
+  function generate(ast, fileName = '') {
     const js = generateJS(ast, config)
 
     return { [fileName + '.js']: js }
   }
+
+  generate.filePattern = ['*.elo.js']
+  return generate
 }
 
 function stringifyDeclaration(declaration) {
@@ -80,7 +91,9 @@ function generateJS(ast, config) {
   }, {})
 
   return (
-    'import { StyleSheet } from "react-native"' +
+    'import { StyleSheet } from "' +
+    config.importName +
+    '"' +
     '\n\n' +
     'const styles = StyleSheet.create({\n  ' +
     Object.keys(modules)
