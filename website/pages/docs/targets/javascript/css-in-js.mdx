@@ -3,3 +3,170 @@ import { make as DocLayout } from '../../../../components/DocLayout.bs.js'
 export default DocLayout
 
 # CSS in JS
+
+This generator is used with JavaScript when building for the web.<br />
+Static styles are extracted to CSS files during compilation while a CSS in JS library resolves dynamic styles.<br/>
+Variants are rendered to plain string.
+
+## Configuration
+
+| Option                 | Type                | Default                  | Description                                                    |
+| ---------------------- | ------------------- | ------------------------ | -------------------------------------------------------------- |
+| adapter                | [Adapter](#adapter) | `false`                  | CSS in JS library adapter                                      |
+| devMode                | Boolean             | `false`                  | Enables readable class names                                   |
+| rootNode               | HTMLElement         | `body`                   | CSS selector to apply root reset style to (see below)          |
+| generateResetClassName | Function            | `type => "_elo_" + type` | Determines how the reset class names are generated (see below) |
+
+## Adapters
+
+## Usage
+
+**elodin.config.js**
+
+```javascript
+var createGenerator = require('@elodin/generator-css-in-js').createGenerator
+var felaAdapter = require('@elodin/generator-css-in-js/adapter/fela')
+
+const config = {
+  devMode: true,
+  adapter: felaDapater(),
+  rootNode: '#__next',
+  generateResetClassName: type => '__ELODIN_' + type.toUpperCase(),
+}
+
+module.exports = {
+  ...elodinConfig,
+  generator: createGenerator(config),
+}
+```
+
+## Resets
+
+The generator provides two important resets that should be added to your document head in order to correctly render Elodin styles.
+
+### Usage
+
+```javascript
+import { generator } from './elodin.config.js'
+
+function appendStyle(css) {
+  const style = document.createElement('style')
+  style.textContent = css
+
+  document.head.appendChild(style)
+}
+
+appendStyle(generator.baseReset)
+appendStyle(generator.rootReset)
+```
+
+### baseReset
+
+The baseReset provides component resets for both `view` and `text` styles.
+
+### rootReset
+
+The rootReset enables your app root to act like a fixed flex container. It applies to the provided `rootNode` selector.
+
+## Feature Coverage
+
+- Styles
+- Primitives
+- Variables
+- Variants
+- Conditionals
+- Functions
+
+It also implements special environment conditions to cover pseudo classes and media queries:
+
+### Pseudo Classes
+
+- link
+- hover
+- focus
+- active
+- visited
+- checked
+- default
+- empty
+- enabled
+- first
+- disabled
+- focusWithin
+- firstChild
+- lastChild
+- firstOfType
+- intermediate
+- inRange
+- invalid
+- lastOfType
+- left
+- onlyChild
+- onlyOfType
+- optional
+- readOnly
+- readWrite
+- required
+- right
+- target
+- valid
+- visited
+
+### Media Queries
+
+- viewportWidth
+- viewportHeight
+
+## Example
+
+This example showcases usage with [React]() and the [Fela]() adapter.<br />
+**Button.elo**
+
+```elo
+variant Variant {
+  Primary
+  Secondary
+}
+
+view Button {
+  paddingLeft: 10
+  paddingRight: 10
+  minWidth: $minWidth
+
+  [Variant=Primary] {
+    backgroundColor: blue
+
+    [@hover] {
+      backgroundColor: lightblue
+    }
+  }
+
+  [Variant=Secondary] {
+    backgroundColor: red
+
+    [@hover] {
+      backgroundColor: lightred
+    }
+  }
+
+  [@viewportWidth>=1024] {
+    paddingLeft: 15
+    paddingRight: 15
+  }
+}
+```
+
+**Button.js**
+
+```jsx
+import React from 'react'
+import { useFela } from 'react-fela'
+
+import { Button as ButtonStyle } from './Button.elo.js'
+
+function Button({ children, minWidth = 100, variant = 'Primary' }) {
+  const { css } = useFela({ minWidth, variant })
+
+  return <button className={css(ButtonStyle)}>{children}</button>
+}
+```

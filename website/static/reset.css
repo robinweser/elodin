@@ -16,11 +16,16 @@ div {
   flex-shrink: 0;
   max-width: 100%;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 body {
-  font-family: -apple-system;
+  font-family: -apple-system, Helvetica Neue, Helvetica, Arial, sans-serif;
   overscroll-behavior: none;
   overflow: auto;
   font-size: 16px;
+}
+
+.token.operator {
+  background: transparent !important;
 }

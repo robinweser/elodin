@@ -8,7 +8,7 @@ module.exports = withCSS(
   })(
     withTM({
       pageExtensions: ['js', 'bs.js', 'md', 'mdx'],
-      transpileModules: ['bs-platform', 'reason-react', '@tavata/ui'],
+      transpileModules: ['bs-platform', 'reason-react', '@tavata/ui', 'bs-css'],
       webpack: config => {
         config.node = {
           fs: 'empty',

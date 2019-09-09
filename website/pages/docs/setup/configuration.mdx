@@ -1,0 +1,14 @@
+import { make as DocLayout } from '../../../components/DocLayout.bs.js'
+
+export default DocLayout
+
+# Configuration
+
+We already learned that Elodin requires a generator to run.<br />
+Apart from that, we can pass a bunch of other configurations.
+
+| Configuration | Value           | Default | Description                                                                                                      |
+| ------------- | --------------- | ------- | ---------------------------------------------------------------------------------------------------------------- |
+| generator     | Generator       |         |                                                                                                                  |
+| plugins       | Array\<Plugin\> | `[]`    | List of plugins to be applied before compilation                                                                 |
+| errors        | `throw`, `log`  | `throw` | Whether compilation errors throw or just log.<br />**It is recommend to throw in order to ensure valid output.** |

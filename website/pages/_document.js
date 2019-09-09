@@ -1,8 +1,22 @@
 import Document, { Head, Main, NextScript } from 'next/document'
+import createEmotionServer from 'create-emotion-server'
+import { caches } from 'emotion'
 
 import config from '../elodin.config'
 
+const { extractCritical } = createEmotionServer(caches)
+
 export default class MyDocument extends Document {
+  static async getInitialProps(ctx) {
+    const emotionCss = extractCritical(ctx.renderPage().html).css
+    const initialProps = await Document.getInitialProps(ctx)
+
+    return {
+      ...initialProps,
+      emotionCss,
+    }
+  }
+
   render() {
     return (
       <html>
@@ -18,6 +32,7 @@ export default class MyDocument extends Document {
           <style
             dangerouslySetInnerHTML={{ __html: config.generator.baseReset }}
           />
+          <style dangerouslySetInnerHTML={{ __html: this.props.emotionCss }} />
           <link rel="stylesheet" href="/static/reset.css" />
         </Head>
         <body>

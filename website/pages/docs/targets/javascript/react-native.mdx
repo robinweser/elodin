@@ -3,3 +3,74 @@ import { make as DocLayout } from '../../../../components/DocLayout.bs.js'
 export default DocLayout
 
 # React Native
+
+This generator is used with JavaScript and React Native.<br />
+It renders all styles to [StyleSheet]() instances.
+
+## Configuration
+
+| Option     | Type   | Default        | Description                                                                                                                                                              |
+| ---------- | ------ | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| importName | String | `react-native` | Set from which package the [StyleSheet]() API is imported. Useful when building with other React Native adopted renderers such as [react-pdf]() or [react-native-web](). |
+
+## Usage
+
+**elodin.config.js**
+
+```javascript
+var createGenerator = require('@elodin/generator-react-native').createGenerator
+
+module.exports = {
+  ...elodinConfig,
+  generator: createGenerator(),
+}
+```
+
+## Feature Coverage
+
+- Styles
+- Primitives
+- Variables
+- Variants
+  - **Does not support dynamic variants at the moment**
+- Conditionals
+- Functions
+
+## Example
+
+**Button.elo**
+
+```
+variant Variant {
+  Primary
+  Secondary
+}
+
+view Button {
+  paddingLeft: 10
+  paddingRight: 10
+  minWidth: $minWidth
+
+  [Variant=Primary] {
+    backgroundColor: blue
+  }
+
+  [Variant=Secondary] {
+    backgroundColor: red
+  }
+}
+```
+
+**Button.js**
+
+```javascript
+import React from 'react'
+import { View } from 'react-native'
+
+import { Button as ButtonStyle } from './Button.elo.js'
+
+// just to showcase the API - do not create Buttons from Views!
+function Button({ children, minWidth = 100, variant = 'Primary' }) {
+  return <View style={ButtonStyle({ minWidth, variant })}>{children}</View>
+}
+```

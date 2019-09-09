@@ -6,7 +6,7 @@ export default function print(path) {
       throw new Error(JSON.stringify(node.error, null, 2))
     }
 
-    return node.body
+    return node.body + '\n'
   }
 
   if (process.env.NODE_ENV === 'test') {

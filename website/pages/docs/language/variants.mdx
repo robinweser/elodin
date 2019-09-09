@@ -3,3 +3,24 @@ import { make as DocLayout } from '../../../components/DocLayout.bs.js'
 export default DocLayout
 
 # Variants
+
+Variants help to define different variations of a single style without having to use variables.<br />
+Usually, you'll use variants if you have a known number of static variations.
+
+```
+variant ThemeMode {
+  Dark
+  Light
+}
+
+view Button {
+  padding: 10
+  [ThemeMode=Dark] {
+    backgroundColor: black
+  }
+
+  [ThemeMode=Light] {
+    backgroundColor: white
+  }
+}
+```

@@ -1,4 +1,4 @@
-const viewResetStyle = `display:flex;align-self:stretch;flex-direction:column;flex-shrink:0;max-width:100%;box-sizing:border-box`
+const viewResetStyle = `display:flex;overflow:hidden;align-self:stretch;flex-direction:column;flex-shrink:0;max-width:100%;box-sizing:border-box`
 const textResetStyle = `display:inline`
 
 const rootResetStyle = `${viewResetStyle};position:fixed;top:0;bottom:0;left:0;right:0`

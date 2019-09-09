@@ -5,19 +5,18 @@ variant Status {
 view Navigation {
   __overflow: auto
   __display: none
-  flexBasis: 300
+  flexBasis: 240
   flexShrink: 0
-  paddingTop: 20
+  paddingTop: 30
   paddingBottom: 20
-  backgroundColor: rgb(240 240 240)
-  [@viewportWidth>=760] {
+  [@viewportWidth>=1024] {
     __display: flex
   }
 }
 
 view NavigationItem {
   padding: 7
-  paddingLeft: 20
+  paddingLeft: 30
 }
 
 text NavigationItemText {
@@ -32,6 +31,10 @@ text NavigationItemText {
       color: rgb(0 176 164)
     }
   }
+}
+
+text NavigationItemDisabled {
+  color: rgb(180 180 180)
 }
 
 text NavigationGroupText {

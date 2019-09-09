@@ -28,7 +28,8 @@ text TitleText {
 
 view CodeBox {
   __overflow: auto
-  backgroundColor: rgb(245 245 245)
+  __display: flex
+  backgroundColor: raw("rgb(245, 245, 245) !important")
   padding: 14
   marginTop: 4
   marginBottom: 6
@@ -36,6 +37,8 @@ view CodeBox {
 
 view InlineCodeBox {
   __display: inlineFlex
+  __overflow: auto
+  alignSelf: flexStart
   backgroundColor: rgb(245 245 245)
   paddingLeft: 6
   paddingRight: 6
@@ -44,7 +47,7 @@ view InlineCodeBox {
 text Code {
   __textRendering: "optimizeLegibility"
   fontSize: 18
-  fontFamily: "Dank Mono, Fira Code, Hack, Consolas, monospace"
+  fontFamily: raw("Dank Mono, Fira Code, Hack, Consolas, monospace !important")
 }
 
 text Strong {
@@ -62,6 +65,7 @@ text Link {
 }
 
 view List {
+  __display: flex
   marginBottom: 10
   paddingLeft: 28
 }
@@ -96,9 +100,10 @@ text BlockquoteText {
 view TableCell {
   __textAlign: left
   __fontSize: 18
+  __overflow: auto
+  __display: inline
+  __lineHeight: 1.4
   flexDirection: row
-  flexGrow: 1
-  flexBasis: 0
   padding: 10
   flexGrow: 1
   flexBasis: 0
@@ -120,8 +125,6 @@ view Table {
 view TableHead {
   __textAlign: left
   __fontSize: 18
-  flexGrow: 1
-  flexBasis: 0
   padding: 10
   flexGrow: 1
   flexBasis: 0

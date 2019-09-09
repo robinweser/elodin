@@ -3,20 +3,42 @@ variant Status {
 }
 
 view Header {
-  paddingTop: 7
-  paddingBottom: 7
+  paddingTop: 5
+  paddingBottom: 5
   backgroundColor: rgb(0 176 164)
   flexDirection: row
+  paddingLeft: 5
+  paddingRight: 10
+  [@viewportWidth>=1024] {
+    paddingLeft: 30
+    paddingRight: 30
+  }
+}
+
+view HeaderSpacer {
+  [@viewportWidth>=1024] {
+    width: 220
+  }
+  [@viewportWidth>=1655] {
+    width: 250
+  }
 }
 
 view NavItem {
   justifyContent: center
   paddingLeft: 10
   paddingRight: 10
+  [@viewportWidth>=1024] {
+    [@firstChild] {
+      paddingLeft: 0
+    }
+  }
 }
 
 text NavItemLink {
   fontSize: 18
+  fontWeight: 400
+  lineHeight: .8
   textDecorationLine: none
   color: white
   [@hover] {

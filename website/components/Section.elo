@@ -1,0 +1,6 @@
+view Section {
+  backgroundColor: $bgColor
+  padding: $padding
+  flexShrink: 0
+  flexGrow: 0
+}

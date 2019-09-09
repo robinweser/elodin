@@ -1,4 +1,12 @@
 open Utils;
+open Prism;
+open Css;
+open Next;
+
+let prism: Js.t('a) = [%bs.raw {| require("prismjs")|}];
+[%bs.raw {|require('prismjs/components/prism-jsx.js') |}];
+[%bs.raw {|require('prismjs/components/prism-javascript.js') |}];
+[%bs.raw {|require('prismjs/components/prism-reason.js') |}];
 
 let components = {
   "h1": (props: {. children: React.element}) => {
@@ -48,13 +56,34 @@ let components = {
       ])}>
       {props##children}
     </p>,
-  "code": (props: {. children: string}) =>
+  "code":
+    (
+      props: {
+        .
+        children: string,
+        className: option(string),
+      },
+    ) => {
+    let className = resolveOption(props##className, c => c, "");
+    let language = Js.String.substr(9, className);
+
+    let languages: Js.Dict.t('a) = prism##languages;
+
+    let languageData = Js.Dict.get(languages, language);
+
+    let highlighted =
+      switch (languageData) {
+      | Some(data) => Prism.highlight(props##children, data, language)
+      | None => props##children
+      };
+
     <pre className={MarkdownStyle.codeBox()}>
       <code
-        className={MarkdownStyle.code()}
-        dangerouslySetInnerHTML={__html: props##children}
+        className={cls([MarkdownStyle.code(), className])}
+        dangerouslySetInnerHTML={__html: highlighted}
       />
-    </pre>,
+    </pre>;
+  },
   "td": (props: {. children: React.element}) =>
     <td className={MarkdownStyle.tableCell()}> {props##children} </td>,
   "table": (props: {. children: React.element}) =>
@@ -63,12 +92,9 @@ let components = {
     <th className={MarkdownStyle.tableHead()}> {props##children} </th>,
   "tr": (props: {. children: React.element}) =>
     <tr className={MarkdownStyle.tableRow()}> {props##children} </tr>,
-  "inlineCode": (props: {. children: string}) =>
+  "inlineCode": (props: {. children: React.element}) =>
     <pre className={MarkdownStyle.inlineCodeBox()}>
-      <code
-        className={MarkdownStyle.code()}
-        dangerouslySetInnerHTML={__html: props##children}
-      />
+      <code className={MarkdownStyle.code()}> {props##children} </code>
     </pre>,
   "strong": (props: {. children: React.element}) =>
     <b className={MarkdownStyle.strong()}> {props##children} </b>,
@@ -110,15 +136,26 @@ let components = {
 
 [@react.component]
 let make = (~children) => {
-  <>
-    <Header />
-    <div className={LayoutStyle.row()}>
-      <Navigation />
-      <div className={LayoutStyle.content()}>
-        <div className={LayoutStyle.navContent()}>
-          <MDX.MDXProvider components> children </MDX.MDXProvider>
-        </div>
+  <PageLayout>
+    <Head>
+      <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/themes/prism.min.css"
+        rel="stylesheet"
+      />
+    </Head>
+    <Section style={ReactDOMRe.Style.make(~flexShrink="1", ())}>
+      <div className={LayoutStyle.row()}>
+        <Navigation />
+        <MDX.MDXProvider components>
+          <div
+            className={cls([
+              LayoutStyle.docContent(),
+              style([selector("::-webkit-scrollbar", [display(`none)])]),
+            ])}>
+            children
+          </div>
+        </MDX.MDXProvider>
       </div>
-    </div>
-  </>;
+    </Section>
+  </PageLayout>;
 };

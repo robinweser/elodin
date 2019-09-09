@@ -1,0 +1,59 @@
+import { make as DocLayout } from '../../../components/DocLayout.bs.js'
+
+export default DocLayout
+
+# Getting Started
+
+With the CLI installed, we can start writing styles.<br />
+Let's create a button style named `button.elo` in which we define a [view]() style and [text]() style.<br />
+Check the [Styles]() section for all available properties.
+
+```el
+view Button {
+  paddingLeft: 10
+  paddingRight: 10
+  backgroundColor: blue
+}
+
+text ButtonText {
+  fontSize: 18
+  lineHeight: 1.2
+  color: white
+}
+```
+
+## Configure Elodin
+
+In order to compile this style, we need to configure a generator which generates target-specific files. Check the Targets section to find the right generator for your job. Each generator accepts different configuration options.<br />
+
+The simplest way to add an Elodin configuration is by creating a `elodin.config.js` file at the root of your project.
+
+```javascript
+// For this example, we'll use the ReasonML generator
+var createGenerator = require('@elodin/generator-reason').createGenerator
+
+module.exports = {
+  generator: createGenerator(),
+}
+```
+
+<br />
+
+> **Note**: For other configuration options, please check out [Configuration]().
+
+## Compiling Files
+
+Now that we have a generator configured, we can run the CLI to generate our output files.
+
+```sh
+elodin button.elo
+```
+
+> **Note**: Also check the [CLI Options]() for other useful options such as `--watch`.
+
+**Congratulations!** You just compiled your first Elodin files.<br />
+The generator has created the following files:
+
+- **ButtonButton.elo.css**: Contains all static styles defined in `Button`
+- **ButtonButtonText.elo.css**: Contains all static styles defined in `ButtonText`
+- **ButtonStyle.re**: Contains style functions for `Button` and `ButtonText` including dynamic styles

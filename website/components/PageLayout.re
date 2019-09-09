@@ -1,9 +1,11 @@
+open Next;
+
 [@react.component]
 let make = (~children) => {
-  <>
-    <Header />
-    <div className={LayoutStyle.content()}>
-      <Layout as_="div"> <div> children </div> </Layout>
-    </div>
-  </>;
+  let router = Router.useRouter();
+  let isWide =
+    Js.String.includes("docs", router##pathname)
+    || Js.String.includes("try", router##pathname);
+
+  <> <Header /> children </>;
 };

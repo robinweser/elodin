@@ -3,3 +3,14 @@ import { make as DocLayout } from '../../../components/DocLayout.bs.js'
 export default DocLayout
 
 # Variables
+
+Apart from primitive values, we can also pass variables to set dynamic properties.<br/>
+Instead of being rendered during compilation, variables are passed in runtime and can change over time.
+
+Depending on the generator, the way they resolve might be different.
+
+```
+view Button {
+  backgroundColor: $bgColor
+}
+```

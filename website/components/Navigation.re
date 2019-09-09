@@ -3,17 +3,21 @@ open Next;
 
 module NavigationLink = {
   [@react.component]
-  let make = (~href, ~children) => {
+  let make = (~disabled=false, ~href, ~children) => {
     let router = Router.useRouter();
     let isActive = router##pathname === href;
     let status = isActive ? Some(NavigationStyle.Active) : None;
 
     <div className={NavigationStyle.navigationItem()}>
-      <Link href>
-        <a className={NavigationStyle.navigationItemText(~status?, ())}>
-          {children |> s}
-        </a>
-      </Link>
+      {disabled
+         ? <span className={NavigationStyle.navigationItemDisabled()}>
+             {children |> s}
+           </span>
+         : <Link href>
+             <a className={NavigationStyle.navigationItemText(~status?, ())}>
+               {children |> s}
+             </a>
+           </Link>}
     </div>;
   };
 };
@@ -48,6 +52,12 @@ let make = () =>
       <NavigationLink href="/docs/setup/installation">
         "Installation"
       </NavigationLink>
+      <NavigationLink href="/docs/setup/getting-started">
+        "Getting Started"
+      </NavigationLink>
+      <NavigationLink href="/docs/setup/configuration">
+        "Configuration"
+      </NavigationLink>
       <NavigationLink href="/docs/setup/editor-plugins">
         "Editor Plugins"
       </NavigationLink>
@@ -66,10 +76,10 @@ let make = () =>
       <NavigationLink href="/docs/language/variants">
         "Variants"
       </NavigationLink>
-      <NavigationLink href="/docs/language/conditionals">
+      <NavigationLink href="/docs/language/conditionals" disabled=true>
         "Conditionals"
       </NavigationLink>
-      <NavigationLink href="/docs/language/functions">
+      <NavigationLink href="/docs/language/functions" disabled=true>
         "Functions"
       </NavigationLink>
     </NavigationGroup>
@@ -81,7 +91,7 @@ let make = () =>
         <NavigationLink href="/docs/targets/javascript/react-native">
           "React Native"
         </NavigationLink>
-        <NavigationLink href="/docs/targets/javascript/vanilla">
+        <NavigationLink href="/docs/targets/javascript/vanilla" disabled=true>
           "Vanilla"
         </NavigationLink>
       </NavigationGroup>
@@ -89,7 +99,8 @@ let make = () =>
         <NavigationLink href="/docs/targets/reasonml/css-in-reason">
           "CSS in Reason"
         </NavigationLink>
-        <NavigationLink href="/docs/targets/reasonml/react-native">
+        <NavigationLink
+          href="/docs/targets/reasonml/react-native" disabled=true>
           "React Native"
         </NavigationLink>
       </NavigationGroup>
@@ -101,7 +112,7 @@ let make = () =>
       </NavigationLink>
     </NavigationGroup>
     <NavigationGroup text="Advanced">
-      <NavigationLink href="/docs/advanced/under-the-hood">
+      <NavigationLink href="/docs/advanced/under-the-hood" disabled=true>
         "Under The Hood"
       </NavigationLink>
       <NavigationLink href="/docs/advanced/specification">
@@ -109,11 +120,21 @@ let make = () =>
       </NavigationLink>
     </NavigationGroup>
     <NavigationGroup text="API Reference">
-      <NavigationLink href="/docs/api/cli"> "CLI" </NavigationLink>
-      <NavigationLink href="/docs/api/core"> "Core" </NavigationLink>
-      <NavigationLink href="/docs/api/types"> "Parser" </NavigationLink>
-      <NavigationLink href="/docs/api/Traverser"> "Traverser" </NavigationLink>
-      <NavigationLink href="/docs/api/types"> "Types" </NavigationLink>
+      <NavigationLink href="/docs/api/cli" disabled=true>
+        "CLI"
+      </NavigationLink>
+      <NavigationLink href="/docs/api/core" disabled=true>
+        "Core"
+      </NavigationLink>
+      <NavigationLink href="/docs/api/parser" disabled=true>
+        "Parser"
+      </NavigationLink>
+      <NavigationLink href="/docs/api/Traverser" disabled=true>
+        "Traverser"
+      </NavigationLink>
+      <NavigationLink href="/docs/api/types" disabled=true>
+        "Types"
+      </NavigationLink>
     </NavigationGroup>
     <NavigationGroup text="Extra">
       <NavigationLink href="/docs/extra/examples"> "Examples" </NavigationLink>

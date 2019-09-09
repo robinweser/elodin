@@ -25,16 +25,20 @@ module HeaderLink = {
 
 [@react.component]
 let make = () => {
+  let router = Router.useRouter();
+  let isWide =
+    Js.String.includes("docs", router##pathname)
+    || Js.String.includes("try", router##pathname);
+
   <header className={HeaderStyle.header()}>
     <Layout as_="nav">
       <div className={LayoutStyle.row()}>
         <HeaderLink href="/">
-          <img src="/static/logo_white.svg" height="40" />
+          <img src="/static/logo_white.svg" height="42" width="42" />
         </HeaderLink>
-        <div style={ReactDOMRe.Style.make(~width="10px", ())} />
-        <HeaderLink href="/blog"> {"Blog" |> s} </HeaderLink>
-        <HeaderLink href="/docs"> {"Docs" |> s} </HeaderLink>
-        <HeaderLink href="/try"> {"Try" |> s} </HeaderLink>
+        // <HeaderLink href="/blog"> {"Blog" |> s} </HeaderLink>
+        <HeaderLink href="/docs/intro/what-why"> {"Docs" |> s} </HeaderLink>
+        // <HeaderLink href="/try"> {"Try" |> s} </HeaderLink>
         <HeaderLink href="https://github.com/robinweser/elodin" external_=true>
           {"Github" |> s}
         </HeaderLink>

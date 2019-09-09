@@ -14,7 +14,7 @@
       "subdirs": true
     }
   ],
-  "bs-dependencies": ["reason-react", "@tavata/ui"],
+  "bs-dependencies": ["reason-react", "bs-css"],
   "reason": {
     "react-jsx": 3
   },

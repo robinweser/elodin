@@ -1,9 +1,16 @@
+variant Size {
+  Wide
+}
+
 view Layout {
   __margin: raw("0 auto")
   maxWidth: 1100
   width: percentage(100)
   flexGrow: 1
   flexShrink: 1
+  [Size=Wide] {
+    maxWidth: 1620
+  }
 }
 
 view Row {
@@ -16,14 +23,22 @@ view Content {
   __overflow: auto
   flexShrink: 1
   flexGrow: 1
-  paddingTop: 30
-  paddingLeft: 30
-  paddingRight: 10
-  paddingBottom: 30
+  padding: 10
+  [@viewportWidth>=1024] {
+    padding: 30
+  }
 }
 
-view NavContent {
+view DocContent {
+  __overflow: auto
+  paddingBottom: 30
+  paddingTop: 30
+  paddingLeft: 15
+  paddingRight: 15
+  maxWidth: 1100
+  flexShrink: 1
   flexGrow: 1
-  maxWidth: 1000
-  paddingBottom: 10
+  [@viewportWidth>=1024] {
+    paddingLeft: 20
+  }
 }
