@@ -2,7 +2,7 @@
   "private": true,
   "name": "@elodin/website",
   "description": "Official Elodin Documentation",
-  "version": "0.0.28",
+  "version": "0.0.29",
   "scripts": {
     "dev": "now dev",
     "build": "echo 1",
@@ -14,13 +14,13 @@
     "elodin": "elodin pages components --watch --clean"
   },
   "dependencies": {
-    "@elodin/cli": "^0.0.28",
-    "@elodin/core": "^0.0.28",
-    "@elodin/format": "^0.0.28",
-    "@elodin/generator-css-in-js": "^0.0.28",
-    "@elodin/generator-react-native": "^0.0.28",
-    "@elodin/generator-reason": "^0.0.28",
-    "@elodin/parser": "^0.0.28",
+    "@elodin/cli": "^0.0.29",
+    "@elodin/core": "^0.0.29",
+    "@elodin/format": "^0.0.29",
+    "@elodin/generator-css-in-js": "^0.0.29",
+    "@elodin/generator-react-native": "^0.0.29",
+    "@elodin/generator-reason": "^0.0.29",
+    "@elodin/parser": "^0.0.29",
     "@emotion/cache": "^10.0.9",
     "@mdx-js/loader": "^0.17.5",
     "@mdx-js/mdx": "^0.17.5",
@@ -43,6 +43,6 @@
     "@now/next": "0.5.6",
     "bs-platform": "^5.0.4",
     "prettier": "^1.14.2",
-    "prettier-plugin-elodin": "^0.0.28"
+    "prettier-plugin-elodin": "^0.0.29"
   }
 }
