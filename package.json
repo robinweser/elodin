@@ -13,7 +13,7 @@
     "release": "git pull --rebase && yarn run cleanup && yarn build && yarn run coverage && lerna publish --force-publish",
     "setup": "yarn bootstrap && yarn build",
     "test": "lerna run test",
-    "check": "yarn format && yarn run test",
+    "check": "yarn run test",
     "postinstall": "yarn build"
   },
   "workspaces": [
