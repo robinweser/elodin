@@ -38,7 +38,6 @@ view CodeBox {
 view InlineCodeBox {
   __display: inlineFlex
   __overflow: auto
-  alignSelf: flexStart
   backgroundColor: rgb(245 245 245)
   paddingLeft: 6
   paddingRight: 6
