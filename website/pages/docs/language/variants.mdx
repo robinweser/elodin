@@ -7,6 +7,10 @@ export default DocLayout
 Variants help to define different variations of a single style without having to use variables.<br />
 Usually, you'll use variants if you have a known number of static variations.
 
+Variants are used together with [Conditionals](/docs/language/conditionals) and can only be compared using an equal comparison.
+
+## Example
+
 ```
 variant ThemeMode {
   Dark
@@ -21,6 +25,37 @@ view Button {
 
   [ThemeMode=Light] {
     backgroundColor: white
+  }
+}
+```
+
+Variants can also be nested to specify styles that are only applied of both conditions are met.
+
+## Example
+
+```
+variant ThemeMode {
+  Dark
+  Light
+}
+
+variant Size {
+  Normal
+  Small
+}
+
+view Button {
+  padding: 10
+  width: 100
+  [ThemeMode=Dark] {
+    backgroundColor: black
+    [Size=Normal] {
+      width: 150
+    }
+
+    [Size=Small] {
+      width: 80
+    }
   }
 }
 ```

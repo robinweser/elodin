@@ -3,19 +3,27 @@ open Utils;
 [@react.component]
 let make = () => {
   <PageLayout>
-    <div style={ReactDOMRe.Style.make(~overflow="auto", ~flexShrink="1", ())}>
-      <Section bgColor="rgb(245, 245, 245)">
-        <div
-          style={ReactDOMRe.Style.make(
-            ~alignSelf="center",
-            ~padding="8vh 0",
-            ~minWidth="400px",
-            ~maxWidth="40vw",
-            (),
-          )}>
-          <img src="/static/logo.svg" width="100%" />
-        </div>
-      </Section>
+    <div
+      style={ReactDOMRe.Style.make(
+        ~overflow="auto",
+        ~flexGrow="1",
+        ~flexShrink="1",
+        (),
+      )}>
+      <div>
+        <Section bgColor="rgb(245, 245, 245)">
+          <div
+            style={ReactDOMRe.Style.make(
+              ~alignSelf="center",
+              ~padding="7vh 30px",
+              ~width="100%",
+              ~maxWidth="800px",
+              (),
+            )}>
+            <img src="/static/logo.svg" width="100%" />
+          </div>
+        </Section>
+      </div>
       // <div
       //   style={ReactDOMRe.Style.make(
       //     ~alignSelf="center",
@@ -28,10 +36,10 @@ let make = () => {
       // </div>
       <Section>
         <div
+          className={LayoutStyle.rowOnDesktop()}
           style={ReactDOMRe.Style.make(
             ~flexGrow="1",
-            ~flexDirection="row",
-            ~padding="40px 0 20px",
+            ~padding="20px 0 20px",
             ~lineHeight="1.4",
             (),
           )}>
@@ -39,9 +47,10 @@ let make = () => {
             style={ReactDOMRe.Style.make(
               ~flexGrow="1",
               ~flexShrink="1",
-              ~padding="20px 40px",
               ~flexBasis="0",
+              ~padding="20px 40px",
               ~textAlign="center",
+              ~display="inline",
               (),
             )}>
             <h2 style={ReactDOMRe.Style.make(~paddingBottom="8px", ())}>
@@ -52,6 +61,7 @@ let make = () => {
                |> s}
             </p>
           </div>
+          // <div style={ReactDOMRe.Style.make(~flex="0 0 10px", ())} />
           <div
             style={ReactDOMRe.Style.make(
               ~flexGrow="1",
@@ -59,9 +69,15 @@ let make = () => {
               ~flexBasis="0",
               ~padding="20px 40px",
               ~textAlign="center",
+              ~display="inline",
               (),
             )}>
-            <h2 style={ReactDOMRe.Style.make(~paddingBottom="8px", ())}>
+            <h2
+              style={ReactDOMRe.Style.make(
+                ~paddingBottom="8px",
+                ~lineHeight="1",
+                (),
+              )}>
               {"Write once, use everywhere" |> s}
             </h2>
             <p>
@@ -71,19 +87,16 @@ let make = () => {
           </div>
         </div>
         <div
-          style={ReactDOMRe.Style.make(
-            ~flexGrow="1",
-            ~flexDirection="row",
-            ~lineHeight="1.4",
-            (),
-          )}>
+          className={LayoutStyle.rowOnDesktop()}
+          style={ReactDOMRe.Style.make(~flexGrow="1", ~lineHeight="1.4", ())}>
           <div
             style={ReactDOMRe.Style.make(
               ~flexGrow="1",
               ~flexShrink="1",
               ~flexBasis="0",
-              ~padding="20px 40px",
+              ~padding="0px 40px 20px",
               ~textAlign="center",
+              ~display="inline",
               (),
             )}>
             <h2 style={ReactDOMRe.Style.make(~paddingBottom="8px", ())}>
@@ -99,8 +112,9 @@ let make = () => {
               ~flexGrow="1",
               ~flexShrink="1",
               ~flexBasis="0",
-              ~padding="20px 40px",
+              ~padding="0px 40px 20px",
               ~textAlign="center",
+              ~display="inline",
               (),
             )}>
             <h2 style={ReactDOMRe.Style.make(~paddingBottom="8px", ())}>

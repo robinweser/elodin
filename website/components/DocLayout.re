@@ -10,13 +10,21 @@ let prism: Js.t('a) = [%bs.raw {| require("prismjs")|}];
 
 let components = {
   "h1": (props: {. children: React.element}) => {
-    <h1 className={cls([MarkdownStyle.title(), MarkdownStyle.titleText()])}>
+    <h1
+      className={cls([
+        MarkdownStyle.titleText(),
+        style([selector("& + p", [marginTop(px(20))])]),
+      ])}>
       {props##children}
     </h1>;
   },
   "h2": (props: {. children: React.element}) => {
     <h2
-      className={cls([MarkdownStyle.heading(), MarkdownStyle.headingText()])}>
+      className={cls([
+        MarkdownStyle.heading(),
+        MarkdownStyle.headingTwo(),
+        MarkdownStyle.headingText(),
+      ])}>
       {props##children}
     </h2>;
   },
@@ -29,7 +37,7 @@ let components = {
 
   "h4": (props: {. children: React.element}) => {
     <h4
-      className={cls([MarkdownStyle.heading(), MarkdownStyle.headingText()])}>
+      className={cls([MarkdownStyle.fileName(), MarkdownStyle.headingText()])}>
       {props##children}
     </h4>;
   },

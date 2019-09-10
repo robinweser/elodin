@@ -14,12 +14,20 @@ view Heading {
   paddingBottom: 4
 }
 
+view HeadingTwo {
+  borderWidth: 0
+  borderBottomWidth: 1
+  borderBottomColor: rgb(230 230 230)
+  borderStyle: solid
+}
+
 text HeadingText {
   lineHeight: 1.0
 }
 
-view Title {
-  paddingBottom: 30
+view FileName {
+  marginTop: 10
+  paddingBottom: 0
 }
 
 text TitleText {
@@ -51,7 +59,6 @@ text Code {
 
 text Strong {
   fontWeight: 500
-  color: black
 }
 
 text Link {
@@ -70,7 +77,7 @@ view List {
 }
 
 text ListText {
-  lineHeight: 1.8
+  lineHeight: 1.6
 }
 
 text ListItem {
@@ -80,6 +87,7 @@ text ListItem {
 }
 
 view Blockquote {
+  __overflow: visible
   paddingLeft: 9
   left: -12
   position: relative

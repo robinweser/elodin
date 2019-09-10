@@ -12,3 +12,27 @@ Apart from that, we can pass a bunch of other configurations.
 | generator     | Generator       |         |                                                                                                                  |
 | plugins       | Array\<Plugin\> | `[]`    | List of plugins to be applied before compilation                                                                 |
 | errors        | `throw`, `log`  | `throw` | Whether compilation errors throw or just log.<br />**It is recommend to throw in order to ensure valid output.** |
+
+## Example
+
+#### elodin.config.js
+
+```javascript
+var createGenerator = require('@elodin/generator-reason').createGenerator
+var replaceVariable = require('@elodin/plugin-replace-variabe')
+
+module.exports = {
+  errors: 'log',
+  plugins: [
+    replaceVariable({
+      primaryColor: 'blue',
+      secondaryColor: 'red',
+      baseFontSize: 16,
+      gridStep: 8,
+    }),
+  ],
+  generator: createGenerator({
+    devMode: true,
+  }),
+}
+```

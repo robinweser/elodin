@@ -4,73 +4,57 @@ export default DocLayout
 
 # CSS in Reason
 
+`@elodin/generator-reason`
+
 This generator is used with ReasonML when building for the web.<br />
 Static styles are extracted to CSS files during compilation.<br/>
-It uses [bs-css]() under the hood to resolve dynamic styles.
+It uses [bs-css](https://github.com/SentiaAnalytics/bs-css) under the hood to resolve dynamic styles.
 
 It renders styles to functions which can be called with variables and variants in order to resolve them.<br />
 Variants are rendered to native ReasonML variants.
 
-## Configuration
-
-| Option                 | Type        | Default                                                                 | Description                                                    |
-| ---------------------- | ----------- | ----------------------------------------------------------------------- | -------------------------------------------------------------- |
-| devMode                | Boolean     | `false`                                                                 | Enables readable class names                                   |
-| rootNode               | HTMLElement | `body`                                                                  | CSS selector to apply root reset style to (see below)          |
-| generateFileName       | Function    | `(fileName, moduleName) => capitalize(fileName) + moduleName + "Style"` | Determines how the file names are generated                    |
-| generateResetClassName | Function    | `type => "_elo_" + type`                                                | Determines how the reset class names are generated (see below) |
-
 ## Usage
 
-**elodin.config.js**
+To use the Reason generator, simply add it to your Elodin configuration and you're ready to go.
+
+#### elodin.config.js
 
 ```javascript
 var createGenerator = require('@elodin/generator-reason').createGenerator
 
-function capitalize(str) {
-  return str.charAt(0).toUpperCase() + str.substr(1)
+module.exports = {
+  generator: createGenerator(),
 }
+```
+
+## Configuration
+
+It also accepts a bunch of configuration options to customize the generated code.
+
+| Option                 | Type        | Default                          | Description                                                    |
+| ---------------------- | ----------- | -------------------------------- | -------------------------------------------------------------- |
+| devMode                | Boolean     | `false`                          | Enables readable class names                                   |
+| rootNode               | HTMLElement | `body`                           | CSS selector to apply root reset style to (see below)          |
+| generateFileName       | Function    | `fileName => fileName + "Style"` | Determines how the file names are generated                    |
+| generateResetClassName | Function    | `type => "_elo_" + type`         | Determines how the reset class names are generated (see below) |
+
+### Example
+
+Let's say instead of `*Style.re` files, we want them to be called `Elodin*.re` instead.
+
+#### elodin.config.js
+
+```javascript
+var createGenerator = require('@elodin/generator-reason').createGenerator
 
 const config = {
-  devMode: true,
-  rootNode: '#__next',
-  generateFileName: (fileName, moduleName) =>
-    'Elodin' + capitalize(fileName) + moduleName,
-  generateResetClassName: type => '__ELODIN_' + type.toUpperCase(),
+  generateFileName: fileName => 'Elodin' + fileName,
 }
+
 module.exports = {
-  ...elodinConfig,
   generator: createGenerator(config),
 }
 ```
-
-## Resets
-
-The generator provides two important resets that should be added to your document head in order to correctly render Elodin styles.
-
-### Usage
-
-```javascript
-import { generator } from './elodin.config.js'
-
-function appendStyle(css) {
-  const style = document.createElement('style')
-  style.textContent = css
-
-  document.head.appendChild(style)
-}
-
-appendStyle(generator.baseReset)
-appendStyle(generator.rootReset)
-```
-
-### baseReset
-
-The baseReset provides component resets for both `view` and `text` styles.
-
-### rootReset
-
-The rootReset enables your app root to act like a fixed flex container. It applies to the provided `rootNode` selector.
 
 ## Feature Coverage
 
@@ -123,7 +107,7 @@ It also implements special environment conditions to cover pseudo classes and me
 
 ## Example
 
-**Button.elo**
+#### Button.elo
 
 ```elo
 variant Variant {
@@ -159,7 +143,7 @@ view Button {
 }
 ```
 
-**Button.re**
+#### Button.re
 
 ```reason
 [@react.component]

@@ -1,34 +1,21 @@
-import colorNames from './colorNames'
-
 const isInteger = value => value.type === 'Integer'
 const isFloat = value => value.type === 'Float'
 const isString = value => value.type === 'String'
 const isPercentage = value => value.type === 'Percentage'
+const isColor = value => value.type === 'Color'
 const isNumber = value => isInteger(value) || isFloat(value)
 
 const matchesKeywords = (...keywords) => value =>
   value.type === 'Identifier' &&
   Boolean(keywords.find(keyword => value.value.indexOf(keyword) !== -1))
 
-const isColor = value => {
-  // TODO: parse in parser
-  if (value.type === 'Identifier' && colorNames[value.value]) {
-    return true
-  }
-
-  if (value.type === 'Color') {
-    return true
-  }
-}
-
 export default {
   view: {
     backgroundColor: [isColor],
     direction: [matchesKeywords('ltr', 'rtl')],
     position: [matchesKeywords('relative', 'absolute')],
-    display: [matchesKeywords('show', 'hide')],
+    // display: [matchesKeywords('show', 'hide')],
     opacity: [isPercentage],
-    zIndex: [isInteger],
 
     // box model
     padding: [isNumber, isPercentage],
@@ -61,7 +48,7 @@ export default {
     borderTopColor: [isColor],
     borderLeftColor: [isColor],
     borderRightColor: [isColor],
-    borderStyle: [matchesKeywords('solid', 'dotted', 'dashed')],
+    borderStyle: [matchesKeywords('none', 'solid', 'dotted', 'dashed')],
     borderRadius: [isNumber],
     borderTopLeftRadius: [isNumber],
     borderTopRightRadius: [isNumber],
@@ -71,7 +58,7 @@ export default {
     // layout flow
     flexGrow: [isInteger],
     flexShrink: [isInteger],
-    flexBasis: [isNumber, isPercentage],
+    flexBasis: [isNumber, isPercentage, matchesKeywords('auto')],
     flexWrap: [matchesKeywords('nowrap', 'wrap')],
     flexDirection: [
       matchesKeywords('row', 'rowReverse', 'column', 'columnReverse'),

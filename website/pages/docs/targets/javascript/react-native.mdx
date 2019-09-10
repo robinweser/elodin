@@ -4,25 +4,46 @@ export default DocLayout
 
 # React Native
 
+`@elodin/generator-react-native`
+
 This generator is used with JavaScript and React Native.<br />
-It renders all styles to [StyleSheet]() instances.
-
-## Configuration
-
-| Option     | Type   | Default        | Description                                                                                                                                                              |
-| ---------- | ------ | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| importName | String | `react-native` | Set from which package the [StyleSheet]() API is imported. Useful when building with other React Native adopted renderers such as [react-pdf]() or [react-native-web](). |
+It renders all styles to [StyleSheet](https://facebook.github.io/react-native/docs/stylesheet) instances.
 
 ## Usage
 
-**elodin.config.js**
+To use the React Native generator, simply add it to your Elodin configuration and you're ready to go.
+
+#### elodin.config.js
+
+```javascript
+var createGenerator = require('@elodin/generator-css-in-js').createGenerator
+var felaAdapter = require('@elodin/generator-css-in-js/adapter/fela')
+
+module.exports = {
+  generator: createGenerator({
+    adapter: felaAdapter(),
+  }),
+}
+```
+
+## Configuration
+
+| Option     | Type   | Default        | Description                                                                                                                                                                                                                                |
+| ---------- | ------ | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| importFrom | String | `react-native` | Package from which package the `StyleSheet` API is imported. Useful when building with other React Native adopted renderers such as [react-pdf](https://react-pdf.org) or [react-native-web](https://github.com/necolas/react-native-web). |
+
+### Example
+
+#### elodin.config.js
 
 ```javascript
 var createGenerator = require('@elodin/generator-react-native').createGenerator
 
 module.exports = {
   ...elodinConfig,
-  generator: createGenerator(),
+  generator: createGenerator({
+    importFrom: '@react-pdf/renderer',
+  }),
 }
 ```
 
@@ -38,9 +59,9 @@ module.exports = {
 
 ## Example
 
-**Button.elo**
+#### Button.elo
 
-```
+```elo
 variant Variant {
   Primary
   Secondary
@@ -50,18 +71,16 @@ view Button {
   paddingLeft: 10
   paddingRight: 10
   minWidth: $minWidth
-
   [Variant=Primary] {
     backgroundColor: blue
   }
-
   [Variant=Secondary] {
     backgroundColor: red
   }
 }
 ```
 
-**Button.js**
+#### Button.js
 
 ```javascript
 import React from 'react'

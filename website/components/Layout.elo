@@ -13,10 +13,22 @@ view Layout {
   }
 }
 
+view HideOnDesktop {
+  [@viewportWidth>=1024] {
+    __display: none
+  }
+}
+
 view Row {
   flexDirection: row
   flexGrow: 1
   flexShrink: 1
+}
+
+view RowOnDesktop {
+  [@viewportWidth>=1024] {
+    flexDirection: row
+  }
 }
 
 view Content {
