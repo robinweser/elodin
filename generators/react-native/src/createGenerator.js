@@ -3,7 +3,7 @@ import { hyphenateProperty } from 'css-in-js-utils'
 import color from 'color'
 
 const defaultConfig = {
-  importName: 'react-native',
+  importFrom: 'react-native',
 }
 
 export default function createGenerator(customConfig = {}) {
@@ -92,7 +92,7 @@ function generateJS(ast, config) {
 
   return (
     'import { StyleSheet } from "' +
-    config.importName +
+    config.importFrom +
     '"' +
     '\n\n' +
     'const styles = StyleSheet.create({\n  ' +
