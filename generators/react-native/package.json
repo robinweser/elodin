@@ -1,6 +1,6 @@
 {
   "name": "@elodin/generator-react-native",
-  "version": "0.0.29",
+  "version": "0.0.30",
   "main": "lib/index.js",
   "module": "es/index.js",
   "publishConfig": {
@@ -18,7 +18,7 @@
   "author": "robinweser <contact@weser.io>",
   "license": "MIT",
   "dependencies": {
-    "@elodin/utils": "^0.0.29",
+    "@elodin/utils": "^0.0.30",
     "color": "^3.1.2",
     "css-in-js-utils": "^3.0.0"
   },
@@ -26,7 +26,7 @@
     "@babel/cli": "^7.2.0",
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.0",
-    "@elodin/parser": "^0.0.29",
+    "@elodin/parser": "^0.0.30",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "cross-env": "^5.2.0",
