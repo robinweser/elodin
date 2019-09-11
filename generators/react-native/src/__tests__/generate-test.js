@@ -29,7 +29,7 @@ describe('Compiling to CSS and JavaScript', () => {
     const { ast } = parse(file)
 
     expect(
-      createGenerator({ importName: '@react-pdf/renderer' })(ast, 'style.elo')
+      createGenerator({ importFrom: '@react-pdf/renderer' })(ast, 'style.elo')
     ).toMatchSnapshot()
   })
 })
