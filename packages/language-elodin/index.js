@@ -60,13 +60,12 @@ var properties = [
   'textDecorationLine',
   'top',
   'width',
-].sort()
+]
 
 var valueMap = {
   direction: ['ltr', 'rtl'],
   position: ['relative', 'absolute'],
   flexBasis: ['auto'],
-  display: ['show', 'hide'],
   borderStyle: ['solid', 'dotted', 'dashed'],
   flexWrap: ['nowrap', 'wrap'],
   flexDirection: ['row', 'rowReverse', 'column', 'columnReverse'],

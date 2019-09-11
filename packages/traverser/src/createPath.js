@@ -28,6 +28,11 @@ export default function createPath(node, parentPath, context) {
         const nodeIndex = container.indexOf(node)
         container[nodeIndex] = newNode
         path.node = newNode
+      } else {
+        // TODO: Make this possible
+        throw Error(
+          "Can't replace the node as it's missing a direct container node. Try to replace a node one level above."
+        )
       }
     },
     removeNode() {
