@@ -5,6 +5,8 @@ import fs from 'fs'
 
 import { transformFile, errorTypes, formatFromAST } from '@elodin/core'
 
+import { logSyntaxError } from './error'
+
 export function chmod(src, dest) {
   fs.chmodSync(dest, fs.statSync(src).mode)
 }
@@ -47,34 +49,49 @@ export function isCompilableExtension(filename) {
 export function compile(filename, opts) {
   const log = errors =>
     errors.forEach(error => {
+      const count = ++opts.errorCount
+
       if (error.type === errorTypes.INVALID_PROPERTY) {
-        const { property, value, path, line, format, name } = error
+        const { property, value, path, line, format } = error
 
-        const count = ++opts.errorCount
-        console.error(chalk`
-{red.bold Error number ${count}}
-{cyan ${path}} {grey ${line}}
-
-{red ${line}} {grey |} {red ${property}}: ${formatFromAST(value)}
-
-The property {bold ${property}} is not a valid ${format} property.
-{dim Check {underline https://elodin.dev/docs/language/styles#${format}} for a list of available properties.}`)
+        logSyntaxError({
+          count,
+          path,
+          lineNumber: line,
+          line: chalk`{red ${property}}: ${formatFromAST(value)}`,
+          message: chalk`The property {bold ${property}} is not a valid ${format} property.
+{dim Check {underline https://elodin.dev/docs/language/styles#${format}} for a list of available properties.}`,
+        })
       } else if (error.type === errorTypes.INVALID_VALUE) {
-        const { property, value, path, line, format, name } = error
+        const { property, value, path, line, format } = error
 
-        const count = ++opts.errorCount
-        console.error(chalk`
-{red.bold Error number ${count}}
-{cyan ${path}} {grey ${line}}
-{red ${line}} {grey |} ${property}: {red ${formatFromAST(value)}}
-
-The property ${property} does not accept the value {bold ${formatFromAST(
-          value
-        )}}.
-{dim Check {underline https://elodin.dev/docs/language/styles#${format}} for a list of available values.}`)
+        logSyntaxError({
+          count,
+          path,
+          lineNumber: line,
+          line: chalk`${property}: {red ${formatFromAST(value)}}`,
+          message: chalk`The property ${property} does not accept the value {bold ${formatFromAST(
+            value
+          )}}.
+{dim Check {underline https://elodin.dev/docs/language/styles#${format}} for a list of available values.}`,
+        })
       } else {
-        // TODO: beautify more message
-        console.error(chalk`{red ${error.message}}`)
+        const { line, path, message, source, token } = error
+
+        const lineCode = source
+          ? source
+              .substr(0, token.end)
+              .split('\n')
+              .pop()
+          : ''
+
+        logSyntaxError({
+          count,
+          path,
+          lineNumber: line,
+          line: chalk`{red ${lineCode}}`,
+          message: chalk`${message}`,
+        })
       }
     })
 

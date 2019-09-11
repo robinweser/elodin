@@ -47,7 +47,18 @@ export default class Parser {
 
   addError(error, exit) {
     if (!this.exit) {
-      this.errors.push(error)
+      const meta = {
+        ...(this.parent || {}),
+        path: this.context.path,
+        source: this.context.source,
+        line: this.context.source
+          ? this.context.source.substr(0, this.currentToken.start).split('\n')
+              .length
+          : undefined,
+        token: this.currentToken,
+      }
+
+      this.errors.push({ ...meta, ...error })
     }
 
     if (exit) {
@@ -87,10 +98,12 @@ export default class Parser {
         const duplicate = file.body.find(n => n.name === node.name)
 
         if (duplicate) {
+          this.updateCurrentToken(1)
+
           this.addError(
             {
               type: errorTypes.DUPLICATE_MODULE,
-              message: `The  ${node.type.toLowerCase()} '${
+              message: `The ${node.type.toLowerCase()} '${
                 node.name
               }' has already been defined as a ${
                 duplicate.type
@@ -205,6 +218,7 @@ export default class Parser {
         if (!node) {
           this.addError(
             {
+              token: this.getNextToken(-1),
               type: errorTypes.SYNTAX_ERROR,
               message:
                 'A ' +
@@ -247,7 +261,7 @@ export default class Parser {
         this.addError(
           {
             type: errorTypes.SYNTAX_ERROR,
-            hint: 'Fragment names must begin with an uppercase letter.',
+            message: 'Fragment names must begin with an uppercase letter.',
             name,
           },
           true
@@ -330,7 +344,7 @@ export default class Parser {
         this.addError(
           {
             type: errorTypes.SYNTAX_ERROR,
-            hint: 'Variant names must begin with an uppercase letter.',
+            message: 'Variant names must begin with an uppercase letter.',
             name,
           },
           true
@@ -378,7 +392,7 @@ export default class Parser {
           this.addError(
             {
               type: errorTypes.SYNTAX_ERROR,
-              hint: 'Variants must only contain identifier variations.',
+              message: 'Variants must only contain identifier variations.',
             },
             true
           )
@@ -392,7 +406,7 @@ export default class Parser {
           this.addError(
             {
               type: errorTypes.SYNTAX_ERROR,
-              hint: 'Variation values must begin with an uppercase letter.',
+              message: 'Variation values must begin with an uppercase letter.',
               variation: variant.value,
             },
             true
@@ -446,16 +460,9 @@ export default class Parser {
               this.addError(
                 {
                   type: errorTypes.INVALID_PROPERTY,
-                  path: this.context.path,
-                  source: this.context.source,
                   property: property,
                   value: value,
-                  name: this.parent.name,
-                  format: this.parent.format,
-                  line: this.context.source
-                    .substr(0, this.currentToken.start)
-                    .split('\n').length,
-                  token: this.currentToken,
+
                   message:
                     property +
                     ': ' +
@@ -494,14 +501,6 @@ export default class Parser {
                   type: errorTypes.INVALID_VALUE,
                   value: value,
                   property: property,
-                  line: this.context.source
-                    .substr(0, this.currentToken.start)
-                    .split('\n').length,
-                  name: this.parent.name,
-                  format: this.parent.format,
-                  source: this.context.source,
-                  path: this.context.path,
-                  token: this.currentToken,
                   message:
                     property +
                     ': ' +
