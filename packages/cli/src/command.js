@@ -19,7 +19,7 @@ export default async function({ cliOptions, elodinOptions }) {
     config = require(configPath)
   } catch (e) {
     console.error(
-      chalk`{bold.red Unable to locate the elodin config file at ${elodinOptions.configFile}.}
+      chalk`{bold.red Unable to locate the elodin config file at ${configPath}.}
    
 {red A valid elodin configuration must be passed.
 Start by creating a {bold elodin.config.js} file.
