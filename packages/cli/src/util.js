@@ -1,8 +1,9 @@
 import readdirRecursive from 'fs-readdir-recursive'
+import chalk from 'chalk'
 import path from 'path'
 import fs from 'fs'
 
-import { transformFile } from '@elodin/core'
+import { transformFile, errorTypes, formatFromAST } from '@elodin/core'
 
 export function chmod(src, dest) {
   fs.chmodSync(dest, fs.statSync(src).mode)
@@ -44,8 +45,41 @@ export function isCompilableExtension(filename) {
 // }
 
 export function compile(filename, opts) {
+  const log = errors =>
+    errors.forEach(error => {
+      if (error.type === errorTypes.INVALID_PROPERTY) {
+        const { property, value, path, line, format, name } = error
+
+        const count = ++opts.errorCount
+        console.error(chalk`
+{red.bold Error number ${count}}
+{cyan ${path}} {grey ${line}}
+
+{red ${line}} {grey |} {red ${property}}: ${formatFromAST(value)}
+
+The property {bold ${property}} is not a valid ${format} property.
+{dim Check {underline https://elodin.dev/docs/language/styles#${format}} for a list of available properties.}`)
+      } else if (error.type === errorTypes.INVALID_VALUE) {
+        const { property, value, path, line, format, name } = error
+
+        const count = ++opts.errorCount
+        console.error(chalk`
+{red.bold Error number ${count}}
+{cyan ${path}} {grey ${line}}
+{red ${line}} {grey |} ${property}: {red ${formatFromAST(value)}}
+
+The property ${property} does not accept the value {bold ${formatFromAST(
+          value
+        )}}.
+{dim Check {underline https://elodin.dev/docs/language/styles#${format}} for a list of available values.}`)
+      } else {
+        // TODO: beautify more message
+        console.error(chalk`{red ${error.message}}`)
+      }
+    })
+
   return new Promise((resolve, reject) =>
-    transformFile(filename, opts, resolve)
+    transformFile(filename, { ...opts, log }, resolve)
   )
 }
 

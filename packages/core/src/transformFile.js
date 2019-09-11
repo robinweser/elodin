@@ -5,10 +5,12 @@ import { parse } from '@elodin/parser'
 import { traverse } from '@elodin/traverser'
 
 export default function transformFile(inputPath, config, callback) {
-  const { plugins = [], generator, errors = 'throw' } = config
+  const { plugins = [], generator, errors = 'throw', log } = config
 
   if (!generator) {
-    throw new Error('No generator passed.')
+    if (!log) {
+      throw new Error('No generator passed.')
+    }
   }
 
   const transform = file => write => {
@@ -20,12 +22,16 @@ export default function transformFile(inputPath, config, callback) {
     })
 
     if (parsed.errors.length > 0) {
-      if (errors === 'throw') {
-        console.error(parsed.errors[0].message)
-      }
+      if (log) {
+        log(parsed.errors)
+      } else {
+        if (errors === 'throw') {
+          console.error(parsed.errors[0].message)
+        }
 
-      if (errors === 'log') {
-        console.log(parsed.errors[0].message)
+        if (errors === 'log') {
+          console.log(parsed.errors[0].message)
+        }
       }
 
       if (callback) {

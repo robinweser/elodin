@@ -2,9 +2,11 @@ import '@babel/polyfill'
 import defaults from 'lodash/defaults'
 import outputFileSync from 'output-file-sync'
 import { sync as mkdirpSync } from 'mkdirp'
+import { performance } from 'perf_hooks'
 import rimraf from 'rimraf'
 import slash from 'slash'
 import path from 'path'
+import chalk from 'chalk'
 import fs from 'fs'
 
 import * as util from './util'
@@ -17,32 +19,50 @@ export default async function({ cliOptions, elodinOptions }) {
     config = require(configPath)
   } catch (e) {
     console.error(
-      `[ERROR] Tried to find the elodin config file at ${configPath}. 
-An elodin configuration must be passed.
-Start by creating a elodin.config.js file.`
+      chalk`{bold.red Unable to locate the elodin config file at ${elodinOptions.configFile}.}
+   
+{red A valid elodin configuration must be passed.
+Start by creating a {bold elodin.config.js} file.
+For further information check out {underline https://elodin.dev/docs/setup/getting-started}.}`
     )
+
     return false
   }
 
   const filenames = cliOptions.filenames
 
+  if (!config.generator) {
+    console.error(
+      chalk`{bold.red Unable to find a generator in your elodin configuration.}
+   
+{red A generator is required to be able to compile elodin files.
+For further information check out {underline https://elodin.dev/docs/setup/configuration}.}`
+    )
+    return false
+  }
+
   if (cliOptions.clean) {
     if (config.generator.filePattern) {
       try {
+        console.log('Cleaning files.\n')
+
         config.generator.filePattern
           .map(v => process.cwd() + '/**/' + v)
           .map(path => rimraf.sync(path))
 
-        console.log('Successfully cleaned all files.')
+        // console.log('Successfully cleaned all files.')
       } catch (e) {
-        console.log(e)
         // TODO: throw sth
+        // console.log(e)
       }
     }
   }
 
   async function walk(filenames) {
+    console.log(chalk`{cyan >>>> Start compiling}`)
+
     const _filenames = []
+    let start = performance.now()
 
     filenames.forEach(function(filename) {
       if (!fs.existsSync(filename)) return
@@ -59,47 +79,42 @@ Start by creating a elodin.config.js file.`
       }
     })
 
-    let success = 0
-    let fail = 0
+    let files = 0
+
+    const compileConfig = {
+      ...config,
+      errors: cliOptions.watch ? 'log' : 'throw',
+      errorCount: 0,
+    }
+
     const results = await Promise.all(
       _filenames.map(async function(filename) {
         let sourceFilename = filename
 
         sourceFilename = slash(sourceFilename)
 
-        const didCompile = await util.compile(filename, {
-          ...config,
-          errors: cliOptions.watch ? 'log' : 'throw',
-        })
+        const didCompile = await util.compile(filename, compileConfig)
 
-        if (didCompile) {
-          success++
-        } else {
-          fail++
-        }
+        files++
       })
     )
 
-    const successLog =
-      success > 0
-        ? 'Successfully compiled ' +
-          success +
-          ' file' +
-          (success > 1 ? 's' : '') +
-          '. '
-        : ''
+    let end = performance.now()
 
-    const failLog =
-      fail > 0
-        ? (successLog.length > 0 ? '\n' : '') +
-          fail +
-          ' file' +
-          (fail > 1 ? 's' : '') +
-          ' failed to compile.'
-        : ''
+    // if (successLog.length + failLog.length > 0) {
+    //   console.log(successLog + failLog)
+    // }
 
-    if (successLog.length + failLog.length > 0) {
-      console.log(successLog + failLog)
+    let fail = compileConfig.errorCount
+
+    if (files > 0) {
+      console.log(
+        chalk`{cyan >>>> Finish compiling (${files} file${
+          files > 1 ? 's' : ''
+        }${
+          fail > 0 ? chalk`, {red ${fail} error${fail > 1 ? 's' : ''}}` : ''
+        })} ${Math.round(end - start)} mseconds`
+      )
     }
   }
 

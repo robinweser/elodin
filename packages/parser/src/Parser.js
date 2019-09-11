@@ -446,6 +446,16 @@ export default class Parser {
               this.addError(
                 {
                   type: errorTypes.INVALID_PROPERTY,
+                  path: this.context.path,
+                  source: this.context.source,
+                  property: property,
+                  value: value,
+                  name: this.parent.name,
+                  format: this.parent.format,
+                  line: this.context.source
+                    .substr(0, this.currentToken.start)
+                    .split('\n').length,
+                  token: this.currentToken,
                   message:
                     property +
                     ': ' +
@@ -482,6 +492,16 @@ export default class Parser {
               this.addError(
                 {
                   type: errorTypes.INVALID_VALUE,
+                  value: value,
+                  property: property,
+                  line: this.context.source
+                    .substr(0, this.currentToken.start)
+                    .split('\n').length,
+                  name: this.parent.name,
+                  format: this.parent.format,
+                  source: this.context.source,
+                  path: this.context.path,
+                  token: this.currentToken,
                   message:
                     property +
                     ': ' +
