@@ -134,15 +134,19 @@ let make = () => {
             </g>
           </svg>
         </HeaderLink>
-        <div
-          onClick={_ => setNavActive(_ => true)}
-          style={ReactDOMRe.Style.make(~cursor="pointer", ())}
-          className={cls([
-            HeaderStyle.navItem(),
-            LayoutStyle.hideOnDesktop(),
-          ])}>
-          <span className={HeaderStyle.navItemLink()}> {"Menu" |> s} </span>
-        </div>
+        {Js.String.includes("docs", router##pathname)
+           ? <div
+               onClick={_ => setNavActive(_ => true)}
+               style={ReactDOMRe.Style.make(~cursor="pointer", ())}
+               className={cls([
+                 HeaderStyle.navItem(),
+                 LayoutStyle.hideOnDesktop(),
+               ])}>
+               <span className={HeaderStyle.navItemLink()}>
+                 {"Menu" |> s}
+               </span>
+             </div>
+           : n}
         // <HeaderLink href="/blog"> {"Blog" |> s} </HeaderLink>
         <HeaderLink href="/docs/intro/what-why"> {"Docs" |> s} </HeaderLink>
         // <HeaderLink href="/try"> {"Try" |> s} </HeaderLink>
