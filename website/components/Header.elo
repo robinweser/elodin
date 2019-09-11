@@ -1,11 +1,7 @@
 variant Status {
   Active
-  Foo
 }
 
-view Header {
-  foo: bar baz
-}
 view Header {
   paddingTop: 5
   paddingBottom: 5
