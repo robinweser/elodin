@@ -3,6 +3,10 @@
 exports[`Compiling to ReasonML should return a map of files 1`] = `
 Object {
   "RootStyle.re": "[%bs.raw {|
+  require(\\"./_reset.elo.css\\")
+|}];
+
+[%bs.raw {|
   require(\\"./RootStyleButton.elo.css\\")
 |}];
 
@@ -119,12 +123,17 @@ let label = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~media
     color: blue
   }
 }",
+  "_reset.elo.css": "._elo_view{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;-webkit-overflow-scrolling:touch;align-self:stretch;flex-direction:column;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-shrink:0;max-width:100%;box-sizing:border-box}._elo_text{display:inline;}",
 }
 `;
 
 exports[`Compiling to ReasonML should return a map of files in devMode 1`] = `
 Object {
   "RootStyle.re": "[%bs.raw {|
+  require(\\"./_reset.elo.css\\")
+|}];
+
+[%bs.raw {|
   require(\\"./RootStyleButton.elo.css\\")
 |}];
 
@@ -241,5 +250,6 @@ let label = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~media
     color: blue
   }
 }",
+  "_reset.elo.css": "._elo_view{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;-webkit-overflow-scrolling:touch;align-self:stretch;flex-direction:column;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-shrink:0;max-width:100%;box-sizing:border-box}._elo_text{display:inline;}",
 }
 `;

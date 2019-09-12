@@ -33,23 +33,35 @@ export default function createGenerator(customConfig = {}) {
     )
   }
 
-  function generate(ast, fileName) {
+  let cssReset = baseReset(config.generateResetClassName)
+  if (config.rootNode) {
+    cssReset += rootReset(config.rootNode)
+  }
+
+  function generate(ast, path = '') {
+    const fileName = path.split('/').pop()
+
+    const relativeRootPath = '../'.repeat(path.split('/').length - 1)
+    config.relativeRootPath = relativeRootPath || './'
+
     const css = generateCSS(ast, config)
     const js = generateJS(ast, config, adapter)
     const root = generateRoot(ast, config)
 
-    return { [fileName + '.js']: root, ...css, ...js }
+    return {
+      [relativeRootPath + '_reset.elo.css']: cssReset,
+      [fileName + '.js']: root,
+      ...css,
+      ...js,
+    }
   }
   generate.filePattern = ['*.elo.js', '*.elo.css']
   generate.ignorePattern = ['node_modules']
 
-  generate.baseReset = baseReset(generateResetClassName)
-  generate.rootReset = rootReset(rootNode)
-
   return generate
 }
 
-function generateRoot(ast) {
+function generateRoot(ast, { relativeRootPath }) {
   // TODO: include fragments
   const styles = ast.body.filter(node => node.type === 'Style')
 
@@ -61,6 +73,9 @@ function generateRoot(ast) {
     .join('\n')
 
   return (
+    "import '" +
+    relativeRootPath +
+    "_reset.elo.css'\n" +
     imports +
     '\n\n' +
     'export {\n  ' +
@@ -109,7 +124,11 @@ function generateCSS(ast, { devMode }) {
   }, {})
 }
 
-function generateJS(ast, { devMode, dynamicImport }, adapter) {
+function generateJS(
+  ast,
+  { devMode, dynamicImport, generateResetClassName },
+  adapter
+) {
   // TODO: include fragments
   const styles = ast.body.filter(node => node.type === 'Style')
   const variants = ast.body.filter(node => node.type === 'Variant')
@@ -136,7 +155,7 @@ function generateJS(ast, { devMode, dynamicImport }, adapter) {
       moduleName: module.name,
       dynamicImport,
       classNameMap,
-      resetClassName: '_elo_' + module.format,
+      resetClassName: generateResetClassName(module.format),
       className: getModuleName(module, devMode),
       variants: variantMap,
     })
