@@ -8,9 +8,11 @@
     "build": "echo 1",
     "start": "next start",
     "export": "next export",
+    "compile": "yarn compile:elodin && yarn compile:reason",
+    "compile:elodin": "elodin pages components --clean",
+    "compile:reason": "bsb -clean-world -make-world",
     "deploy": "now --target production",
     "reason": "bsb -clean-world -make-world -w",
-    "compile": "bsb -clean-world -make-world",
     "elodin": "elodin pages components --watch --clean"
   },
   "dependencies": {

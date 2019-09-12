@@ -39,6 +39,7 @@ let make = () => {
         ~bottom="0px",
         ~left="0px",
         ~right="0px",
+        ~zIndex="10",
         ~display=navActive ? "flex" : "none",
         ~backgroundColor="white",
         ~overflow="auto",
