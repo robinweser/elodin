@@ -2,8 +2,6 @@ import Document, { Head, Main, NextScript } from 'next/document'
 import createEmotionServer from 'create-emotion-server'
 import { caches } from 'emotion'
 
-import config from '../elodin.config'
-
 const { extractCritical } = createEmotionServer(caches)
 
 export default class MyDocument extends Document {
@@ -25,12 +23,6 @@ export default class MyDocument extends Document {
           <meta
             name="viewport"
             content="width=device-width,height=device-height,initial-scale=1, viewport-fit=cover"
-          />
-          <style
-            dangerouslySetInnerHTML={{ __html: config.generator.rootReset }}
-          />
-          <style
-            dangerouslySetInnerHTML={{ __html: config.generator.baseReset }}
           />
           <style dangerouslySetInnerHTML={{ __html: this.props.emotionCss }} />
           <link rel="stylesheet" href="/static/reset.css" />

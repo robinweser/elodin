@@ -21,7 +21,6 @@ import { baseReset, rootReset } from './getReset'
 
 const defaultConfig = {
   devMode: false,
-  rootNode: 'body',
   generateResetClassName: type => '_elo_' + type,
   generateFileName: (fileName, moduleName) =>
     capitalizeString(fileName) + moduleName + 'Style',
@@ -31,6 +30,11 @@ export default function createGenerator(customConfig = {}) {
   const config = {
     ...defaultConfig,
     ...customConfig,
+  }
+
+  let cssReset = baseReset(config.generateResetClassName)
+  if (config.rootNode) {
+    cssReset += rootReset(config.rootNode)
   }
 
   function generate(ast, path = '') {
@@ -43,12 +47,19 @@ export default function createGenerator(customConfig = {}) {
       .join('')
 
     const escapedAst = escapeKeywords(ast, keywords)
+    const relativeRootPath = '../'.repeat(path.split('/').length - 1)
+
+    config.relativeRootPath = relativeRootPath || './'
 
     const modules = generateModules(escapedAst, config)
     const css = generateCSSFiles(escapedAst, config, fileName)
     const reason = generateReasonFile(escapedAst, config, modules, fileName)
 
-    return { ...css, ...reason }
+    return {
+      [relativeRootPath + '_reset.elo.css']: cssReset,
+      ...css,
+      ...reason,
+    }
   }
 
   generate.filePattern = [
@@ -56,17 +67,15 @@ export default function createGenerator(customConfig = {}) {
     config.generateFileName('*', '') + '.bs.js',
     '*.elo.css',
   ]
-  generate.ignorePattern = ['node_modules']
 
-  generate.baseReset = baseReset(config.generateResetClassName)
-  generate.rootReset = rootReset(config.rootNode)
+  generate.ignorePattern = ['node_modules']
 
   return generate
 }
 
 function generateReasonFile(
   ast,
-  { devMode, generateFileName },
+  { devMode, generateFileName, relativeRootPath },
   modules,
   fileName
 ) {
@@ -76,10 +85,13 @@ function generateReasonFile(
   const styles = ast.body.filter(node => node.type === 'Style')
   const variants = ast.body.filter(node => node.type === 'Variant')
 
-  const imports = styles.reduce((imports, module) => {
-    imports.push('require("./' + moduleName + module.name + '.elo.css")')
-    return imports
-  }, [])
+  const imports = styles.reduce(
+    (imports, module) => {
+      imports.push('require("./' + moduleName + module.name + '.elo.css")')
+      return imports
+    },
+    ['require("' + relativeRootPath + '_reset.elo.css")']
+  )
 
   const variantMap = variants.reduce((flatVariants, variant) => {
     flatVariants[variant.name] = variant.body.map(variation => variation.value)
