@@ -18,6 +18,8 @@ export default function createGenerator(customConfig = {}) {
   }
 
   generate.filePattern = ['*.elo.js']
+  generate.ignorePattern = ['node_modules']
+
   return generate
 }
 

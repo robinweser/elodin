@@ -7,6 +7,7 @@ import rimraf from 'rimraf'
 import slash from 'slash'
 import path from 'path'
 import chalk from 'chalk'
+import glob from 'glob'
 import fs from 'fs'
 
 import * as util from './util'
@@ -43,17 +44,35 @@ For further information check out {underline https://elodin.dev/docs/setup/confi
 
   if (cliOptions.clean) {
     if (config.generator.filePattern) {
-      try {
-        console.log('Cleaning files.\n')
+      let didClean = false
+      const ignorePattern = config.generator.ignorePattern || []
+      config.generator.filePattern.map(v => {
+        try {
+          const files = glob.sync(process.cwd() + '/**/' + v)
+          const actualFiles = files.filter(
+            file =>
+              ignorePattern.find(pattern => file.indexOf(pattern) !== -1) ===
+              undefined
+          )
 
-        config.generator.filePattern
-          .map(v => process.cwd() + '/**/' + v)
-          .map(path => rimraf.sync(path))
+          if (actualFiles.length > 0) {
+            console.log('Cleaning ' + actualFiles.length + ' files.')
+            didClean = true
+          }
 
-        // console.log('Successfully cleaned all files.')
-      } catch (e) {
-        // TODO: throw sth
-        // console.log(e)
+          // config.generator.filePattern
+          //   .map(v => process.cwd() + '/**/' + v)
+          //   .map(path => rimraf.sync(path))
+
+          // console.log('Successfully cleaned all files.')
+        } catch (e) {
+          // TODO: throw sth
+          // console.log(e)
+        }
+      })
+
+      if (didClean) {
+        console.log('')
       }
     }
   }

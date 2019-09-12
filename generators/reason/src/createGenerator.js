@@ -56,6 +56,7 @@ export default function createGenerator(customConfig = {}) {
     config.generateFileName('*', '') + '.bs.js',
     '*.elo.css',
   ]
+  generate.ignorePattern = ['node_modules']
 
   generate.baseReset = baseReset(config.generateResetClassName)
   generate.rootReset = rootReset(config.rootNode)

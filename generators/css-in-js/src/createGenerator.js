@@ -41,6 +41,7 @@ export default function createGenerator(customConfig = {}) {
     return { [fileName + '.js']: root, ...css, ...js }
   }
   generate.filePattern = ['*.elo.js', '*.elo.css']
+  generate.ignorePattern = ['node_modules']
 
   generate.baseReset = baseReset(generateResetClassName)
   generate.rootReset = rootReset(rootNode)
