@@ -57,6 +57,7 @@ For further information check out {underline https://elodin.dev/docs/setup/confi
 
           if (actualFiles.length > 0) {
             console.log('Cleaning ' + actualFiles.length + ' files.')
+            actualFiles.forEach(fs.unlinkSync)
             didClean = true
           }
 
