@@ -26,6 +26,7 @@ export default async function({ cliOptions, elodinOptions }) {
 Start by creating a {bold elodin.config.js} file.
 For further information check out {underline https://elodin.dev/docs/setup/getting-started}.}`
     )
+    console.error(e)
 
     return false
   }
