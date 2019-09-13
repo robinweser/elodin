@@ -9,9 +9,7 @@ Elodin is a small styling language that aims to provide a universal way to autho
 - **Write once, use everywhere**:<br>Elodin compiles to a variety of different languages, platforms and libraries without having to change a single line. It's truly one file for all targets!
 - **Type-safe properties**:<br>The compiler will validate every property-value pair and throw on invalid rules resulting in solid code and bulletproof output. If it compiles, it works!
 
-
 <img alt="License" src="https://img.shields.io/badge/license-MIT-brightgreen.svg"></a> <a href="https://spectrum.chat/elodin"><img alt="Spectrum" src="https://img.shields.io/badge/support-spectrum-brightgreen.svg"></a> <img alt="npm downloads" src="https://img.shields.io/npm/dm/@elodin/core.svg">
-
 
 ## Example
 
@@ -115,11 +113,14 @@ export default function Label() {
 
 ## Documentation
 
-- [Setup]()
-- [Introduction]()
-- [Language]()
-- [Usage Guides]()
-- [API Reference]()
+- [Into](https://elodin.dev/docs/intro/what-why)
+- [Setup](https://elodin.dev/docs/setup/installation)
+- [Language](https://elodin.dev/docs/language/styles)
+- [Targets](https://elodin.dev/docs/targets/overview)
+- [Plugins](https://elodin.dev/docs/plugins/color)
+- [Advanced](https://elodin.dev/docs/advanced/specification)
+- [API Reference](https://elodin.dev/docs/api/CLI)
+- [Extra](https://elodin.dev/docs/extra/examples)
 
 ## Examples
 
