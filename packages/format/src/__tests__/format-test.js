@@ -1,6 +1,7 @@
 import format from '../format'
 
 const file = `
+variant Type { Primary }
 variant Mode { Dark 
 
  Light}

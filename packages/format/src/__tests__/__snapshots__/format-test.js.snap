@@ -1,7 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Formatting elodin syntax should return beautiful syntax 1`] = `
-"variant Mode {
+"variant Type {
+  Primary
+}
+
+variant Mode {
   Dark
   Light
 }
@@ -42,7 +46,11 @@ text Label {
 
 exports[`Formatting elodin syntax should return beautiful syntax with custom syntax 1`] = `
 Object {
-  "code": "variant Mode {
+  "code": "variant Type {
+  Primary
+}
+
+variant Mode {
   Dark
   Light
 }
