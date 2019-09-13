@@ -229,6 +229,19 @@ export default class Parser {
           )
         }
 
+        const duplicate = body.find(n => n.property === node.property)
+
+        if (duplicate) {
+          this.addError(
+            {
+              type: errorTypes.DUPLICATE_PROPERTY,
+              message: `The property ${duplicate.property} has already been declared before.`,
+              duplicate,
+            },
+            true
+          )
+        }
+
         body.push(node)
         this.updateCurrentToken(1)
       }
@@ -398,7 +411,6 @@ export default class Parser {
           )
         }
 
-        // TODO: parse duplicate variation
         if (
           variant &&
           variant.value.charAt(0).toUpperCase() !== variant.value.charAt(0)
@@ -406,8 +418,21 @@ export default class Parser {
           this.addError(
             {
               type: errorTypes.SYNTAX_ERROR,
-              message: 'Variation values must begin with an uppercase letter.',
+              message: 'Variations must begin with an uppercase letter.',
               variation: variant.value,
+            },
+            true
+          )
+        }
+
+        const duplicate = body.find(v => v.value === variant.value)
+        if (duplicate) {
+          this.addError(
+            {
+              type: errorTypes.DUPLICATE_VARIANT,
+              message: `The variation value ${duplicate.value} has already been declared before.`,
+              variation: variant.value,
+              duplicate,
             },
             true
           )
