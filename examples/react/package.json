@@ -7,7 +7,7 @@
     "build": "echo 1",
     "build:next": "next build src",
     "start": "next start src",
-    "elodin": "elodin src --watch"
+    "elodin": "elodin src --watch --clean"
   },
   "license": "MIT",
   "dependencies": {

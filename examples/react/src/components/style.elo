@@ -1,47 +1,50 @@
-style Button {
-  color: white
-  backgroundColor: rgb(61 116 204)
-  fontSize: $fontSize
+variant Mode {
+  Dark
+  Light
+}
 
+view Button {
+  backgroundColor: rgb(61 116 204)
   [@hover] {
     backgroundColor: rgb(89 148 242)
   }
 }
 
-style Label {
+text ButtonText {
+  color: white
+  fontSize: $fontSize
+}
+
+text Label {
   color: grey
   fontSize: 20
 }
 
-style Input {
+text Input {
   fontSize: 15
   color: red
-
   [@viewportWidth>=1000] {
     fontSize: 20
     color: blue
   }
 }
 
-variant Mode {
-  Dark
-  Light
-}
-
-style Block {
-  fontSize: $size
-  paddingLeft: 10
-  paddingRight: 10
-  paddingTop: 10
-  paddingBottom: 10
-
+view Block {
+  padding: 10
   [Mode=Light] {
     backgroundColor: white
-    color: black
-  } 
-
+  }
   [Mode=Dark] {
     backgroundColor: black
+  }
+}
+
+text BlockText {
+  fontSize: $size
+  [Mode=Light] {
+    color: black
+  }
+  [Mode=Dark] {
     color: white
   }
 }
