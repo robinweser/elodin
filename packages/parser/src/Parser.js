@@ -81,6 +81,7 @@ export default class Parser {
     this.input = input
     this.currentPosition = 0
     this.errors = []
+    this.variantConditionals = []
     this.updateCurrentToken()
 
     const file = {
@@ -129,6 +130,29 @@ export default class Parser {
 
       file.body.push(node)
     }
+
+    const variants = file.body.filter(node => node.type === 'Variant')
+    this.variantConditionals.forEach(({ property, value }) => {
+      const matchingVariant = variants.find(v => v.name === property.value)
+
+      if (!matchingVariant) {
+        this.addError({
+          type: errorTypes.INVALID_VARIANT,
+          message: `The variant '${property.value}' is not defined.`,
+        })
+      } else {
+        const matchingValue = matchingVariant.body.find(
+          v => v.value === value.value
+        )
+
+        if (!matchingValue) {
+          this.addError({
+            type: errorTypes.INVALID_VARIANT,
+            message: `The variant '${property.value}' does not define a '${value.value}' variation.`,
+          })
+        }
+      }
+    })
 
     return {
       errors: this.errors,
@@ -602,6 +626,10 @@ export default class Parser {
 
       this.updateCurrentToken(-1)
 
+      if (!condition.boolean && condition.property.type === 'Identifier') {
+        this.variantConditionals.push(condition)
+      }
+
       return {
         ...condition,
         type: 'Conditional',
@@ -624,6 +652,20 @@ export default class Parser {
             {
               type: errorTypes.SYNTAX_ERROR,
               message: 'A condition must have a valid comparison operator.',
+              operator,
+            },
+            true
+          )
+
+          return
+        }
+
+        if (property.type === 'Identifier' && operator !== '=') {
+          this.addError(
+            {
+              type: errorTypes.SYNTAX_ERROR,
+              message: 'Variant conditionals can only use equal comparison.',
+              property,
               operator,
             },
             true

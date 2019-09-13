@@ -37,7 +37,7 @@ text Label {
 
   it('should correctly parse conditionals', () => {
     const file = `
-    variant Type {
+    variant Mode {
       Dark
       Light
     }
@@ -45,12 +45,14 @@ text Label {
 view Button {
   backgroundColor: red
 
-  [Type=Primary] {
+  [Mode=Dark] {
     backgroundColor: blue
   }
 }`
 
     const parser = new Parser()
+
+    console.log(parser.parse(file).errors)
 
     expect(parser.parse(file).errors.length).toBe(0)
     expect(parser.parse(file).ast).toMatchSnapshot()

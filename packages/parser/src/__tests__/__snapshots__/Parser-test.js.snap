@@ -14,7 +14,7 @@ Object {
           "value": "Light",
         },
       ],
-      "name": "Type",
+      "name": "Mode",
       "type": "Variant",
     },
     Object {
@@ -53,12 +53,12 @@ Object {
           "operator": "=",
           "property": Object {
             "type": "Identifier",
-            "value": "Type",
+            "value": "Mode",
           },
           "type": "Conditional",
           "value": Object {
             "type": "Identifier",
-            "value": "Primary",
+            "value": "Dark",
           },
         },
       ],
