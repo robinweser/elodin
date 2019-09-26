@@ -218,10 +218,7 @@ function generateModules(ast, { devMode, generateResetClassName }) {
 
     if (variantNames.length > 0) {
       const combinations = getArrayCombinations(
-        ...Object.keys(usedVariants).map(variant => [
-          ...variantMap[variant],
-          'None',
-        ])
+        ...variantNames.map(variant => [...variantMap[variant], 'None'])
       )
 
       const combis = combinations.reduce((matches, combination) => {
