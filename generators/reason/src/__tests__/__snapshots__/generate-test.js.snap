@@ -17,6 +17,11 @@ Object {
 open Css;
 
 [@bs.deriving jsConverter]
+type size =
+  | Small
+  | Big;
+
+[@bs.deriving jsConverter]
 type type_ =
   | Primary
   | Secondary;
@@ -72,16 +77,24 @@ let labelStyle = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~
     hover([unsafe(\\"font-size\\", fontSize)]),
     media(\\"(min-width: 320px) and (max-width: 320px)\\", [unsafe(\\"font-size\\", mediaFontSize),
 hover([unsafe(\\"font-size\\", mediaHoverFontSize)])])]);
-let getLabelVariants = (~mode, ()) => {
-  switch (mode) {
-    | (Some(Dark)) => \\"\\"
-    | (Some(Light)) => \\" _m7rm99_0-1\\"
-    | (Some(Semi)) => \\"\\"
-    | (None) => \\"\\"
+let getLabelVariants = (~size, ~mode, ()) => {
+  switch (size, mode) {
+    | (Some(Small), Some(Dark)) => \\" _1rqb5jm_0-0 _1rqb5jm_1-0 _1rqb5jm_0-0_1-0\\"
+    | (Some(Small), Some(Light)) => \\" _1rqb5jm_0-0 _1rqb5jm_1-1 _1rqb5jm_0-0_1-1\\"
+    | (Some(Small), Some(Semi)) => \\" _1rqb5jm_0-0 _1rqb5jm_1-2 _1rqb5jm_0-0_1-2\\"
+    | (Some(Small), None) => \\" _1rqb5jm_0-0\\"
+    | (Some(Big), Some(Dark)) => \\"\\"
+    | (Some(Big), Some(Light)) => \\" _1rqb5jm_0-1 _1rqb5jm_1-1 _1rqb5jm_0-1_1-1\\"
+    | (Some(Big), Some(Semi)) => \\"\\"
+    | (Some(Big), None) => \\" _1rqb5jm_0-1\\"
+    | (None, Some(Dark)) => \\" _1rqb5jm_1-0\\"
+    | (None, Some(Light)) => \\" _1rqb5jm_1-1\\"
+    | (None, Some(Semi)) => \\" _1rqb5jm_1-2\\"
+    | (None, None) => \\"\\"
   }
 };
 
-let label = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~mediaHoverFontSize:string, ~mode=?, ()) => \\"_elo_text _m7rm99\\" ++ getLabelVariants(~mode, ()) ++ \\" \\" ++ merge([labelStyle(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize)]);
+let label = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~mediaHoverFontSize:string, ~size=?, ~mode=?, ()) => \\"_elo_text _1rqb5jm\\" ++ getLabelVariants(~size, ~mode, ()) ++ \\" \\" ++ merge([labelStyle(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize)]);
 ",
   "RootStyleButton.elo.css": "._1a6mix7 {
   background-color: red;
@@ -104,22 +117,26 @@ let label = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~media
 ._1a6mix7_1-1 {
   background-color: green
 }",
-  "RootStyleLabel.elo.css": "._m7rm99:hover {
+  "RootStyleLabel.elo.css": "._1rqb5jm_0-0 {
+  font-size: 15px
+}
+
+._1rqb5jm:hover {
   color: red
 }
 
-._m7rm99_0-1 {
+._1rqb5jm_1-1 {
   font-size: 16px
 }
 
 @media (min-width: 320px) and (max-width: 320px) {
-  ._m7rm99 {
+  ._1rqb5jm {
     color: green
   }
 }
 
 @media (min-width: 320px) and (max-width: 320px) {
-  ._m7rm99:hover {
+  ._1rqb5jm:hover {
     color: blue
   }
 }",
@@ -142,6 +159,11 @@ Object {
 |}];
 
 open Css;
+
+[@bs.deriving jsConverter]
+type size =
+  | Small
+  | Big;
 
 [@bs.deriving jsConverter]
 type type_ =
@@ -199,16 +221,24 @@ let labelStyle = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~
     hover([unsafe(\\"font-size\\", fontSize)]),
     media(\\"(min-width: 320px) and (max-width: 320px)\\", [unsafe(\\"font-size\\", mediaFontSize),
 hover([unsafe(\\"font-size\\", mediaHoverFontSize)])])]);
-let getLabelVariants = (~mode, ()) => {
-  switch (mode) {
-    | (Some(Dark)) => \\"\\"
-    | (Some(Light)) => \\" Label_m7rm99__Mode-Light\\"
-    | (Some(Semi)) => \\"\\"
-    | (None) => \\"\\"
+let getLabelVariants = (~size, ~mode, ()) => {
+  switch (size, mode) {
+    | (Some(Small), Some(Dark)) => \\" Label_1rqb5jm__Size-Small Label_1rqb5jm__Mode-Dark Label_1rqb5jm__Size-Small__Mode-Dark\\"
+    | (Some(Small), Some(Light)) => \\" Label_1rqb5jm__Size-Small Label_1rqb5jm__Mode-Light Label_1rqb5jm__Size-Small__Mode-Light\\"
+    | (Some(Small), Some(Semi)) => \\" Label_1rqb5jm__Size-Small Label_1rqb5jm__Mode-Semi Label_1rqb5jm__Size-Small__Mode-Semi\\"
+    | (Some(Small), None) => \\" Label_1rqb5jm__Size-Small\\"
+    | (Some(Big), Some(Dark)) => \\"\\"
+    | (Some(Big), Some(Light)) => \\" Label_1rqb5jm__Size-Big Label_1rqb5jm__Mode-Light Label_1rqb5jm__Size-Big__Mode-Light\\"
+    | (Some(Big), Some(Semi)) => \\"\\"
+    | (Some(Big), None) => \\" Label_1rqb5jm__Size-Big\\"
+    | (None, Some(Dark)) => \\" Label_1rqb5jm__Mode-Dark\\"
+    | (None, Some(Light)) => \\" Label_1rqb5jm__Mode-Light\\"
+    | (None, Some(Semi)) => \\" Label_1rqb5jm__Mode-Semi\\"
+    | (None, None) => \\"\\"
   }
 };
 
-let label = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~mediaHoverFontSize:string, ~mode=?, ()) => \\"_elo_text Label_m7rm99\\" ++ getLabelVariants(~mode, ()) ++ \\" \\" ++ merge([labelStyle(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize)]);
+let label = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~mediaHoverFontSize:string, ~size=?, ~mode=?, ()) => \\"_elo_text Label_1rqb5jm\\" ++ getLabelVariants(~size, ~mode, ()) ++ \\" \\" ++ merge([labelStyle(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize)]);
 ",
   "RootStyleButton.elo.css": ".Button_1a6mix7 {
   background-color: red;
@@ -231,22 +261,26 @@ let label = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~media
 .Button_1a6mix7__Mode-Light {
   background-color: green
 }",
-  "RootStyleLabel.elo.css": ".Label_m7rm99:hover {
+  "RootStyleLabel.elo.css": ".Label_1rqb5jm__Size-Small {
+  font-size: 15px
+}
+
+.Label_1rqb5jm:hover {
   color: red
 }
 
-.Label_m7rm99__Mode-Light {
+.Label_1rqb5jm__Mode-Light {
   font-size: 16px
 }
 
 @media (min-width: 320px) and (max-width: 320px) {
-  .Label_m7rm99 {
+  .Label_1rqb5jm {
     color: green
   }
 }
 
 @media (min-width: 320px) and (max-width: 320px) {
-  .Label_m7rm99:hover {
+  .Label_1rqb5jm:hover {
     color: blue
   }
 }",

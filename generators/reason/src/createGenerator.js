@@ -144,6 +144,7 @@ function generateCSSFiles(ast, { devMode, generateFileName }, fileName) {
 
       return flatVariants
     }, {})
+
     const classes = generateCSSClasses(module.body, variantMap, devMode)
 
     files[generatedFileName + module.name + '.elo.css'] = classes
@@ -177,13 +178,16 @@ function generateModules(ast, { devMode, generateResetClassName }) {
 
     return flatVariants
   }, {})
+  const variantOrder = Object.keys(variantMap)
 
   return styles.reduce((rules, module) => {
     const style = generateStyle(module.body)
     const variables = getVariablesFromAST(module)
     const variantStyleMap = generateVariantStyleMap(module.body, variants)
     const usedVariants = getVariantsFromAST(module)
-    const variantNames = Object.keys(usedVariants)
+    const variantNames = Object.keys(usedVariants).sort((x, y) =>
+      variantOrder.indexOf(x) > variantOrder.indexOf(y) ? 1 : -1
+    )
 
     const className =
       generateResetClassName(module.format) +

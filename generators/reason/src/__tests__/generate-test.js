@@ -3,6 +3,11 @@ import { parse } from '@elodin/core'
 import createGenerator from '../createGenerator'
 
 const file = `
+variant Size {
+  Small
+  Big
+}
+
 variant Type {
   Primary
   Secondary
@@ -40,6 +45,10 @@ view Button {
 
 text Label {
   lineHeight: $lineHeight
+
+  [Size=Small] {
+    fontSize: 15
+  }
 
   [@hover] {
     color: red
