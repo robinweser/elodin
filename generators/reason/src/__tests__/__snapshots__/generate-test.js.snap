@@ -11,216 +11,117 @@ Object {
 |}];
 
 [%bs.raw {|
-  require(\\"./RootStyleButtonText.elo.css\\")
+  require(\\"./RootStyleLabel.elo.css\\")
 |}];
 
+open Css;
+
 [@bs.deriving jsConverter]
-type variant =
+type type_ =
   | Primary
-  | Destructive;
+  | Secondary;
 
 [@bs.deriving jsConverter]
-type intent =
-  | Inline
-  | Outline;
+type mode =
+  | Dark
+  | Light
+  | Semi;
 
-[@bs.deriving jsConverter]
-type size =
-  | Small
-  | Normal
-  | Big;
+let buttonStyle = (~borderWidth:string, ~paddingLeft:string, ~paddingRight:string, ~padLeft:string) => style([unsafe(\\"border-width\\", borderWidth)]);
+let getButtonStyleVariants = (~borderWidth:string, ~paddingLeft:string, ~paddingRight:string, ~padLeft:string, ~type_, ~mode, ()) => {
+    let buttonStylePrimary = style([unsafe(\\"padding-left\\", paddingLeft),
+      hover([unsafe(\\"padding-right\\", paddingRight)])]);
+    let buttonStylePrimaryDark = style([unsafe(\\"padding-left\\", padLeft)]);
 
-let getButtonVariants = (~variant, ~intent, ()) => {
-  switch (variant, intent) {
-    | (Some(Primary), Some(Inline)) => \\" _1htgadr_0-0 _1htgadr_1-0 _1htgadr_0-0_1-0\\"
-    | (Some(Primary), Some(Outline)) => \\" _1htgadr_0-0 _1htgadr_1-1 _1htgadr_0-0_1-1\\"
-    | (Some(Primary), None) => \\" _1htgadr_0-0\\"
-    | (Some(Destructive), Some(Inline)) => \\" _1htgadr_0-1 _1htgadr_1-0 _1htgadr_0-1_1-0\\"
-    | (Some(Destructive), Some(Outline)) => \\" _1htgadr_0-1 _1htgadr_1-1 _1htgadr_0-1_1-1\\"
-    | (Some(Destructive), None) => \\" _1htgadr_0-1\\"
-    | (None, Some(Inline)) => \\" _1htgadr_1-0\\"
-    | (None, Some(Outline)) => \\" _1htgadr_1-1\\"
+switch (type_, mode) {
+    | (Some(Primary), Some(Dark)) => [buttonStylePrimary,buttonStylePrimaryDark]
+    | (Some(Primary), Some(Light)) => [buttonStylePrimary]
+    | (Some(Primary), Some(Semi)) => [buttonStylePrimary]
+    | (Some(Primary), None) => [buttonStylePrimary]
+    | (Some(Secondary), Some(Dark)) => []
+    | (Some(Secondary), Some(Light)) => []
+    | (Some(Secondary), Some(Semi)) => []
+    | (Some(Secondary), None) => []
+    | (None, Some(Dark)) => []
+    | (None, Some(Light)) => []
+    | (None, Some(Semi)) => []
+    | (None, None) => []
+    }
+  };
+
+let getButtonVariants = (~type_, ~mode, ()) => {
+  switch (type_, mode) {
+    | (Some(Primary), Some(Dark)) => \\" _1a6mix7_0-0 _1a6mix7_1-0 _1a6mix7_0-0_1-0\\"
+    | (Some(Primary), Some(Light)) => \\" _1a6mix7_0-0 _1a6mix7_1-1 _1a6mix7_0-0_1-1\\"
+    | (Some(Primary), Some(Semi)) => \\" _1a6mix7_0-0 _1a6mix7_1-2 _1a6mix7_0-0_1-2\\"
+    | (Some(Primary), None) => \\" _1a6mix7_0-0\\"
+    | (Some(Secondary), Some(Dark)) => \\" _1a6mix7_0-1 _1a6mix7_1-0 _1a6mix7_0-1_1-0\\"
+    | (Some(Secondary), Some(Light)) => \\" _1a6mix7_0-1 _1a6mix7_1-1 _1a6mix7_0-1_1-1\\"
+    | (Some(Secondary), Some(Semi)) => \\"\\"
+    | (Some(Secondary), None) => \\" _1a6mix7_0-1\\"
+    | (None, Some(Dark)) => \\" _1a6mix7_1-0\\"
+    | (None, Some(Light)) => \\" _1a6mix7_1-1\\"
+    | (None, Some(Semi)) => \\" _1a6mix7_1-2\\"
     | (None, None) => \\"\\"
   }
 };
 
-let button = (~variant=?, ~intent=?, ()) => \\"_elo_view _1htgadr\\" ++ getButtonVariants(~variant, ~intent, ());
+let button = (~borderWidth:string, ~paddingLeft:string, ~paddingRight:string, ~padLeft:string, ~type_=?, ~mode=?, ()) => \\"_elo_view _1a6mix7\\" ++ getButtonVariants(~type_, ~mode, ()) ++ \\" \\" ++ merge([buttonStyle(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft), ...getButtonStyleVariants(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_, ~mode, ())]);
 
-let getButtonTextVariants = (~variant, ~intent, ~size, ()) => {
-  switch (variant, intent, size) {
-    | (Some(Small), Some(Inline), Some(Primary)) => \\"\\"
-    | (Some(Small), Some(Inline), Some(Destructive)) => \\"\\"
-    | (Some(Small), Some(Inline), None) => \\" _gr233u_0--1 _gr233u_1-0 _gr233u_0--1_1-0\\"
-    | (Some(Small), Some(Outline), Some(Primary)) => \\" _gr233u_0--1 _gr233u_1-1 _gr233u_0--1_1-1 _gr233u_2--1 _gr233u_0--1_2--1 _gr233u_1-1_2--1 _gr233u_0--1_1-1_2--1\\"
-    | (Some(Small), Some(Outline), Some(Destructive)) => \\" _gr233u_0--1 _gr233u_1-1 _gr233u_0--1_1-1 _gr233u_2--1 _gr233u_0--1_2--1 _gr233u_1-1_2--1 _gr233u_0--1_1-1_2--1\\"
-    | (Some(Small), Some(Outline), None) => \\" _gr233u_0--1 _gr233u_1-1 _gr233u_0--1_1-1\\"
-    | (Some(Small), None, Some(Primary)) => \\" _gr233u_0--1 _gr233u_2--1 _gr233u_0--1_2--1\\"
-    | (Some(Small), None, Some(Destructive)) => \\" _gr233u_0--1 _gr233u_2--1 _gr233u_0--1_2--1\\"
-    | (Some(Small), None, None) => \\" _gr233u_0--1\\"
-    | (Some(Normal), Some(Inline), Some(Primary)) => \\"\\"
-    | (Some(Normal), Some(Inline), Some(Destructive)) => \\"\\"
-    | (Some(Normal), Some(Inline), None) => \\" _gr233u_0--1 _gr233u_1-0 _gr233u_0--1_1-0\\"
-    | (Some(Normal), Some(Outline), Some(Primary)) => \\" _gr233u_0--1 _gr233u_1-1 _gr233u_0--1_1-1 _gr233u_2--1 _gr233u_0--1_2--1 _gr233u_1-1_2--1 _gr233u_0--1_1-1_2--1\\"
-    | (Some(Normal), Some(Outline), Some(Destructive)) => \\" _gr233u_0--1 _gr233u_1-1 _gr233u_0--1_1-1 _gr233u_2--1 _gr233u_0--1_2--1 _gr233u_1-1_2--1 _gr233u_0--1_1-1_2--1\\"
-    | (Some(Normal), Some(Outline), None) => \\" _gr233u_0--1 _gr233u_1-1 _gr233u_0--1_1-1\\"
-    | (Some(Normal), None, Some(Primary)) => \\" _gr233u_0--1 _gr233u_2--1 _gr233u_0--1_2--1\\"
-    | (Some(Normal), None, Some(Destructive)) => \\" _gr233u_0--1 _gr233u_2--1 _gr233u_0--1_2--1\\"
-    | (Some(Normal), None, None) => \\" _gr233u_0--1\\"
-    | (Some(Big), Some(Inline), Some(Primary)) => \\"\\"
-    | (Some(Big), Some(Inline), Some(Destructive)) => \\"\\"
-    | (Some(Big), Some(Inline), None) => \\" _gr233u_0--1 _gr233u_1-0 _gr233u_0--1_1-0\\"
-    | (Some(Big), Some(Outline), Some(Primary)) => \\" _gr233u_0--1 _gr233u_1-1 _gr233u_0--1_1-1 _gr233u_2--1 _gr233u_0--1_2--1 _gr233u_1-1_2--1 _gr233u_0--1_1-1_2--1\\"
-    | (Some(Big), Some(Outline), Some(Destructive)) => \\" _gr233u_0--1 _gr233u_1-1 _gr233u_0--1_1-1 _gr233u_2--1 _gr233u_0--1_2--1 _gr233u_1-1_2--1 _gr233u_0--1_1-1_2--1\\"
-    | (Some(Big), Some(Outline), None) => \\" _gr233u_0--1 _gr233u_1-1 _gr233u_0--1_1-1\\"
-    | (Some(Big), None, Some(Primary)) => \\" _gr233u_0--1 _gr233u_2--1 _gr233u_0--1_2--1\\"
-    | (Some(Big), None, Some(Destructive)) => \\" _gr233u_0--1 _gr233u_2--1 _gr233u_0--1_2--1\\"
-    | (Some(Big), None, None) => \\" _gr233u_0--1\\"
-    | (None, Some(Inline), Some(Primary)) => \\" _gr233u_1-0 _gr233u_2--1 _gr233u_1-0_2--1\\"
-    | (None, Some(Inline), Some(Destructive)) => \\" _gr233u_1-0 _gr233u_2--1 _gr233u_1-0_2--1\\"
-    | (None, Some(Inline), None) => \\" _gr233u_1-0\\"
-    | (None, Some(Outline), Some(Primary)) => \\" _gr233u_1-1 _gr233u_2--1 _gr233u_1-1_2--1\\"
-    | (None, Some(Outline), Some(Destructive)) => \\" _gr233u_1-1 _gr233u_2--1 _gr233u_1-1_2--1\\"
-    | (None, Some(Outline), None) => \\" _gr233u_1-1\\"
-    | (None, None, Some(Primary)) => \\" _gr233u_2--1\\"
-    | (None, None, Some(Destructive)) => \\" _gr233u_2--1\\"
-    | (None, None, None) => \\"\\"
+let labelStyle = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~mediaHoverFontSize:string) => style([unsafe(\\"line-height\\", lineHeight),
+    hover([unsafe(\\"font-size\\", fontSize)]),
+    media(\\"(min-width: 320px) and (max-width: 320px)\\", [unsafe(\\"font-size\\", mediaFontSize),
+hover([unsafe(\\"font-size\\", mediaHoverFontSize)])])]);
+let getLabelVariants = (~mode, ()) => {
+  switch (mode) {
+    | (Some(Dark)) => \\"\\"
+    | (Some(Light)) => \\" _m7rm99_0-1\\"
+    | (Some(Semi)) => \\"\\"
+    | (None) => \\"\\"
   }
 };
 
-let buttonText = (~variant=?, ~intent=?, ~size=?, ()) => \\"_elo_text _gr233u\\" ++ getButtonTextVariants(~variant, ~intent, ~size, ());
+let label = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~mediaHoverFontSize:string, ~mode=?, ()) => \\"_elo_text _m7rm99\\" ++ getLabelVariants(~mode, ()) ++ \\" \\" ++ merge([labelStyle(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize)]);
 ",
-  "RootStyleButton.elo.css": "._1htgadr {
-  display: inline-flex;
-  -moz-appearance: none;
-  appearance: none;
-  border: 0px;
-  cursor: pointer;
-  -webkit-appearance: none;
-  transition: 200ms all ease-in-out;
-  width: 100%;
-  align-self: flex-start;
-  flex-shrink: 1;
-  flex-direction: row;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 20px;
-  padding-right: 20px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 7px
+  "RootStyleButton.elo.css": "._1a6mix7 {
+  background-color: red;
+  padding-left: 10px;
+  border: 0px
 }
 
-._1htgadr:disabled {
-  box-shadow: none;
-  cursor: not-allowed;
-  background-color: rgb(190, 190, 190)
+._1a6mix7_0-0 {
+  background-color: red
 }
 
-._1htgadr:disabled:hover {
-  box-shadow: none;
-  background-color: rgb(190, 190, 190)
+._1a6mix7_0-0:hover {
+  padding-left: 10px
 }
 
-._1htgadr_0-0 {
-  box-shadow: 0 4px 12px rgba(0, 207, 192, 0.4);
-  background-color: rgb(0, 176, 164)
+._1a6mix7_0-0_1-0 {
+  background-color: blue
 }
 
-._1htgadr_0-0:hover {
-  box-shadow: 0 6px 20px rgba(0, 207, 192, 0.2);
-  background-color: rgb(0, 166, 154)
-}
-
-._1htgadr_0-0:active {
-  background-color: rgb(0, 156, 144)
-}
-
-._1htgadr_0-1 {
-  box-shadow: 0 4px 12px rgba(220, 60, 110, 0.4);
-  background-color: rgb(209, 50, 90)
-}
-
-._1htgadr_0-1:hover {
-  box-shadow: 0 6px 20px rgba(220, 60, 110, 0.2);
-  background-color: rgb(200, 40, 80)
-}
-
-._1htgadr_0-1:active {
-  background-color: rgb(190, 30, 70)
-}
-
-._1htgadr_1-0 {
-  box-shadow: none;
-  border-radius: 0px
-}
-
-._1htgadr_1-0:hover {
-  box-shadow: none
-}
-
-._1htgadr_1-1 {
-  box-shadow: none;
-  background-color: transparent;
-  border-width: 2px;
-  border-style: solid
-}
-
-._1htgadr_0-0_1-1 {
-  border-color: rgb(0, 176, 164)
-}
-
-._1htgadr_0-0_1-1:hover {
-  border-color: rgb(0, 166, 154)
-}
-
-._1htgadr_0-0_1-1:active {
-  border-color: rgb(0, 156, 144)
-}
-
-._1htgadr_0-1_1-1 {
-  border-color: rgb(209, 50, 90)
-}
-
-._1htgadr_0-1_1-1:hover {
-  border-color: rgb(200, 40, 80)
-}
-
-._1htgadr_0-1_1-1:active {
-  border-color: rgb(190, 30, 70)
+._1a6mix7_1-1 {
+  background-color: green
 }",
-  "RootStyleButtonText.elo.css": "._gr233u {
-  font-size: 18px;
-  line-height: 1.5;
-  color: rgb(255, 255, 255);
-  text-align: center;
-  letter-spacing: -0.1px;
-  text-decoration-line: none
+  "RootStyleLabel.elo.css": "._m7rm99:hover {
+  color: red
 }
 
-._gr233u:disabled {
-  color: rgb(240, 240, 240)
-}
-
-._gr233u_2-0 {
+._m7rm99_0-1 {
   font-size: 16px
 }
 
-._gr233u_2-2 {
-  font-size: 20px
+@media (min-width: 320px) and (max-width: 320px) {
+  ._m7rm99 {
+    color: green
+  }
 }
 
-._gr233u_0-0_1-1 {
-  text-shadow: 0 4px 12px rgba(0, 207, 192, 0.4);
-  color: rgb(0, 176, 164)
-}
-
-._gr233u_0-1_1-1 {
-  text-shadow: 0 4px 12px rgba(220, 60, 110, 0.4);
-  color: rgb(209, 50, 90)
-}
-
-._gr233u_1-1:hover {
-  color: white
+@media (min-width: 320px) and (max-width: 320px) {
+  ._m7rm99:hover {
+    color: blue
+  }
 }",
   "_reset.elo.css": "._elo_view{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;-webkit-overflow-scrolling:touch;align-self:stretch;flex-direction:column;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-shrink:0;max-width:100%;box-sizing:border-box}._elo_text{display:inline;}",
 }
@@ -241,11 +142,6 @@ Object {
 |}];
 
 open Css;
-
-[@bs.deriving jsConverter]
-type size =
-  | Small
-  | Big;
 
 [@bs.deriving jsConverter]
 type type_ =
@@ -303,24 +199,16 @@ let labelStyle = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~
     hover([unsafe(\\"font-size\\", fontSize)]),
     media(\\"(min-width: 320px) and (max-width: 320px)\\", [unsafe(\\"font-size\\", mediaFontSize),
 hover([unsafe(\\"font-size\\", mediaHoverFontSize)])])]);
-let getLabelVariants = (~size, ~mode, ()) => {
-  switch (size, mode) {
-    | (Some(Small), Some(Dark)) => \\" Label_1rqb5jm__Size-Small Label_1rqb5jm__Mode-Dark Label_1rqb5jm__Size-Small__Mode-Dark\\"
-    | (Some(Small), Some(Light)) => \\" Label_1rqb5jm__Size-Small Label_1rqb5jm__Mode-Light Label_1rqb5jm__Size-Small__Mode-Light\\"
-    | (Some(Small), Some(Semi)) => \\" Label_1rqb5jm__Size-Small Label_1rqb5jm__Mode-Semi Label_1rqb5jm__Size-Small__Mode-Semi\\"
-    | (Some(Small), None) => \\" Label_1rqb5jm__Size-Small\\"
-    | (Some(Big), Some(Dark)) => \\"\\"
-    | (Some(Big), Some(Light)) => \\" Label_1rqb5jm__Size-Big Label_1rqb5jm__Mode-Light Label_1rqb5jm__Size-Big__Mode-Light\\"
-    | (Some(Big), Some(Semi)) => \\"\\"
-    | (Some(Big), None) => \\" Label_1rqb5jm__Size-Big\\"
-    | (None, Some(Dark)) => \\" Label_1rqb5jm__Mode-Dark\\"
-    | (None, Some(Light)) => \\" Label_1rqb5jm__Mode-Light\\"
-    | (None, Some(Semi)) => \\" Label_1rqb5jm__Mode-Semi\\"
-    | (None, None) => \\"\\"
+let getLabelVariants = (~mode, ()) => {
+  switch (mode) {
+    | (Some(Dark)) => \\"\\"
+    | (Some(Light)) => \\" Label_m7rm99__Mode-Light\\"
+    | (Some(Semi)) => \\"\\"
+    | (None) => \\"\\"
   }
 };
 
-let label = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~mediaHoverFontSize:string, ~size=?, ~mode=?, ()) => \\"_elo_text Label_1rqb5jm\\" ++ getLabelVariants(~size, ~mode, ()) ++ \\" \\" ++ merge([labelStyle(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize)]);
+let label = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~mediaHoverFontSize:string, ~mode=?, ()) => \\"_elo_text Label_m7rm99\\" ++ getLabelVariants(~mode, ()) ++ \\" \\" ++ merge([labelStyle(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize)]);
 ",
   "RootStyleButton.elo.css": ".Button_1a6mix7 {
   background-color: red;
@@ -343,26 +231,22 @@ let label = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~media
 .Button_1a6mix7__Mode-Light {
   background-color: green
 }",
-  "RootStyleLabel.elo.css": ".Label_1rqb5jm__Size-Small {
-  font-size: 15px
-}
-
-.Label_1rqb5jm:hover {
+  "RootStyleLabel.elo.css": ".Label_m7rm99:hover {
   color: red
 }
 
-.Label_1rqb5jm__Mode-Light {
+.Label_m7rm99__Mode-Light {
   font-size: 16px
 }
 
 @media (min-width: 320px) and (max-width: 320px) {
-  .Label_1rqb5jm {
+  .Label_m7rm99 {
     color: green
   }
 }
 
 @media (min-width: 320px) and (max-width: 320px) {
-  .Label_1rqb5jm:hover {
+  .Label_m7rm99:hover {
     color: blue
   }
 }",
