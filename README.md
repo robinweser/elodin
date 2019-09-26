@@ -55,11 +55,11 @@ This compiles to the following files where `_hash` is just a placeholder for an 
   padding-top: 10;
 }
 
-._hash__Mode-Dark {
+._hash__0-0 {
   background-color: black;
 }
 
-._hash__Mode-Light {
+._hash__0-1 {
   background-color: white;
 }
 ```
@@ -81,10 +81,10 @@ import { getClassNameFromVariantMap } from '@elodin/runtime'
 
 const variantClassNameMap = {
   '': {},
-  '__Mode-Dark': {
+  '__0-0': {
     Mode: 'Dark',
   },
-  '__Mode-Light': {
+  '__0-1': {
     Mode: 'Light',
   },
 }
