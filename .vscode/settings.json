@@ -45,7 +45,7 @@
     "**/*.vi": true,
     "**/*.elo.*": true,
     "**/*.bs.js": true,
-    "**/*Style.re": true,
+    // "**/*Style.re": true,
     "**/node_modules": true,
     "**/lib": true,
     "**/es ": true,

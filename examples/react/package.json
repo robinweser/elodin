@@ -17,15 +17,15 @@
     "@elodin/generator-css-in-js": "^0.0.33",
     "@elodin/parser": "^0.0.33",
     "@zeit/next-css": "^1.0.1",
-    "fela": "^10.4.0",
-    "fela-beautifier": "^10.4.0",
-    "fela-dom": "^10.4.0",
-    "fela-plugin-rtl": "^10.4.0",
-    "fela-preset-web": "^10.4.0",
+    "fela": "^10.7.0",
+    "fela-beautifier": "^10.7.0",
+    "fela-dom": "^10.7.0",
+    "fela-plugin-rtl": "^10.7.0",
+    "fela-preset-web": "^10.7.0",
     "next": "latest",
     "prettier-plugin-elodin": "^0.0.33",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
-    "react-fela": "^10.4.0"
+    "react-fela": "^10.7.0"
   }
 }

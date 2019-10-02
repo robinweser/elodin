@@ -1,0 +1,13 @@
+text Label {
+  color: grey
+  fontSize: 20
+}
+
+text Input {
+  fontSize: 15
+  color: red
+  [@viewportWidth>=1000] {
+    fontSize: 20
+    color: blue
+  }
+}

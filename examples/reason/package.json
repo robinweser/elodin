@@ -7,25 +7,35 @@
     "build": "echo 1",
     "build:next": "next build src",
     "start": "next start src",
-    "elodin": "elodin src --watch"
+    "compile": "yarn compile:elodin && yarn compile:reason",
+    "compile:elodin": "elodin src --clean",
+    "compile:reason": "bsb -clean-world -make-world",
+    "deploy": "now --target production",
+    "reason": "bsb -clean-world -make-world -w",
+    "elodin": "elodin src --watch --clean"
   },
   "license": "MIT",
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
     "@elodin/cli": "^0.0.33",
     "@elodin/core": "^0.0.33",
-    "@elodin/generator-css-in-js": "^0.0.33",
+    "@elodin/generator-reason": "^0.0.33",
     "@elodin/parser": "^0.0.33",
+    "@emotion/cache": "^10.0.9",
     "@zeit/next-css": "^1.0.1",
-    "fela": "^10.4.0",
-    "fela-beautifier": "^10.4.0",
-    "fela-dom": "^10.4.0",
-    "fela-plugin-rtl": "^10.4.0",
-    "fela-preset-web": "^10.4.0",
-    "next": "latest",
-    "prettier-plugin-elodin": "^0.0.33",
+    "@zeit/next-mdx": "^1.2.0",
+    "babel-plugin-bucklescript": "^0.5.3",
+    "bs-css": "^10.0.0",
+    "create-emotion-server": "^10.0.0",
+    "emotion": "^9.2.12",
+    "next": "^9.0.5",
+    "next-transpile-modules": "^2.3.1",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
-    "react-fela": "^10.4.0"
+    "reason-react": "^0.7.0"
+  },
+  "devDependencies": {
+    "prettier-plugin-elodin": "^0.0.33",
+    "bs-platform": "^5.0.4"
   }
 }

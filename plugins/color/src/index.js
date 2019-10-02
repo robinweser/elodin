@@ -1,7 +1,16 @@
 const defaultSelector = (variables, property) => variables[property]
 
 // available formats: rgb, hsl, hex, keyword
-export default function color(format = 'rgb') {
+const defaultConfig = {
+  format: 'rgb',
+}
+
+export default function color(customConfig = {}) {
+  const { format } = {
+    ...defaultConfig,
+    ...customConfig,
+  }
+
   return {
     Color: {
       enter(path) {

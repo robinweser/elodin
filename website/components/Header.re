@@ -3,9 +3,13 @@ open Next;
 
 module HeaderLink = {
   [@react.component]
-  let make = (~external_=?, ~href, ~children) => {
+  let make = (~external_=?, ~href, ~children, ~includes=?) => {
     let router = Router.useRouter();
-    let isActive = Js.String.includes(href, router##pathname);
+    let isActive =
+      Js.String.includes(
+        resolveOption(includes, i => i, href),
+        router##pathname,
+      );
     let status = isActive ? Some(HeaderStyle.Active) : None;
 
     <div className={HeaderStyle.navItem()}>
@@ -149,7 +153,9 @@ let make = () => {
              </div>
            : n}
         // <HeaderLink href="/blog"> {"Blog" |> s} </HeaderLink>
-        <HeaderLink href="/docs/intro/what-why"> {"Docs" |> s} </HeaderLink>
+        <HeaderLink includes="/docs" href="/docs/intro/what-why">
+          {"Docs" |> s}
+        </HeaderLink>
         // <HeaderLink href="/try"> {"Try" |> s} </HeaderLink>
         <HeaderLink href="https://github.com/robinweser/elodin" external_=true>
           {"Github" |> s}

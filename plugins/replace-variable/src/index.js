@@ -1,6 +1,15 @@
 const defaultSelector = (variables, property) => variables[property]
 
-export default function replaceVariable(variables, selector = defaultSelector) {
+const defaultConfig = {
+  selector: defaultSelector,
+}
+
+export default function replaceVariable(customConfig = {}) {
+  const { variables, selector } = {
+    ...defaultConfig,
+    customConfig,
+  }
+
   return {
     Declaration: {
       enter(path) {

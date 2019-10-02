@@ -7,6 +7,7 @@ module.exports = withCSS(
     extension: /\.(md|mdx)$/,
   })(
     withTM({
+      serverless: false,
       pageExtensions: ['js', 'bs.js', 'md', 'mdx'],
       transpileModules: ['bs-platform', 'reason-react', '@tavata/ui', 'bs-css'],
       webpack: config => {

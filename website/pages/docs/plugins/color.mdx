@@ -4,4 +4,48 @@ export default DocLayout
 
 # Color
 
-Tbd.
+`@elodin/plugin-color`
+
+The color plugin converts all used colors into a consistent color format.
+
+## Usage
+
+To use the plugin, simply add it to your Elodin configuration and you're ready to go.
+
+#### elodin.config.js
+
+```javascript
+import color from '@elodin/plugin-color'
+
+module.exports = {
+  plugins: [color()],
+}
+```
+
+## Configuration
+
+| Option | Type                           | Default | Description                      |
+| ------ | ------------------------------ | ------- | -------------------------------- |
+| format | `rgb`, `hsl`, `hex`, `keyword` | `rgb`   | The prefered output color format |
+
+### Example
+
+Let's say we want all colors to be written as `rgb` colors.
+
+#### Input
+
+```elodin
+view Button {
+  backgroundColor: rgb(0 10 0)
+  borderTopColor: #fff
+}
+```
+
+#### Output
+
+```elodin
+view Button {
+  backgroundColor: rgb(0 10 0)
+  borderTopColor: rgb(255 255 255)
+}
+```

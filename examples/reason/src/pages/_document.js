@@ -1,44 +1,30 @@
 import Document, { Head, Main, NextScript } from 'next/document'
-import { renderToSheetList } from 'fela-dom'
 
-import getFelaRenderer from '../styling/getFelaRenderer'
+import { extractCritical } from '../styling/emotionServer'
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx) {
-    const renderer = getFelaRenderer()
-    const originalRenderPage = ctx.renderPage
-
-    ctx.renderPage = () =>
-      originalRenderPage({
-        enhanceApp: App => props => <App {...props} renderer={renderer} />,
-      })
-
+    const emotionCss = extractCritical(ctx.renderPage().html).css
     const initialProps = await Document.getInitialProps(ctx)
-    const sheetList = renderToSheetList(renderer)
 
     return {
       ...initialProps,
-      sheetList,
+      emotionCss,
     }
   }
 
   render() {
-    const styleNodes = this.props.sheetList.map(
-      ({ type, rehydration, support, media, css }) => (
-        <style
-          dangerouslySetInnerHTML={{ __html: css }}
-          data-fela-rehydration={rehydration}
-          data-fela-support={support}
-          data-fela-type={type}
-          key={type + media}
-          media={media}
-        />
-      )
-    )
-
     return (
       <html>
-        <Head>{styleNodes}</Head>
+        <Head>
+          <meta httpEquiv="Content-Type" content="text/html;charset=utf-8" />
+          <meta
+            name="viewport"
+            content="width=device-width,height=device-height,initial-scale=1, viewport-fit=cover"
+          />
+          <style dangerouslySetInnerHTML={{ __html: this.props.emotionCss }} />
+          <link rel="stylesheet" href="/static/reset.css" />
+        </Head>
         <body>
           <Main />
           <NextScript />

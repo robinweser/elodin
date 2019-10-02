@@ -35,9 +35,7 @@ export default function Block({ children, onClick, ...styleProps }) {
   const { css } = useFela(styleProps)
 
   return (
-    <div
-      onClick={onClick}
-      className={css(BlockStyle) + ' ' + css(BlockTextStyle)}>
+    <div onClick={onClick} className={css(BlockStyle, BlockTextStyle)}>
       {children}
     </div>
   )

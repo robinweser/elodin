@@ -4,4 +4,123 @@ export default DocLayout
 
 # Replace Variable
 
-Tbd.
+`@elodin/plugin-replace-variable`
+
+The replace variable plugin is used to replace dynamic variables with static values before compilation in order to get rid of runtime code.<br />
+It can be used to achieve e.g. static theming.
+
+## Usage
+
+To use the plugin, simply add it to your Elodin configuration and you're ready to go.
+
+#### elodin.config.js
+
+```javascript
+var replaceVariable = require('@elodin/plugin-replace-variable')
+
+module.exports = {
+  plugins: [
+    replaceVariable({
+      variables: {
+        primaryColor: 'red',
+        secondaryColor: 'blue',
+      },
+    }),
+  ],
+}
+```
+
+## Configuration
+
+| Option    | Type     | Default                      | Description                      |
+| --------- | -------- | ---------------------------- | -------------------------------- |
+| variables | Object   |                              | The prefered output color format |
+| selector  | Function | `(vars, prop) => vars[prop]` | The prefered output color format |
+
+### Example
+
+Given the variables from the usage example above:
+
+#### Input
+
+```elodin
+view Button {
+  backgroundColor: $primaryColor
+}
+
+text ButtonText {
+  color: $secondaryColor
+}
+```
+
+#### Output
+
+```elodin
+view Button {
+  backgroundColor: red
+}
+
+text ButtonText {
+  color: blue
+}
+```
+
+### Custom selector
+
+Apart from plain flat variables, we can also use a custom selector to implement more complex structures.
+
+#### elodin.config.js
+
+```javascript
+var replaceVariable = require('@elodin/plugin-replace-variable')
+
+module.exports = {
+  plugins: [
+    replaceVariable({
+      selector: (vars, prop) =>
+        prop
+          .split('_')
+          .reduce((out, sub) => (out ? out[sub] : undefined), vars),
+      variables: {
+        theme: {
+          colors: {
+            primary: 'red',
+            secondary: 'blue',
+          },
+          sizes: {
+            l: 20,
+            m: 16,
+            s: 12,
+          },
+        },
+      },
+    }),
+  ],
+}
+```
+
+#### Input
+
+```elodin
+view Button {
+  backgroundColor: $theme_colors_primary
+}
+
+text ButtonText {
+  color: $theme_colors_secondary
+  fontSize: $theme_sizes_l
+}
+```
+
+#### Output
+
+```elodin
+view Button {
+  backgroundColor: red
+}
+
+text ButtonText {
+  color: blue
+  fontSize: 20
+}
+```

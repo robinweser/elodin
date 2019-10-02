@@ -8,9 +8,5 @@ import {
 export default function Button({ children, ...styleProps }) {
   const { css } = useFela(styleProps)
 
-  return (
-    <div className={css(ButtonStyle) + ' ' + css(ButtonTextStyle)}>
-      {children}
-    </div>
-  )
+  return <div className={css(ButtonStyle, ButtonTextStyle)}>{children}</div>
 }

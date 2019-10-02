@@ -15,6 +15,8 @@ Apart from that, we can pass a bunch of other configurations.
 
 ## Example
 
+> **Note**: We're using ES5 here since it won't pre-compile configuration files by default. If you want to write modern ES2015+, you'll have to transpile those with e.g. Babel first.
+
 #### elodin.config.js
 
 ```javascript
@@ -25,10 +27,12 @@ module.exports = {
   errors: 'log',
   plugins: [
     replaceVariable({
-      primaryColor: 'blue',
-      secondaryColor: 'red',
-      baseFontSize: 16,
-      gridStep: 8,
+      variables: {
+        primaryColor: 'blue',
+        secondaryColor: 'red',
+        baseFontSize: 16,
+        gridStep: 8,
+      },
     }),
   ],
   generator: createGenerator({

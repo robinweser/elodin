@@ -1,5 +1,8 @@
-var generator = require('@elodin/generator-css-in-js').default
+var generator = require('@elodin/generator-reason').createGenerator
 
 module.exports = {
-  generator: generator({ adapter: 'fela' }),
+  generator: generator({
+    rootNode: '#__next',
+    generateResetClassName: type => '__' + type.substr(0, 1),
+  }),
 }
