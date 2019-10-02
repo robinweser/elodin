@@ -5,17 +5,18 @@
   "version": "0.0.33",
   "scripts": {
     "develop": "now dev",
-    "build": "echo 1",
+    "build": "yarn build:elodin && yarn build:reason && next build",
+    "build:reason": "bsb -clean-world -make-world",
+    "build:elodin": "elodin pages components",
+    "now-build": "yarn build",
     "start": "next start",
     "export": "next export",
-    "compile": "yarn compile:elodin && yarn compile:reason",
-    "compile:elodin": "elodin pages components --clean",
-    "compile:reason": "bsb -clean-world -make-world",
     "deploy": "now --target production",
     "reason": "bsb -clean-world -make-world -w",
     "elodin": "elodin pages components --watch --clean"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.6.0",
     "@elodin/cli": "^0.0.33",
     "@elodin/core": "^0.0.33",
     "@elodin/format": "^0.0.33",
