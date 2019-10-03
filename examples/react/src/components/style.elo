@@ -22,10 +22,10 @@ text Label {
 
 text Input {
   fontSize: 15
-  color: red
+  color: $theme_colors_primary
   [@viewportWidth>=1000] {
     fontSize: 20
-    color: blue
+    color: $theme_colors_secondary
   }
 }
 

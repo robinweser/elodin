@@ -7,7 +7,7 @@ const defaultConfig = {
 export default function replaceVariable(customConfig = {}) {
   const { variables, selector } = {
     ...defaultConfig,
-    customConfig,
+    ...customConfig,
   }
 
   return {
