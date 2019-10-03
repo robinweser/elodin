@@ -1,25 +1,151 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Parsing elodin syntax should correctly parse comments 1`] = `
+Object {
+  "body": Array [
+    Object {
+      "body": Array [
+        Object {
+          "comments": Array [],
+          "type": "Identifier",
+          "value": "Bar",
+        },
+        Object {
+          "comments": Array [
+            " baz",
+          ],
+          "type": "Identifier",
+          "value": "Foo",
+        },
+      ],
+      "comments": Array [
+        " variant comment",
+      ],
+      "name": "Foo",
+      "type": "Variant",
+    },
+    Object {
+      "body": Array [
+        Object {
+          "comments": Array [],
+          "dynamic": false,
+          "property": "backgroundColor",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "alpha": 1,
+            "blue": 0,
+            "format": "keyword",
+            "green": 0,
+            "red": 255,
+            "type": "Color",
+          },
+        },
+        Object {
+          "comments": Array [
+            " inline",
+          ],
+          "dynamic": false,
+          "property": "borderColor",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "alpha": 1,
+            "blue": 255,
+            "format": "rgb",
+            "green": 255,
+            "red": 255,
+            "type": "Color",
+          },
+        },
+        Object {
+          "comments": Array [],
+          "dynamic": false,
+          "property": "paddingLeft",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "negative": false,
+            "type": "Integer",
+            "value": 15,
+          },
+        },
+        Object {
+          "comments": Array [],
+          "dynamic": false,
+          "property": "marginTop",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "fractional": 2,
+            "integer": 1,
+            "negative": false,
+            "type": "Float",
+          },
+        },
+        Object {
+          "comments": Array [],
+          "dynamic": true,
+          "property": "borderWidth",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "environment": false,
+            "type": "Variable",
+            "value": "width",
+          },
+        },
+        Object {
+          "comments": Array [
+            " another",
+          ],
+          "dynamic": false,
+          "property": "animationName",
+          "raw": true,
+          "type": "Declaration",
+          "value": Object {
+            "type": "Identifier",
+            "value": "keyframe",
+          },
+        },
+      ],
+      "comments": Array [
+        " A comment",
+        " Another one",
+      ],
+      "format": "view",
+      "name": "Button",
+      "type": "Style",
+    },
+  ],
+  "type": "File",
+}
+`;
+
 exports[`Parsing elodin syntax should correctly parse conditionals 1`] = `
 Object {
   "body": Array [
     Object {
       "body": Array [
         Object {
+          "comments": Array [],
           "type": "Identifier",
           "value": "Dark",
         },
         Object {
+          "comments": Array [],
           "type": "Identifier",
           "value": "Light",
         },
       ],
+      "comments": Array [],
       "name": "Mode",
       "type": "Variant",
     },
     Object {
       "body": Array [
         Object {
+          "comments": Array [],
           "dynamic": false,
           "property": "backgroundColor",
           "raw": false,
@@ -36,6 +162,7 @@ Object {
         Object {
           "body": Array [
             Object {
+              "comments": Array [],
               "dynamic": false,
               "property": "backgroundColor",
               "raw": false,
@@ -50,6 +177,7 @@ Object {
               },
             },
           ],
+          "comments": Array [],
           "operator": "=",
           "property": Object {
             "type": "Identifier",
@@ -62,6 +190,7 @@ Object {
           },
         },
       ],
+      "comments": Array [],
       "format": "view",
       "name": "Button",
       "type": "Style",
@@ -79,6 +208,7 @@ Object {
         Object {
           "body": Array [
             Object {
+              "comments": Array [],
               "dynamic": false,
               "property": "backgroundColor",
               "raw": false,
@@ -94,6 +224,7 @@ Object {
             },
           ],
           "boolean": true,
+          "comments": Array [],
           "property": Object {
             "environment": true,
             "type": "Variable",
@@ -104,6 +235,7 @@ Object {
         Object {
           "body": Array [
             Object {
+              "comments": Array [],
               "dynamic": false,
               "property": "backgroundColor",
               "raw": false,
@@ -120,6 +252,7 @@ Object {
             Object {
               "body": Array [
                 Object {
+                  "comments": Array [],
                   "dynamic": false,
                   "property": "backgroundColor",
                   "raw": false,
@@ -135,6 +268,7 @@ Object {
                 },
               ],
               "boolean": true,
+              "comments": Array [],
               "property": Object {
                 "environment": true,
                 "type": "Variable",
@@ -143,6 +277,7 @@ Object {
               "type": "Conditional",
             },
           ],
+          "comments": Array [],
           "operator": ">=",
           "property": Object {
             "environment": true,
@@ -157,6 +292,7 @@ Object {
           },
         },
       ],
+      "comments": Array [],
       "format": "view",
       "name": "Button",
       "type": "Style",
@@ -172,6 +308,7 @@ Object {
     Object {
       "body": Array [
         Object {
+          "comments": Array [],
           "dynamic": false,
           "property": "flexDirection",
           "raw": false,
@@ -182,6 +319,7 @@ Object {
           },
         },
         Object {
+          "comments": Array [],
           "dynamic": false,
           "property": "alignSelf",
           "raw": false,
@@ -192,6 +330,7 @@ Object {
           },
         },
         Object {
+          "comments": Array [],
           "dynamic": false,
           "property": "flexGrow",
           "raw": false,
@@ -203,6 +342,7 @@ Object {
           },
         },
         Object {
+          "comments": Array [],
           "dynamic": false,
           "property": "flexShrink",
           "raw": false,
@@ -214,6 +354,7 @@ Object {
           },
         },
         Object {
+          "comments": Array [],
           "dynamic": false,
           "property": "flexBasis",
           "raw": false,
@@ -225,6 +366,7 @@ Object {
           },
         },
       ],
+      "comments": Array [],
       "name": "Flex",
       "type": "Fragment",
     },
@@ -239,6 +381,7 @@ Object {
     Object {
       "body": Array [
         Object {
+          "comments": Array [],
           "dynamic": false,
           "property": "backgroundColor",
           "raw": false,
@@ -253,6 +396,7 @@ Object {
           },
         },
         Object {
+          "comments": Array [],
           "dynamic": false,
           "property": "paddingLeft",
           "raw": false,
@@ -264,6 +408,7 @@ Object {
           },
         },
       ],
+      "comments": Array [],
       "format": "view",
       "name": "Button",
       "type": "Style",
@@ -271,6 +416,7 @@ Object {
     Object {
       "body": Array [
         Object {
+          "comments": Array [],
           "dynamic": false,
           "property": "lineHeight",
           "raw": false,
@@ -282,6 +428,7 @@ Object {
           },
         },
       ],
+      "comments": Array [],
       "format": "text",
       "name": "Label",
       "type": "Style",
@@ -297,6 +444,7 @@ Object {
     Object {
       "body": Array [
         Object {
+          "comments": Array [],
           "dynamic": false,
           "property": "backgroundColor",
           "raw": false,
@@ -311,6 +459,9 @@ Object {
           },
         },
         Object {
+          "comments": Array [
+            " foo",
+          ],
           "dynamic": false,
           "property": "borderColor",
           "raw": false,
@@ -325,6 +476,7 @@ Object {
           },
         },
         Object {
+          "comments": Array [],
           "dynamic": false,
           "property": "paddingLeft",
           "raw": false,
@@ -336,6 +488,7 @@ Object {
           },
         },
         Object {
+          "comments": Array [],
           "dynamic": false,
           "property": "marginTop",
           "raw": false,
@@ -348,6 +501,7 @@ Object {
           },
         },
         Object {
+          "comments": Array [],
           "dynamic": true,
           "property": "borderWidth",
           "raw": false,
@@ -359,6 +513,7 @@ Object {
           },
         },
         Object {
+          "comments": Array [],
           "dynamic": false,
           "property": "animationName",
           "raw": true,
@@ -369,6 +524,7 @@ Object {
           },
         },
       ],
+      "comments": Array [],
       "format": "view",
       "name": "Button",
       "type": "Style",

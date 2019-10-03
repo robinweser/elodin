@@ -2,25 +2,25 @@
 
 exports[`Compiling to CSS and JavaScript should return a map of files 1`] = `
 Object {
-  "Button.elo.css": "._1hqkjic {
+  "Button.elo.css": "._w7qnl2 {
   border: 0px;
   background-color: red;
   padding-left: 10px
 }
 
-._1hqkjic_0-0 {
+._w7qnl2_0-0 {
   background-color: red
 }
 
-._1hqkjic_0-0:hover {
+._w7qnl2_0-0:hover {
   padding-left: 10px
 }
 
-._1hqkjic_0-0_1-0 {
+._w7qnl2_0-0_1-0 {
   background-color: blue
 }
 
-._1hqkjic_1-1 {
+._w7qnl2_1-1 {
   background-color: green
 }",
   "Button.elo.js": "import './Button.elo.css'
@@ -52,19 +52,19 @@ const variantStyleMap = {
 
 export function Button(props = {}) {
   return {
-    _className: '_elo_view ' + getClassNameFromVariantMap('_1hqkjic', variantClassNameMap, props),
+    _className: '_elo_view ' + getClassNameFromVariantMap('_w7qnl2', variantClassNameMap, props),
     \\"borderWidth\\":props.borderWidth,
     ...getDynamicStyleFromVariantMap(variantStyleMap, props)
   }
 }",
-  "Label.elo.css": "._1edorjp:hover {
+  "Label.elo.css": "._1ie8i52:hover {
   color: red
 }",
   "Label.elo.js": "import './Label.elo.css'
 
 export function Label(props = {}) {
   return {
-    _className: '_elo_text _1edorjp',
+    _className: '_elo_text _1ie8i52',
     \\"lineHeight\\":props.lineHeight,
     \\":hover\\":{\\"fontSize\\":props.fontSize}
   }
@@ -83,25 +83,25 @@ export {
 
 exports[`Compiling to CSS and JavaScript should return a map of files in devMode 1`] = `
 Object {
-  "Button.elo.css": ".Button_1hqkjic {
+  "Button.elo.css": ".Button_w7qnl2 {
   border: 0px;
   background-color: red;
   padding-left: 10px
 }
 
-.Button_1hqkjic__Type-Primary {
+.Button_w7qnl2__Type-Primary {
   background-color: red
 }
 
-.Button_1hqkjic__Type-Primary:hover {
+.Button_w7qnl2__Type-Primary:hover {
   padding-left: 10px
 }
 
-.Button_1hqkjic__Type-Primary__Mode-Dark {
+.Button_w7qnl2__Type-Primary__Mode-Dark {
   background-color: blue
 }
 
-.Button_1hqkjic__Mode-Light {
+.Button_w7qnl2__Mode-Light {
   background-color: green
 }",
   "Button.elo.js": "import './Button.elo.css'
@@ -133,19 +133,19 @@ const variantStyleMap = {
 
 export function Button(props = {}) {
   return {
-    _className: '_elo_view ' + getClassNameFromVariantMap('Button_1hqkjic', variantClassNameMap, props),
+    _className: '_elo_view ' + getClassNameFromVariantMap('Button_w7qnl2', variantClassNameMap, props),
     \\"borderWidth\\":props.borderWidth,
     ...getDynamicStyleFromVariantMap(variantStyleMap, props)
   }
 }",
-  "Label.elo.css": ".Label_1edorjp:hover {
+  "Label.elo.css": ".Label_1ie8i52:hover {
   color: red
 }",
   "Label.elo.js": "import './Label.elo.css'
 
 export function Label(props = {}) {
   return {
-    _className: '_elo_text Label_1edorjp',
+    _className: '_elo_text Label_1ie8i52',
     \\"lineHeight\\":props.lineHeight,
     \\":hover\\":{\\"fontSize\\":props.fontSize}
   }
@@ -164,25 +164,25 @@ export {
 
 exports[`Compiling to CSS and JavaScript should use the given adapter 1`] = `
 Object {
-  "Button.elo.css": "._1hqkjic {
+  "Button.elo.css": "._w7qnl2 {
   border: 0px;
   background-color: red;
   padding-left: 10px
 }
 
-._1hqkjic_0-0 {
+._w7qnl2_0-0 {
   background-color: red
 }
 
-._1hqkjic_0-0:hover {
+._w7qnl2_0-0:hover {
   padding-left: 10px
 }
 
-._1hqkjic_0-0_1-0 {
+._w7qnl2_0-0_1-0 {
   background-color: blue
 }
 
-._1hqkjic_1-1 {
+._w7qnl2_1-1 {
   background-color: green
 }",
   "Button.elo.js": "import './Button.elo.css'
@@ -215,14 +215,14 @@ const variantStyleMap = {
 
 function ButtonStyle(props  = {}) {
   return {
-    _className: '_elo_view ' + getClassNameFromVariantMap('_1hqkjic', variantMap, props),
+    _className: '_elo_view ' + getClassNameFromVariantMap('_w7qnl2', variantMap, props),
     \\"borderWidth\\":props.borderWidth,
     ...getDynamicStyleFromVariantMap(variantStyleMap, props)
   }
 }
 
 export const Button = createComponent(ButtonStyle)",
-  "Label.elo.css": "._1edorjp:hover {
+  "Label.elo.css": "._1ie8i52:hover {
   color: red
 }",
   "Label.elo.js": "import './Label.elo.css'
@@ -230,7 +230,7 @@ import { createComponent } from 'react-fela'
 
 function LabelStyle(props  = {}) {
   return {
-    _className: '_elo_text _1edorjp',
+    _className: '_elo_text _1ie8i52',
     \\"lineHeight\\":props.lineHeight,
     \\":hover\\":{\\"fontSize\\":props.fontSize}
   }

@@ -11,8 +11,10 @@ describe('Replacing variables', () => {
     expect(
       traverse(ast, [
         replaceVariable({
-          spacingL: 10,
-          spacingXL: 20,
+          variables: {
+            spacingL: 10,
+            spacingXL: 20,
+          },
         }),
       ])
     ).toMatchSnapshot()
@@ -25,18 +27,19 @@ describe('Replacing variables', () => {
 
     expect(
       traverse(ast, [
-        replaceVariable(
-          {
+        replaceVariable({
+          variables: {
             colors: {
               primary: 'red',
               secondary: 'blue',
             },
           },
-          (variables, property) =>
+
+          selector: (variables, property) =>
             property
               .split('_')
-              .reduce((out, prop) => (out ? out[prop] : undefined), variables)
-        ),
+              .reduce((out, prop) => (out ? out[prop] : undefined), variables),
+        }),
       ])
     ).toMatchSnapshot()
   })
