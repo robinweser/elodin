@@ -5,6 +5,7 @@ variant Status {
 view Navigation {
   __overflow: auto
   __display: none
+  backgroundColor: rgb(245 245 245)
   flexBasis: 240
   flexShrink: 0
   paddingTop: 30
@@ -17,6 +18,9 @@ view Navigation {
 view NavigationItem {
   padding: 7
   paddingLeft: 30
+  [@viewportWidth>=1655] {
+    paddingLeft: 7
+  }
 }
 
 text NavigationItemText {

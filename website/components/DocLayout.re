@@ -7,6 +7,7 @@ let prism: Js.t('a) = [%bs.raw {| require("prismjs")|}];
 [%bs.raw {|require('prismjs/components/prism-jsx.js') |}];
 [%bs.raw {|require('prismjs/components/prism-javascript.js') |}];
 [%bs.raw {|require('prismjs/components/prism-reason.js') |}];
+[%bs.raw {|require('prismjs/components/prism-bash.js') |}];
 
 let components = {
   "h1": (props: {. children: React.element}) => {

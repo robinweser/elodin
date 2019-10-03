@@ -15,6 +15,7 @@
     "@elodin/cli": "^0.0.33",
     "@elodin/core": "^0.0.33",
     "@elodin/generator-css-in-js": "^0.0.33",
+    "@elodin/plugin-replace-variable": "^0.0.33",
     "@elodin/parser": "^0.0.33",
     "@zeit/next-css": "^1.0.1",
     "fela": "^10.7.0",

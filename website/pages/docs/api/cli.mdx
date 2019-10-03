@@ -3,3 +3,45 @@ import { make as DocLayout } from '../../../components/DocLayout.bs.js'
 export default DocLayout
 
 # CLI
+
+`@elodin/cli`
+
+This package provides the CLI for Elodin with compilation commands.<br/>
+It requires a valid [Elodin configuration](/docs/setup/configuration) to run.
+
+## Usage
+
+The basic elodin command requires at least 1 file or directly to run.
+
+```shell
+# Compiling a single file
+elodin src/style.elo
+
+# Compiling multiple files
+elodin src/button.elo src/label.elo
+
+# Compiling a whole directory (including sub directories)
+elodin src
+
+# Compiling multiple directories
+elodin components pages
+
+# Compiling a mix of files and directories
+elodin components pages root.elo src/app.elo
+```
+
+## Configuration
+
+The CLI comes with a set of configuration options.
+
+| Option                       | Default              | Description                                                                                                                 |
+| ---------------------------- | -------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `--config [path]`            | `./elodin.config.js` | The relative path to your [Elodin configuration](/docs/setup/configuration).                                                |
+| `--watch, -w`                |                      | Enables watch mode to automatically recompile on file changes.                                                              |
+| `--clean, -c`                |                      | Remove previously generated files before compilation. Helps to get rid of old files where the Elodin file has been removed. |
+| `--skip-initial-build, -sib` |                      | Skips the initial build in watch mode.<br />_Only works with watch mode enabled_.                                           |
+
+## Watch Mode
+
+Watch mode (using either `--watch` or the shorthand `-w` flag) will automatically recompile all files on detected file changes.<br />
+This is very useful for development, where you want to apply changes immediately without having to compile manually again and again.
