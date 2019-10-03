@@ -38,9 +38,7 @@ export default function formatFromAST(node, customConfig = {}, level = 1) {
 
     case 'Style':
       return (
-        node.comments
-          .map(comment => '# ' + comment.trim() + '\n' + ident.repeat(level))
-          .join('') +
+        node.comments.map(comment => '# ' + comment.trim() + '\n').join('') +
         node.format +
         ' ' +
         node.name +
@@ -54,9 +52,7 @@ export default function formatFromAST(node, customConfig = {}, level = 1) {
 
     case 'Variant':
       return (
-        node.comments
-          .map(comment => '# ' + comment.trim() + '\n' + ident.repeat(level))
-          .join('') +
+        node.comments.map(comment => '# ' + comment.trim() + '\n').join('') +
         'variant ' +
         node.name +
         ' {\n' +
@@ -67,9 +63,7 @@ export default function formatFromAST(node, customConfig = {}, level = 1) {
 
     case 'Fragment':
       return (
-        node.comments
-          .map(comment => '# ' + comment.trim() + '\n' + ident.repeat(level))
-          .join('') +
+        node.comments.map(comment => '# ' + comment.trim() + '\n').join('') +
         'fragment ' +
         node.name +
         ' {\n' +
