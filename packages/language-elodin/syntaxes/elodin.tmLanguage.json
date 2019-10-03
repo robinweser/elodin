@@ -13,6 +13,10 @@
     "keywords": {
       "patterns": [
         {
+          "name": "comment.elodin",
+          "match": "(#.*)"
+        },
+        {
           "name": "constant.variable.elodin",
           "match": "(?<=hex\\()\\s*([A-Fa-f0-9]+)"
         },
