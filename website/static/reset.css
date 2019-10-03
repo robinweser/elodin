@@ -21,7 +21,7 @@ div {
 body {
   font-family: -apple-system, Helvetica Neue, Helvetica, Arial, sans-serif;
   overscroll-behavior: none;
-  overflow: auto;
+  overflow: hidden;
   font-size: 16px;
 }
 
