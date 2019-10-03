@@ -7,13 +7,15 @@ import colorNames from './colorNames'
 
 const ruleMap = {
   minus: /^[-]$/,
+  hash: /^[#]$/,
   comparison: /^[><=]+$/i,
   quote: /^("|\\")$/,
   identifier: /^[_a-z]+$/i,
   number: /^\d+$/,
   floating_point: /^[.]+$/,
   colon: /^:$/,
-  whitespace: /^\s+$/,
+  whitespace: /^[^\S\r\n]$/,
+  newline: /^\s+$/,
   round_bracket: /^[()]$/,
   curly_bracket: /^[{}]$/,
   square_bracket: /^[\[\]]$/,
@@ -39,6 +41,7 @@ export default class Parser {
   updateCurrentToken(increment = 0) {
     this.currentPosition += increment
     this.currentToken = this.tokens[this.currentPosition]
+    this.parseComment()
   }
 
   isRunning() {
@@ -69,8 +72,32 @@ export default class Parser {
   }
 
   parse(input) {
-    this.tokens = tokenize(input.trim(), ruleMap, 'unknown').filter(
-      token => token.type !== 'whitespace'
+    const tokens = tokenize(input.trim(), ruleMap, 'unknown')
+
+    // TODO: extract to method
+    const newTokens = []
+
+    for (var i = 0; i < tokens.length; ++i) {
+      const token = tokens[i]
+
+      if (token.type === 'hash') {
+        var comment = ''
+        var j = i + 1
+
+        while (j < tokens.length && tokens[j].type !== 'newline') {
+          comment += tokens[j].value
+          ++j
+        }
+
+        i = j
+        newTokens.push({ type: 'comment', value: comment })
+      } else {
+        newTokens.push(token)
+      }
+    }
+
+    this.tokens = newTokens.filter(
+      token => token.type !== 'whitespace' && token.type !== 'newline'
     )
 
     this.tokens.push({
@@ -161,6 +188,12 @@ export default class Parser {
     }
   }
 
+  parseComment() {
+    if (this.currentToken.type === 'comment') {
+      this.comment = this.currentToken.value
+      this.updateCurrentToken(1)
+    }
+  }
   parseStyle() {
     if (
       this.currentToken.type === 'identifier' &&
