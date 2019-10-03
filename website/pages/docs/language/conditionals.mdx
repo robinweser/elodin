@@ -4,4 +4,59 @@ export default DocLayout
 
 # Conditionals
 
-Tbd.
+Conditionals add a special syntax to apply styles only a **condition** is fulfilled.<br/>
+They're written in square brackets and depending on the type of comparison support only equal comparison or all comparison operators.
+
+## Comparison Operators
+
+| Operator | Description                                                                                                      |
+| -------- | ---------------------------------------------------------------------------------------------------------------- |
+| =        | Matches if the value is exactly the same.<br />Commonly used with [variants](/docs/language/variants).           |
+| >        | Matches if the value greater than a given number.<br />_Only supported for integer and float types._             |
+| >=       | Matches if the value greater than or equal to a given number.<br />_Only supported for integer and float types._ |
+| <        | Matches if the value less than a given number.<br />_Only supported for integer and float types._                |
+| <=       | Matches if the value less than or equal to a given number.<br />_Only supported for integer and float types._    |
+
+## Variant Comparison
+
+The most simple conditions are variant checks which we've seen in the [Variant](/docs/language/variants) docs before.
+
+### Example
+
+```elodin
+variant Mode {
+  Dark
+  Light
+}
+
+view Button {
+  padding: 10
+  [Mode=Dark] {
+    backgroundColor: black
+  }
+
+  [Mode=White] {
+    backgroundColor: white
+  }
+}
+```
+
+## Environment Conditionals
+
+Apart from variants, some generators also implement special environment conditionals such as pseudo classes and media queries for web-specific generators.<br />
+Some environment variables are boolean types, which means they don't use a comparison operator at all.
+
+### Example
+
+```elodin
+view Button {
+  padding: 10
+  backgroundColor: black
+  [@hover] {
+    backgroundColor: rgb(40 40 40)
+  }
+  [@viewportWidth>=1024] {
+    padding: 15
+  }
+}
+```

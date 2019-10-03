@@ -127,18 +127,13 @@ module NavigationContent = {
         </NavigationLink>
       </NavigationGroup>
       <NavigationGroup text="API Reference">
-        <NavigationLink href="/docs/api/cli" disabled=true>
-          "CLI"
-        </NavigationLink>
-        <NavigationLink href="/docs/api/core" disabled=true>
-          "Core"
-        </NavigationLink>
-        <NavigationLink href="/docs/api/parser" disabled=true>
-          "Parser"
-        </NavigationLink>
-        <NavigationLink href="/docs/api/Traverser" disabled=true>
+        <NavigationLink href="/docs/api/cli"> "CLI" </NavigationLink>
+        <NavigationLink href="/docs/api/core"> "Core" </NavigationLink>
+        <NavigationLink href="/docs/api/parser"> "Parser" </NavigationLink>
+        <NavigationLink href="/docs/api/traverser">
           "Traverser"
         </NavigationLink>
+        <NavigationLink href="/docs/api/format"> "Formatter" </NavigationLink>
         <NavigationLink href="/docs/api/types" disabled=true>
           "Types"
         </NavigationLink>

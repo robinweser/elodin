@@ -38,8 +38,11 @@ import pkg from '../package.json'
 // )
 commander.option('--config [path]', 'Path to a elodin.config.js file to use')
 commander.option('-w, --watch', 'Recompile files on changes')
-commander.option('--clean', 'Remove old files before compilation')
-commander.option('--skip-initial-build', 'Do not compile files before watching')
+commander.option('-c, --clean', 'Remove old files before compilation')
+commander.option(
+  '-sib, --skip-initial-build',
+  'Do not compile files before watching'
+)
 
 // commander.option(
 //   '-d, --out-dir [out]',
