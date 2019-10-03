@@ -82,6 +82,9 @@ module NavigationContent = {
         <NavigationLink href="/docs/language/conditionals">
           "Conditionals"
         </NavigationLink>
+        <NavigationLink href="/docs/language/comments">
+          "Comments"
+        </NavigationLink>
         <NavigationLink href="/docs/language/functions" disabled=true>
           "Functions"
         </NavigationLink>

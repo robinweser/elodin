@@ -1,0 +1,27 @@
+import { make as DocLayout } from '../../../components/DocLayout.bs.js'
+
+export default DocLayout
+
+# Comments
+
+Comments can be helpful to explain a certain line of code or add some notes for other developers.<br />
+In Elodin, there're only single line comments, if you want a comment spread over multiple lines, simply use multiple single line comments.
+
+## Example
+
+```elodin
+variant Mode {
+  # the better mode
+  Light
+  # the hipster one, required to be cool
+  Mode
+}
+
+# This is our main Button
+view Button {
+  padding: 10
+  # we set a marginBottom to ensure that
+  # they're never paired with text directly
+  marginBottom: 5
+}
+```

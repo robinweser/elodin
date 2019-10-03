@@ -5,10 +5,11 @@
   "version": "0.0.33",
   "scripts": {
     "develop": "now dev",
-    "build": "yarn build:elodin && yarn build:reason && next build",
+    "build": "echo 1",
+    "build:page": "yarn build:elodin && yarn build:reason && next build",
     "build:reason": "bsb -clean-world -make-world",
     "build:elodin": "elodin pages components",
-    "now-build": "yarn build",
+    "now-build": "yarn build:page",
     "start": "next start",
     "export": "next export",
     "deploy": "now --target production",
