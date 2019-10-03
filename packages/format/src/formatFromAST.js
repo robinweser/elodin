@@ -38,36 +38,45 @@ export default function formatFromAST(node, customConfig = {}, level = 1) {
 
     case 'Style':
       return (
+        node.comments
+          .map(comment => '# ' + comment.trim() + '\n' + ident.repeat(level))
+          .join('') +
         node.format +
         ' ' +
         node.name +
         ' {\n' +
-        ident +
+        ident.repeat(level) +
         sortDeclarations(node.body)
           .map(generate)
-          .join('\n' + ident) +
+          .join('\n' + ident.repeat(level)) +
         '\n}'
       )
 
     case 'Variant':
       return (
+        node.comments
+          .map(comment => '# ' + comment.trim() + '\n' + ident.repeat(level))
+          .join('') +
         'variant ' +
         node.name +
         ' {\n' +
-        ident +
-        node.body.map(generate).join('\n' + ident) +
+        ident.repeat(level) +
+        node.body.map(generate).join('\n' + ident.repeat(level)) +
         '\n}'
       )
 
     case 'Fragment':
       return (
+        node.comments
+          .map(comment => '# ' + comment.trim() + '\n' + ident.repeat(level))
+          .join('') +
         'fragment ' +
         node.name +
         ' {\n' +
-        ident +
+        ident.repeat(level) +
         sortDeclarations(node.body)
           .map(generate)
-          .join('\n' + ident) +
+          .join('\n' + ident.repeat(level)) +
         '\n}'
       )
 
@@ -75,6 +84,9 @@ export default function formatFromAST(node, customConfig = {}, level = 1) {
       const newLevel = level + 1
 
       return (
+        node.comments
+          .map(comment => '# ' + comment.trim() + '\n' + ident.repeat(level))
+          .join('') +
         '[' +
         (node.boolean
           ? generate(node.property)
@@ -94,7 +106,13 @@ export default function formatFromAST(node, customConfig = {}, level = 1) {
 
     case 'Declaration':
       return (
-        (node.raw ? '__' : '') + node.property + ': ' + generate(node.value)
+        node.comments
+          .map(comment => '# ' + comment.trim() + '\n' + ident.repeat(level))
+          .join('') +
+        (node.raw ? '__' : '') +
+        node.property +
+        ': ' +
+        generate(node.value)
       )
 
     case 'Variable':

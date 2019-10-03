@@ -1,21 +1,26 @@
 import format from '../format'
 
 const file = `
+# foo
 variant Type { Primary }
 variant Mode { Dark 
 
  Light}
 fragment Flex {
    flexGrow: 1
+   #foobar
+      # baz
   flexDirection: row
 }
-view Button{justifyContent: flexStart
+view Button{justifyContent: flexStart #baz
 
 
       __borderWidth: .3
        backgroundColor: rgb(  255  200   155  )
-
-  [ Type =   Primary  ] {  paddingLeft: 20[Mode=Dark]{ backgroundColor:green __paddingLeft: 10}}
+#bam
+  [ Type =   Primary  ] {  #bazbar 
+    paddingLeft: 20[Mode=Dark]{ backgroundColor:green #bam 
+      __paddingLeft: 10}}
   }
 
    text    Label {
