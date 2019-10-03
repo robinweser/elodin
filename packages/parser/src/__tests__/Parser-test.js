@@ -4,7 +4,7 @@ describe('Parsing elodin syntax', () => {
   it('should correctly parse styles', () => {
     const file = `
 view Button {
-  backgroundColor: red
+  backgroundColor: red # foo
   borderColor: rgb(255 255 255)
   paddingLeft: 15
   marginTop: 1.2
@@ -52,7 +52,31 @@ view Button {
 
     const parser = new Parser()
 
-    console.log(parser.parse(file).errors)
+    expect(parser.parse(file).errors.length).toBe(0)
+    expect(parser.parse(file).ast).toMatchSnapshot()
+  })
+
+  it('should correctly parse comments', () => {
+    const file = `
+    # variant comment
+    variant Foo {
+      Bar
+      # baz 
+      Foo
+    }
+    # A comment
+    # Another one
+view Button {
+  backgroundColor: red # inline
+  borderColor: rgb(255 255 255)
+  paddingLeft: 15
+  marginTop: 1.2
+  borderWidth: $width
+  # another
+  __animationName: keyframe
+}`
+
+    const parser = new Parser()
 
     expect(parser.parse(file).errors.length).toBe(0)
     expect(parser.parse(file).ast).toMatchSnapshot()

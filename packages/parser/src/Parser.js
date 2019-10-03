@@ -41,6 +41,8 @@ export default class Parser {
   updateCurrentToken(increment = 0) {
     this.currentPosition += increment
     this.currentToken = this.tokens[this.currentPosition]
+
+    // ensure we always skip comments
     this.parseComment()
   }
 
@@ -69,6 +71,14 @@ export default class Parser {
       this.updateCurrentToken()
       this.exit = true
     }
+  }
+
+  getComments() {
+    this.parseComment()
+    const comments = [...this.comments]
+    this.comments = []
+
+    return comments
   }
 
   parse(input) {
@@ -109,6 +119,7 @@ export default class Parser {
     this.currentPosition = 0
     this.errors = []
     this.variantConditionals = []
+    this.comments = []
     this.updateCurrentToken()
 
     const file = {
@@ -118,6 +129,8 @@ export default class Parser {
 
     while (this.isRunning()) {
       this.parent = undefined
+
+      const comments = this.getComments()
 
       const node =
         this.parseStyle() || this.parseFragment() || this.parseVariant()
@@ -155,7 +168,7 @@ export default class Parser {
         )
       }
 
-      file.body.push(node)
+      file.body.push({ ...node, comments })
     }
 
     const variants = file.body.filter(node => node.type === 'Variant')
@@ -190,10 +203,11 @@ export default class Parser {
 
   parseComment() {
     if (this.currentToken.type === 'comment') {
-      this.comment = this.currentToken.value
+      this.comments.push(this.currentToken.value)
       this.updateCurrentToken(1)
     }
   }
+
   parseStyle() {
     if (
       this.currentToken.type === 'identifier' &&
@@ -270,6 +284,7 @@ export default class Parser {
       this.updateCurrentToken(1)
 
       while (this.isRunning() && this.currentToken.type !== 'curly_bracket') {
+        const comments = this.getComments()
         const node = this.parseDeclaration() || this.parseConditional()
 
         if (!node) {
@@ -299,7 +314,7 @@ export default class Parser {
           )
         }
 
-        body.push(node)
+        body.push({ ...node, comments })
         this.updateCurrentToken(1)
       }
 
@@ -371,6 +386,7 @@ export default class Parser {
       this.updateCurrentToken(1)
 
       while (this.isRunning() && this.currentToken.type !== 'curly_bracket') {
+        const comments = this.getComments()
         const declaration = this.parseDeclaration()
 
         if (!declaration) {
@@ -382,7 +398,7 @@ export default class Parser {
             true
           )
         }
-        body.push(declaration)
+        body.push({ ...declaration, comments })
         this.updateCurrentToken(1)
       }
 
@@ -456,6 +472,7 @@ export default class Parser {
       this.updateCurrentToken(1)
 
       while (this.isRunning() && this.currentToken.type !== 'curly_bracket') {
+        const comments = this.getComments()
         const variant = this.parseIdentifier()
 
         if (!variant) {
@@ -495,7 +512,7 @@ export default class Parser {
           )
         }
 
-        body.push(variant)
+        body.push({ ...variant, comments })
         this.updateCurrentToken(1)
       }
 
