@@ -5,6 +5,7 @@ variant Status {
 view Navigation {
   __overflow: auto
   __display: none
+  backgroundColor: rgb(245 245 245)
   flexBasis: 240
   flexShrink: 0
   paddingTop: 30

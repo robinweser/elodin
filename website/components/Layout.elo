@@ -51,6 +51,7 @@ view DocContent {
   flexShrink: 1
   flexGrow: 1
   [@viewportWidth>=1024] {
-    paddingLeft: 20
+    paddingLeft: 30
+    paddingRight: 30
   }
 }
