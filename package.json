@@ -11,6 +11,7 @@
     "format": "prettier --write \"**/*.js\"",
     "coverage": "lerna run coverage",
     "release": "git pull --rebase && yarn run cleanup && yarn build && yarn run coverage && lerna publish --force-publish",
+    "publish-website": "cd website && yarn deploy",
     "setup": "yarn bootstrap && yarn build",
     "test": "lerna run test",
     "check": "yarn run test",
