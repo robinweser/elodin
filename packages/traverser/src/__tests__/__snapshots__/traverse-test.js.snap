@@ -6,6 +6,7 @@ Object {
     Object {
       "body": Array [
         Object {
+          "comments": Array [],
           "dynamic": false,
           "property": "color",
           "raw": false,
@@ -22,6 +23,7 @@ Object {
         Object {
           "body": Array [
             Object {
+              "comments": Array [],
               "dynamic": false,
               "property": "color",
               "raw": false,
@@ -36,6 +38,7 @@ Object {
               },
             },
           ],
+          "comments": Array [],
           "operator": "=",
           "property": Object {
             "type": "Identifier",
@@ -48,6 +51,7 @@ Object {
           },
         },
       ],
+      "comments": Array [],
       "format": "view",
       "name": "Button",
       "type": "Style",

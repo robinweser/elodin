@@ -6,6 +6,7 @@ Object {
     Object {
       "body": Array [
         Object {
+          "comments": Array [],
           "dynamic": false,
           "property": "backgroundColor",
           "raw": false,
@@ -13,13 +14,14 @@ Object {
           "value": Object {
             "alpha": 1,
             "blue": 0,
-            "format": "hex",
+            "format": "rgb",
             "green": 0,
             "red": 255,
             "type": "Color",
           },
         },
         Object {
+          "comments": Array [],
           "dynamic": false,
           "property": "borderBottomColor",
           "raw": false,
@@ -27,13 +29,14 @@ Object {
           "value": Object {
             "alpha": 1,
             "blue": 50,
-            "format": "hex",
+            "format": "rgb",
             "green": 100,
             "red": 255,
             "type": "Color",
           },
         },
       ],
+      "comments": Array [],
       "format": "view",
       "name": "Button",
       "type": "Style",

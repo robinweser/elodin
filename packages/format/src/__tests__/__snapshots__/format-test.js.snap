@@ -1,7 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Formatting elodin syntax should return beautiful syntax 1`] = `
-"variant Type {
+"# foo
+  variant Type {
   Primary
 }
 
@@ -12,16 +13,22 @@ variant Mode {
 
 fragment Flex {
   flexGrow: 1
+  # foobar
+  # baz
   flexDirection: row
 }
 
 view Button {
+  # baz
   __borderWidth: .3
   justifyContent: flexStart
   backgroundColor: rgb(255 200 155)
+  # bam
   [Type=Primary] {
+    # bazbar
     paddingLeft: 20
     [Mode=Dark] {
+      # bam
       __paddingLeft: 10
       backgroundColor: green
     }
@@ -46,7 +53,8 @@ text Label {
 
 exports[`Formatting elodin syntax should return beautiful syntax with custom syntax 1`] = `
 Object {
-  "code": "variant Type {
+  "code": "# foo
+  variant Type {
   Primary
 }
 
@@ -57,16 +65,22 @@ variant Mode {
 
 fragment Flex {
   flexGrow: 1
+  # foobar
+  # baz
   flexDirection: row
 }
 
 view Button {
+  # baz
   __borderWidth: .3
   justifyContent: flexStart
   backgroundColor: rgb(255 200 155)
+  # bam
   [Type=Primary] {
+    # bazbar
     paddingLeft: 20
     [Mode=Dark] {
+      # bam
       __paddingLeft: 10
       backgroundColor: green
     }

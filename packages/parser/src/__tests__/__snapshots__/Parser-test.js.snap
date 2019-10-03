@@ -308,6 +308,7 @@ Object {
     Object {
       "body": Array [
         Object {
+          "comments": Array [],
           "dynamic": false,
           "property": "flexDirection",
           "raw": false,
@@ -318,6 +319,7 @@ Object {
           },
         },
         Object {
+          "comments": Array [],
           "dynamic": false,
           "property": "alignSelf",
           "raw": false,
@@ -328,6 +330,7 @@ Object {
           },
         },
         Object {
+          "comments": Array [],
           "dynamic": false,
           "property": "flexGrow",
           "raw": false,
@@ -339,6 +342,7 @@ Object {
           },
         },
         Object {
+          "comments": Array [],
           "dynamic": false,
           "property": "flexShrink",
           "raw": false,
@@ -350,6 +354,7 @@ Object {
           },
         },
         Object {
+          "comments": Array [],
           "dynamic": false,
           "property": "flexBasis",
           "raw": false,
