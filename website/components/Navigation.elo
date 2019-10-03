@@ -17,6 +17,9 @@ view Navigation {
 view NavigationItem {
   padding: 7
   paddingLeft: 30
+  [@viewportWidth>=1655] {
+    paddingLeft: 7
+  }
 }
 
 text NavigationItemText {
