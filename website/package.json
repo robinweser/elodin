@@ -4,7 +4,7 @@
   "description": "Official Elodin Documentation",
   "version": "0.0.34",
   "scripts": {
-    "develop": "now dev",
+    "dev": "now dev",
     "build": "echo 1",
     "build:page": "yarn build:elodin && yarn build:reason && next build",
     "build:reason": "bsb -clean-world -make-world",

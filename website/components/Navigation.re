@@ -120,6 +120,9 @@ module NavigationContent = {
         <NavigationLink href="/docs/plugins/replace-variable">
           "Replace Variable"
         </NavigationLink>
+        <NavigationLink href="/docs/plugins/rename-variable">
+          "Rename Variable"
+        </NavigationLink>
       </NavigationGroup>
       <NavigationGroup text="Advanced">
         <NavigationLink href="/docs/advanced/under-the-hood" disabled=true>
