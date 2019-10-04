@@ -309,24 +309,23 @@ function generateStyle(nodes) {
   const nests = nestings
     .map(nest => {
       if (nest.property.type === 'Variable' && nest.property.environment) {
-        if (nest.boolean) {
-          const pseudoClass = isPseudoClass(nest.property.value)
-          const pseudoElement = isPseudoElement(nest.property.value)
+        const pseudoClass = isPseudoClass(nest.property.value)
+        const pseudoElement = isPseudoElement(nest.property.value)
+        const mediaQuery = isMediaQuery(nest.property.value)
 
-          if (pseudoClass || pseudoElement) {
-            return {
-              property: (pseudoElement ? '::' : ':') + nest.property.value,
-              value: generateStyle(nest.body),
-            }
+        if ((pseudoClass || pseudoElement) && nest.boolean) {
+          return {
+            property: (pseudoElement ? '::' : ':') + nest.property.value,
+            value: generateStyle(nest.body),
           }
         }
 
-        if (isMediaQuery(nest.property.value)) {
+        if (mediaQuery) {
           return {
             property:
               '@media ' +
               generateCSSMediaQueryFromNode(
-                nest.value.value,
+                nest.boolean ? undefined : nest.value.value,
                 nest.property.value,
                 nest.operator
               ),

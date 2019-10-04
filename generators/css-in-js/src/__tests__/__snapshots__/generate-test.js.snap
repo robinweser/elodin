@@ -57,16 +57,30 @@ export function Button.elo(props = {}) {
     ...getDynamicStyleFromVariantMap(variantStyleMap, props)
   }
 }",
-  "Label.elo.css": "._1ie8i52:hover {
+  "Label.elo.css": "._19ixzy1:hover {
   color: red
+}
+
+@media (min-width: 320px) {
+  ._19ixzy1 {
+    color: green
+  }
+}
+
+@media (min-width: 320px) {
+  ._19ixzy1:hover {
+    color: blue
+  }
 }",
   "Label.elo.js": "import './Label.elo.css'
 
 export function Label.elo(props = {}) {
   return {
-    _className: '_elo_text _1ie8i52',
+    _className: '_elo_text _19ixzy1',
     \\"lineHeight\\":props.lineHeight,
-    \\":hover\\":{\\"fontSize\\":props.fontSize}
+    \\":hover\\":{\\"fontSize\\":props.fontSize},
+    \\"@media (min-width: 320px)\\":{\\"fontSize\\":props.mediaFontSize,
+\\":hover\\":{\\"fontSize\\":props.mediaHoverFontSize}}
   }
 }",
   "_reset.elo.css": "._elo_view{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;overflow:hidden;-webkit-overflow-scrolling:touch;align-self:stretch;flex-direction:column;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-shrink:0;max-width:100%;box-sizing:border-box}._elo_text{display:inline}body{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;overflow:hidden;-webkit-overflow-scrolling:touch;align-self:stretch;flex-direction:column;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-shrink:0;max-width:100%;box-sizing:border-box;max-height:100vh}",
@@ -138,16 +152,30 @@ export function Button.elo(props = {}) {
     ...getDynamicStyleFromVariantMap(variantStyleMap, props)
   }
 }",
-  "Label.elo.css": ".Label_1ie8i52:hover {
+  "Label.elo.css": ".Label_19ixzy1:hover {
   color: red
+}
+
+@media (min-width: 320px) {
+  .Label_19ixzy1 {
+    color: green
+  }
+}
+
+@media (min-width: 320px) {
+  .Label_19ixzy1:hover {
+    color: blue
+  }
 }",
   "Label.elo.js": "import './Label.elo.css'
 
 export function Label.elo(props = {}) {
   return {
-    _className: '_elo_text Label_1ie8i52',
+    _className: '_elo_text Label_19ixzy1',
     \\"lineHeight\\":props.lineHeight,
-    \\":hover\\":{\\"fontSize\\":props.fontSize}
+    \\":hover\\":{\\"fontSize\\":props.fontSize},
+    \\"@media (min-width: 320px)\\":{\\"fontSize\\":props.mediaFontSize,
+\\":hover\\":{\\"fontSize\\":props.mediaHoverFontSize}}
   }
 }",
   "_reset.elo.css": "._elo_view{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;overflow:hidden;-webkit-overflow-scrolling:touch;align-self:stretch;flex-direction:column;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-shrink:0;max-width:100%;box-sizing:border-box}._elo_text{display:inline}body{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;overflow:hidden;-webkit-overflow-scrolling:touch;align-self:stretch;flex-direction:column;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-shrink:0;max-width:100%;box-sizing:border-box;max-height:100vh}",
@@ -219,16 +247,30 @@ export function BUTTON(props = {}) {
     ...getDynamicStyleFromVariantMap(variantStyleMap, props)
   }
 }",
-  "LABEL.css": "._1ie8i52:hover {
+  "LABEL.css": "._19ixzy1:hover {
   color: red
+}
+
+@media (min-width: 320px) {
+  ._19ixzy1 {
+    color: green
+  }
+}
+
+@media (min-width: 320px) {
+  ._19ixzy1:hover {
+    color: blue
+  }
 }",
   "LABEL.js": "import './LABEL.css'
 
 export function LABEL(props = {}) {
   return {
-    _className: '_elo_text _1ie8i52',
+    _className: '_elo_text _19ixzy1',
     \\"lineHeight\\":props.lineHeight,
-    \\":hover\\":{\\"fontSize\\":props.fontSize}
+    \\":hover\\":{\\"fontSize\\":props.fontSize},
+    \\"@media (min-width: 320px)\\":{\\"fontSize\\":props.mediaFontSize,
+\\":hover\\":{\\"fontSize\\":props.mediaHoverFontSize}}
   }
 }",
   "_RESET.css": "._elo_view{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;overflow:hidden;-webkit-overflow-scrolling:touch;align-self:stretch;flex-direction:column;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-shrink:0;max-width:100%;box-sizing:border-box}._elo_text{display:inline}body{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;overflow:hidden;-webkit-overflow-scrolling:touch;align-self:stretch;flex-direction:column;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-shrink:0;max-width:100%;box-sizing:border-box;max-height:100vh}",
@@ -303,17 +345,31 @@ function Button.eloStyle(props  = {}) {
 }
 
 export const Button.elo = createComponent(Button.eloStyle)",
-  "Label.elo.css": "._1ie8i52:hover {
+  "Label.elo.css": "._19ixzy1:hover {
   color: red
+}
+
+@media (min-width: 320px) {
+  ._19ixzy1 {
+    color: green
+  }
+}
+
+@media (min-width: 320px) {
+  ._19ixzy1:hover {
+    color: blue
+  }
 }",
   "Label.elo.js": "import './Label.elo.css'
 import { createComponent } from 'react-fela'
 
 function Label.eloStyle(props  = {}) {
   return {
-    _className: '_elo_text _1ie8i52',
+    _className: '_elo_text _19ixzy1',
     \\"lineHeight\\":props.lineHeight,
-    \\":hover\\":{\\"fontSize\\":props.fontSize}
+    \\":hover\\":{\\"fontSize\\":props.fontSize},
+    \\"@media (min-width: 320px)\\":{\\"fontSize\\":props.mediaFontSize,
+\\":hover\\":{\\"fontSize\\":props.mediaHoverFontSize}}
   }
 }
 

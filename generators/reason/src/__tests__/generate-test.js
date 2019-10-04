@@ -19,6 +19,9 @@ view Button {
   paddingLeft: 10
   __border: 0
   borderWidth: $borderWidth
+  [@landscape] {
+    backgroundColor: blue
+  }
   [Type=Primary] {
     backgroundColor: red
     paddingLeft: $paddingLeft

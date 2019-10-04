@@ -74,26 +74,25 @@ export default function generateCSSClasses(
     }
 
     if (nest.property.type === 'Variable' && nest.property.environment) {
-      if (nest.boolean) {
-        const pseudoClass = isPseudoClass(nest.property.value)
-        const pseudoElement = isPseudoElement(nest.property.value)
+      const pseudoClass = isPseudoClass(nest.property.value)
+      const pseudoElement = isPseudoElement(nest.property.value)
+      const mediaQuery = isMediaQuery(nest.property.value)
 
-        if (pseudoClass || pseudoElement) {
-          generateCSSClasses(
-            nest.body,
-            variantMap,
-            devMode,
-            classes,
-            modifier,
-            pseudo +
-              (pseudoElement ? '::' : ':') +
-              hyphenateProperty(nest.property.value),
-            media
-          )
-        }
+      if ((pseudoClass || pseudoElement) && nest.boolean) {
+        generateCSSClasses(
+          nest.body,
+          variantMap,
+          devMode,
+          classes,
+          modifier,
+          pseudo +
+            (pseudoElement ? '::' : ':') +
+            hyphenateProperty(nest.property.value),
+          media
+        )
       }
 
-      if (isMediaQuery(nest.property.value)) {
+      if (mediaQuery) {
         generateCSSClasses(
           nest.body,
           variantMap,
@@ -104,7 +103,7 @@ export default function generateCSSClasses(
           media +
             (media ? ' and ' : '') +
             generateCSSMediaQueryFromNode(
-              nest.value.value,
+              nest.boolean ? undefined : nest.value.value,
               nest.property.value,
               nest.operator
             )

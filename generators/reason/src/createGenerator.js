@@ -465,7 +465,7 @@ function generateStyle(nodes) {
         if (isMediaQuery(nest.property.value)) {
           return {
             property: generateCSSMediaQueryFromNode(
-              nest.value.value,
+              nest.boolean ? undefined : nest.value.value,
               nest.property.value,
               nest.operator
             ),

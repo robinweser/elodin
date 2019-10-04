@@ -47,7 +47,7 @@ text Label {
     fontSize: $fontSize
   }
 
-  [@minWidth=320] {
+  [@viewportWidth>=320] {
     color: green
     fontSize: $mediaFontSize
     [@hover] {
