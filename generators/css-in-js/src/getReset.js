@@ -1,7 +1,7 @@
 const viewResetStyle = `display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;overflow:hidden;-webkit-overflow-scrolling:touch;align-self:stretch;flex-direction:column;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-shrink:0;max-width:100%;box-sizing:border-box`
 const textResetStyle = `display:inline;overflow:visible`
 
-const rootResetStyle = `${viewResetStyle};position:fixed;top:0;bottom:0;left:0;right:0`
+const rootResetStyle = `${viewResetStyle};max-height:100vh`
 
 export function baseReset(generateClassName) {
   const viewClassName = generateClassName('view')
