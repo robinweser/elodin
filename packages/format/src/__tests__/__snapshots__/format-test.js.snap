@@ -2,7 +2,7 @@
 
 exports[`Formatting elodin syntax should return beautiful syntax 1`] = `
 "# foo
-  variant Type {
+variant Type {
   Primary
 }
 
@@ -54,7 +54,7 @@ text Label {
 exports[`Formatting elodin syntax should return beautiful syntax with custom syntax 1`] = `
 Object {
   "code": "# foo
-  variant Type {
+variant Type {
   Primary
 }
 
