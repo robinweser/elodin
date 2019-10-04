@@ -1,0 +1,54 @@
+import { make as DocLayout } from '../../../components/DocLayout.bs.js'
+
+export default DocLayout
+
+# Rename Variable
+
+`@elodin/plugin-rename-variable`
+
+The reame variable plugin is used to rename variables.<br />
+
+## Usage
+
+To use the plugin, simply add it to your Elodin configuration and you're ready to go.
+
+#### elodin.config.js
+
+```javascript
+var renameVariable = require('@elodin/plugin-replace-variable')
+
+module.exports = {
+  plugins: [
+    renameVariable({
+      rename: variable =>
+        variable.replace(/_[a-z]/gi, match => match.charAt(1).toUpperCase()),
+    }),
+  ],
+}
+```
+
+## Configuration
+
+| Option | Type     | Default | Description                                               |
+| ------ | -------- | ------- | --------------------------------------------------------- |
+| rename | Function |         | A function that given the variable name returns a new one |
+
+### Example
+
+Given the rename function from the above usage example:
+
+#### Input
+
+```elodin
+view Button {
+  backgroundColor: $theme_primary_color
+}
+```
+
+#### Output
+
+```elodin
+view Button {
+  backgroundColor: $themePrimaryColor
+}
+```

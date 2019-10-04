@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Renaming variables should correctly rename variables 1`] = `
+Object {
+  "body": Array [
+    Object {
+      "body": Array [
+        Object {
+          "comments": Array [],
+          "dynamic": false,
+          "property": "paddingLeft",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "negative": false,
+            "type": "Integer",
+            "value": 10,
+          },
+        },
+        Object {
+          "comments": Array [],
+          "dynamic": true,
+          "property": "paddingRight",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "environment": false,
+            "type": "Variable",
+            "value": "theme.colors.primary",
+          },
+        },
+      ],
+      "comments": Array [],
+      "format": "view",
+      "name": "Button",
+      "type": "Style",
+    },
+  ],
+  "type": "File",
+}
+`;
