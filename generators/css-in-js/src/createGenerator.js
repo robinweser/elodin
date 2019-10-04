@@ -17,6 +17,8 @@ const defaultConfig = {
   rootNode: 'body',
   dynamicImport: false,
   generateResetClassName: type => '_elo_' + type,
+  generateCSSFileName: moduleName => moduleName + '.elo',
+  generateJSFileName: moduleName => moduleName + '.elo',
 }
 
 export default function createGenerator(customConfig = {}) {
@@ -49,33 +51,46 @@ export default function createGenerator(customConfig = {}) {
     const root = generateRoot(ast, config)
 
     return {
-      [relativeRootPath + '_reset.elo.css']: cssReset,
+      [relativeRootPath +
+      config.generateCSSFileName('_reset') +
+      '.css']: cssReset,
       [fileName + '.js']: root,
       ...css,
       ...js,
     }
   }
-  generate.filePattern = ['*.elo.js', '*.elo.css']
+  generate.filePattern = [
+    config.generateJSFileName('*') + '.js',
+    config.generateCSSFileName('*') + '.css',
+  ]
   generate.ignorePattern = ['node_modules']
 
   return generate
 }
 
-function generateRoot(ast, { relativeRootPath }) {
+function generateRoot(
+  ast,
+  { relativeRootPath, generateCSSFileName, generateJSFileName }
+) {
   // TODO: include fragments
   const styles = ast.body.filter(node => node.type === 'Style')
 
   const imports = styles
     .map(
       module =>
-        'import { ' + module.name + " } from './" + module.name + ".elo.js'"
+        'import { ' +
+        module.name +
+        " } from './" +
+        generateJSFileName(module.name) +
+        ".js'"
     )
     .join('\n')
 
   return (
     "import '" +
     relativeRootPath +
-    "_reset.elo.css'\n" +
+    generateCSSFileName('_reset') +
+    ".css'\n" +
     imports +
     '\n\n' +
     'export {\n  ' +
@@ -84,7 +99,7 @@ function generateRoot(ast, { relativeRootPath }) {
   )
 }
 
-function generateCSS(ast, { devMode }) {
+function generateCSS(ast, { devMode, generateCSSFileName }) {
   // TODO: include fragments
   const styles = ast.body.filter(node => node.type === 'Style')
   const variants = ast.body.filter(node => node.type === 'Variant')
@@ -103,7 +118,7 @@ function generateCSS(ast, { devMode }) {
 
     const classes = generateCSSClasses(module.body, variantMap, devMode)
 
-    files[module.name + '.elo.css'] = classes
+    files[generateCSSFileName(module.name) + '.css'] = classes
       .filter(selector => selector.declarations.length > 0)
       .map(selector => {
         const css = stringifyCSSRule(
@@ -126,7 +141,13 @@ function generateCSS(ast, { devMode }) {
 
 function generateJS(
   ast,
-  { devMode, dynamicImport, generateResetClassName },
+  {
+    devMode,
+    dynamicImport,
+    generateResetClassName,
+    generateCSSFileName,
+    generateJSFileName,
+  },
   adapter
 ) {
   // TODO: include fragments
@@ -149,10 +170,10 @@ function generateJS(
     const classNameMap = generateClassNameMap(module.body, variantMap, devMode)
     const variantStyleMap = generateVariantStyleMap(module.body, variants)
 
-    files[module.name + '.elo.js'] = adapter({
+    files[generateJSFileName(module.name) + '.js'] = adapter({
       style,
       variantStyleMap,
-      moduleName: module.name,
+      moduleName: generateCSSFileName(module.name),
       dynamicImport,
       classNameMap,
       resetClassName: generateResetClassName(module.format),

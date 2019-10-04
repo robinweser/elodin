@@ -79,6 +79,18 @@ describe('Compiling to CSS and JavaScript', () => {
     ).toMatchSnapshot()
   })
 
+  it('should return a map of files using custom fileName generators', () => {
+    const { ast } = parse(file)
+
+    expect(
+      createGenerator({
+        adapter: felaAdapter,
+        generateJSFileName: moduleName => moduleName.toUpperCase(),
+        generateCSSFileName: moduleName => moduleName.toUpperCase(),
+      })(ast, 'index.elo')
+    ).toMatchSnapshot()
+  })
+
   it('should use the given adapter', () => {
     const { ast } = parse(file)
 

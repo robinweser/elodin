@@ -50,7 +50,7 @@ const variantStyleMap = {
 })
 }
 
-export function Button(props = {}) {
+export function Button.elo(props = {}) {
   return {
     _className: '_elo_view ' + getClassNameFromVariantMap('_w7qnl2', variantClassNameMap, props),
     \\"borderWidth\\":props.borderWidth,
@@ -62,14 +62,14 @@ export function Button(props = {}) {
 }",
   "Label.elo.js": "import './Label.elo.css'
 
-export function Label(props = {}) {
+export function Label.elo(props = {}) {
   return {
     _className: '_elo_text _1ie8i52',
     \\"lineHeight\\":props.lineHeight,
     \\":hover\\":{\\"fontSize\\":props.fontSize}
   }
 }",
-  "_reset.elo.css": "._elo_view{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;overflow:hidden;-webkit-overflow-scrolling:touch;align-self:stretch;flex-direction:column;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-shrink:0;max-width:100%;box-sizing:border-box}._elo_text{display:inline;overflow:visible}body{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;overflow:hidden;-webkit-overflow-scrolling:touch;align-self:stretch;flex-direction:column;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-shrink:0;max-width:100%;box-sizing:border-box;max-height:100vh}",
+  "_reset.elo.css": "._elo_view{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;overflow:hidden;-webkit-overflow-scrolling:touch;align-self:stretch;flex-direction:column;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-shrink:0;max-width:100%;box-sizing:border-box}._elo_text{display:inline}body{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;overflow:hidden;-webkit-overflow-scrolling:touch;align-self:stretch;flex-direction:column;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-shrink:0;max-width:100%;box-sizing:border-box;max-height:100vh}",
   "index.elo.js": "import './_reset.elo.css'
 import { Button } from './Button.elo.js'
 import { Label } from './Label.elo.js'
@@ -131,7 +131,7 @@ const variantStyleMap = {
 })
 }
 
-export function Button(props = {}) {
+export function Button.elo(props = {}) {
   return {
     _className: '_elo_view ' + getClassNameFromVariantMap('Button_w7qnl2', variantClassNameMap, props),
     \\"borderWidth\\":props.borderWidth,
@@ -143,17 +143,98 @@ export function Button(props = {}) {
 }",
   "Label.elo.js": "import './Label.elo.css'
 
-export function Label(props = {}) {
+export function Label.elo(props = {}) {
   return {
     _className: '_elo_text Label_1ie8i52',
     \\"lineHeight\\":props.lineHeight,
     \\":hover\\":{\\"fontSize\\":props.fontSize}
   }
 }",
-  "_reset.elo.css": "._elo_view{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;overflow:hidden;-webkit-overflow-scrolling:touch;align-self:stretch;flex-direction:column;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-shrink:0;max-width:100%;box-sizing:border-box}._elo_text{display:inline;overflow:visible}body{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;overflow:hidden;-webkit-overflow-scrolling:touch;align-self:stretch;flex-direction:column;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-shrink:0;max-width:100%;box-sizing:border-box;max-height:100vh}",
+  "_reset.elo.css": "._elo_view{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;overflow:hidden;-webkit-overflow-scrolling:touch;align-self:stretch;flex-direction:column;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-shrink:0;max-width:100%;box-sizing:border-box}._elo_text{display:inline}body{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;overflow:hidden;-webkit-overflow-scrolling:touch;align-self:stretch;flex-direction:column;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-shrink:0;max-width:100%;box-sizing:border-box;max-height:100vh}",
   "index.elo.js": "import './_reset.elo.css'
 import { Button } from './Button.elo.js'
 import { Label } from './Label.elo.js'
+
+export {
+  Button,
+  Label
+}",
+}
+`;
+
+exports[`Compiling to CSS and JavaScript should return a map of files using custom fileName generators 1`] = `
+Object {
+  "BUTTON.css": "._w7qnl2 {
+  border: 0px;
+  background-color: red;
+  padding-left: 10px
+}
+
+._w7qnl2_0-0 {
+  background-color: red
+}
+
+._w7qnl2_0-0:hover {
+  padding-left: 10px
+}
+
+._w7qnl2_0-0_1-0 {
+  background-color: blue
+}
+
+._w7qnl2_1-1 {
+  background-color: green
+}",
+  "BUTTON.js": "import './BUTTON.css'
+import { getClassNameFromVariantMap, getDynamicStyleFromVariantMap } from '@elodin/runtime'
+
+const variantClassNameMap = {
+  \\"\\": {},
+  \\"_0-0\\": {
+    \\"Type\\": \\"Primary\\"
+  },
+  \\"_0-0_1-0\\": {
+    \\"Type\\": \\"Primary\\",
+    \\"Mode\\": \\"Dark\\"
+  },
+  \\"_1-1\\": {
+    \\"Mode\\": \\"Light\\"
+  }
+}
+
+const variantStyleMap = {
+'__Type-Primary': props => ({
+  \\"paddingLeft\\":props.paddingLeft,
+  \\":hover\\":{\\"paddingRight\\":props.paddingRight}
+}),
+'__Type-Primary__Mode-Dark': props => ({
+  \\"paddingLeft\\":props.padLeft
+})
+}
+
+export function BUTTON(props = {}) {
+  return {
+    _className: '_elo_view ' + getClassNameFromVariantMap('_w7qnl2', variantClassNameMap, props),
+    \\"borderWidth\\":props.borderWidth,
+    ...getDynamicStyleFromVariantMap(variantStyleMap, props)
+  }
+}",
+  "LABEL.css": "._1ie8i52:hover {
+  color: red
+}",
+  "LABEL.js": "import './LABEL.css'
+
+export function LABEL(props = {}) {
+  return {
+    _className: '_elo_text _1ie8i52',
+    \\"lineHeight\\":props.lineHeight,
+    \\":hover\\":{\\"fontSize\\":props.fontSize}
+  }
+}",
+  "_RESET.css": "._elo_view{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;overflow:hidden;-webkit-overflow-scrolling:touch;align-self:stretch;flex-direction:column;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-shrink:0;max-width:100%;box-sizing:border-box}._elo_text{display:inline}body{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;overflow:hidden;-webkit-overflow-scrolling:touch;align-self:stretch;flex-direction:column;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-shrink:0;max-width:100%;box-sizing:border-box;max-height:100vh}",
+  "index.elo.js": "import './_RESET.css'
+import { Button } from './BUTTON.js'
+import { Label } from './LABEL.js'
 
 export {
   Button,
@@ -213,7 +294,7 @@ const variantStyleMap = {
 })
 }
 
-function ButtonStyle(props  = {}) {
+function Button.eloStyle(props  = {}) {
   return {
     _className: '_elo_view ' + getClassNameFromVariantMap('_w7qnl2', variantMap, props),
     \\"borderWidth\\":props.borderWidth,
@@ -221,14 +302,14 @@ function ButtonStyle(props  = {}) {
   }
 }
 
-export const Button = createComponent(ButtonStyle)",
+export const Button.elo = createComponent(Button.eloStyle)",
   "Label.elo.css": "._1ie8i52:hover {
   color: red
 }",
   "Label.elo.js": "import './Label.elo.css'
 import { createComponent } from 'react-fela'
 
-function LabelStyle(props  = {}) {
+function Label.eloStyle(props  = {}) {
   return {
     _className: '_elo_text _1ie8i52',
     \\"lineHeight\\":props.lineHeight,
@@ -236,8 +317,8 @@ function LabelStyle(props  = {}) {
   }
 }
 
-export const Label = createComponent(LabelStyle)",
-  "_reset.elo.css": "._elo_view{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;overflow:hidden;-webkit-overflow-scrolling:touch;align-self:stretch;flex-direction:column;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-shrink:0;max-width:100%;box-sizing:border-box}._elo_text{display:inline;overflow:visible}body{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;overflow:hidden;-webkit-overflow-scrolling:touch;align-self:stretch;flex-direction:column;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-shrink:0;max-width:100%;box-sizing:border-box;max-height:100vh}",
+export const Label.elo = createComponent(Label.eloStyle)",
+  "_reset.elo.css": "._elo_view{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;overflow:hidden;-webkit-overflow-scrolling:touch;align-self:stretch;flex-direction:column;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-shrink:0;max-width:100%;box-sizing:border-box}._elo_text{display:inline}body{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;overflow:hidden;-webkit-overflow-scrolling:touch;align-self:stretch;flex-direction:column;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-shrink:0;max-width:100%;box-sizing:border-box;max-height:100vh}",
   "index.elo.js": "import './_reset.elo.css'
 import { Button } from './Button.elo.js'
 import { Label } from './Label.elo.js'

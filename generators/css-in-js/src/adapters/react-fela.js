@@ -28,7 +28,7 @@ export default function reactFelaAdapter({
   ].filter(Boolean)
 
   return (
-    (!dynamicImport ? "import './" + moduleName + ".elo.css'\n" : '') +
+    (!dynamicImport ? "import './" + moduleName + ".css'\n" : '') +
     (imports.length > 0
       ? 'import { ' + imports.join(', ') + " } from '@elodin/runtime'\n"
       : '') +
@@ -59,7 +59,7 @@ export default function reactFelaAdapter({
     'Style' +
     '(props  = {})' +
     ' {\n  ' +
-    (dynamicImport ? "import('./" + moduleName + ".elo.css')\n" : '') +
+    (dynamicImport ? "import('./" + moduleName + ".css')\n" : '') +
     'return {\n    ' +
     '_className: ' +
     (hasVariations
