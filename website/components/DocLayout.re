@@ -153,6 +153,16 @@ let make = (~children) => {
       />
     </Head>
     <Section style={ReactDOMRe.Style.make(~flexShrink="1", ())}>
+      <div
+        style={ReactDOMRe.Style.make(
+          ~position="absolute",
+          ~paddingLeft="999px",
+          ~marginLeft="-999px",
+          ~height="100%",
+          ~backgroundColor="rgb(245, 245, 245)",
+          (),
+        )}
+      />
       <div className={LayoutStyle.row()}>
         <Navigation />
         <MDX.MDXProvider components>

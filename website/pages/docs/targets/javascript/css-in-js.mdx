@@ -43,13 +43,12 @@ Apart from the adapter, it also accepts a bunch of configuration options to cust
 Adapters are bindings to different CSS in JS libraries.<br />
 They all use the same generated data and render library specific source code in order to work seamlessly.<br />
 
-| Adapter           | Description                                                                                                                                                                                                  |
-| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-|  fela             | Renders styles to pure [fela](http://fela.js.org) [rules](http://fela.js.org/docs/basics/Rules.html)                                                                                                         |
-| react-fela        | Renders styles to React components using [react-fela](https://github.com/robinweser/fela/tree/master/packages/react-fela)'s [createComponent](http://fela.js.org/docs/api/bindings/createComponent.html) API |
-| styled-components | Renders styles to React components using [styled-components](https://www.styled-components.com) [styled](https://www.styled-components.com/docs/api#styled) API                                              |
+| Adapter    | Description                                                                                                                                                                                                  |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| fela       | Renders styles to pure [fela](http://fela.js.org) [rules](http://fela.js.org/docs/basics/Rules.html)                                                                                                         |
+| react-fela | Renders styles to React components using [react-fela](https://github.com/robinweser/fela/tree/master/packages/react-fela)'s [createComponent](http://fela.js.org/docs/api/bindings/createComponent.html) API |
 
-> **Missing your favourite library?** File and issue and we'll try to add an adapter for it!
+> **Missing your favourite library?** File an issue and we'll try to add an adapter for it!
 
 ### Example
 
@@ -57,11 +56,11 @@ They all use the same generated data and render library specific source code in 
 
 ```javascript
 var createGenerator = require('@elodin/generator-css-in-js').createGenerator
-var styledComponentsAdapter = require('@elodin/generator-css-in-js/adapter/styled-components')
+var felaAdapter = require('@elodin/generator-css-in-js/adapter/fela')
 
 const config = {
   devMode: true,
-  adapter: styledComponentsAdapter(),
+  adapter: felaAdapter(),
   rootNode: '#__next',
 }
 
