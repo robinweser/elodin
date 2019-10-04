@@ -128,7 +128,7 @@ const values = [
 ]
 var functions = ['rgb', 'hsl', 'rgba', 'hsla', 'hex', 'percentage']
 var keywords = ['view', 'text', 'variant', 'fragment']
-var mediaQueries = ['viewportWidth', 'viewportHeight']
+var mediaQueries = ['viewportWidth', 'viewportHeight', 'landscape', 'portrait']
 var pseudoClasses = [
   'active',
   'checked',
