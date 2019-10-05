@@ -3,3 +3,57 @@ import { make as DocLayout } from '../../../components/DocLayout.bs.js'
 export default DocLayout
 
 # Parser
+
+`@elodin/parser`
+
+The parser turns a string of Elodin code into an AST (Abstract Syntax Tree).
+
+## parse
+
+It exposes a `parse` method that just takes an single string of code.
+
+### Example
+
+```javascript
+import { parse } from '@elodin/parser'
+
+const input = `
+view Button {
+  backgroundColor: red
+  paddingLeft: 10
+  paddingRight: 10
+}
+`
+
+const ast = parse(input)
+```
+
+## AST Nodes
+
+The AST consists of the following AST nodes:
+
+### File
+
+### Style
+
+### Variant
+
+### Conditional
+
+### Declaration
+
+### Variable
+
+### Float
+
+### Integer
+
+### Identifier
+
+### RawValue
+
+### Percentage
+
+### String
+
+### Color

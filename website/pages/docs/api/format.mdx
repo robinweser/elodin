@@ -2,4 +2,35 @@ import { make as DocLayout } from '../../../components/DocLayout.bs.js'
 
 export default DocLayout
 
-# Core
+# Format
+
+`@elodin/format`
+
+Format beautifies a string of Elodin code in an opinionated approach.
+
+## format
+
+It exposes a single `format` method that just takes an single string of code.
+
+### Example
+
+```javascript
+import { format } from '@elodin/format'
+
+const input = `
+view Button { backgroundColor: red
+      paddingLeft: 10
+paddingRight  :   10
+}
+`
+
+const output = format(input)
+
+output = `
+view Button {
+  backgroundColor: red
+  paddingLeft: 10
+  paddingRight: 10
+}
+`
+```

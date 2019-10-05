@@ -3,3 +3,57 @@ import { make as DocLayout } from '../../../components/DocLayout.bs.js'
 export default DocLayout
 
 # Traverser
+
+`@elodin/traverser`
+
+The traverser takes an AST, transform its nodes and returns a new AST.<br />
+It traverses (thus the name) the tree reaching each node once.
+
+## traverse
+
+The `traverse` method takes an ast and a list of visitors.
+
+### Example
+
+```javascript
+import { parse } from '@elodin/parser'
+import { traverse } from '@elodin/traverser'
+
+const input = `
+view Button {
+  backgroundColor: red
+  paddingLeft: 10
+  paddingRight: 10
+}
+`
+
+// this visitors adds 5 to every Integer node
+const visitors = {
+  Integer: {
+    enter(path) {
+      path.node.value += 5
+    },
+  },
+}
+
+const ast = traverse(parse(input), visitors)
+```
+
+## Visitors
+
+A visitor contains an `enter` and/or `exit` function for a specific AST node type.<br />
+Enter is called once the AST node is reached while exit is called once the AST node with its sub nodes was fully processed. <br />
+Both are called with a `path` object.
+
+### Path
+
+The path object contains all data and methods for the current AST node.
+
+| Property    |  Description                                                                                                      |
+| ----------- | ----------------------------------------------------------------------------------------------------------------- |
+| node        | The current AST node                                                                                              |
+| parent      | The parent AST node                                                                                               |
+| traverse    | The traverse method just for convenience when doing nested traversals                                             |
+| context     | An object with context information (e.g. file path)                                                               |
+| replaceNode | A function that takes an AST node to replace the current AST node. _Note_: Only available for container AST nodes |
+| removeNode  | Removes the current AST node from its parent                                                                      |

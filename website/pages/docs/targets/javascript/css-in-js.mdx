@@ -18,11 +18,11 @@ To use the CSS in JS generator, simply add it to your Elodin configuration and c
 
 ```javascript
 var createGenerator = require('@elodin/generator-css-in-js').createGenerator
-var felaAdapter = require('@elodin/generator-css-in-js/adapter/fela')
+var felaAdapter = require('@elodin/generator-css-in-js/adapter/fela').default
 
 module.exports = {
   generator: createGenerator({
-    adapter: felaAdapter(),
+    adapter: felaAdapter,
   }),
 }
 ```
@@ -56,11 +56,12 @@ They all use the same generated data and render library specific source code in 
 
 ```javascript
 var createGenerator = require('@elodin/generator-css-in-js').createGenerator
-var felaAdapter = require('@elodin/generator-css-in-js/adapter/fela')
+var reactFelaAdapter = require('@elodin/generator-css-in-js/adapter/react-fela')
+  .default
 
 const config = {
   devMode: true,
-  adapter: felaAdapter(),
+  adapter: reactFelaAdapter,
   rootNode: '#__next',
 }
 
