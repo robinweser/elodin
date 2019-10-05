@@ -151,6 +151,7 @@ let make = (~children) => {
         href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/themes/prism.min.css"
         rel="stylesheet"
       />
+      <title> {"Elodin - Documentation" |> s} </title>
     </Head>
     <Section style={ReactDOMRe.Style.make(~flexShrink="1", ())}>
       <div

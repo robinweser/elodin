@@ -3,6 +3,9 @@ open Utils;
 [@react.component]
 let make = () => {
   <PageLayout>
+    <Next.Head>
+      <title> {"Elodin - The Universal Styling Language" |> s} </title>
+    </Next.Head>
     <div
       style={ReactDOMRe.Style.make(
         ~overflow="auto",
@@ -20,7 +23,7 @@ let make = () => {
               ~maxWidth="800px",
               (),
             )}>
-            <img src="/static/logo.svg" width="100%" />
+            <img src="/static/wordmark.svg" width="100%" />
           </div>
         </Section>
       </div>

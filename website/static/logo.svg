@@ -1,28 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg width="100%" height="100%" viewBox="0 0 3756 1241" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
-    <g transform="matrix(0.63711,0,0,0.63711,-138.706,-393.795)">
+<svg width="100%" height="100%" viewBox="0 0 1241 1241" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(0.63711,0,0,0.63711,-109.062,-394.703)">
         <circle cx="1142.32" cy="1590.27" r="367.345" style="fill:rgb(0,176,164);"/>
     </g>
-    <g transform="matrix(1,0,0,1,-426.676,-636.178)">
+    <g transform="matrix(1,0,0,1,-397.031,-637.087)">
         <circle cx="637.945" cy="1039.3" r="148.992" style="fill:rgb(25,93,157);"/>
     </g>
-    <g transform="matrix(1,0,0,1,329.248,-203.393)">
+    <g transform="matrix(1,0,0,1,358.893,-204.302)">
         <circle cx="637.945" cy="1039.3" r="148.992" style="fill:rgb(25,139,157);fill-opacity:0.76;"/>
     </g>
-    <g transform="matrix(1,0,0,1,-47.7074,9.46524)">
+    <g transform="matrix(1,0,0,1,-18.0626,8.55692)">
         <circle cx="637.945" cy="1039.3" r="148.992" style="fill:rgb(25,93,157);"/>
     </g>
-    <g transform="matrix(1,0,0,1,-48.3847,-849.021)">
+    <g transform="matrix(1,0,0,1,-18.7399,-849.929)">
         <circle cx="637.945" cy="1039.3" r="148.992" style="fill:rgb(80,167,180);"/>
     </g>
-    <g transform="matrix(1,0,0,1,329.118,-636.252)">
+    <g transform="matrix(1,0,0,1,358.763,-637.161)">
         <circle cx="637.945" cy="1039.3" r="148.992" style="fill:rgb(25,93,157);"/>
     </g>
-    <g transform="matrix(1,0,0,1,-427.437,-203.278)">
+    <g transform="matrix(1,0,0,1,-397.792,-204.186)">
         <circle cx="637.945" cy="1039.3" r="148.992" style="fill:rgb(80,167,180);"/>
-    </g>
-    <g transform="matrix(1,0,0,1,-235.598,-414.914)">
-        <text x="1588.7px" y="1361.67px" style="font-family:'MyanmarSangamMN-Bold', 'Myanmar Sangam MN';font-size:893.105px;fill:rgb(48,48,48);">Elodin</text>
     </g>
 </svg>

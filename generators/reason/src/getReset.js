@@ -1,5 +1,5 @@
 const viewResetStyle = `display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;overflow:hidden;-webkit-overflow-scrolling:touch;align-self:stretch;flex-direction:column;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-shrink:0;max-width:100%;box-sizing:border-box`
-const textResetStyle = `display:inline`
+const textResetStyle = `display:inline;overflow:visible`
 
 const rootResetStyle = `${viewResetStyle};max-height:100vh`
 
