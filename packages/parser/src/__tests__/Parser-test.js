@@ -1,7 +1,7 @@
 import Parser from '../Parser'
 
 describe('Parsing elodin syntax', () => {
-  it('should correctly parse styles', () => {
+  it.only('should correctly parse styles', () => {
     const file = `
 view Button {
   backgroundColor: red # foo
@@ -14,6 +14,7 @@ view Button {
 
     const parser = new Parser()
 
+    // console.log(parser.parse(file))
     expect(parser.parse(file).errors.length).toBe(0)
     expect(parser.parse(file).ast).toMatchSnapshot()
   })
