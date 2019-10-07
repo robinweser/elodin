@@ -108,8 +108,7 @@ export default class Parser {
 
       const comments = this.getComments()
 
-      const node =
-        this.parseStyle() || this.parseFragment() || this.parseVariant()
+      const node = this.parseStyle() || this.parseVariant()
 
       if (node) {
         const duplicate = file.body.find(n => n.name === node.name)
@@ -138,7 +137,7 @@ export default class Parser {
           {
             type: errorTypes.SYNTAX_ERROR,
             message:
-              'Invalid Syntax. Top-level constructs can only be view, text, fragment or variant.',
+              'Invalid Syntax. Top-level constructs can only be view, text or variant.',
           },
           true
         )
@@ -299,89 +298,89 @@ export default class Parser {
     }
   }
 
-  parseFragment() {
-    if (
-      this.currentToken.type === 'identifier' &&
-      this.currentToken.value === 'fragment'
-    ) {
-      this.updateCurrentToken(1)
+  // parseFragment() {
+  //   if (
+  //     this.currentToken.type === 'identifier' &&
+  //     this.currentToken.value === 'fragment'
+  //   ) {
+  //     this.updateCurrentToken(1)
 
-      const name = this.parseStyleName()
+  //     const name = this.parseStyleName()
 
-      if (!name) {
-        this.addError(
-          {
-            type: errorTypes.SYNTAX_ERROR,
-            message: 'A fragment must have a valid name.',
-          },
-          true
-        )
-      }
+  //     if (!name) {
+  //       this.addError(
+  //         {
+  //           type: errorTypes.SYNTAX_ERROR,
+  //           message: 'A fragment must have a valid name.',
+  //         },
+  //         true
+  //       )
+  //     }
 
-      if (name && name.charAt(0).toUpperCase() !== name.charAt(0)) {
-        this.addError(
-          {
-            type: errorTypes.SYNTAX_ERROR,
-            message: 'Fragment names must begin with an uppercase letter.',
-            name,
-          },
-          true
-        )
-      }
+  //     if (name && name.charAt(0).toUpperCase() !== name.charAt(0)) {
+  //       this.addError(
+  //         {
+  //           type: errorTypes.SYNTAX_ERROR,
+  //           message: 'Fragment names must begin with an uppercase letter.',
+  //           name,
+  //         },
+  //         true
+  //       )
+  //     }
 
-      this.parent = {
-        type: 'fragment',
-        name,
-      }
+  //     this.parent = {
+  //       type: 'fragment',
+  //       name,
+  //     }
 
-      const body = this.parseFragmentBody()
+  //     const body = this.parseFragmentBody()
 
-      if (!body) {
-        this.addError(
-          {
-            type: errorTypes.SYNTAX_ERROR,
-          },
-          true
-        )
-      }
-      return {
-        type: 'Fragment',
-        name,
-        body,
-      }
-    }
-  }
+  //     if (!body) {
+  //       this.addError(
+  //         {
+  //           type: errorTypes.SYNTAX_ERROR,
+  //         },
+  //         true
+  //       )
+  //     }
+  //     return {
+  //       type: 'Fragment',
+  //       name,
+  //       body,
+  //     }
+  //   }
+  // }
 
-  parseFragmentBody() {
-    const body = []
+  // parseFragmentBody() {
+  //   const body = []
 
-    if (
-      this.currentToken.type === 'curly_bracket' &&
-      this.currentToken.value === '{'
-    ) {
-      this.updateCurrentToken(1)
+  //   if (
+  //     this.currentToken.type === 'curly_bracket' &&
+  //     this.currentToken.value === '{'
+  //   ) {
+  //     this.updateCurrentToken(1)
 
-      while (this.isRunning() && this.currentToken.type !== 'curly_bracket') {
-        const comments = this.getComments()
-        const declaration = this.parseDeclaration()
+  //     while (this.isRunning() && this.currentToken.type !== 'curly_bracket') {
+  //       const comments = this.getComments()
+  //       const declaration = this.parseDeclaration()
 
-        if (!declaration) {
-          this.addError(
-            {
-              type: errorTypes.SYNTAX_ERROR,
-              messages: 'Fragments must only contain declarations.',
-            },
-            true
-          )
-        }
-        body.push({ ...declaration, comments })
-        this.updateCurrentToken(1)
-      }
+  //       if (!declaration) {
+  //         this.addError(
+  //           {
+  //             type: errorTypes.SYNTAX_ERROR,
+  //             messages: 'Fragments must only contain declarations.',
+  //           },
+  //           true
+  //         )
+  //       }
+  //       body.push({ ...declaration, comments })
+  //       this.updateCurrentToken(1)
+  //     }
 
-      this.updateCurrentToken(1)
-      return body
-    }
-  }
+  //     this.updateCurrentToken(1)
+  //     return body
+  //   }
+  // }
 
   parseVariant() {
     if (

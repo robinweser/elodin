@@ -5,7 +5,7 @@ describe('Parsing elodin syntax', () => {
     const file = `
 view Button {
   backgroundColor: red
-  borderColor: rgba(255 255 255 percentage(add(20 10)))
+  borderColor: rgb(255 255 255)
   paddingLeft: 15
   marginTop: 1.2
   borderWidth: $width
@@ -82,21 +82,21 @@ view Button {
     expect(parser.parse(file).ast).toMatchSnapshot()
   })
 
-  it('should correctly parse fragments', () => {
-    const file = `
-fragment Flex {
-  flexDirection: row
-  alignSelf: stretch
-  flexGrow: 0
-  flexShrink: 1
-  flexBasis: 50
-}`
+  //   it('should correctly parse fragments', () => {
+  //     const file = `
+  // fragment Flex {
+  //   flexDirection: row
+  //   alignSelf: stretch
+  //   flexGrow: 0
+  //   flexShrink: 1
+  //   flexBasis: 50
+  // }`
 
-    const parser = new Parser()
+  //     const parser = new Parser()
 
-    expect(parser.parse(file).errors.length).toBe(0)
-    expect(parser.parse(file).ast).toMatchSnapshot()
-  })
+  //     expect(parser.parse(file).errors.length).toBe(0)
+  //     expect(parser.parse(file).ast).toMatchSnapshot()
+  //   })
 
   it('should correctly parse env condition', () => {
     const file = `

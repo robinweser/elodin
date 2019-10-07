@@ -2,6 +2,14 @@ const isBetween = (start, end) => node =>
   node.value > start && node.value <= end
 
 export default {
+  raw: {
+    params: [
+      {
+        type: 'String',
+      },
+    ],
+    return: 'RawValue',
+  },
   percentage: {
     params: [
       {
@@ -12,16 +20,41 @@ export default {
     return: 'Percentage',
   },
 
-  percentage: {
+  hsl: {
     params: [
       {
         type: 'Integer',
-        validate: isBetween(0, 100),
+        validate: isBetween(0, 360),
+      },
+      {
+        type: 'Percentage',
+      },
+      {
+        type: 'Percentage',
       },
     ],
-    return: 'Percentage',
+    return: 'Color',
   },
-  
+
+  hsla: {
+    params: [
+      {
+        type: 'Integer',
+        validate: isBetween(0, 360),
+      },
+      {
+        type: 'Percentage',
+      },
+      {
+        type: 'Percentage',
+      },
+      {
+        type: 'Percentage',
+      },
+    ],
+    return: 'Color',
+  },
+
   rgb: {
     params: [
       {
@@ -60,6 +93,16 @@ export default {
     return: 'Color',
   },
   add: {
+    types: ['Integer', 'Float'],
+    return: params =>
+      params.find(param => param.type === 'Float') ? 'Float' : 'Integer',
+  },
+  sub: {
+    types: ['Integer', 'Float'],
+    return: params =>
+      params.find(param => param.type === 'Float') ? 'Float' : 'Integer',
+  },
+  mul: {
     types: ['Integer', 'Float'],
     return: params =>
       params.find(param => param.type === 'Float') ? 'Float' : 'Integer',
