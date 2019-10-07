@@ -22,7 +22,7 @@ var felaAdapter = require('@elodin/generator-css-in-js/adapter/fela').default
 
 module.exports = {
   generator: createGenerator({
-    adapter: felaAdapter,
+    adapter: felaAdapter(),
   }),
 }
 ```
@@ -31,24 +31,30 @@ module.exports = {
 
 Apart from the adapter, it also accepts a bunch of configuration options to customize the generated code.
 
-| Option                 | Type        | Default                  | Description                                                    |
-| ---------------------- | ----------- | ------------------------ | -------------------------------------------------------------- |
-| adapter                | Adapter     | `false`                  | CSS in JS library adapter                                      |
-| devMode                | Boolean     | `false`                  | Enables readable class names                                   |
-| rootNode               | HTMLElement | `body`                   | CSS selector to apply root reset style to (see below)          |
-| generateResetClassName | Function    | `type => "_elo_" + type` | Determines how the reset class names are generated (see below) |
+| Option                 | Type        | Default                  | Description                                           |
+| ---------------------- | ----------- | ------------------------ | ----------------------------------------------------- |
+| adapter                | Adapter     | `false`                  | CSS in JS library adapter                             |
+| devMode                | Boolean     | `false`                  | Enables readable class names                          |
+| rootNode               | HTMLElement |                          | CSS selector to apply root reset style to (see below) |
+| generateResetClassName | Function    | `type => "_elo_" + type` | Determines how the reset class names are generated    |
+
+### rootNode
+
+If a rootNode is provided, Elodin will automatically apply a small reset for more convenient flexbox usage.
 
 ## Adapters
 
 Adapters are bindings to different CSS in JS libraries.<br />
 They all use the same generated data and render library specific source code in order to work seamlessly.<br />
 
-| Adapter    | Description                                                                                                                                                                                                  |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| fela       | Renders styles to pure [fela](http://fela.js.org) [rules](http://fela.js.org/docs/basics/Rules.html)                                                                                                         |
-| react-fela | Renders styles to React components using [react-fela](https://github.com/robinweser/fela/tree/master/packages/react-fela)'s [createComponent](http://fela.js.org/docs/api/bindings/createComponent.html) API |
+> **Note**: Also check out the adapter documentation as some also provide additional library specific configuration options!
 
-> **Missing your favourite library?** File an issue and we'll try to add an adapter for it!
+| Adapter                                             | Description                                                                                                                                                         |
+| --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [fela](/docs/targets/javascript/css-in-js/fela)     | Renders to [fela](http://fela.js.org) [rules](http://fela.js.org/docs/basics/Rules.html) or [components](http://fela.js.org/docs/api/bindings/createComponent.html) |
+| [glamor](/docs/targets/javascript/css-in-js/glamor) | Renders to [glamor](https://github.com/threepointone/glamor) styles                                                                                                 |
+
+> **Missing your favourite library?** [File an issue](https://github.com/robinweser/elodin/issues/new) and we'll try to add an adapter for it!
 
 ### Example
 
@@ -56,12 +62,14 @@ They all use the same generated data and render library specific source code in 
 
 ```javascript
 var createGenerator = require('@elodin/generator-css-in-js').createGenerator
-var reactFelaAdapter = require('@elodin/generator-css-in-js/adapter/react-fela')
+var glamorAdapter = require('@elodin/generator-css-in-js/adapter/glamor')
   .default
 
 const config = {
   devMode: true,
-  adapter: reactFelaAdapter,
+  adapter: glamorAdapter({
+    dynamicImport: true,
+  }),
   rootNode: '#__next',
 }
 
@@ -123,7 +131,7 @@ It also implements special environment conditions to cover pseudo classes and me
 
 ## Example
 
-This example showcases usage with [React](https://reactjs.org) and the [Fela](http://fela.js.org) adapter.<br />
+This example showcases usage with [React](https://reactjs.org) and the fela adapter.<br />
 
 #### Button.elo
 

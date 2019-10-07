@@ -72,7 +72,7 @@ describe('Compiling to CSS and JavaScript using fela', () => {
 
     expect(
       createGenerator({
-        adapter: felaAdapter({ useReactFela: true, dynamicImport: true }),
+        adapter: felaAdapter({ reactFela: true, dynamicImport: true }),
       })(ast, 'index.elo')
     ).toMatchSnapshot()
   })

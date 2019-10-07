@@ -97,6 +97,14 @@ module NavigationContent = {
           <NavigationLink href="/docs/targets/javascript/css-in-js">
             "CSS in JS"
           </NavigationLink>
+          <div style={ReactDOMRe.Style.make(~paddingLeft="15px", ())}>
+            <NavigationLink href="/docs/targets/javascript/css-in-js/fela">
+              "Fela"
+            </NavigationLink>
+            <NavigationLink href="/docs/targets/javascript/css-in-js/glamor">
+              "Glamor"
+            </NavigationLink>
+          </div>
           <NavigationLink href="/docs/targets/javascript/react-native">
             "React Native"
           </NavigationLink>

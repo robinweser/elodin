@@ -11,11 +11,11 @@ function stringifyDeclaration(declaration) {
 }
 
 const defaultConfig = {
-  useReactFela: false,
+  reactFela: false,
   dynamicImport: false,
 }
 export default function felaAdapter(customConfig = {}) {
-  const { dynamicImport, useReactFela } = {
+  const { dynamicImport, reactFela } = {
     ...defaultConfig,
     ...customConfig,
   }
@@ -40,7 +40,7 @@ export default function felaAdapter(customConfig = {}) {
 
     return (
       (!dynamicImport ? "import './" + cssFileName + ".css'\n" : '') +
-      (useReactFela ? "import { createComponent } from 'react-fela'\n" : '') +
+      (reactFela ? "import { createComponent } from 'react-fela'\n" : '') +
       (imports.length > 0
         ? 'import { ' + imports.join(', ') + " } from '@elodin/runtime'\n\n"
         : '\n') +
@@ -69,10 +69,10 @@ export default function felaAdapter(customConfig = {}) {
           '\n}' +
           '\n\n'
         : '') +
-      (useReactFela ? '' : 'export ') +
+      (reactFela ? '' : 'export ') +
       'function ' +
       moduleName +
-      (useReactFela ? 'Style' : '') +
+      (reactFela ? 'Style' : '') +
       '(props = {})' +
       ' {\n  ' +
       (dynamicImport ? "import('./" + cssFileName + ".css')\n  " : '') +
@@ -95,7 +95,7 @@ export default function felaAdapter(customConfig = {}) {
         ? ',\n    ...getDynamicStyleFromVariantMap(variantStyleMap, props)'
         : '') +
       '\n  }\n}' +
-      (useReactFela
+      (reactFela
         ? '\nexport const ' +
           moduleName +
           ' = createComponent(' +
