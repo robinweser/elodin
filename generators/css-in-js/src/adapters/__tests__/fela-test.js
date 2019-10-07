@@ -1,8 +1,8 @@
 import { parse } from '@elodin/parser'
 
-import { createGenerator } from '../index'
+import { createGenerator } from '../../index'
 
-import felaAdapter from '../adapters/fela'
+import felaAdapter from '../fela'
 
 const file = `
 variant Type {
@@ -56,7 +56,7 @@ text Label {
   }
 }`
 
-describe('Compiling to CSS and JavaScript', () => {
+describe('Compiling to CSS and JavaScript using fela', () => {
   it('should return a map of files', () => {
     const { ast } = parse(file)
 
@@ -67,25 +67,12 @@ describe('Compiling to CSS and JavaScript', () => {
     ).toMatchSnapshot()
   })
 
-  it('should return a map of files in devMode', () => {
+  it('should pass adapter configuration', () => {
     const { ast } = parse(file)
 
     expect(
       createGenerator({
-        adapter: felaAdapter(),
-        devMode: true,
-      })(ast, 'index.elo')
-    ).toMatchSnapshot()
-  })
-
-  it('should return a map of files using custom fileName generators', () => {
-    const { ast } = parse(file)
-
-    expect(
-      createGenerator({
-        adapter: felaAdapter(),
-        generateJSFileName: moduleName => moduleName.toUpperCase(),
-        generateCSSFileName: moduleName => moduleName.toUpperCase(),
+        adapter: felaAdapter({ useReactFela: true, dynamicImport: true }),
       })(ast, 'index.elo')
     ).toMatchSnapshot()
   })
