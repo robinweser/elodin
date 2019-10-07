@@ -1,0 +1,207 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Compiling to CSS and JavaScript using glamor should pass adapter configuration 1`] = `
+Object {
+  "Button.elo.css": "._w7qnl2 {
+  border: 0px;
+  background-color: red;
+  padding-left: 10px
+}
+
+._w7qnl2_0-0 {
+  background-color: red
+}
+
+._w7qnl2_0-0:hover {
+  padding-left: 10px
+}
+
+._w7qnl2_0-0_1-0 {
+  background-color: blue
+}
+
+._w7qnl2_1-1 {
+  background-color: green
+}",
+  "Button.elo.js": "import { css } from 'glamor'
+import { getClassNameFromVariantMap, getDynamicStyleFromVariantMap } from '@elodin/runtime'
+
+const variantClassNameMap = {
+  \\"\\": {},
+  \\"_0-0\\": {
+    \\"Type\\": \\"Primary\\"
+  },
+  \\"_0-0_1-0\\": {
+    \\"Type\\": \\"Primary\\",
+    \\"Mode\\": \\"Dark\\"
+  },
+  \\"_1-1\\": {
+    \\"Mode\\": \\"Light\\"
+  }
+}
+
+const variantStyleMap = {
+'__Type-Primary': ({ borderWidth, paddingLeft, paddingRight, padLeft }) => ({
+  \\"paddingLeft\\":paddingLeft,
+  \\":hover\\":{\\"paddingRight\\":paddingRight}
+}),
+'__Type-Primary__Mode-Dark': ({ borderWidth, paddingLeft, paddingRight, padLeft }) => ({
+  \\"paddingLeft\\":padLeft
+})
+}
+
+export function Button(props = {}) {
+  import('./Button.elo.css')
+  const { borderWidth, paddingLeft, paddingRight, padLeft } = props
+
+  const className = '_elo_view ' + getClassNameFromVariantMap('_w7qnl2', variantClassNameMap, props)
+
+  return className + \\" \\" + css({
+    \\"borderWidth\\":borderWidth,
+    ...getDynamicStyleFromVariantMap(variantStyleMap, props)
+  })
+}",
+  "Label.elo.css": "._19ixzy1:hover {
+  color: red
+}
+
+@media (min-width: 320px) {
+  ._19ixzy1 {
+    color: green
+  }
+}
+
+@media (min-width: 320px) {
+  ._19ixzy1:hover {
+    color: blue
+  }
+}",
+  "Label.elo.js": "import { css } from 'glamor'
+
+export function Label(props = {}) {
+  import('./Label.elo.css')
+  const { lineHeight, fontSize, mediaFontSize, mediaHoverFontSize } = props
+
+  const className = '_elo_text _19ixzy1'
+
+  return className + \\" \\" + css({
+    \\"lineHeight\\":lineHeight,
+    \\":hover\\":{\\"fontSize\\":fontSize},
+    \\"@media (min-width: 320px)\\":{\\"fontSize\\":mediaFontSize,
+\\":hover\\":{\\"fontSize\\":mediaHoverFontSize}}
+  })
+}",
+  "_reset.elo.css": "._elo_view{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;overflow:hidden;-webkit-overflow-scrolling:touch;align-self:stretch;flex-direction:column;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-shrink:0;max-width:100%;box-sizing:border-box}._elo_text{display:inline;overflow:visible}",
+  "index.elo.js": "import './_reset.elo.css'
+import { Button } from './Button.elo.js'
+import { Label } from './Label.elo.js'
+
+export {
+  Button,
+  Label
+}",
+}
+`;
+
+exports[`Compiling to CSS and JavaScript using glamor should return a map of files 1`] = `
+Object {
+  "Button.elo.css": "._w7qnl2 {
+  border: 0px;
+  background-color: red;
+  padding-left: 10px
+}
+
+._w7qnl2_0-0 {
+  background-color: red
+}
+
+._w7qnl2_0-0:hover {
+  padding-left: 10px
+}
+
+._w7qnl2_0-0_1-0 {
+  background-color: blue
+}
+
+._w7qnl2_1-1 {
+  background-color: green
+}",
+  "Button.elo.js": "import './Button.elo.css'
+import { css } from 'glamor'
+import { getClassNameFromVariantMap, getDynamicStyleFromVariantMap } from '@elodin/runtime'
+
+const variantClassNameMap = {
+  \\"\\": {},
+  \\"_0-0\\": {
+    \\"Type\\": \\"Primary\\"
+  },
+  \\"_0-0_1-0\\": {
+    \\"Type\\": \\"Primary\\",
+    \\"Mode\\": \\"Dark\\"
+  },
+  \\"_1-1\\": {
+    \\"Mode\\": \\"Light\\"
+  }
+}
+
+const variantStyleMap = {
+'__Type-Primary': ({ borderWidth, paddingLeft, paddingRight, padLeft }) => ({
+  \\"paddingLeft\\":paddingLeft,
+  \\":hover\\":{\\"paddingRight\\":paddingRight}
+}),
+'__Type-Primary__Mode-Dark': ({ borderWidth, paddingLeft, paddingRight, padLeft }) => ({
+  \\"paddingLeft\\":padLeft
+})
+}
+
+export function Button(props = {}) {
+  const { borderWidth, paddingLeft, paddingRight, padLeft } = props
+
+  const className = '_elo_view ' + getClassNameFromVariantMap('_w7qnl2', variantClassNameMap, props)
+
+  return className + \\" \\" + css({
+    \\"borderWidth\\":borderWidth,
+    ...getDynamicStyleFromVariantMap(variantStyleMap, props)
+  })
+}",
+  "Label.elo.css": "._19ixzy1:hover {
+  color: red
+}
+
+@media (min-width: 320px) {
+  ._19ixzy1 {
+    color: green
+  }
+}
+
+@media (min-width: 320px) {
+  ._19ixzy1:hover {
+    color: blue
+  }
+}",
+  "Label.elo.js": "import './Label.elo.css'
+import { css } from 'glamor'
+
+export function Label(props = {}) {
+  const { lineHeight, fontSize, mediaFontSize, mediaHoverFontSize } = props
+
+  const className = '_elo_text _19ixzy1'
+
+  return className + \\" \\" + css({
+    \\"lineHeight\\":lineHeight,
+    \\":hover\\":{\\"fontSize\\":fontSize},
+    \\"@media (min-width: 320px)\\":{\\"fontSize\\":mediaFontSize,
+\\":hover\\":{\\"fontSize\\":mediaHoverFontSize}}
+  })
+}",
+  "_reset.elo.css": "._elo_view{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;overflow:hidden;-webkit-overflow-scrolling:touch;align-self:stretch;flex-direction:column;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-shrink:0;max-width:100%;box-sizing:border-box}._elo_text{display:inline;overflow:visible}",
+  "index.elo.js": "import './_reset.elo.css'
+import { Button } from './Button.elo.js'
+import { Label } from './Label.elo.js'
+
+export {
+  Button,
+  Label
+}",
+}
+`;
