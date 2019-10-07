@@ -536,6 +536,7 @@ export default class Parser {
                   type: errorTypes.INVALID_PROPERTY,
                   property: property,
                   value: value,
+                  hint: validation.hint,
 
                   message:
                     property +
@@ -575,6 +576,7 @@ export default class Parser {
                   type: errorTypes.INVALID_VALUE,
                   value: value,
                   property: property,
+                  hint: validation.hint,
                   message:
                     property +
                     ': ' +

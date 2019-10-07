@@ -4,7 +4,6 @@ import path from 'path'
 import fs from 'fs'
 
 import { transformFile, errorTypes, formatFromAST } from '@elodin/core'
-
 import { logSyntaxError } from './error'
 
 export function chmod(src, dest) {
@@ -52,14 +51,21 @@ export function compile(filename, opts) {
       const count = ++opts.errorCount
 
       if (error.type === errorTypes.INVALID_PROPERTY) {
-        const { property, value, path, line, format } = error
+        const { property, value, path, line, format, hint } = error
+
+        const didYouMeanMessage = hint
+          ? `
+
+  Did you mean: ${hint}?
+`
+          : ''
 
         logSyntaxError({
           count,
           path,
           lineNumber: line,
           line: chalk`{red ${property}}: ${formatFromAST(value)}`,
-          message: chalk`The property {bold ${property}} is not a valid ${format} property.
+          message: chalk`The property {bold ${property}} is not a valid ${format} property.${didYouMeanMessage}
 {dim Check {underline https://elodin.dev/docs/language/styles#${format}} for a list of available properties.}`,
         })
       } else if (error.type === errorTypes.INVALID_VALUE) {
