@@ -127,7 +127,7 @@ export default function formatFromAST(node, customConfig = {}, level = 1) {
     case 'RawValue':
       return 'raw("' + node.value + '")'
     case 'Percentage':
-      return 'percentage(' + node.value + ')'
+      return 'percentage(' + generate(node.value) + ')'
     case 'String':
       return '"' + node.value + '"'
 

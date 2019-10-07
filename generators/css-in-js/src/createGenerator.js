@@ -301,10 +301,19 @@ function generateStyle(nodes) {
 
   const declarations = base
     .filter(decl => decl.dynamic)
-    .map(declaration => ({
-      property: declaration.property,
-      value: declaration.value.value,
-    }))
+    .map(decl => {
+      if (decl.value.type === 'Percentage') {
+        return {
+          property: decl.property,
+          value: decl.value.value.value + '+ %',
+        }
+      }
+
+      return {
+        property: decl.property,
+        value: decl.value.value,
+      }
+    })
 
   const nests = nestings
     .map(nest => {

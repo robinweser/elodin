@@ -1,13 +1,29 @@
 import definitions from './definitions'
+import functions from './functions'
 
 export default function validateDeclaration(property, value, rawValue, format) {
-  const propertyDefinition = format
-    ? definitions[format][property]
-    : definitions.view[property] || definitions.text[property]
+  const propertyDefinition = definitions[format][property]
 
   if (propertyDefinition) {
+    let val = value
+    if (value.type === 'FunctionExpression') {
+      const validator = functions[value.callee]
+
+      if (validator) {
+        if (typeof validator.return === 'function') {
+          val = {
+            type: validator.return(value.params),
+          }
+        } else {
+          val = {
+            type: validator.return,
+          }
+        }
+      }
+    }
+
     const isValid = propertyDefinition.find(
-      validator => validator(value) === true
+      validator => validator(val) === true
     )
 
     if (!isValid) {
@@ -20,7 +36,6 @@ export default function validateDeclaration(property, value, rawValue, format) {
           '` is invalid for the property `' +
           property +
           '`.',
-        hint: '',
       }
     }
 

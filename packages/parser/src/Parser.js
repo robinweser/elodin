@@ -2,6 +2,7 @@ import tokenize from 'tokenize-sync'
 import color from 'color'
 
 import validateDeclaration from './validateDeclaration'
+import validateFunction from './validateFunction'
 import errorTypes from './errorTypes'
 import colorNames from './colorNames'
 
@@ -177,7 +178,7 @@ export default class Parser {
   }
 
   parseComment() {
-    if (this.currentToken.type === 'comment') {
+    if (this.currentToken && this.currentToken.type === 'comment') {
       this.comments.push(this.currentToken.value.substr(1))
       this.updateCurrentToken(1)
     }
@@ -841,123 +842,136 @@ export default class Parser {
 
         const params = this.parseUntil(token => token.type === 'round_bracket')
 
-        if (ident === 'percentage') {
-          if (params.length === 1 && params[0]) {
-            if (
-              // parse float
-              params[0].type === 'Integer' &&
-              params[0].value >= 0 &&
-              params[0].value <= 100
-            ) {
-              return {
-                type: 'Percentage',
-                value: params[0].value,
-              }
-            } else {
-              this.addError(
-                {
-                  type: 'SYNTAX_ERROR',
-                  message:
-                    'Percentage values must contain an Integer between 0 and 100.',
-                },
-                true
-              )
-            }
-          } else {
-            this.addError(
-              {
-                type: 'SYNTAX_ERROR',
-                message:
-                  'The `percentage` function requires exactly 1 parameter of type Integer.',
-              },
-              true
-            )
-          }
+        const isValidFunction = validateFunction(ident, params)
+
+        if (!isValidFunction) {
+          this.addError(
+            {
+              type: 'INVALID_FUNCTION',
+              message: 'Invalid function.',
+            },
+            true
+          )
         }
 
-        if (ident === 'hex') {
-          let normalizedValue
-          try {
-            normalizedValue = color(
-              '#' + params.map(param => param && param.value).join('')
-            )
-          } catch (e) {
-            this.addError(
-              {
-                type: 'SYNTAX_ERROR',
-                message:
-                  'A valid hexadecimal string of length 3, 6 or 8 must be passed to the `hex` function.',
-              },
-              true
-            )
-          }
+        // if (ident === 'percentage') {
+        //   if (params.length === 1 && params[0]) {
+        //     if (
+        //       // parse float
+        //       params[0].type === 'Variable' ||
+        //       (params[0].type === 'Integer' &&
+        //         params[0].value >= 0 &&
+        //         params[0].value <= 100)
+        //     ) {
+        //       return {
+        //         type: 'Percentage',
+        //         value: params[0],
+        //       }
+        //     } else {
+        //       this.addError(
+        //         {
+        //           type: 'SYNTAX_ERROR',
+        //           message:
+        //             'Percentage values must contain an Integer between 0 and 100.',
+        //         },
+        //         true
+        //       )
+        //     }
+        //   } else {
+        //     this.addError(
+        //       {
+        //         type: 'SYNTAX_ERROR',
+        //         message:
+        //           'The `percentage` function requires exactly 1 parameter of type Integer.',
+        //       },
+        //       true
+        //     )
+        //   }
+        // }
 
-          if (normalizedValue) {
-            return {
-              type: 'Color',
-              red: normalizedValue.red(),
-              green: normalizedValue.green(),
-              blue: normalizedValue.blue(),
-              alpha: normalizedValue.alpha(),
-              format: 'hex',
-            }
-          }
-        }
+        // if (ident === 'hex') {
+        //   let normalizedValue
+        //   try {
+        //     normalizedValue = color(
+        //       '#' + params.map(param => param && param.value).join('')
+        //     )
+        //   } catch (e) {
+        //     this.addError(
+        //       {
+        //         type: 'SYNTAX_ERROR',
+        //         message:
+        //           'A valid hexadecimal string of length 3, 6 or 8 must be passed to the `hex` function.',
+        //       },
+        //       true
+        //     )
+        //   }
 
-        if (ident === 'rgb' || ident === 'rgba') {
-          const [
-            red,
-            green,
-            blue,
-            alpha = { type: 'Percentage', value: 100 },
-          ] = params
+        //   if (normalizedValue) {
+        //     return {
+        //       type: 'Color',
+        //       red: normalizedValue.red(),
+        //       green: normalizedValue.green(),
+        //       blue: normalizedValue.blue(),
+        //       alpha: normalizedValue.alpha(),
+        //       format: 'hex',
+        //     }
+        //   }
+        // }
 
-          // TODO: validate value
-          if (
-            !red ||
-            !green ||
-            !blue ||
-            red.type !== 'Integer' ||
-            green.type !== 'Integer' ||
-            blue.type !== 'Integer' ||
-            alpha.type !== 'Percentage'
-          ) {
-            this.addError(
-              {
-                type: 'SYNTAX_ERROR',
-                message: 'WRONG RGB',
-              },
-              true
-            )
-          } else {
-            return {
-              type: 'Color',
-              red: red.value,
-              green: green.value,
-              blue: blue.value,
-              alpha: alpha.value / 100,
-              format: 'rgb',
-            }
-          }
-        }
+        // if (ident === 'rgb' || ident === 'rgba') {
+        //   const [
+        //     red,
+        //     green,
+        //     blue,
+        //     alpha = { type: 'Percentage', value: 100 },
+        //   ] = params
 
-        if (ident === 'raw') {
-          if (params.length === 1 && params[0] && params[0].type === 'String') {
-            return {
-              type: 'RawValue',
-              value: params[0].value,
-            }
-          } else {
-            this.addError(
-              {
-                type: errorTypes.SYNTAX_ERROR,
-                message:
-                  'The `raw` function only accepts a single String value.',
-              },
-              true
-            )
-          }
-        }
+        //   // TODO: validate value
+        //   if (
+        //     !red ||
+        //     !green ||
+        //     !blue ||
+        //     red.type !== 'Integer' ||
+        //     green.type !== 'Integer' ||
+        //     blue.type !== 'Integer' ||
+        //     alpha.type !== 'Percentage'
+        //   ) {
+        //     this.addError(
+        //       {
+        //         type: 'SYNTAX_ERROR',
+        //         message: 'WRONG RGB',
+        //       },
+        //       true
+        //     )
+        //   } else {
+        //     return {
+        //       type: 'Color',
+        //       red: red.value,
+        //       green: green.value,
+        //       blue: blue.value,
+        //       alpha: alpha.value / 100,
+        //       format: 'rgb',
+        //     }
+        //   }
+        // }
+
+        // if (ident === 'raw') {
+        //   if (params.length === 1 && params[0] && params[0].type === 'String') {
+        //     return {
+        //       type: 'RawValue',
+        //       value: params[0].value,
+        //     }
+        //   } else {
+        //     this.addError(
+        //       {
+        //         type: errorTypes.SYNTAX_ERROR,
+        //         message:
+        //           'The `raw` function only accepts a single String value.',
+        //       },
+        //       true
+        //     )
+        //   }
+        // }
 
         return {
           type: 'FunctionExpression',

@@ -4,8 +4,8 @@ describe('Parsing elodin syntax', () => {
   it.only('should correctly parse styles', () => {
     const file = `
 view Button {
-  backgroundColor: red # foo
-  borderColor: rgb(255 255 255)
+  backgroundColor: red
+  borderColor: rgba(255 255 255 percentage(add(20 10)))
   paddingLeft: 15
   marginTop: 1.2
   borderWidth: $width
@@ -14,7 +14,6 @@ view Button {
 
     const parser = new Parser()
 
-    // console.log(parser.parse(file))
     expect(parser.parse(file).errors.length).toBe(0)
     expect(parser.parse(file).ast).toMatchSnapshot()
   })
@@ -62,7 +61,7 @@ view Button {
     # variant comment
     variant Foo {
       Bar
-      # baz 
+      # baz
       Foo
     }
     # A comment

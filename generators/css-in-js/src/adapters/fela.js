@@ -1,6 +1,10 @@
 function stringifyDeclaration(declaration) {
   const prop = '"' + declaration.property + '":'
 
+  if (declaration.value.type === 'Variable') {
+    return ''
+  }
+
   if (typeof declaration.value === 'object') {
     return (
       prop + '{' + declaration.value.map(stringifyDeclaration).join(',\n') + '}'

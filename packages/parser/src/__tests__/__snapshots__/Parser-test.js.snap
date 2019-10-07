@@ -459,9 +459,7 @@ Object {
           },
         },
         Object {
-          "comments": Array [
-            " foo",
-          ],
+          "comments": Array [],
           "dynamic": false,
           "property": "borderColor",
           "raw": false,

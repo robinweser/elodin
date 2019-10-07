@@ -16,9 +16,9 @@ export default function generateCSSValue(value, property, unit = true) {
 
   if (value.type === 'Percentage') {
     if (property === 'opacity') {
-      return value.value / 100
+      return value.value.value / 100
     } else {
-      return value.value + '%'
+      return value.value.value + '%'
     }
   }
 
