@@ -979,19 +979,19 @@ export default class Parser {
         }
       }
 
-      // TODO: parse color names
-      if (colorNames[ident]) {
-        const namedColor = color(ident)
+      // // TODO: parse color names
+      // if (colorNames[ident]) {
+      //   const namedColor = color(ident)
 
-        return {
-          type: 'Color',
-          red: namedColor.red(),
-          green: namedColor.green(),
-          blue: namedColor.blue(),
-          alpha: namedColor.alpha(),
-          format: 'keyword',
-        }
-      }
+      //   return {
+      //     type: 'Color',
+      //     red: namedColor.red(),
+      //     green: namedColor.green(),
+      //     blue: namedColor.blue(),
+      //     alpha: namedColor.alpha(),
+      //     format: 'keyword',
+      //   }
+      // }
 
       return {
         type: 'Identifier',

@@ -4,7 +4,8 @@ import { createGenerator } from '../index'
 
 const file = `
 view Button {
-  backgroundColor: red
+  backgroundColor: rgb(add(200 sub(20 10)) 0 add($blue 10))
+  width: percentage(add($width 10))
   paddingLeft: 10
   alignItems: $alignItems
 }

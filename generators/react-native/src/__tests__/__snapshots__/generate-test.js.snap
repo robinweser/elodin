@@ -17,21 +17,21 @@ const styles = StyleSheet.create({
   }
 })
 
-export function Button(props = {}) {
+export function Button({ alignItems }) {
   const style = {
-    alignItems: props.alignItems
+    alignItems: \\"alignItems\\"
   }
 
   return StyleSheet.flatten([styles.button, style])
 }
 
-export function Box(props = {}) {
+export function Box() {
   return styles.box
 }
 
-export function Label(props = {}) {
+export function Label({ lineHeight }) {
   const style = {
-    lineHeight: props.lineHeight
+    lineHeight: \\"lineHeight\\"
   }
 
   return StyleSheet.flatten([styles.label, style])
@@ -56,21 +56,21 @@ const styles = StyleSheet.create({
   }
 })
 
-export function Button(props = {}) {
+export function Button({ alignItems }) {
   const style = {
-    alignItems: props.alignItems
+    alignItems: \\"alignItems\\"
   }
 
   return StyleSheet.flatten([styles.button, style])
 }
 
-export function Box(props = {}) {
+export function Box() {
   return styles.box
 }
 
-export function Label(props = {}) {
+export function Label({ lineHeight }) {
   const style = {
-    lineHeight: props.lineHeight
+    lineHeight: \\"lineHeight\\"
   }
 
   return StyleSheet.flatten([styles.label, style])

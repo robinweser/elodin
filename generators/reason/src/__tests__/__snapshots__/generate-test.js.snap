@@ -27,8 +27,8 @@ type mode =
   | Light
   | Semi;
 
-let buttonStyle = (~borderWidth:string, ~paddingLeft:string, ~paddingRight:string, ~padLeft:string) => style([unsafe(\\"border-width\\", borderWidth)]);
-let getButtonStyleVariants = (~borderWidth:string, ~paddingLeft:string, ~paddingRight:string, ~padLeft:string, ~type_, ~mode, ()) => {
+let buttonStyle = (~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft) => style([unsafe(\\"border-width\\", borderWidth)]);
+let getButtonStyleVariants = (~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_, ~mode, ()) => {
     let buttonStylePrimary = style([unsafe(\\"padding-left\\", paddingLeft),
       hover([unsafe(\\"padding-right\\", paddingRight)])]);
     let buttonStylePrimaryDark = style([unsafe(\\"padding-left\\", padLeft)]);
@@ -66,9 +66,9 @@ let getButtonVariants = (~type_, ~mode, ()) => {
   }
 };
 
-let button = (~borderWidth:string, ~paddingLeft:string, ~paddingRight:string, ~padLeft:string, ~type_=?, ~mode=?, ()) => \\"_elo_view _hxsbaq\\" ++ getButtonVariants(~type_, ~mode, ()) ++ \\" \\" ++ merge([buttonStyle(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft), ...getButtonStyleVariants(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_, ~mode, ())]);
+let button = (~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_=?, ~mode=?, ()) => \\"_elo_view _hxsbaq\\" ++ getButtonVariants(~type_, ~mode, ()) ++ \\" \\" ++ merge([buttonStyle(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft), ...getButtonStyleVariants(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_, ~mode, ())]);
 
-let labelStyle = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~mediaHoverFontSize:string) => style([unsafe(\\"line-height\\", lineHeight),
+let labelStyle = (~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize) => style([unsafe(\\"line-height\\", lineHeight),
     hover([unsafe(\\"font-size\\", fontSize)]),
     media(\\"(min-width: 320px) and (max-width: 320px)\\", [unsafe(\\"font-size\\", mediaFontSize),
 hover([unsafe(\\"font-size\\", mediaHoverFontSize)])])]);
@@ -81,7 +81,7 @@ let getLabelVariants = (~mode, ()) => {
   }
 };
 
-let label = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~mediaHoverFontSize:string, ~mode=?, ()) => \\"_elo_text _87emqf\\" ++ getLabelVariants(~mode, ()) ++ \\" \\" ++ merge([labelStyle(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize)]);
+let label = (~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize, ~mode=?, ()) => \\"_elo_text _87emqf\\" ++ getLabelVariants(~mode, ()) ++ \\" \\" ++ merge([labelStyle(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize)]);
 ",
   "RootStyleButton.elo.css": "._hxsbaq {
   background-color: red;
@@ -123,7 +123,7 @@ let label = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~media
     color: blue
   }
 }",
-  "_reset.elo.css": "._elo_view{overflow:hidden;display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;-webkit-overflow-scrolling:touch;align-self:stretch;flex-direction:column;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-shrink:0;max-width:100%;box-sizing:border-box}._elo_text{display:inline;}",
+  "_reset.elo.css": "._elo_view{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;overflow:hidden;-webkit-overflow-scrolling:touch;align-self:stretch;flex-direction:column;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-shrink:0;max-width:100%;box-sizing:border-box}._elo_text{display:inline;overflow:visible}",
 }
 `;
 
@@ -154,8 +154,8 @@ type mode =
   | Light
   | Semi;
 
-let buttonStyle = (~borderWidth:string, ~paddingLeft:string, ~paddingRight:string, ~padLeft:string) => style([unsafe(\\"border-width\\", borderWidth)]);
-let getButtonStyleVariants = (~borderWidth:string, ~paddingLeft:string, ~paddingRight:string, ~padLeft:string, ~type_, ~mode, ()) => {
+let buttonStyle = (~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft) => style([unsafe(\\"border-width\\", borderWidth)]);
+let getButtonStyleVariants = (~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_, ~mode, ()) => {
     let buttonStylePrimary = style([unsafe(\\"padding-left\\", paddingLeft),
       hover([unsafe(\\"padding-right\\", paddingRight)])]);
     let buttonStylePrimaryDark = style([unsafe(\\"padding-left\\", padLeft)]);
@@ -193,9 +193,9 @@ let getButtonVariants = (~type_, ~mode, ()) => {
   }
 };
 
-let button = (~borderWidth:string, ~paddingLeft:string, ~paddingRight:string, ~padLeft:string, ~type_=?, ~mode=?, ()) => \\"_elo_view Button_hxsbaq\\" ++ getButtonVariants(~type_, ~mode, ()) ++ \\" \\" ++ merge([buttonStyle(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft), ...getButtonStyleVariants(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_, ~mode, ())]);
+let button = (~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_=?, ~mode=?, ()) => \\"_elo_view Button_hxsbaq\\" ++ getButtonVariants(~type_, ~mode, ()) ++ \\" \\" ++ merge([buttonStyle(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft), ...getButtonStyleVariants(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_, ~mode, ())]);
 
-let labelStyle = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~mediaHoverFontSize:string) => style([unsafe(\\"line-height\\", lineHeight),
+let labelStyle = (~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize) => style([unsafe(\\"line-height\\", lineHeight),
     hover([unsafe(\\"font-size\\", fontSize)]),
     media(\\"(min-width: 320px) and (max-width: 320px)\\", [unsafe(\\"font-size\\", mediaFontSize),
 hover([unsafe(\\"font-size\\", mediaHoverFontSize)])])]);
@@ -208,7 +208,7 @@ let getLabelVariants = (~mode, ()) => {
   }
 };
 
-let label = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~mediaHoverFontSize:string, ~mode=?, ()) => \\"_elo_text Label_87emqf\\" ++ getLabelVariants(~mode, ()) ++ \\" \\" ++ merge([labelStyle(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize)]);
+let label = (~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize, ~mode=?, ()) => \\"_elo_text Label_87emqf\\" ++ getLabelVariants(~mode, ()) ++ \\" \\" ++ merge([labelStyle(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize)]);
 ",
   "RootStyleButton.elo.css": ".Button_hxsbaq {
   background-color: red;
@@ -250,6 +250,6 @@ let label = (~lineHeight:string, ~fontSize:string, ~mediaFontSize:string, ~media
     color: blue
   }
 }",
-  "_reset.elo.css": "._elo_view{overflow:hidden;display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;-webkit-overflow-scrolling:touch;align-self:stretch;flex-direction:column;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-shrink:0;max-width:100%;box-sizing:border-box}._elo_text{display:inline;}",
+  "_reset.elo.css": "._elo_view{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;overflow:hidden;-webkit-overflow-scrolling:touch;align-self:stretch;flex-direction:column;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-shrink:0;max-width:100%;box-sizing:border-box}._elo_text{display:inline;overflow:visible}",
 }
 `;

@@ -252,7 +252,7 @@ function generateModules(ast, { devMode, generateResetClassName }) {
         variantStyleSwitch = `let get${
           module.name
         }StyleVariants = (${variables
-          .map(variable => '~' + variable + ':string')
+          .map(variable => '~' + variable)
           .join(', ') +
           (variables.length > 0 && variants.length > 0 ? ', ' : '') +
           variantNames
@@ -333,7 +333,7 @@ function generateModules(ast, { devMode, generateResetClassName }) {
         ? 'let ' +
           uncapitalizeString(module.name) +
           'Style = (' +
-          variables.map(variable => '~' + variable + ':string').join(', ') +
+          variables.map(variable => '~' + variable).join(', ') +
           ') => style([' +
           style.map(stringifyDeclaration).join(',\n    ') +
           ']);'
@@ -349,7 +349,7 @@ function generateModules(ast, { devMode, generateResetClassName }) {
         ' = (' +
         // TODO: deduplicate
         // TODO: add typings
-        variables.map(variable => '~' + variable + ':string').join(', ') +
+        variables.map(variable => '~' + variable).join(', ') +
         (variables.length > 0 && variantNames.length > 0 ? ', ' : '') +
         variantNames.map(name => '~' + name.toLowerCase() + '=?').join(', ') +
         (variables.length > 0 || variantNames.length > 0
@@ -445,7 +445,7 @@ function generateStyle(nodes) {
     .filter(decl => decl.dynamic)
     .map(declaration => ({
       property: declaration.property,
-      value: declaration.value.value,
+      value: generateValue(declaration.value),
     }))
 
   const nests = nestings
@@ -496,4 +496,91 @@ function stringifyDeclaration({ property, value, media }) {
   }
 
   return 'unsafe("' + hyphenateProperty(property) + '", ' + value + ')'
+}
+
+function wrapInString(value) {
+  return '"' + value + '"'
+}
+
+const inlineFns = {
+  add: true,
+  sub: true,
+  mul: true,
+  div: true,
+  percentage: true,
+}
+
+const stringFns = {
+  rgb: true,
+  rgba: true,
+  hsl: true,
+  hsla: true,
+}
+
+function generateFunction(node) {
+  if (stringFns[node.callee]) {
+    return wrapInString(
+      node.callee +
+        '(' +
+        node.params
+          .map(param => {
+            if (
+              param.type === 'Variable' ||
+              (param.type === 'FunctionExpression' && inlineFns[param.callee])
+            ) {
+              return '" ++ string_of_int(' + generateValue(param) + ') ++ "'
+            }
+            return generateValue(param)
+          })
+          .join(', ') +
+        ')'
+    )
+  }
+
+  if (node.callee === 'percentage') {
+    return 'string_of_int(' + generateValue(node.params[0]) + ') ++ "%"'
+  }
+
+  if (node.callee === 'raw') {
+    return generateValue(node.params[0])
+  }
+
+  if (node.callee === 'add') {
+    return node.params.map(generateValue).join(' + ')
+  }
+
+  if (node.callee === 'sub') {
+    return node.params.map(generateValue).join(' - ')
+  }
+
+  if (node.callee === 'mul') {
+    return node.params.map(generateValue).join(' * ')
+  }
+
+  // if (math[node.callee]) {
+  //   return generateValue({
+  //     type: 'Integer',
+  //     value: resolveMath(value),
+  //   })
+  // }
+}
+
+function generateValue(node) {
+  if (node.type === 'FunctionExpression') {
+    return generateFunction(node)
+  }
+
+  if (node.type === 'Integer') {
+    return (node.negative ? '-' : '') + node.value
+  }
+
+  if (node.type === 'Float') {
+    return (node.negative ? '-' : '') + node.integer + '.' + node.fractional
+  }
+
+  if (node.type === 'Identifier') {
+    return hyphenateProperty(node.value)
+  }
+
+  return node.value
 }
