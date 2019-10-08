@@ -24,7 +24,6 @@ export default function felaAdapter(customConfig = {}) {
     style,
     variantStyleMap,
     className,
-    variables,
     cssFileName,
     resetClassName,
     classNameMap,
@@ -57,9 +56,7 @@ export default function felaAdapter(customConfig = {}) {
                 "'" +
                 modifier +
                 "'" +
-                ': ({ ' +
-                variables.join(', ') +
-                ' }) => ({\n  ' +
+                ': (props = {}) => ({\n  ' +
                 variantStyleMap[modifier]
                   .map(stringifyDeclaration)
                   .join(',\n  ') +
@@ -76,9 +73,6 @@ export default function felaAdapter(customConfig = {}) {
       '(props = {})' +
       ' {\n  ' +
       (dynamicImport ? "import('./" + cssFileName + ".css')\n  " : '') +
-      'const { ' +
-      variables.join(', ') +
-      ' } = props\n\n  ' +
       'return {\n    ' +
       '_className: ' +
       (hasVariations

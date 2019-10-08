@@ -13,7 +13,7 @@ view Button {
 }`
 
     const parser = new Parser()
-
+    console.log(parser.parse(file).errors)
     expect(parser.parse(file).errors.length).toBe(0)
     expect(parser.parse(file).ast).toMatchSnapshot()
   })

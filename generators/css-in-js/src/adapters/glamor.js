@@ -24,7 +24,6 @@ export default function glamorAdapter(customConfig = {}) {
     style,
     variantStyleMap,
     className,
-    variables,
     cssFileName,
     resetClassName,
     classNameMap,
@@ -57,9 +56,7 @@ export default function glamorAdapter(customConfig = {}) {
                 "'" +
                 modifier +
                 "'" +
-                ': ({ ' +
-                variables.join(', ') +
-                ' }) => ({\n  ' +
+                ': (props = {}) => ({\n  ' +
                 variantStyleMap[modifier]
                   .map(stringifyDeclaration)
                   .join(',\n  ') +
@@ -74,9 +71,6 @@ export default function glamorAdapter(customConfig = {}) {
       '(props = {})' +
       ' {\n  ' +
       (dynamicImport ? "import('./" + cssFileName + ".css')\n  " : '') +
-      'const { ' +
-      variables.join(', ') +
-      ' } = props\n\n  ' +
       'const className = ' +
       (hasVariations
         ? "'" +

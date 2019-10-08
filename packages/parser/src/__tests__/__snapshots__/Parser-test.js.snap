@@ -390,12 +390,8 @@ Object {
           "raw": false,
           "type": "Declaration",
           "value": Object {
-            "alpha": 1,
-            "blue": 0,
-            "format": "keyword",
-            "green": 0,
-            "red": 255,
-            "type": "Color",
+            "type": "Identifier",
+            "value": "red",
           },
         },
         Object {

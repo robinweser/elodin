@@ -419,5 +419,9 @@ function generateValue(node) {
     return hyphenateProperty(node.value)
   }
 
+  if (node.type === 'Variable') {
+    return 'props.' + node.value
+  }
+
   return node.value
 }

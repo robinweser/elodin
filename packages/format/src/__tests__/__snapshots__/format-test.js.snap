@@ -11,7 +11,7 @@ variant Mode {
   Light
 }
 
-fragment Flex {
+view Flex {
   flexGrow: 1
   # foobar
   # baz
@@ -43,7 +43,7 @@ text Label {
     color: rgba(255 0 120 percentage(50))
   }
   [@minWidth=320] {
-    color: hex(F3F3F3)
+    color: rgba(add(10 20) 0 20 percentage($percent))
     [@hover] {
       color: green
     }
@@ -63,7 +63,7 @@ variant Mode {
   Light
 }
 
-fragment Flex {
+view Flex {
   flexGrow: 1
   # foobar
   # baz
@@ -95,7 +95,7 @@ text Label {
     color: rgba(255 0 120 percentage(50))
   }
   [@minWidth=320] {
-    color: hex(F3F3F3)
+    color: rgba(add(10 20) 0 20 percentage($percent))
     [@hover] {
       color: green
     }

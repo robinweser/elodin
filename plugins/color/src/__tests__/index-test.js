@@ -8,6 +8,6 @@ describe('Normalizing colors', () => {
 
     const ast = parse(file).ast
 
-    expect(traverse(ast, [color('hex')])).toMatchSnapshot()
+    expect(traverse(ast, [color()])).toMatchSnapshot()
   })
 })

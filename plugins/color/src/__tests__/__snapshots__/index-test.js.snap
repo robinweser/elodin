@@ -12,12 +12,8 @@ Object {
           "raw": false,
           "type": "Declaration",
           "value": Object {
-            "alpha": 1,
-            "blue": 0,
-            "format": "rgb",
-            "green": 0,
-            "red": 255,
-            "type": "Color",
+            "type": "Identifier",
+            "value": "red",
           },
         },
         Object {
@@ -27,12 +23,25 @@ Object {
           "raw": false,
           "type": "Declaration",
           "value": Object {
-            "alpha": 1,
-            "blue": 50,
-            "format": "rgb",
-            "green": 100,
-            "red": 255,
-            "type": "Color",
+            "callee": "rgb",
+            "params": Array [
+              Object {
+                "negative": false,
+                "type": "Integer",
+                "value": 255,
+              },
+              Object {
+                "negative": false,
+                "type": "Integer",
+                "value": 100,
+              },
+              Object {
+                "negative": false,
+                "type": "Integer",
+                "value": 50,
+              },
+            ],
+            "type": "FunctionExpression",
           },
         },
       ],

@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
 
 export function Button({ alignItems }) {
   const style = {
-    alignItems: \\"alignItems\\"
+    alignItems: alignItems
   }
 
   return StyleSheet.flatten([styles.button, style])
@@ -31,7 +31,7 @@ export function Box() {
 
 export function Label({ lineHeight }) {
   const style = {
-    lineHeight: \\"lineHeight\\"
+    lineHeight: lineHeight
   }
 
   return StyleSheet.flatten([styles.label, style])
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
 
 export function Button({ alignItems }) {
   const style = {
-    alignItems: \\"alignItems\\"
+    alignItems: alignItems
   }
 
   return StyleSheet.flatten([styles.button, style])
@@ -70,7 +70,7 @@ export function Box() {
 
 export function Label({ lineHeight }) {
   const style = {
-    lineHeight: \\"lineHeight\\"
+    lineHeight: lineHeight
   }
 
   return StyleSheet.flatten([styles.label, style])

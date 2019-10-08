@@ -2,25 +2,25 @@
 
 exports[`Compiling to CSS and JavaScript should return a map of files 1`] = `
 Object {
-  "Button.elo.css": "._w7qnl2 {
+  "Button.elo.css": "._3sxupx {
   border: 0px;
   background-color: red;
   padding-left: 10px
 }
 
-._w7qnl2_0-0 {
+._3sxupx_0-0 {
   background-color: red
 }
 
-._w7qnl2_0-0:hover {
+._3sxupx_0-0:hover {
   padding-left: 10px
 }
 
-._w7qnl2_0-0_1-0 {
+._3sxupx_0-0_1-0 {
   background-color: blue
 }
 
-._w7qnl2_1-1 {
+._3sxupx_1-1 {
   background-color: green
 }",
   "Button.elo.js": "import './Button.elo.css'
@@ -41,50 +41,46 @@ const variantClassNameMap = {
 }
 
 const variantStyleMap = {
-'__Type-Primary': ({ borderWidth, paddingLeft, paddingRight, padLeft }) => ({
-  \\"paddingLeft\\":paddingLeft,
-  \\":hover\\":{\\"paddingRight\\":paddingRight}
+'__Type-Primary': (props = {}) => ({
+  \\"paddingLeft\\":props.paddingLeft,
+  \\":hover\\":{\\"paddingRight\\":props.paddingRight}
 }),
-'__Type-Primary__Mode-Dark': ({ borderWidth, paddingLeft, paddingRight, padLeft }) => ({
-  \\"paddingLeft\\":padLeft
+'__Type-Primary__Mode-Dark': (props = {}) => ({
+  \\"paddingLeft\\":props.padLeft
 })
 }
 
 export function Button(props = {}) {
-  const { borderWidth, paddingLeft, paddingRight, padLeft } = props
-
   return {
-    _className: '_elo_view ' + getClassNameFromVariantMap('_w7qnl2', variantClassNameMap, props),
-    \\"borderWidth\\":borderWidth,
+    _className: '_elo_view ' + getClassNameFromVariantMap('_3sxupx', variantClassNameMap, props),
+    \\"borderWidth\\":props.borderWidth,
     ...getDynamicStyleFromVariantMap(variantStyleMap, props)
   }
 }",
-  "Label.elo.css": "._19ixzy1:hover {
+  "Label.elo.css": "._1m6pe37:hover {
   color: red
 }
 
 @media (min-width: 320px) {
-  ._19ixzy1 {
+  ._1m6pe37 {
     color: green
   }
 }
 
 @media (min-width: 320px) {
-  ._19ixzy1:hover {
+  ._1m6pe37:hover {
     color: blue
   }
 }",
   "Label.elo.js": "import './Label.elo.css'
 
 export function Label(props = {}) {
-  const { lineHeight, fontSize, mediaFontSize, mediaHoverFontSize } = props
-
   return {
-    _className: '_elo_text _19ixzy1',
-    \\"lineHeight\\":lineHeight,
-    \\":hover\\":{\\"fontSize\\":fontSize},
-    \\"@media (min-width: 320px)\\":{\\"fontSize\\":mediaFontSize,
-\\":hover\\":{\\"fontSize\\":mediaHoverFontSize}}
+    _className: '_elo_text _1m6pe37',
+    \\"lineHeight\\":props.lineHeight,
+    \\":hover\\":{\\"fontSize\\":props.fontSize},
+    \\"@media (min-width: 320px)\\":{\\"fontSize\\":props.mediaFontSize,
+\\":hover\\":{\\"fontSize\\":props.mediaHoverFontSize}}
   }
 }",
   "_reset.elo.css": "._elo_view{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;overflow:hidden;-webkit-overflow-scrolling:touch;align-self:stretch;flex-direction:column;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-shrink:0;max-width:100%;box-sizing:border-box}._elo_text{display:inline;overflow:visible}",
@@ -101,25 +97,25 @@ export {
 
 exports[`Compiling to CSS and JavaScript should return a map of files in devMode 1`] = `
 Object {
-  "Button.elo.css": ".Button_w7qnl2 {
+  "Button.elo.css": ".Button_3sxupx {
   border: 0px;
   background-color: red;
   padding-left: 10px
 }
 
-.Button_w7qnl2__Type-Primary {
+.Button_3sxupx__Type-Primary {
   background-color: red
 }
 
-.Button_w7qnl2__Type-Primary:hover {
+.Button_3sxupx__Type-Primary:hover {
   padding-left: 10px
 }
 
-.Button_w7qnl2__Type-Primary__Mode-Dark {
+.Button_3sxupx__Type-Primary__Mode-Dark {
   background-color: blue
 }
 
-.Button_w7qnl2__Mode-Light {
+.Button_3sxupx__Mode-Light {
   background-color: green
 }",
   "Button.elo.js": "import './Button.elo.css'
@@ -140,50 +136,46 @@ const variantClassNameMap = {
 }
 
 const variantStyleMap = {
-'__Type-Primary': ({ borderWidth, paddingLeft, paddingRight, padLeft }) => ({
-  \\"paddingLeft\\":paddingLeft,
-  \\":hover\\":{\\"paddingRight\\":paddingRight}
+'__Type-Primary': (props = {}) => ({
+  \\"paddingLeft\\":props.paddingLeft,
+  \\":hover\\":{\\"paddingRight\\":props.paddingRight}
 }),
-'__Type-Primary__Mode-Dark': ({ borderWidth, paddingLeft, paddingRight, padLeft }) => ({
-  \\"paddingLeft\\":padLeft
+'__Type-Primary__Mode-Dark': (props = {}) => ({
+  \\"paddingLeft\\":props.padLeft
 })
 }
 
 export function Button(props = {}) {
-  const { borderWidth, paddingLeft, paddingRight, padLeft } = props
-
   return {
-    _className: '_elo_view ' + getClassNameFromVariantMap('Button_w7qnl2', variantClassNameMap, props),
-    \\"borderWidth\\":borderWidth,
+    _className: '_elo_view ' + getClassNameFromVariantMap('Button_3sxupx', variantClassNameMap, props),
+    \\"borderWidth\\":props.borderWidth,
     ...getDynamicStyleFromVariantMap(variantStyleMap, props)
   }
 }",
-  "Label.elo.css": ".Label_19ixzy1:hover {
+  "Label.elo.css": ".Label_1m6pe37:hover {
   color: red
 }
 
 @media (min-width: 320px) {
-  .Label_19ixzy1 {
+  .Label_1m6pe37 {
     color: green
   }
 }
 
 @media (min-width: 320px) {
-  .Label_19ixzy1:hover {
+  .Label_1m6pe37:hover {
     color: blue
   }
 }",
   "Label.elo.js": "import './Label.elo.css'
 
 export function Label(props = {}) {
-  const { lineHeight, fontSize, mediaFontSize, mediaHoverFontSize } = props
-
   return {
-    _className: '_elo_text Label_19ixzy1',
-    \\"lineHeight\\":lineHeight,
-    \\":hover\\":{\\"fontSize\\":fontSize},
-    \\"@media (min-width: 320px)\\":{\\"fontSize\\":mediaFontSize,
-\\":hover\\":{\\"fontSize\\":mediaHoverFontSize}}
+    _className: '_elo_text Label_1m6pe37',
+    \\"lineHeight\\":props.lineHeight,
+    \\":hover\\":{\\"fontSize\\":props.fontSize},
+    \\"@media (min-width: 320px)\\":{\\"fontSize\\":props.mediaFontSize,
+\\":hover\\":{\\"fontSize\\":props.mediaHoverFontSize}}
   }
 }",
   "_reset.elo.css": "._elo_view{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;overflow:hidden;-webkit-overflow-scrolling:touch;align-self:stretch;flex-direction:column;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-shrink:0;max-width:100%;box-sizing:border-box}._elo_text{display:inline;overflow:visible}",
@@ -200,25 +192,25 @@ export {
 
 exports[`Compiling to CSS and JavaScript should return a map of files using custom fileName generators 1`] = `
 Object {
-  "BUTTON.css": "._w7qnl2 {
+  "BUTTON.css": "._3sxupx {
   border: 0px;
   background-color: red;
   padding-left: 10px
 }
 
-._w7qnl2_0-0 {
+._3sxupx_0-0 {
   background-color: red
 }
 
-._w7qnl2_0-0:hover {
+._3sxupx_0-0:hover {
   padding-left: 10px
 }
 
-._w7qnl2_0-0_1-0 {
+._3sxupx_0-0_1-0 {
   background-color: blue
 }
 
-._w7qnl2_1-1 {
+._3sxupx_1-1 {
   background-color: green
 }",
   "BUTTON.js": "import './BUTTON.css'
@@ -239,50 +231,46 @@ const variantClassNameMap = {
 }
 
 const variantStyleMap = {
-'__Type-Primary': ({ borderWidth, paddingLeft, paddingRight, padLeft }) => ({
-  \\"paddingLeft\\":paddingLeft,
-  \\":hover\\":{\\"paddingRight\\":paddingRight}
+'__Type-Primary': (props = {}) => ({
+  \\"paddingLeft\\":props.paddingLeft,
+  \\":hover\\":{\\"paddingRight\\":props.paddingRight}
 }),
-'__Type-Primary__Mode-Dark': ({ borderWidth, paddingLeft, paddingRight, padLeft }) => ({
-  \\"paddingLeft\\":padLeft
+'__Type-Primary__Mode-Dark': (props = {}) => ({
+  \\"paddingLeft\\":props.padLeft
 })
 }
 
 export function Button(props = {}) {
-  const { borderWidth, paddingLeft, paddingRight, padLeft } = props
-
   return {
-    _className: '_elo_view ' + getClassNameFromVariantMap('_w7qnl2', variantClassNameMap, props),
-    \\"borderWidth\\":borderWidth,
+    _className: '_elo_view ' + getClassNameFromVariantMap('_3sxupx', variantClassNameMap, props),
+    \\"borderWidth\\":props.borderWidth,
     ...getDynamicStyleFromVariantMap(variantStyleMap, props)
   }
 }",
-  "LABEL.css": "._19ixzy1:hover {
+  "LABEL.css": "._1m6pe37:hover {
   color: red
 }
 
 @media (min-width: 320px) {
-  ._19ixzy1 {
+  ._1m6pe37 {
     color: green
   }
 }
 
 @media (min-width: 320px) {
-  ._19ixzy1:hover {
+  ._1m6pe37:hover {
     color: blue
   }
 }",
   "LABEL.js": "import './LABEL.css'
 
 export function Label(props = {}) {
-  const { lineHeight, fontSize, mediaFontSize, mediaHoverFontSize } = props
-
   return {
-    _className: '_elo_text _19ixzy1',
-    \\"lineHeight\\":lineHeight,
-    \\":hover\\":{\\"fontSize\\":fontSize},
-    \\"@media (min-width: 320px)\\":{\\"fontSize\\":mediaFontSize,
-\\":hover\\":{\\"fontSize\\":mediaHoverFontSize}}
+    _className: '_elo_text _1m6pe37',
+    \\"lineHeight\\":props.lineHeight,
+    \\":hover\\":{\\"fontSize\\":props.fontSize},
+    \\"@media (min-width: 320px)\\":{\\"fontSize\\":props.mediaFontSize,
+\\":hover\\":{\\"fontSize\\":props.mediaHoverFontSize}}
   }
 }",
   "_RESET.css": "._elo_view{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;overflow:hidden;-webkit-overflow-scrolling:touch;align-self:stretch;flex-direction:column;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-shrink:0;max-width:100%;box-sizing:border-box}._elo_text{display:inline;overflow:visible}",
