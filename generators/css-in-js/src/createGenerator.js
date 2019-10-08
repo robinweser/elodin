@@ -299,7 +299,7 @@ function generateStyle(nodes) {
     .filter(decl => decl.dynamic)
     .map(decl => ({
       property: decl.property,
-      value: generateValue(decl.value),
+      value: generateValue(decl.value, decl.property === 'opacity'),
     }))
 
   const nests = nestings
@@ -339,11 +339,15 @@ function wrapInString(value) {
   return "'" + value + "'"
 }
 
+function wrapInParens(value) {
+  return '(' + value + ')'
+}
+
 const inlineFns = {
-  add: true,
-  sub: true,
-  mul: true,
-  div: true,
+  add: ' + ',
+  sub: ' - ',
+  mul: ' * ',
+  div: ' / ',
   percentage: true,
 }
 
@@ -354,7 +358,7 @@ const stringFns = {
   hsla: true,
 }
 
-function generateFunction(node) {
+function generateFunction(node, floatingPercentage = false) {
   if (stringFns[node.callee]) {
     return wrapInString(
       node.callee +
@@ -365,9 +369,9 @@ function generateFunction(node) {
               param.type === 'Variable' ||
               (param.type === 'FunctionExpression' && inlineFns[param.callee])
             ) {
-              return "' + (" + generateValue(param) + ") + '"
+              return "' + " + wrapInParens(generateValue(param, true)) + " + '"
             }
-            return generateValue(param)
+            return generateValue(param, true)
           })
           .join(', ') +
         ')'
@@ -375,36 +379,31 @@ function generateFunction(node) {
   }
 
   if (node.callee === 'percentage') {
-    return '(' + generateValue(node.params[0]) + ") + '%'"
+    if (floatingPercentage) {
+      return wrapInParens(
+        generateValue(node.params[0], floatingPercentage) + ' / 100'
+      )
+    }
+
+    return '(' + generateValue(node.params[0], floatingPercentage) + ") + '%'"
   }
 
   if (node.callee === 'raw') {
-    return generateValue(node.params[0])
+    return generateValue(node.params[0], floatingPercentage)
   }
 
-  if (node.callee === 'add') {
-    return node.params.map(generateValue).join(' + ')
+  if (inlineFns[node.callee]) {
+    return wrapInParens(
+      node.params
+        .map(value => generateValue(value, floatingPercentage))
+        .join(inlineFns[node.callee])
+    )
   }
-
-  if (node.callee === 'sub') {
-    return node.params.map(generateValue).join(' - ')
-  }
-
-  if (node.callee === 'mul') {
-    return node.params.map(generateValue).join(' * ')
-  }
-
-  // if (math[node.callee]) {
-  //   return generateValue({
-  //     type: 'Integer',
-  //     value: resolveMath(value),
-  //   })
-  // }
 }
 
-function generateValue(node) {
+function generateValue(node, floatingPercentage = false) {
   if (node.type === 'FunctionExpression') {
-    return generateFunction(node)
+    return generateFunction(node, floatingPercentage)
   }
 
   if (node.type === 'Integer') {

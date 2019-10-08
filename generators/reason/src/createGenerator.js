@@ -445,7 +445,10 @@ function generateStyle(nodes) {
     .filter(decl => decl.dynamic)
     .map(declaration => ({
       property: declaration.property,
-      value: generateValue(declaration.value),
+      value: generateValue(
+        declaration.value,
+        declaration.property === 'opacity'
+      ),
     }))
 
   const nests = nestings
@@ -502,11 +505,15 @@ function wrapInString(value) {
   return '"' + value + '"'
 }
 
+function wrapInParens(value) {
+  return '(' + value + ')'
+}
+
 const inlineFns = {
-  add: true,
-  sub: true,
-  mul: true,
-  div: true,
+  add: ' + ',
+  sub: ' - ',
+  mul: ' * ',
+  div: ' / ',
   percentage: true,
 }
 
@@ -517,7 +524,7 @@ const stringFns = {
   hsla: true,
 }
 
-function generateFunction(node) {
+function generateFunction(node, floatingPercentage = false) {
   if (stringFns[node.callee]) {
     return wrapInString(
       node.callee +
@@ -528,9 +535,12 @@ function generateFunction(node) {
               param.type === 'Variable' ||
               (param.type === 'FunctionExpression' && inlineFns[param.callee])
             ) {
-              return '" ++ string_of_int(' + generateValue(param) + ') ++ "'
+              return (
+                '" ++ string_of_int(' + generateValue(param, true) + ') ++ "'
+              )
             }
-            return generateValue(param)
+
+            return generateValue(param, true)
           })
           .join(', ') +
         ')'
@@ -538,23 +548,31 @@ function generateFunction(node) {
   }
 
   if (node.callee === 'percentage') {
-    return 'string_of_int(' + generateValue(node.params[0]) + ') ++ "%"'
+    if (floatingPercentage) {
+      return (
+        'string_of_int((' +
+        generateValue(node.params[0], floatingPercentage) +
+        ') / 100)'
+      )
+    }
+
+    return (
+      'string_of_int(' +
+      generateValue(node.params[0], floatingPercentage) +
+      ') ++ "%"'
+    )
   }
 
   if (node.callee === 'raw') {
-    return generateValue(node.params[0])
+    return generateValue(node.params[0], floatingPercentage)
   }
 
-  if (node.callee === 'add') {
-    return node.params.map(generateValue).join(' + ')
-  }
-
-  if (node.callee === 'sub') {
-    return node.params.map(generateValue).join(' - ')
-  }
-
-  if (node.callee === 'mul') {
-    return node.params.map(generateValue).join(' * ')
+  if (inlineFns[node.callee]) {
+    return wrapInParens(
+      node.params
+        .map(value => generateValue(value, floatingPercentage))
+        .join(inlineFns[node.callee])
+    )
   }
 
   // if (math[node.callee]) {
@@ -565,9 +583,9 @@ function generateFunction(node) {
   // }
 }
 
-function generateValue(node) {
+function generateValue(node, floatingPercentage = false) {
   if (node.type === 'FunctionExpression') {
-    return generateFunction(node)
+    return generateFunction(node, floatingPercentage)
   }
 
   if (node.type === 'Integer') {

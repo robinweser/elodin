@@ -70,11 +70,7 @@ function generateJS(ast, config) {
         name =>
           'export function ' +
           name +
-          '(' +
-          (modules[name].variables.length > 0
-            ? '{ ' + modules[name].variables.join(', ') + ' }'
-            : '') +
-          ') {\n  ' +
+          '(props = {}) {\n  ' +
           (modules[name].style.find(decl => decl.dynamic)
             ? 'const style = {\n    ' +
               modules[name].style
@@ -98,7 +94,7 @@ function generateStyle(nodes) {
 
   return base.map(declaration => ({
     property: declaration.property,
-    value: generateValue(declaration.value, declaration.property),
+    value: generateValue(declaration.value, declaration.property === 'opacity'),
     dynamic: declaration.dynamic,
   }))
 }
@@ -107,11 +103,15 @@ function wrapInString(value) {
   return '"' + value + '"'
 }
 
+function wrapInParens(value) {
+  return '(' + value + ')'
+}
+
 const inlineFns = {
-  add: true,
-  sub: true,
-  mul: true,
-  div: true,
+  add: ' + ',
+  sub: ' - ',
+  mul: ' * ',
+  div: ' / ',
   percentage: true,
 }
 
@@ -122,7 +122,7 @@ const stringFns = {
   hsla: true,
 }
 
-function generateFunction(node) {
+function generateFunction(node, floatingPercentage = false) {
   if (stringFns[node.callee]) {
     return wrapInString(
       node.callee +
@@ -133,9 +133,9 @@ function generateFunction(node) {
               param.type === 'Variable' ||
               (param.type === 'FunctionExpression' && inlineFns[param.callee])
             ) {
-              return '" + (' + generateValue(param) + ') + "'
+              return '" + ' + wrapInParens(generateValue(param, true)) + ' + "'
             }
-            return generateValue(param)
+            return generateValue(param, true)
           })
           .join(', ') +
         ')'
@@ -143,23 +143,25 @@ function generateFunction(node) {
   }
 
   if (node.callee === 'percentage') {
-    return '(' + generateValue(node.params[0]) + ') + "%"'
+    if (floatingPercentage) {
+      return wrapInParens(
+        generateValue(node.params[0], floatingPercentage) + ' / 100'
+      )
+    }
+
+    return '(' + generateValue(node.params[0], floatingPercentage) + ') + "%"'
   }
 
   if (node.callee === 'raw') {
-    return wrapInString(generateValue(node.params[0]))
+    return wrapInString(generateValue(node.params[0], floatingPercentage))
   }
 
-  if (node.callee === 'add') {
-    return node.params.map(generateValue).join(' + ')
-  }
-
-  if (node.callee === 'sub') {
-    return node.params.map(generateValue).join(' - ')
-  }
-
-  if (node.callee === 'mul') {
-    return node.params.map(generateValue).join(' * ')
+  if (inlineFns[node.callee]) {
+    return wrapInParens(
+      node.params
+        .map(value => generateValue(value, floatingPercentage))
+        .join(inlineFns[node.callee])
+    )
   }
 
   // if (math[node.callee]) {
@@ -170,9 +172,9 @@ function generateFunction(node) {
   // }
 }
 
-function generateValue(node) {
+function generateValue(node, floatingPercentage = false) {
   if (node.type === 'FunctionExpression') {
-    return generateFunction(node)
+    return generateFunction(node, floatingPercentage)
   }
 
   if (node.type === 'Integer') {
@@ -188,7 +190,7 @@ function generateValue(node) {
   }
 
   if (node.type === 'Variable') {
-    return node.value
+    return 'props.' + node.value
   }
 
   return wrapInString(node.value)

@@ -38,12 +38,18 @@ function resolveMath(value) {
   return value.value
 }
 
-function generateFunction(value, property, unit) {
+function generateFunction(value, property, unit, floatingPercentage = false) {
   if (value.callee === 'raw') {
     return generateCSSValue(value.params[0], property, false)
   }
 
   if (value.callee === 'percentage') {
+    if (floatingPercentage || property === 'opacity') {
+      return (
+        parseFloat(generateCSSValue(value.params[0], property, false)) / 100
+      )
+    }
+
     return generateCSSValue(value.params[0], property, false) + '%'
   }
 
@@ -63,14 +69,19 @@ function generateFunction(value, property, unit) {
       value.callee +
       '(' +
       value.params
-        .map(param => generateCSSValue(param, property, false))
+        .map(param => generateCSSValue(param, property, false, true))
         .join(', ') +
       ')'
     )
   }
 }
 
-export default function generateCSSValue(value, property, unit = true) {
+export default function generateCSSValue(
+  value,
+  property,
+  unit = true,
+  floatingPercentage = false
+) {
   if (value.type === 'Integer') {
     return (
       (value.negative ? '-' : '') +
@@ -80,7 +91,7 @@ export default function generateCSSValue(value, property, unit = true) {
   }
 
   if (value.type === 'FunctionExpression') {
-    return generateFunction(value, property, unit)
+    return generateFunction(value, property, unit, floatingPercentage)
   }
 
   if (value.type === 'String') {
