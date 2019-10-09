@@ -61,9 +61,8 @@ They all use the same generated data and render library specific source code in 
 #### elodin.config.js
 
 ```javascript
-var createGenerator = require('@elodin/generator-css-in-js').createGenerator
-var glamorAdapter = require('@elodin/generator-css-in-js/adapter/glamor')
-  .default
+var { createGenerator } = require('@elodin/generator-css-in-js')
+var { glamor } = require('@elodin/generator-css-in-js/adapters')
 
 const config = {
   devMode: true,

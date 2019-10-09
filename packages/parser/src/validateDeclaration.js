@@ -22,6 +22,10 @@ export default function validateDeclaration(property, value, rawValue, format) {
       }
     }
 
+    if (val.type === 'RawValue') {
+      return true
+    }
+
     const isValid = propertyDefinition.find(
       validator => validator(val) === true
     )

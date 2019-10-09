@@ -67,6 +67,14 @@ describe('Compiling to ReasonML', () => {
     expect(createGenerator()(ast, 'root.elo')).toMatchSnapshot()
   })
 
+  it('should return a map of files using dynamic imports', () => {
+    const { ast } = parse(file)
+
+    expect(
+      createGenerator({ dynamicImport: true })(ast, 'root.elo')
+    ).toMatchSnapshot()
+  })
+
   it('should return a map of files in devMode', () => {
     const { ast } = parse(file)
 

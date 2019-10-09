@@ -66,7 +66,9 @@ let getButtonVariants = (~type_, ~mode, ()) => {
   }
 };
 
-let button = (~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_=?, ~mode=?, ()) => \\"_elo_view _333se4\\" ++ getButtonVariants(~type_, ~mode, ()) ++ \\" \\" ++ merge([buttonStyle(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft), ...getButtonStyleVariants(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_, ~mode, ())]);
+let button = (~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_=?, ~mode=?, ()) => {
+  \\"_elo_view _333se4\\" ++ getButtonVariants(~type_, ~mode, ()) ++ \\" \\" ++ merge([buttonStyle(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft), ...getButtonStyleVariants(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_, ~mode, ())]);
+}
 
 let labelStyle = (~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize) => style([unsafe(\\"line-height\\", lineHeight),
     hover([unsafe(\\"font-size\\", fontSize)]),
@@ -81,7 +83,9 @@ let getLabelVariants = (~mode, ()) => {
   }
 };
 
-let label = (~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize, ~mode=?, ()) => \\"_elo_text _1imz7a4\\" ++ getLabelVariants(~mode, ()) ++ \\" \\" ++ merge([labelStyle(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize)]);
+let label = (~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize, ~mode=?, ()) => {
+  \\"_elo_text _1imz7a4\\" ++ getLabelVariants(~mode, ()) ++ \\" \\" ++ merge([labelStyle(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize)]);
+}
 ",
   "RootStyleButton.elo.css": "._333se4 {
   background-color: red;
@@ -193,7 +197,9 @@ let getButtonVariants = (~type_, ~mode, ()) => {
   }
 };
 
-let button = (~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_=?, ~mode=?, ()) => \\"_elo_view Button_333se4\\" ++ getButtonVariants(~type_, ~mode, ()) ++ \\" \\" ++ merge([buttonStyle(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft), ...getButtonStyleVariants(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_, ~mode, ())]);
+let button = (~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_=?, ~mode=?, ()) => {
+  \\"_elo_view Button_333se4\\" ++ getButtonVariants(~type_, ~mode, ()) ++ \\" \\" ++ merge([buttonStyle(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft), ...getButtonStyleVariants(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_, ~mode, ())]);
+}
 
 let labelStyle = (~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize) => style([unsafe(\\"line-height\\", lineHeight),
     hover([unsafe(\\"font-size\\", fontSize)]),
@@ -208,7 +214,9 @@ let getLabelVariants = (~mode, ()) => {
   }
 };
 
-let label = (~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize, ~mode=?, ()) => \\"_elo_text Label_1imz7a4\\" ++ getLabelVariants(~mode, ()) ++ \\" \\" ++ merge([labelStyle(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize)]);
+let label = (~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize, ~mode=?, ()) => {
+  \\"_elo_text Label_1imz7a4\\" ++ getLabelVariants(~mode, ()) ++ \\" \\" ++ merge([labelStyle(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize)]);
+}
 ",
   "RootStyleButton.elo.css": ".Button_333se4 {
   background-color: red;
@@ -247,6 +255,127 @@ let label = (~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize, ~mode=
 
 @media (min-width: 320px) and (max-width: 320px) {
   .Label_1imz7a4:hover {
+    color: blue
+  }
+}",
+  "_reset.elo.css": "._elo_view{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;overflow:hidden;-webkit-overflow-scrolling:touch;align-self:stretch;flex-direction:column;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-shrink:0;max-width:100%;box-sizing:border-box}._elo_text{display:inline;overflow:visible}",
+}
+`;
+
+exports[`Compiling to ReasonML should return a map of files using dynamic imports 1`] = `
+Object {
+  "RootStyle.re": "open Css;
+
+[@bs.deriving jsConverter]
+type type_ =
+  | Primary
+  | Secondary;
+
+[@bs.deriving jsConverter]
+type mode =
+  | Dark
+  | Light
+  | Semi;
+
+let buttonStyle = (~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft) => style([unsafe(\\"border-width\\", borderWidth)]);
+let getButtonStyleVariants = (~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_, ~mode, ()) => {
+    let buttonStylePrimary = style([unsafe(\\"padding-left\\", paddingLeft),
+      hover([unsafe(\\"padding-right\\", paddingRight)])]);
+    let buttonStylePrimaryDark = style([unsafe(\\"padding-left\\", padLeft)]);
+
+switch (type_, mode) {
+    | (Some(Primary), Some(Dark)) => [buttonStylePrimary,buttonStylePrimaryDark]
+    | (Some(Primary), Some(Light)) => [buttonStylePrimary]
+    | (Some(Primary), Some(Semi)) => [buttonStylePrimary]
+    | (Some(Primary), None) => [buttonStylePrimary]
+    | (Some(Secondary), Some(Dark)) => []
+    | (Some(Secondary), Some(Light)) => []
+    | (Some(Secondary), Some(Semi)) => []
+    | (Some(Secondary), None) => []
+    | (None, Some(Dark)) => []
+    | (None, Some(Light)) => []
+    | (None, Some(Semi)) => []
+    | (None, None) => []
+    }
+  };
+
+let getButtonVariants = (~type_, ~mode, ()) => {
+  switch (type_, mode) {
+    | (Some(Primary), Some(Dark)) => \\" _333se4_0-0 _333se4_1-0 _333se4_0-0_1-0\\"
+    | (Some(Primary), Some(Light)) => \\" _333se4_0-0 _333se4_1-1 _333se4_0-0_1-1\\"
+    | (Some(Primary), Some(Semi)) => \\" _333se4_0-0 _333se4_1-2 _333se4_0-0_1-2\\"
+    | (Some(Primary), None) => \\" _333se4_0-0\\"
+    | (Some(Secondary), Some(Dark)) => \\" _333se4_0-1 _333se4_1-0 _333se4_0-1_1-0\\"
+    | (Some(Secondary), Some(Light)) => \\" _333se4_0-1 _333se4_1-1 _333se4_0-1_1-1\\"
+    | (Some(Secondary), Some(Semi)) => \\"\\"
+    | (Some(Secondary), None) => \\" _333se4_0-1\\"
+    | (None, Some(Dark)) => \\" _333se4_1-0\\"
+    | (None, Some(Light)) => \\" _333se4_1-1\\"
+    | (None, Some(Semi)) => \\" _333se4_1-2\\"
+    | (None, None) => \\"\\"
+  }
+};
+
+let button = (~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_=?, ~mode=?, ()) => {
+  [%bs.raw {| import(\\"./RootStyleButton.elo.css\\") |}];
+  \\"_elo_view _333se4\\" ++ getButtonVariants(~type_, ~mode, ()) ++ \\" \\" ++ merge([buttonStyle(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft), ...getButtonStyleVariants(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_, ~mode, ())]);
+}
+
+let labelStyle = (~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize) => style([unsafe(\\"line-height\\", lineHeight),
+    hover([unsafe(\\"font-size\\", fontSize)]),
+    media(\\"(min-width: 320px) and (max-width: 320px)\\", [unsafe(\\"font-size\\", mediaFontSize),
+hover([unsafe(\\"font-size\\", mediaHoverFontSize)])])]);
+let getLabelVariants = (~mode, ()) => {
+  switch (mode) {
+    | (Some(Dark)) => \\"\\"
+    | (Some(Light)) => \\" _1imz7a4_0-1\\"
+    | (Some(Semi)) => \\"\\"
+    | (None) => \\"\\"
+  }
+};
+
+let label = (~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize, ~mode=?, ()) => {
+  [%bs.raw {| import(\\"./RootStyleLabel.elo.css\\") |}];
+  \\"_elo_text _1imz7a4\\" ++ getLabelVariants(~mode, ()) ++ \\" \\" ++ merge([labelStyle(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize)]);
+}
+",
+  "RootStyleButton.elo.css": "._333se4 {
+  background-color: red;
+  padding-left: 10px;
+  border: 0px
+}
+
+._333se4_0-0 {
+  background-color: red
+}
+
+._333se4_0-0:hover {
+  padding-left: 10px
+}
+
+._333se4_0-0_1-0 {
+  background-color: blue
+}
+
+._333se4_1-1 {
+  background-color: green
+}",
+  "RootStyleLabel.elo.css": "._1imz7a4:hover {
+  color: red
+}
+
+._1imz7a4_0-1 {
+  font-size: 16px
+}
+
+@media (min-width: 320px) and (max-width: 320px) {
+  ._1imz7a4 {
+    color: green
+  }
+}
+
+@media (min-width: 320px) and (max-width: 320px) {
+  ._1imz7a4:hover {
     color: blue
   }
 }",

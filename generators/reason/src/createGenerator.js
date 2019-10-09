@@ -21,6 +21,7 @@ import { baseReset, rootReset } from './getReset'
 
 const defaultConfig = {
   devMode: false,
+  dynamicImport: false,
   generateResetClassName: type => '_elo_' + type,
   generateFileName: (fileName, moduleName) =>
     capitalizeString(fileName) + moduleName + 'Style',
@@ -51,9 +52,8 @@ export default function createGenerator(customConfig = {}) {
 
     config.relativeRootPath = relativeRootPath || './'
 
-    const modules = generateModules(escapedAst, config)
     const css = generateCSSFiles(escapedAst, config, fileName)
-    const reason = generateReasonFile(escapedAst, config, modules, fileName)
+    const reason = generateReasonFile(escapedAst, config, fileName)
 
     return {
       [relativeRootPath + '_reset.elo.css']: cssReset,
@@ -73,25 +73,20 @@ export default function createGenerator(customConfig = {}) {
   return generate
 }
 
-function generateReasonFile(
-  ast,
-  { devMode, generateFileName, relativeRootPath },
-  modules,
-  fileName
-) {
+function generateReasonFile(ast, config, fileName) {
+  const { devMode, generateFileName, relativeRootPath, dynamicImport } = config
   const moduleName = generateFileName(fileName, '')
 
   // TODO: include fragments
   const styles = ast.body.filter(node => node.type === 'Style')
   const variants = ast.body.filter(node => node.type === 'Variant')
 
-  const imports = styles.reduce(
-    (imports, module) => {
-      imports.push('require("./' + moduleName + module.name + '.elo.css")')
-      return imports
-    },
-    ['require("' + relativeRootPath + '_reset.elo.css")']
-  )
+  const imports = styles.reduce((imports, module) => {
+    imports.push('require("./' + moduleName + module.name + '.elo.css")')
+    return imports
+  }, [])
+
+  const modules = generateModules(ast, config, moduleName)
 
   const variantMap = variants.reduce((flatVariants, variant) => {
     flatVariants[variant.name] = variant.body.map(variation => variation.value)
@@ -115,10 +110,14 @@ function generateReasonFile(
 
   return {
     [moduleName + '.re']:
-      imports
-        .map(cssFile => '[%bs.raw {|\n  ' + cssFile + '\n|}];')
-        .join('\n\n') +
-      '\n\n' +
+      '[%bs.raw {| require("' +
+      relativeRootPath +
+      '_reset.elo.css") |}];\n' +
+      (config.dynamicImport
+        ? ''
+        : imports
+            .map(cssFile => '[%bs.raw {|\n  ' + cssFile + '\n|}];')
+            .join('\n\n') + '\n\n') +
       (allVariables.length > 0 ? 'open Css;' + '\n\n' : '') +
       variantTypes +
       '\n\n' +
@@ -168,7 +167,11 @@ function generateCSSFiles(ast, { devMode, generateFileName }, fileName) {
   }, {})
 }
 
-function generateModules(ast, { devMode, generateResetClassName }) {
+function generateModules(
+  ast,
+  { devMode, generateResetClassName, dynamicImport },
+  moduleName
+) {
   // TODO: include fragments
   const styles = ast.body.filter(node => node.type === 'Style')
   const variants = ast.body.filter(node => node.type === 'Variant')
@@ -353,8 +356,15 @@ function generateModules(ast, { devMode, generateResetClassName }) {
         (variables.length > 0 && variantNames.length > 0 ? ', ' : '') +
         variantNames.map(name => '~' + name.toLowerCase() + '=?').join(', ') +
         (variables.length > 0 || variantNames.length > 0
-          ? ', ()) => "'
-          : ') => "') +
+          ? ', ()) => {\n  '
+          : ') => {\n  ') +
+        (dynamicImport
+          ? '[%bs.raw {| import("./' +
+            moduleName +
+            module.name +
+            '.elo.css") |}];\n  '
+          : '') +
+        '"' +
         className +
         (variantNames.length > 0
           ? '" ++ get' +
@@ -382,7 +392,8 @@ function generateModules(ast, { devMode, generateResetClassName }) {
                 ', ())'
               : '') +
             ']);'
-          : ';')
+          : ';') +
+        '\n}'
     )
 
     return rules

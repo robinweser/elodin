@@ -31,12 +31,13 @@ module.exports = {
 
 It also accepts a bunch of configuration options to customize the generated code.
 
-| Option                 | Type        | Default                          | Description                                                    |
-| ---------------------- | ----------- | -------------------------------- | -------------------------------------------------------------- |
-| devMode                | Boolean     | `false`                          | Enables readable class names                                   |
-| rootNode               | HTMLElement | `body`                           | CSS selector to apply root reset style to (see below)          |
-| generateFileName       | Function    | `fileName => fileName + "Style"` | Determines how the file names are generated                    |
-| generateResetClassName | Function    | `type => "_elo_" + type`         | Determines how the reset class names are generated (see below) |
+| Option                 | Type        | Default                          | Description                                                           |
+| ---------------------- | ----------- | -------------------------------- | --------------------------------------------------------------------- |
+| devMode                | Boolean     | `false`                          | Enables readable class names                                          |
+| dynamicImport          | Boolean     | `false`                          | Enables dynamic inline `import()` calls to lazy-load static CSS files |
+| rootNode               | HTMLElement | `body`                           | CSS selector to apply root reset style to (see below)                 |
+| generateFileName       | Function    | `fileName => fileName + "Style"` | Determines how the file names are generated                           |
+| generateResetClassName | Function    | `type => "_elo_" + type`         | Determines how the reset class names are generated (see below)        |
 
 ### Example
 

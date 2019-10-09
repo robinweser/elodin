@@ -54,7 +54,7 @@ view InlineCodeBox {
 text Code {
   __textRendering: "optimizeLegibility"
   fontSize: 18
-  fontFamily: raw("Dank Mono, Fira Code, Hack, Consolas, monospace !important")
+  fontFamily: "Dank Mono, Fira Code, Hack, Consolas, monospace !important"
 }
 
 text Strong {
