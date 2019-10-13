@@ -110,15 +110,15 @@ function generateReasonFile(ast, config, fileName) {
 
   return {
     [moduleName + '.re']:
-      '[%bs.raw {| require("' +
-      relativeRootPath +
-      '_reset.elo.css") |}];\n' +
       (config.dynamicImport
         ? ''
         : imports
             .map(cssFile => '[%bs.raw {|\n  ' + cssFile + '\n|}];')
             .join('\n\n') + '\n\n') +
-      (allVariables.length > 0 ? 'open Css;' + '\n\n' : '') +
+      (allVariables.length > 0 ? 'open Css;' + '\n' : '') +
+      '[%bs.raw{|\n  require("' +
+      relativeRootPath +
+      '_reset.elo.css")\n|}];\n\n' +
       variantTypes +
       '\n\n' +
       modules.join('\n\n') +

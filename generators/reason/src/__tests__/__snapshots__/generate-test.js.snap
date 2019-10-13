@@ -3,10 +3,6 @@
 exports[`Compiling to ReasonML should return a map of files 1`] = `
 Object {
   "RootStyle.re": "[%bs.raw {|
-  require(\\"./_reset.elo.css\\")
-|}];
-
-[%bs.raw {|
   require(\\"./RootStyleButton.elo.css\\")
 |}];
 
@@ -15,6 +11,9 @@ Object {
 |}];
 
 open Css;
+[%bs.raw{|
+  require(\\"./_reset.elo.css\\")
+|}];
 
 [@bs.deriving jsConverter]
 type type_ =
@@ -134,10 +133,6 @@ let label = (~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize, ~mode=
 exports[`Compiling to ReasonML should return a map of files in devMode 1`] = `
 Object {
   "RootStyle.re": "[%bs.raw {|
-  require(\\"./_reset.elo.css\\")
-|}];
-
-[%bs.raw {|
   require(\\"./RootStyleButton.elo.css\\")
 |}];
 
@@ -146,6 +141,9 @@ Object {
 |}];
 
 open Css;
+[%bs.raw{|
+  require(\\"./_reset.elo.css\\")
+|}];
 
 [@bs.deriving jsConverter]
 type type_ =
@@ -265,6 +263,9 @@ let label = (~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize, ~mode=
 exports[`Compiling to ReasonML should return a map of files using dynamic imports 1`] = `
 Object {
   "RootStyle.re": "open Css;
+[%bs.raw{|
+  require(\\"./_reset.elo.css\\")
+|}];
 
 [@bs.deriving jsConverter]
 type type_ =
