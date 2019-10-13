@@ -99,10 +99,10 @@ module NavigationContent = {
           </NavigationLink>
           <div style={ReactDOMRe.Style.make(~paddingLeft="15px", ())}>
             <NavigationLink href="/docs/targets/javascript/css-in-js/fela">
-              "Fela"
+              "fela"
             </NavigationLink>
             <NavigationLink href="/docs/targets/javascript/css-in-js/glamor">
-              "Glamor"
+              "glamor"
             </NavigationLink>
           </div>
           <NavigationLink href="/docs/targets/javascript/react-native">
@@ -117,6 +117,15 @@ module NavigationContent = {
           <NavigationLink href="/docs/targets/reasonml/css-in-reason">
             "CSS in Reason"
           </NavigationLink>
+          <div style={ReactDOMRe.Style.make(~paddingLeft="15px", ())}>
+            <NavigationLink
+              href="/docs/targets/reasonml/css-in-reason/reason-fela">
+              "reason-fela"
+            </NavigationLink>
+            <NavigationLink href="/docs/targets/reasonml/css-in-reason/bs-css">
+              "bs-css"
+            </NavigationLink>
+          </div>
           <NavigationLink
             href="/docs/targets/reasonml/react-native" disabled=true>
             "React Native"

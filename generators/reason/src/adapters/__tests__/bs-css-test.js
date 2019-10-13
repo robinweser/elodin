@@ -1,7 +1,7 @@
 import { parse } from '@elodin/core'
 
-import createGenerator from '../createGenerator'
-import bsCssAdapter from '../adapters/bs-css'
+import createGenerator from '../../createGenerator'
+import bsCssAdapter from '../bs-css'
 
 const file = `
 variant Type {
@@ -61,34 +61,12 @@ text Label {
   }
 }`
 
-describe('Compiling to ReasonML', () => {
+describe('Compiling to ReasonML using bs-css', () => {
   it('should return a map of files', () => {
     const { ast } = parse(file)
 
     expect(
       createGenerator({ adapter: bsCssAdapter() })(ast, 'root.elo')
-    ).toMatchSnapshot()
-  })
-
-  it('should return a map of files using dynamic imports', () => {
-    const { ast } = parse(file)
-
-    expect(
-      createGenerator({ adapter: bsCssAdapter(), dynamicImport: true })(
-        ast,
-        'root.elo'
-      )
-    ).toMatchSnapshot()
-  })
-
-  it('should return a map of files in devMode', () => {
-    const { ast } = parse(file)
-
-    expect(
-      createGenerator({ adapter: bsCssAdapter(), devMode: true })(
-        ast,
-        'root.elo'
-      )
     ).toMatchSnapshot()
   })
 })

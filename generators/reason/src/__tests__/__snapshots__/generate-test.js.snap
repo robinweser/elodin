@@ -2,7 +2,8 @@
 
 exports[`Compiling to ReasonML should return a map of files 1`] = `
 Object {
-  "RootStyle.re": "[%bs.raw {|
+  "RootStyle.re": "open Css;
+[%bs.raw {|
   require(\\"./RootStyleButton.elo.css\\")
 |}];
 
@@ -10,7 +11,6 @@ Object {
   require(\\"./RootStyleLabel.elo.css\\")
 |}];
 
-open Css;
 [%bs.raw{|
   require(\\"./_reset.elo.css\\")
 |}];
@@ -132,7 +132,8 @@ let label = (~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize, ~mode=
 
 exports[`Compiling to ReasonML should return a map of files in devMode 1`] = `
 Object {
-  "RootStyle.re": "[%bs.raw {|
+  "RootStyle.re": "open Css;
+[%bs.raw {|
   require(\\"./RootStyleButton.elo.css\\")
 |}];
 
@@ -140,7 +141,6 @@ Object {
   require(\\"./RootStyleLabel.elo.css\\")
 |}];
 
-open Css;
 [%bs.raw{|
   require(\\"./_reset.elo.css\\")
 |}];

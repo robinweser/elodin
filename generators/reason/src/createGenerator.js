@@ -18,6 +18,7 @@ import { isUnitlessProperty, hyphenateProperty } from 'css-in-js-utils'
 
 import keywords from './keywords'
 import { baseReset, rootReset } from './getReset'
+import stringifyDeclaration from './stringifyDeclaration'
 
 const defaultConfig = {
   devMode: false,
@@ -33,9 +34,17 @@ export default function createGenerator(customConfig = {}) {
     ...customConfig,
   }
 
-  let cssReset = baseReset(config.generateResetClassName)
-  if (config.rootNode) {
-    cssReset += rootReset(config.rootNode)
+  const { adapter, generateResetClassName, rootNode } = config
+
+  if (!adapter) {
+    throw new Error(
+      'An adapter needs to passed in order to generate code. See @elodin/generator-reason/lib/adapters for more information.'
+    )
+  }
+
+  let cssReset = baseReset(generateResetClassName)
+  if (rootNode) {
+    cssReset += rootReset(rootNode)
   }
 
   function generate(ast, path = '') {
@@ -74,7 +83,13 @@ export default function createGenerator(customConfig = {}) {
 }
 
 function generateReasonFile(ast, config, fileName) {
-  const { devMode, generateFileName, relativeRootPath, dynamicImport } = config
+  const {
+    adapter,
+    devMode,
+    generateFileName,
+    relativeRootPath,
+    dynamicImport,
+  } = config
   const moduleName = generateFileName(fileName, '')
 
   // TODO: include fragments
@@ -96,7 +111,6 @@ function generateReasonFile(ast, config, fileName) {
 
   const allVariables = getVariablesFromAST(ast)
   const variantTypes = Object.keys(variantMap)
-
     .map(
       variant =>
         '[@bs.deriving jsConverter]\n' +
@@ -109,20 +123,17 @@ function generateReasonFile(ast, config, fileName) {
     .join('\n\n')
 
   return {
-    [moduleName + '.re']:
-      (config.dynamicImport
+    [moduleName + '.re']: adapter.generateFile({
+      relativeRootPath,
+      cssImports: config.dynamicImport
         ? ''
         : imports
             .map(cssFile => '[%bs.raw {|\n  ' + cssFile + '\n|}];')
-            .join('\n\n') + '\n\n') +
-      (allVariables.length > 0 ? 'open Css;' + '\n' : '') +
-      '[%bs.raw{|\n  require("' +
-      relativeRootPath +
-      '_reset.elo.css")\n|}];\n\n' +
-      variantTypes +
-      '\n\n' +
-      modules.join('\n\n') +
-      '\n',
+            .join('\n\n') + '\n\n',
+      variables: allVariables,
+      modules,
+      variantTypes,
+    }),
   }
 }
 
@@ -169,7 +180,7 @@ function generateCSSFiles(ast, { devMode, generateFileName }, fileName) {
 
 function generateModules(
   ast,
-  { devMode, generateResetClassName, dynamicImport },
+  { devMode, generateResetClassName, dynamicImport, adapter },
   moduleName
 ) {
   // TODO: include fragments
@@ -331,69 +342,23 @@ function generateModules(
 };`
     }
 
-    const baseStyle =
-      style.length > 0
-        ? 'let ' +
-          uncapitalizeString(module.name) +
-          'Style = (' +
-          variables.map(variable => '~' + variable).join(', ') +
-          ') => style([' +
-          style.map(stringifyDeclaration).join(',\n    ') +
-          ']);'
-        : ''
-
     rules.push(
-      (baseStyle ? baseStyle + '\n' : '') +
-        (variantStyleSwitch ? variantStyleSwitch + '\n\n' : '') +
-        (variantSwitch ? variantSwitch + '\n\n' : '') +
-        `let ` +
-        module.name.charAt(0).toLowerCase() +
-        module.name.substr(1) +
-        ' = (' +
-        // TODO: deduplicate
-        // TODO: add typings
-        variables.map(variable => '~' + variable).join(', ') +
-        (variables.length > 0 && variantNames.length > 0 ? ', ' : '') +
-        variantNames.map(name => '~' + name.toLowerCase() + '=?').join(', ') +
-        (variables.length > 0 || variantNames.length > 0
-          ? ', ()) => {\n  '
-          : ') => {\n  ') +
-        (dynamicImport
+      adapter.generateModule({
+        styleName: module.name.charAt(0).toLowerCase() + module.name.substr(1),
+        style,
+        cssImport: dynamicImport
           ? '[%bs.raw {| import("./' +
             moduleName +
             module.name +
             '.elo.css") |}];\n  '
-          : '') +
-        '"' +
-        className +
-        (variantNames.length > 0
-          ? '" ++ get' +
-            module.name +
-            'Variants(' +
-            variantNames.map(name => '~' + name.toLowerCase()).join(', ') +
-            ', ())'
-          : '"') +
-        (style.length > 0 || variantStyleSwitch
-          ? ' ++ " " ++ merge([' +
-            (style.length > 0
-              ? uncapitalizeString(module.name) +
-                'Style(' +
-                variables.map(variable => '~' + variable).join(', ') +
-                ')'
-              : '') +
-            (variantStyleSwitch
-              ? (style.length > 0 ? ', ' : '') +
-                '...get' +
-                module.name +
-                'StyleVariants(' +
-                variables.map(variable => '~' + variable).join(', ') +
-                (variables.length > 0 && variantNames.length > 0 ? ', ' : '') +
-                variantNames.map(name => '~' + name.toLowerCase()).join(', ') +
-                ', ())'
-              : '') +
-            ']);'
-          : ';') +
-        '\n}'
+          : '',
+        variables,
+        variantNames,
+        variantStyleSwitch,
+        variantSwitch,
+        className,
+        module,
+      })
     )
 
     return rules
@@ -492,24 +457,6 @@ function generateStyle(nodes) {
     .filter(nesting => nesting && nesting.value.length > 0)
 
   return [...declarations, ...nests]
-}
-
-function stringifyDeclaration({ property, value, media }) {
-  if (media && typeof value === 'object') {
-    return (
-      'media("' +
-      property +
-      '", [' +
-      value.map(stringifyDeclaration).join(',\n') +
-      '])'
-    )
-  }
-
-  if (typeof value === 'object') {
-    return property + '([' + value.map(stringifyDeclaration).join(',\n') + '])'
-  }
-
-  return 'unsafe("' + hyphenateProperty(property) + '", ' + value + ')'
 }
 
 function wrapInString(value) {

@@ -12,17 +12,17 @@ Variants are rendered to plain string.
 
 ## Usage
 
-To use the CSS in JS generator, simply add it to your Elodin configuration and configure your prefered adapter.
+To use the CSS in JS generator, simply add it to your Elodin configuration specifying your prefered adapter.
 
 #### elodin.config.js
 
 ```javascript
-var createGenerator = require('@elodin/generator-css-in-js').createGenerator
-var felaAdapter = require('@elodin/generator-css-in-js/adapter/fela').default
+var { createGenerator } = require('@elodin/generator-css-in-js')
+var { fela } = require('@elodin/generator-css-in-js/adapter')
 
 module.exports = {
   generator: createGenerator({
-    adapter: felaAdapter(),
+    adapter: fela(),
   }),
 }
 ```
@@ -62,18 +62,16 @@ They all use the same generated data and render library specific source code in 
 
 ```javascript
 var { createGenerator } = require('@elodin/generator-css-in-js')
-var { glamor } = require('@elodin/generator-css-in-js/adapters')
-
-const config = {
-  devMode: true,
-  adapter: glamorAdapter({
-    dynamicImport: true,
-  }),
-  rootNode: '#__next',
-}
+var { glamor } = require('@elodin/generator-css-in-js/adapter')
 
 module.exports = {
-  generator: createGenerator(config),
+  generator: createGenerator({
+    devMode: true,
+    adapter: glamor({
+      dynamicImport: true,
+    }),
+    rootNode: '#__next',
+  }),
 }
 ```
 

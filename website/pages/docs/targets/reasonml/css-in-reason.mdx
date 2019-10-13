@@ -7,37 +7,58 @@ export default DocLayout
 `@elodin/generator-reason`
 
 This generator is used with ReasonML when building for the web.<br />
-Static styles are extracted to CSS files during compilation.<br/>
-It uses [bs-css](https://github.com/SentiaAnalytics/bs-css) under the hood to resolve dynamic styles.
+Static styles are extracted to CSS files during compilation while a CSS in Reason library resolves dynamic styles.<br/>
 
 It renders styles to functions which can be called with variables and variants in order to resolve them.<br />
 Variants are rendered to native ReasonML variants.
 
 ## Usage
 
-To use the Reason generator, simply add it to your Elodin configuration and you're ready to go.
+To use the CSS in Reason generator, simply add it to your Elodin configuration specifying your prefered adapter.
 
 #### elodin.config.js
 
 ```javascript
-var createGenerator = require('@elodin/generator-reason').createGenerator
+var { createGenerator } = require('@elodin/generator-reason')
+var { reasonFela } = require('@elodin/generator-reason/adapters')
 
 module.exports = {
-  generator: createGenerator(),
+  generator: createGenerator({
+    adapter: reasonFela(),
+  }),
 }
 ```
 
 ## Configuration
 
-It also accepts a bunch of configuration options to customize the generated code.
+Apart from the adapter, it also accepts a bunch of configuration options to customize the generated code.
 
 | Option                 | Type        | Default                          | Description                                                           |
 | ---------------------- | ----------- | -------------------------------- | --------------------------------------------------------------------- |
+| adapter                | Adapter     |                                  | CSS in Reason library adapter                                         |
 | devMode                | Boolean     | `false`                          | Enables readable class names                                          |
 | dynamicImport          | Boolean     | `false`                          | Enables dynamic inline `import()` calls to lazy-load static CSS files |
 | rootNode               | HTMLElement | `body`                           | CSS selector to apply root reset style to (see below)                 |
 | generateFileName       | Function    | `fileName => fileName + "Style"` | Determines how the file names are generated                           |
 | generateResetClassName | Function    | `type => "_elo_" + type`         | Determines how the reset class names are generated (see below)        |
+
+### rootNode
+
+If a rootNode is provided, Elodin will automatically apply a small reset for more convenient flexbox usage.
+
+## Adapters
+
+Adapters are bindings to different CSS in Reason libraries.<br />
+They all use the same generated data and render library specific source code in order to work seamlessly.<br />
+
+> **Note**: Also check out the adapter documentation as some also provide additional library specific configuration options!
+
+| Adapter                                                       | Description                                                                            |
+| ------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| [reason-fela](/docs/targets/reason/css-in-reason/reason-fela) | Renders to [reason-fela](http://fela.js.org/docs/guides/UsageWithReasonML.html) styles |
+| [bs-css](/docs/targets/reason/css-in-reason/bs-css)           | Renders to [bs-css](https://github.com/SentiaAnalytics/bs-css) styles                  |
+
+> **Missing your favourite library?** [File an issue](https://github.com/robinweser/elodin/issues/new) and we'll try to add an adapter for it!
 
 ### Example
 
@@ -46,14 +67,14 @@ Let's say instead of `*Style.re` files, we want them to be called `Elodin*.re` i
 #### elodin.config.js
 
 ```javascript
-var createGenerator = require('@elodin/generator-reason').createGenerator
-
-const config = {
-  generateFileName: fileName => 'Elodin' + fileName,
-}
+var { createGenerator } = require('@elodin/generator-reason')
+var { bsCss } = require('@elodin/generator-reason/adapters')
 
 module.exports = {
-  generator: createGenerator(config),
+  generator: createGenerator({
+    generateFileName: fileName => 'Elodin' + fileName,
+    adapter: bsCss(),
+  }),
 }
 ```
 
