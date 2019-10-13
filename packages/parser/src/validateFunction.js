@@ -1,5 +1,19 @@
 import functions from './functions'
 
+function stringifyTypes(types) {
+  if (types.length === 1) {
+    return '<' + types[0] + '>'
+  }
+
+  const last = types.pop()
+
+  return (
+    types.map(type => '<' + type + '>').join(', ') +
+    ' or ' +
+    stringifyTypes([last])
+  )
+}
+
 export default function validateFunction(callee, params) {
   const validator = functions[callee]
 
@@ -27,28 +41,48 @@ export default function validateFunction(callee, params) {
         const isValidParam = validator.types.indexOf(type) !== -1
 
         if (!isValidParam) {
-          console.log(
-            'Found parameter ' +
+          return {
+            type: 'type',
+            message:
+              'Found parameter ' +
               (index + 1) +
-              ' of type ' +
+              ' of type <' +
               type +
+              '> in ' +
+              callee +
               ', but wanted ' +
-              validator.types.join(', ')
-          )
-          return false
+              stringifyTypes(validator.types) +
+              '.',
+          }
         }
         return isValid
       }, true)
     }
 
     if (params.length > validator.params.length) {
-      console.log('Too much arguments.')
-      return false
+      return {
+        type: 'length',
+        message:
+          callee +
+          'only accepts ' +
+          validator.params.length +
+          ' parameters where ' +
+          params.length +
+          ' were passed.',
+      }
     }
 
     if (params.length < validator.params.length) {
-      console.log('Not enough params.')
-      return false
+      return {
+        type: 'length',
+        message:
+          callee +
+          'requires ' +
+          validator.params.length +
+          ' parameters. Only ' +
+          params.length +
+          ' found.',
+      }
     }
 
     return params.reduce((isValid, param, index) => {
@@ -73,29 +107,36 @@ export default function validateFunction(callee, params) {
       const isValidParamType = type === paramValidator.type
 
       if (!isValidParamType) {
-        console.log(
-          'Found parameter ' +
+        return {
+          type: 'type',
+          message:
+            'Found parameter ' +
             (index + 1) +
-            ' of type ' +
+            ' of type <' +
             type +
+            '> in ' +
+            callee +
             ', but wanted ' +
-            paramValidator.type
-        )
-        return false
+            stringifyTypes([paramValidator.type]) +
+            '.',
+        }
       }
 
       if (paramValidator.validate) {
         const isValidParamValue = paramValidator.validate(param)
 
         if (!isValidParamType) {
-          console.log(
-            'Found parameter ' +
+          return {
+            type: 'type',
+            message:
+              'Found parameter ' +
               (index + 1) +
-              ' of type ' +
+              ' of type <' +
               param.type +
-              ', with invalid value'
-          )
-          return false
+              '> in ' +
+              callee +
+              ' with an invalid value.',
+          }
         }
       }
 
@@ -103,6 +144,8 @@ export default function validateFunction(callee, params) {
     }, true)
   }
 
-  console.log('Invalid function call ' + callee)
-  return false
+  return {
+    type: 'callee',
+    message: 'The function `' + callee + '` is not a valid function.',
+  }
 }

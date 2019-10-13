@@ -757,15 +757,15 @@ export default class Parser {
 
         const params = this.parseUntil(token => token.type === 'round_bracket')
 
-        const isValidFunction = validateFunction(ident, params)
+        const validation = validateFunction(ident, params)
 
-        if (!isValidFunction) {
+        if (typeof validation === 'object') {
           this.addError(
             {
+              ...validation,
               type: 'INVALID_FUNCTION',
-              message: 'Invalid function.',
             },
-            true
+            false
           )
         }
 
