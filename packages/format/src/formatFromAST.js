@@ -61,19 +61,6 @@ export default function formatFromAST(node, customConfig = {}, level = 1) {
         '\n}'
       )
 
-    case 'Fragment':
-      return (
-        node.comments.map(comment => '# ' + comment.trim() + '\n').join('') +
-        'fragment ' +
-        node.name +
-        ' {\n' +
-        ident.repeat(level) +
-        sortDeclarations(node.body)
-          .map(generate)
-          .join('\n' + ident.repeat(level)) +
-        '\n}'
-      )
-
     case 'Conditional':
       const newLevel = level + 1
 
@@ -124,53 +111,8 @@ export default function formatFromAST(node, customConfig = {}, level = 1) {
       return (node.negative ? '-' : '') + node.value
     case 'Identifier':
       return node.value
-    case 'RawValue':
-      return 'raw("' + node.value + '")'
-    case 'Percentage':
-      return 'percentage(' + node.value + ')'
     case 'String':
       return '"' + node.value + '"'
-
-    case 'Color':
-      const { format, red, blue, green, alpha } = node
-      const colorValue = color.rgb(red, green, blue, alpha)
-
-      if (format === 'hex') {
-        return 'hex(' + colorValue.hex().substr(1) + ')'
-      }
-
-      if (format === 'keyword') {
-        // TODO: check APIs
-        return colorValue.keyword()
-      }
-
-      if (node.alpha < 1) {
-        if (format === 'rgb') {
-          return (
-            'rgba(' +
-            [
-              node.red,
-              node.green,
-              node.blue,
-              'percentage(' + node.alpha * 100 + ')',
-            ].join(' ') +
-            ')'
-          )
-        } else {
-          'hsla(' +
-            [
-              node.hue,
-              node.saturation,
-              node.lumination,
-              'percentage(' + node.alpha * 100 + ')',
-            ].join(' ') +
-            ')'
-        }
-      }
-
-      return colorValue[format]()
-        .string()
-        .replace(/,/g, '')
 
     default:
       throw new Error('Unknown node: ', node.type)

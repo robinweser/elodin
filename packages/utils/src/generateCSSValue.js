@@ -1,7 +1,87 @@
 import { isUnitlessProperty, hyphenateProperty } from 'css-in-js-utils'
 import color from 'color'
 
-export default function generateCSSValue(value, property, unit = true) {
+const math = {
+  add: true,
+  sub: true,
+  mul: true,
+  div: true,
+}
+
+const stringFn = {
+  rgba: true,
+  rgb: true,
+  hsl: true,
+  hsla: true,
+}
+
+function resolveMath(value) {
+  if (value.callee === 'add') {
+    return value.params.reduce((sum, param) => sum + resolveMath(param), 0)
+  }
+
+  if (value.callee === 'sub') {
+    return value.params.reduce(
+      (sum, param) => sum - resolveMath(param),
+      resolveMath(value.params[0]) * 2
+    )
+  }
+
+  if (value.callee === 'mul') {
+    return value.params.reduce((sum, param) => sum * resolveMath(param), 1)
+  }
+
+  // if (value.callee === 'add') {
+  //   return value.params.reduce((sum, param) => sum + resolveMath(param), 0)
+  // }
+
+  return value.value
+}
+
+function generateFunction(value, property, unit, floatingPercentage = false) {
+  if (value.callee === 'raw') {
+    return generateCSSValue(value.params[0], property, false)
+  }
+
+  if (value.callee === 'percentage') {
+    if (floatingPercentage || property === 'opacity') {
+      return (
+        parseFloat(generateCSSValue(value.params[0], property, false)) / 100
+      )
+    }
+
+    return generateCSSValue(value.params[0], property, false) + '%'
+  }
+
+  if (math[value.callee]) {
+    return generateCSSValue(
+      {
+        type: 'Integer',
+        value: resolveMath(value),
+      },
+      property,
+      unit
+    )
+  }
+
+  if (stringFn[value.callee]) {
+    return (
+      value.callee +
+      '(' +
+      value.params
+        .map(param => generateCSSValue(param, property, false, true))
+        .join(', ') +
+      ')'
+    )
+  }
+}
+
+export default function generateCSSValue(
+  value,
+  property,
+  unit = true,
+  floatingPercentage = false
+) {
   if (value.type === 'Integer') {
     return (
       (value.negative ? '-' : '') +
@@ -10,16 +90,12 @@ export default function generateCSSValue(value, property, unit = true) {
     )
   }
 
-  if (value.type === 'RawValue' || value.type === 'String') {
-    return value.value
+  if (value.type === 'FunctionExpression') {
+    return generateFunction(value, property, unit, floatingPercentage)
   }
 
-  if (value.type === 'Percentage') {
-    if (property === 'opacity') {
-      return value.value / 100
-    } else {
-      return value.value + '%'
-    }
+  if (value.type === 'String') {
+    return value.value
   }
 
   if (value.type === 'Color') {

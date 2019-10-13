@@ -34,26 +34,82 @@ The AST consists of the following AST nodes:
 
 ### File
 
+| Property | Type             | Description        |
+| -------- | ---------------- | ------------------ |
+| body     | [Variant, Style] | List of root nodes |
+
 ### Style
+
+| Property | Type                       | Description                                  |
+| -------- | -------------------------- | -------------------------------------------- |
+| name     | String                     | The name of the style                        |
+| format   | `view`, `text`             | The format of the style                      |
+| body     | [Declaration, Conditional] | List of declarations                         |
+| comments | [String]                   | List of comments found in front of the style |
 
 ### Variant
 
+| Property | Type         | Description                                  |
+| -------- | ------------ | -------------------------------------------- |
+| name     | String       | The name of the variant                      |
+| body     | [Identifier] | List of variant values                       |
+| comments | [String]     | List of comments found in front of the style |
+
 ### Conditional
+
+| Property | Type                               | Description                                                                                            |
+| -------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| property | String                             | The property that is being compared (only available if boolean is `false`)                             |
+| value    | Float, Integer, Identifier, String | The value that is being compared with the actual property value (only available if boolean is `false`) |
+| operator | `=`, `>=`, `>`, `<=`, `<`          | The comparison operator used                                                                           |
+| boolean  | Boolean                            | Whether the condition is boolean                                                                       |
+| body     | [Declaration, Conditional]         | List of declarations                                                                                   |
 
 ### Declaration
 
-### Variable
+| Property | Type                                                               | Description                                                           |
+| -------- | ------------------------------------------------------------------ | --------------------------------------------------------------------- |
+| property | String                                                             | The style property                                                    |
+| value    | [FunctionExpression, Float, Integer, Identifier, String, Variable] | The style value                                                       |
+| dynamic  | Boolean                                                            | Whether it's declaration has dynamic input (thus a variable as value) |
+| raw      | Boolean                                                            | Whether it has a raw property prefixed with `__`                      |
+
+### FunctionExpression
+
+| Property | Type | Description |
+| -------- | ---- | ----------- |
+| callee   |      |             |
+| params   |      |             |
 
 ### Float
 
+| Property   | Type | Description |
+| ---------- | ---- | ----------- |
+| integer    |      |             |
+| fractional |      |             |
+| negative   |      |             |
+
 ### Integer
+
+| Property | Type | Description |
+| -------- | ---- | ----------- |
+| value    |      |             |
+| negative |      |             |
 
 ### Identifier
 
-### RawValue
-
-### Percentage
+| Property | Type | Description |
+| -------- | ---- | ----------- |
+| value    |      |             |
 
 ### String
 
-### Color
+| Property | Type | Description |
+| -------- | ---- | ----------- |
+| value    |      |             |
+
+### Variable
+
+| Property | Type | Description |
+| -------- | ---- | ----------- |
+| value    |      |             |

@@ -26,37 +26,3 @@ text Label {
   fontFamily: "Arial"
 }
 ```
-
-## Percentage
-
-Percentages are used for values that represent percentage values and accept a number between 0 and 100.
-
-```
-view Button {
-  width: percentage(50)
-}
-```
-
-## Color
-
-Colors are either color keywords or special color functions used to set color properties.
-
-```
-view Button {
-  borderRightColor: red
-  borderTopColor: rgb(100 0 100)
-  borderLeftColor: rgba(100 0 100 percentage(50))
-  borderBottomColor: hex(f8f8f8)
-}
-```
-
-## RawValue
-
-RawValues are special values used to bypass the type-check to pass platform-specific values.<br />
-They're usually used with [Raw Properties]() and should be used with caution as they might not translate to other targets.
-
-```
-view Button {
-  __transition: raw("all 200ms linear")
-}
-```

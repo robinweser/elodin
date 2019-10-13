@@ -19,9 +19,6 @@ view Button {
   paddingLeft: 10
   __border: 0
   borderWidth: $borderWidth
-  [@landscape] {
-    backgroundColor: blue
-  }
   [Type=Primary] {
     backgroundColor: red
     paddingLeft: $paddingLeft
@@ -68,6 +65,14 @@ describe('Compiling to ReasonML', () => {
     const { ast } = parse(file)
 
     expect(createGenerator()(ast, 'root.elo')).toMatchSnapshot()
+  })
+
+  it('should return a map of files using dynamic imports', () => {
+    const { ast } = parse(file)
+
+    expect(
+      createGenerator({ dynamicImport: true })(ast, 'root.elo')
+    ).toMatchSnapshot()
   })
 
   it('should return a map of files in devMode', () => {

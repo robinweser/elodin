@@ -6,7 +6,7 @@ variant Type { Primary }
 variant Mode { Dark 
 
  Light}
-fragment Flex {
+view Flex {
    flexGrow: 1
    #foobar
       # baz
@@ -33,7 +33,7 @@ lineHeight:   $lineHeight
      }
 
      [@minWidth=320] {
-       color:hex(f3f3f3) [@hover] {
+       color:rgba(add(10 20) 0 20 percentage($percent)) [@hover] {
          color: green
        }
      }

@@ -50,12 +50,25 @@ Object {
           "raw": false,
           "type": "Declaration",
           "value": Object {
-            "alpha": 1,
-            "blue": 255,
-            "format": "rgb",
-            "green": 255,
-            "red": 255,
-            "type": "Color",
+            "callee": "rgb",
+            "params": Array [
+              Object {
+                "negative": false,
+                "type": "Integer",
+                "value": 255,
+              },
+              Object {
+                "negative": false,
+                "type": "Integer",
+                "value": 255,
+              },
+              Object {
+                "negative": false,
+                "type": "Integer",
+                "value": 255,
+              },
+            ],
+            "type": "FunctionExpression",
           },
         },
         Object {
@@ -302,79 +315,6 @@ Object {
 }
 `;
 
-exports[`Parsing elodin syntax should correctly parse fragments 1`] = `
-Object {
-  "body": Array [
-    Object {
-      "body": Array [
-        Object {
-          "comments": Array [],
-          "dynamic": false,
-          "property": "flexDirection",
-          "raw": false,
-          "type": "Declaration",
-          "value": Object {
-            "type": "Identifier",
-            "value": "row",
-          },
-        },
-        Object {
-          "comments": Array [],
-          "dynamic": false,
-          "property": "alignSelf",
-          "raw": false,
-          "type": "Declaration",
-          "value": Object {
-            "type": "Identifier",
-            "value": "stretch",
-          },
-        },
-        Object {
-          "comments": Array [],
-          "dynamic": false,
-          "property": "flexGrow",
-          "raw": false,
-          "type": "Declaration",
-          "value": Object {
-            "negative": false,
-            "type": "Integer",
-            "value": 0,
-          },
-        },
-        Object {
-          "comments": Array [],
-          "dynamic": false,
-          "property": "flexShrink",
-          "raw": false,
-          "type": "Declaration",
-          "value": Object {
-            "negative": false,
-            "type": "Integer",
-            "value": 1,
-          },
-        },
-        Object {
-          "comments": Array [],
-          "dynamic": false,
-          "property": "flexBasis",
-          "raw": false,
-          "type": "Declaration",
-          "value": Object {
-            "negative": false,
-            "type": "Integer",
-            "value": 50,
-          },
-        },
-      ],
-      "comments": Array [],
-      "name": "Flex",
-      "type": "Fragment",
-    },
-  ],
-  "type": "File",
-}
-`;
-
 exports[`Parsing elodin syntax should correctly parse multiple styles 1`] = `
 Object {
   "body": Array [
@@ -450,29 +390,36 @@ Object {
           "raw": false,
           "type": "Declaration",
           "value": Object {
-            "alpha": 1,
-            "blue": 0,
-            "format": "keyword",
-            "green": 0,
-            "red": 255,
-            "type": "Color",
+            "type": "Identifier",
+            "value": "red",
           },
         },
         Object {
-          "comments": Array [
-            " foo",
-          ],
+          "comments": Array [],
           "dynamic": false,
           "property": "borderColor",
           "raw": false,
           "type": "Declaration",
           "value": Object {
-            "alpha": 1,
-            "blue": 255,
-            "format": "rgb",
-            "green": 255,
-            "red": 255,
-            "type": "Color",
+            "callee": "rgb",
+            "params": Array [
+              Object {
+                "negative": false,
+                "type": "Integer",
+                "value": 255,
+              },
+              Object {
+                "negative": false,
+                "type": "Integer",
+                "value": 255,
+              },
+              Object {
+                "negative": false,
+                "type": "Integer",
+                "value": 255,
+              },
+            ],
+            "type": "FunctionExpression",
           },
         },
         Object {

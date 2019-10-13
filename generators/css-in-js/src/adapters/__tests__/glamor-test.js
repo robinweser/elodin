@@ -1,8 +1,8 @@
 import { parse } from '@elodin/parser'
 
-import { createGenerator } from '../index'
+import { createGenerator } from '../../index'
 
-import felaAdapter from '../adapters/fela'
+import glamorAdapter from '../glamor'
 
 const file = `
 variant Type {
@@ -56,36 +56,23 @@ text Label {
   }
 }`
 
-describe('Compiling to CSS and JavaScript', () => {
+describe('Compiling to CSS and JavaScript using glamor', () => {
   it('should return a map of files', () => {
     const { ast } = parse(file)
 
     expect(
       createGenerator({
-        adapter: felaAdapter(),
+        adapter: glamorAdapter(),
       })(ast, 'index.elo')
     ).toMatchSnapshot()
   })
 
-  it('should return a map of files in devMode', () => {
+  it('should pass adapter configuration', () => {
     const { ast } = parse(file)
 
     expect(
       createGenerator({
-        adapter: felaAdapter(),
-        devMode: true,
-      })(ast, 'index.elo')
-    ).toMatchSnapshot()
-  })
-
-  it('should return a map of files using custom fileName generators', () => {
-    const { ast } = parse(file)
-
-    expect(
-      createGenerator({
-        adapter: felaAdapter(),
-        generateJSFileName: moduleName => moduleName.toUpperCase(),
-        generateCSSFileName: moduleName => moduleName.toUpperCase(),
+        adapter: glamorAdapter({ dynamicImport: true }),
       })(ast, 'index.elo')
     ).toMatchSnapshot()
   })

@@ -1,8 +1,18 @@
+import colorNames from './colorNames'
+
+const COLOR_FUNCTIONS = /^(rgb|rgba|hsl|hsla)$/gi
+
 const isInteger = value => value.type === 'Integer'
 const isFloat = value => value.type === 'Float'
 const isString = value => value.type === 'String'
-const isPercentage = value => value.type === 'Percentage'
-const isColor = value => value.type === 'Color'
+const isPercentage = value =>
+  value.type === 'Percentage' ||
+  (value.type === 'FunctionExpression' && value.callee === 'percentage')
+const isColor = value =>
+  value.type === 'Color' ||
+  (value.type === 'Identifier' && colorNames[value.value]) ||
+  (value.type === 'FunctionExpression' &&
+    value.callee.match(COLOR_FUNCTIONS) !== null)
 const isNumber = value => isInteger(value) || isFloat(value)
 
 const matchesKeywords = (...keywords) => value =>

@@ -6,16 +6,16 @@ import {
   generateCSSMediaQueryFromNode,
   getModuleName,
   getVariantsFromAST,
+  getVariablesFromAST,
   stringifyCSSRule,
 } from '@elodin/utils'
 import { isUnitlessProperty, hyphenateProperty } from 'css-in-js-utils'
 
 import { baseReset, rootReset } from './getReset'
+import { wrap } from 'module'
 
 const defaultConfig = {
   devMode: false,
-  rootNode: 'body',
-  dynamicImport: false,
   generateResetClassName: type => '_elo_' + type,
   generateCSSFileName: moduleName => moduleName + '.elo',
   generateJSFileName: moduleName => moduleName + '.elo',
@@ -141,13 +141,7 @@ function generateCSS(ast, { devMode, generateCSSFileName }) {
 
 function generateJS(
   ast,
-  {
-    devMode,
-    dynamicImport,
-    generateResetClassName,
-    generateCSSFileName,
-    generateJSFileName,
-  },
+  { devMode, generateResetClassName, generateCSSFileName, generateJSFileName },
   adapter
 ) {
   // TODO: include fragments
@@ -166,6 +160,7 @@ function generateJS(
       return flatVariants
     }, {})
 
+    const variables = getVariablesFromAST(module)
     const style = generateStyle(module.body)
     const classNameMap = generateClassNameMap(module.body, variantMap, devMode)
     const variantStyleMap = generateVariantStyleMap(module.body, variants)
@@ -173,8 +168,9 @@ function generateJS(
     files[generateJSFileName(module.name) + '.js'] = adapter({
       style,
       variantStyleMap,
-      moduleName: generateCSSFileName(module.name),
-      dynamicImport,
+      variables,
+      moduleName: module.name,
+      cssFileName: generateCSSFileName(module.name),
       classNameMap,
       resetClassName: generateResetClassName(module.format),
       className: getModuleName(module, devMode),
@@ -301,9 +297,9 @@ function generateStyle(nodes) {
 
   const declarations = base
     .filter(decl => decl.dynamic)
-    .map(declaration => ({
-      property: declaration.property,
-      value: declaration.value.value,
+    .map(decl => ({
+      property: decl.property,
+      value: generateValue(decl.value, decl.property === 'opacity'),
     }))
 
   const nests = nestings
@@ -337,4 +333,94 @@ function generateStyle(nodes) {
     .filter(nesting => nesting && nesting.value.length > 0)
 
   return [...declarations, ...nests]
+}
+
+function wrapInString(value) {
+  return "'" + value + "'"
+}
+
+function wrapInParens(value) {
+  return '(' + value + ')'
+}
+
+const inlineFns = {
+  add: ' + ',
+  sub: ' - ',
+  mul: ' * ',
+  div: ' / ',
+  percentage: true,
+}
+
+const stringFns = {
+  rgb: true,
+  rgba: true,
+  hsl: true,
+  hsla: true,
+}
+
+function generateFunction(node, floatingPercentage = false) {
+  if (stringFns[node.callee]) {
+    return wrapInString(
+      node.callee +
+        '(' +
+        node.params
+          .map(param => {
+            if (
+              param.type === 'Variable' ||
+              (param.type === 'FunctionExpression' && inlineFns[param.callee])
+            ) {
+              return "' + " + wrapInParens(generateValue(param, true)) + " + '"
+            }
+            return generateValue(param, true)
+          })
+          .join(', ') +
+        ')'
+    )
+  }
+
+  if (node.callee === 'percentage') {
+    if (floatingPercentage) {
+      return wrapInParens(
+        generateValue(node.params[0], floatingPercentage) + ' / 100'
+      )
+    }
+
+    return '(' + generateValue(node.params[0], floatingPercentage) + ") + '%'"
+  }
+
+  if (node.callee === 'raw') {
+    return generateValue(node.params[0], floatingPercentage)
+  }
+
+  if (inlineFns[node.callee]) {
+    return wrapInParens(
+      node.params
+        .map(value => generateValue(value, floatingPercentage))
+        .join(inlineFns[node.callee])
+    )
+  }
+}
+
+function generateValue(node, floatingPercentage = false) {
+  if (node.type === 'FunctionExpression') {
+    return generateFunction(node, floatingPercentage)
+  }
+
+  if (node.type === 'Integer') {
+    return (node.negative ? '-' : '') + node.value
+  }
+
+  if (node.type === 'Float') {
+    return (node.negative ? '-' : '') + node.integer + '.' + node.fractional
+  }
+
+  if (node.type === 'Identifier') {
+    return hyphenateProperty(node.value)
+  }
+
+  if (node.type === 'Variable') {
+    return 'props.' + node.value
+  }
+
+  return node.value
 }

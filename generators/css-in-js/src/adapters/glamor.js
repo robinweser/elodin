@@ -11,11 +11,11 @@ function stringifyDeclaration(declaration) {
 }
 
 const defaultConfig = {
-  reactFela: false,
   dynamicImport: false,
 }
-export default function felaAdapter(customConfig = {}) {
-  const { dynamicImport, reactFela } = {
+
+export default function glamorAdapter(customConfig = {}) {
+  const { dynamicImport } = {
     ...defaultConfig,
     ...customConfig,
   }
@@ -39,7 +39,7 @@ export default function felaAdapter(customConfig = {}) {
 
     return (
       (!dynamicImport ? "import './" + cssFileName + ".css'\n" : '') +
-      (reactFela ? "import { createComponent } from 'react-fela'\n" : '') +
+      "import { css } from 'glamor'\n" +
       (imports.length > 0
         ? 'import { ' + imports.join(', ') + " } from '@elodin/runtime'\n\n"
         : '\n') +
@@ -66,15 +66,12 @@ export default function felaAdapter(customConfig = {}) {
           '\n}' +
           '\n\n'
         : '') +
-      (reactFela ? '' : 'export ') +
-      'function ' +
+      'export function ' +
       moduleName +
-      (reactFela ? 'Style' : '') +
       '(props = {})' +
       ' {\n  ' +
       (dynamicImport ? "import('./" + cssFileName + ".css')\n  " : '') +
-      'return {\n    ' +
-      '_className: ' +
+      'const className = ' +
       (hasVariations
         ? "'" +
           resetClassName +
@@ -83,20 +80,13 @@ export default function felaAdapter(customConfig = {}) {
           className +
           "', variantClassNameMap, props)"
         : "'" + resetClassName + ' ' + className + "'") +
-      ',\n    ' +
+      '\n\n  ' +
+      'return className + " " + css({\n    ' +
       style.map(stringifyDeclaration).join(',\n    ') +
       (hasDynamicVariations
         ? ',\n    ...getDynamicStyleFromVariantMap(variantStyleMap, props)'
         : '') +
-      '\n  }\n}' +
-      (reactFela
-        ? '\nexport const ' +
-          moduleName +
-          ' = createComponent(' +
-          moduleName +
-          'Style' +
-          ')'
-        : '')
+      '\n  })\n}'
     )
   }
 }

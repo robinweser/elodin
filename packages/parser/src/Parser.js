@@ -2,6 +2,7 @@ import tokenize from 'tokenize-sync'
 import color from 'color'
 
 import validateDeclaration from './validateDeclaration'
+import validateFunction from './validateFunction'
 import errorTypes from './errorTypes'
 import colorNames from './colorNames'
 
@@ -107,8 +108,7 @@ export default class Parser {
 
       const comments = this.getComments()
 
-      const node =
-        this.parseStyle() || this.parseFragment() || this.parseVariant()
+      const node = this.parseStyle() || this.parseVariant()
 
       if (node) {
         const duplicate = file.body.find(n => n.name === node.name)
@@ -137,7 +137,7 @@ export default class Parser {
           {
             type: errorTypes.SYNTAX_ERROR,
             message:
-              'Invalid Syntax. Top-level constructs can only be view, text, fragment or variant.',
+              'Invalid Syntax. Top-level constructs can only be view, text or variant.',
           },
           true
         )
@@ -177,7 +177,7 @@ export default class Parser {
   }
 
   parseComment() {
-    if (this.currentToken.type === 'comment') {
+    if (this.currentToken && this.currentToken.type === 'comment') {
       this.comments.push(this.currentToken.value.substr(1))
       this.updateCurrentToken(1)
     }
@@ -290,90 +290,6 @@ export default class Parser {
         }
 
         body.push({ ...node, comments })
-        this.updateCurrentToken(1)
-      }
-
-      this.updateCurrentToken(1)
-      return body
-    }
-  }
-
-  parseFragment() {
-    if (
-      this.currentToken.type === 'identifier' &&
-      this.currentToken.value === 'fragment'
-    ) {
-      this.updateCurrentToken(1)
-
-      const name = this.parseStyleName()
-
-      if (!name) {
-        this.addError(
-          {
-            type: errorTypes.SYNTAX_ERROR,
-            message: 'A fragment must have a valid name.',
-          },
-          true
-        )
-      }
-
-      if (name && name.charAt(0).toUpperCase() !== name.charAt(0)) {
-        this.addError(
-          {
-            type: errorTypes.SYNTAX_ERROR,
-            message: 'Fragment names must begin with an uppercase letter.',
-            name,
-          },
-          true
-        )
-      }
-
-      this.parent = {
-        type: 'fragment',
-        name,
-      }
-
-      const body = this.parseFragmentBody()
-
-      if (!body) {
-        this.addError(
-          {
-            type: errorTypes.SYNTAX_ERROR,
-          },
-          true
-        )
-      }
-      return {
-        type: 'Fragment',
-        name,
-        body,
-      }
-    }
-  }
-
-  parseFragmentBody() {
-    const body = []
-
-    if (
-      this.currentToken.type === 'curly_bracket' &&
-      this.currentToken.value === '{'
-    ) {
-      this.updateCurrentToken(1)
-
-      while (this.isRunning() && this.currentToken.type !== 'curly_bracket') {
-        const comments = this.getComments()
-        const declaration = this.parseDeclaration()
-
-        if (!declaration) {
-          this.addError(
-            {
-              type: errorTypes.SYNTAX_ERROR,
-              messages: 'Fragments must only contain declarations.',
-            },
-            true
-          )
-        }
-        body.push({ ...declaration, comments })
         this.updateCurrentToken(1)
       }
 
@@ -843,142 +759,22 @@ export default class Parser {
 
         const params = this.parseUntil(token => token.type === 'round_bracket')
 
-        if (ident === 'percentage') {
-          if (params.length === 1 && params[0]) {
-            if (
-              // parse float
-              params[0].type === 'Integer' &&
-              params[0].value >= 0 &&
-              params[0].value <= 100
-            ) {
-              return {
-                type: 'Percentage',
-                value: params[0].value,
-              }
-            } else {
-              this.addError(
-                {
-                  type: 'SYNTAX_ERROR',
-                  message:
-                    'Percentage values must contain an Integer between 0 and 100.',
-                },
-                true
-              )
-            }
-          } else {
-            this.addError(
-              {
-                type: 'SYNTAX_ERROR',
-                message:
-                  'The `percentage` function requires exactly 1 parameter of type Integer.',
-              },
-              true
-            )
-          }
-        }
+        const validation = validateFunction(ident, params)
 
-        if (ident === 'hex') {
-          let normalizedValue
-          try {
-            normalizedValue = color(
-              '#' + params.map(param => param && param.value).join('')
-            )
-          } catch (e) {
-            this.addError(
-              {
-                type: 'SYNTAX_ERROR',
-                message:
-                  'A valid hexadecimal string of length 3, 6 or 8 must be passed to the `hex` function.',
-              },
-              true
-            )
-          }
-
-          if (normalizedValue) {
-            return {
-              type: 'Color',
-              red: normalizedValue.red(),
-              green: normalizedValue.green(),
-              blue: normalizedValue.blue(),
-              alpha: normalizedValue.alpha(),
-              format: 'hex',
-            }
-          }
-        }
-
-        if (ident === 'rgb' || ident === 'rgba') {
-          const [
-            red,
-            green,
-            blue,
-            alpha = { type: 'Percentage', value: 100 },
-          ] = params
-
-          // TODO: validate value
-          if (
-            !red ||
-            !green ||
-            !blue ||
-            red.type !== 'Integer' ||
-            green.type !== 'Integer' ||
-            blue.type !== 'Integer' ||
-            alpha.type !== 'Percentage'
-          ) {
-            this.addError(
-              {
-                type: 'SYNTAX_ERROR',
-                message: 'WRONG RGB',
-              },
-              true
-            )
-          } else {
-            return {
-              type: 'Color',
-              red: red.value,
-              green: green.value,
-              blue: blue.value,
-              alpha: alpha.value / 100,
-              format: 'rgb',
-            }
-          }
-        }
-
-        if (ident === 'raw') {
-          if (params.length === 1 && params[0] && params[0].type === 'String') {
-            return {
-              type: 'RawValue',
-              value: params[0].value,
-            }
-          } else {
-            this.addError(
-              {
-                type: errorTypes.SYNTAX_ERROR,
-                message:
-                  'The `raw` function only accepts a single String value.',
-              },
-              true
-            )
-          }
+        if (typeof validation === 'object') {
+          this.addError(
+            {
+              ...validation,
+              type: 'INVALID_FUNCTION',
+            },
+            false
+          )
         }
 
         return {
           type: 'FunctionExpression',
           callee: ident,
           params,
-        }
-      }
-
-      // TODO: parse color names
-      if (colorNames[ident]) {
-        const namedColor = color(ident)
-
-        return {
-          type: 'Color',
-          red: namedColor.red(),
-          green: namedColor.green(),
-          blue: namedColor.blue(),
-          alpha: namedColor.alpha(),
-          format: 'keyword',
         }
       }
 

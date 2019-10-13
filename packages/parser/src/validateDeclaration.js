@@ -1,4 +1,5 @@
 import definitions from './definitions'
+import functions from './functions'
 
 var Matcher = require('did-you-mean')
 
@@ -8,13 +9,32 @@ const matcher = {
 }
 
 export default function validateDeclaration(property, value, rawValue, format) {
-  const propertyDefinition = format
-    ? definitions[format][property]
-    : definitions.view[property] || definitions.text[property]
+  const propertyDefinition = definitions[format][property]
 
   if (propertyDefinition) {
+    let val = value
+    if (value.type === 'FunctionExpression') {
+      const validator = functions[value.callee]
+
+      if (validator) {
+        if (typeof validator.return === 'function') {
+          val = {
+            type: validator.return(value.params),
+          }
+        } else {
+          val = {
+            type: validator.return,
+          }
+        }
+      }
+    }
+
+    if (val.type === 'RawValue') {
+      return true
+    }
+
     const isValid = propertyDefinition.find(
-      validator => validator(value) === true
+      validator => validator(val) === true
     )
 
     if (!isValid) {
