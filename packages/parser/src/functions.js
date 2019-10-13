@@ -107,4 +107,9 @@ export default {
     return: params =>
       params.find(param => param.type === 'Float') ? 'Float' : 'Integer',
   },
+  div: {
+    types: ['Integer', 'Float'],
+    return: params =>
+      params.find(param => param.type === 'Float') ? 'Float' : 'Integer',
+  },
 }
