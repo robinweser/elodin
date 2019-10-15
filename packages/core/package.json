@@ -1,6 +1,6 @@
 {
   "name": "@elodin/core",
-  "version": "0.0.36",
+  "version": "0.0.37",
   "main": "lib/index.js",
   "module": "es/index.js",
   "publishConfig": {
@@ -18,10 +18,10 @@
   "author": "robinweser <contact@weser.io>",
   "license": "MIT",
   "dependencies": {
-    "@elodin/format": "^0.0.36",
-    "@elodin/parser": "^0.0.36",
-    "@elodin/traverser": "^0.0.36",
-    "@elodin/types": "^0.0.36",
+    "@elodin/format": "^0.0.37",
+    "@elodin/parser": "^0.0.37",
+    "@elodin/traverser": "^0.0.37",
+    "@elodin/types": "^0.0.37",
     "read-transform-write": "^2.1.0"
   },
   "devDependencies": {
