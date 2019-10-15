@@ -73,6 +73,17 @@ let labelStyle = (~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize) =
     hover([unsafe(\\"font-size\\", fontSize)]),
     media(\\"(min-width: 320px) and (max-width: 320px)\\", [unsafe(\\"font-size\\", mediaFontSize),
 hover([unsafe(\\"font-size\\", mediaHoverFontSize)])])]);
+let getLabelStyleVariants = (~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize, ~mode, ()) => {
+    
+
+switch (mode) {
+    | (Some(Dark)) => []
+    | (Some(Light)) => []
+    | (Some(Semi)) => []
+    | (None) => []
+    }
+  };
+
 let getLabelVariants = (~mode, ()) => {
   switch (mode) {
     | (Some(Dark)) => \\"\\"
@@ -83,7 +94,7 @@ let getLabelVariants = (~mode, ()) => {
 };
 
 let label = (~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize, ~mode=?, ()) => {
-  \\"_elo_text _1imz7a4\\" ++ getLabelVariants(~mode, ()) ++ \\" \\" ++ merge([labelStyle(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize)]);
+  \\"_elo_text _1imz7a4\\" ++ getLabelVariants(~mode, ()) ++ \\" \\" ++ merge([labelStyle(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize), ...getLabelStyleVariants(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize, ~mode, ())]);
 }
 ",
   "RootStyleButton.elo.css": "._333se4 {
