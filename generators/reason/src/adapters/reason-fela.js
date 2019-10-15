@@ -70,7 +70,7 @@ export default function() {
             variantNames.map(name => '~' + name.toLowerCase()).join(', ') +
             ', ())'
           : '"') +
-        (style.length > 0
+        (style.length > 0 || variantStyleSwitch
           ? ' ++ " " ++ merge([' +
             (style.length > 0
               ? uncapitalizeString(module.name) +

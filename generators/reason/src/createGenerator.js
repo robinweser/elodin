@@ -270,7 +270,7 @@ function generateModules(
         return matches
       }, [])
 
-      if (variables.length > 0 && dynamicStyle) {
+      if (variables.length > 0 || dynamicStyle) {
         variantStyleSwitch = `let get${
           module.name
         }StyleVariants = (${variables
