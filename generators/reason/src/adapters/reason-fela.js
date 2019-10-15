@@ -42,7 +42,14 @@ export default function() {
         ') => style([' +
         'unsafe("_className", "' +
         className +
-        '"), ' +
+        (variantNames.length > 0 && variantSwitch
+          ? '" ++ " " ++ get' +
+            module.name +
+            'Variants(' +
+            variantNames.map(name => '~' + name.toLowerCase()).join(', ') +
+            ', ())'
+          : '"') +
+        '), ' +
         style.map(stringifyDeclaration).join(',\n    ') +
         ']);'
 
@@ -63,15 +70,8 @@ export default function() {
           ? ', ()) => {\n  '
           : ') => {\n  ') +
         cssImport +
-        (variantNames.length > 0 && variantSwitch
-          ? 'get' +
-            module.name +
-            'Variants(' +
-            variantNames.map(name => '~' + name.toLowerCase()).join(', ') +
-            ', ())'
-          : '""') +
         (style.length > 0 || variantStyleSwitch
-          ? ' ++ " " ++ merge([' +
+          ? 'Fela.combineRules([' +
             (style.length > 0
               ? uncapitalizeString(module.name) +
                 'Style(' +
@@ -90,7 +90,7 @@ export default function() {
               : '') +
             ']);'
           : ';') +
-        '\n}'
+        '\n};'
       )
     },
   }
