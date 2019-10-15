@@ -66,7 +66,7 @@ let getButtonVariants = (~type_, ~mode, ()) => {
 };
 
 let button = (~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_=?, ~mode=?, ()) => {
-  Fela.combineRules([buttonStyle(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft), ...getButtonStyleVariants(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_, ~mode, ())]);
+  Fela.combineRules([|buttonStyle(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft), ...getButtonStyleVariants(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_, ~mode, ())|]);
 };
 
 let labelStyle = (~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize) => style([unsafe(\\"_className\\", \\"_elo_text _1imz7a4\\" ++ \\" \\" ++ getLabelVariants(~mode, ())), unsafe(\\"line-height\\", lineHeight),
@@ -94,7 +94,7 @@ let getLabelVariants = (~mode, ()) => {
 };
 
 let label = (~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize, ~mode=?, ()) => {
-  Fela.combineRules([labelStyle(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize), ...getLabelStyleVariants(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize, ~mode, ())]);
+  Fela.combineRules([|labelStyle(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize), ...getLabelStyleVariants(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize, ~mode, ())|]);
 };
 ",
   "RootStyleButton.elo.css": "._333se4 {

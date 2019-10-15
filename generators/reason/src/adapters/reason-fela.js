@@ -71,7 +71,7 @@ export default function() {
           : ') => {\n  ') +
         cssImport +
         (style.length > 0 || variantStyleSwitch
-          ? 'Fela.combineRules([' +
+          ? 'Fela.combineRules([|' +
             (style.length > 0
               ? uncapitalizeString(module.name) +
                 'Style(' +
@@ -88,7 +88,7 @@ export default function() {
                 variantNames.map(name => '~' + name.toLowerCase()).join(', ') +
                 ', ())'
               : '') +
-            ']);'
+            '|]);'
           : ';') +
         '\n};'
       )
