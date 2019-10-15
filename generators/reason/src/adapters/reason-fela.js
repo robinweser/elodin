@@ -63,14 +63,14 @@ export default function() {
           ? ', ()) => {\n  '
           : ') => {\n  ') +
         cssImport +
-        (variantNames.length > 0
+        (variantNames.length > 0 && variantSwitch
           ? 'get' +
             module.name +
             'Variants(' +
             variantNames.map(name => '~' + name.toLowerCase()).join(', ') +
             ', ())'
           : '"') +
-        (style.length > 0 || variantStyleSwitch
+        (style.length > 0
           ? ' ++ " " ++ merge([' +
             (style.length > 0
               ? uncapitalizeString(module.name) +

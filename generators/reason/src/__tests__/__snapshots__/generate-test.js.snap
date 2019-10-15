@@ -434,7 +434,7 @@ switch (type_, mode) {
   };
 
 let button = (~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_=?, ~mode=?, ()) => {
-  \\"_elo_view\\" ++ getButtonVariants(~type_, ~mode, ()) ++ \\" \\" ++ merge([buttonStyle(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft), ...getButtonStyleVariants(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_, ~mode, ())]);
+  \\"_elo_view\\" ++ \\" \\" ++ merge([buttonStyle(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft), ...getButtonStyleVariants(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_, ~mode, ())]);
 }
 
 let labelStyle = (~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize) => style([unsafe(\\"line-height\\", lineHeight),
@@ -456,7 +456,7 @@ switch (mode) {
   };
 
 let label = (~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize, ~mode=?, ()) => {
-  \\"_elo_text\\" ++ getLabelVariants(~mode, ()) ++ \\" \\" ++ merge([labelStyle(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize), ...getLabelStyleVariants(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize, ~mode, ())]);
+  \\"_elo_text\\" ++ \\" \\" ++ merge([labelStyle(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize), ...getLabelStyleVariants(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize, ~mode, ())]);
 }
 ",
   "_reset.elo.css": "._elo_view{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;overflow:hidden;-webkit-overflow-scrolling:touch;align-self:stretch;flex-direction:column;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-shrink:0;max-width:100%;box-sizing:border-box}._elo_text{display:inline;overflow:visible}",
