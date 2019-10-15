@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@elodin/example-reason",
-  "version": "0.0.37",
+  "version": "0.0.38",
   "scripts": {
     "dev": "next src",
     "build": "echo 1",
@@ -17,10 +17,10 @@
   "license": "MIT",
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
-    "@elodin/cli": "^0.0.37",
-    "@elodin/core": "^0.0.37",
-    "@elodin/generator-reason": "^0.0.37",
-    "@elodin/parser": "^0.0.37",
+    "@elodin/cli": "^0.0.38",
+    "@elodin/core": "^0.0.38",
+    "@elodin/generator-reason": "^0.0.38",
+    "@elodin/parser": "^0.0.38",
     "@emotion/cache": "^10.0.9",
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-mdx": "^1.2.0",
@@ -36,6 +36,6 @@
   },
   "devDependencies": {
     "bs-platform": "^5.0.4",
-    "prettier-plugin-elodin": "^0.0.37"
+    "prettier-plugin-elodin": "^0.0.38"
   }
 }
