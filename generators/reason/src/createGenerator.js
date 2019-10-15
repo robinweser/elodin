@@ -13,6 +13,7 @@ import {
   escapeKeywords,
   generateCSSMediaQueryFromNode,
   generateCSSClasses,
+  generateCSSValue,
 } from '@elodin/utils'
 import { isUnitlessProperty, hyphenateProperty } from 'css-in-js-utils'
 
@@ -23,6 +24,7 @@ import stringifyDeclaration from './stringifyDeclaration'
 const defaultConfig = {
   devMode: false,
   dynamicImport: false,
+  extractCss: true,
   generateResetClassName: type => '_elo_' + type,
   generateFileName: (fileName, moduleName) =>
     capitalizeString(fileName) + moduleName + 'Style',
@@ -34,7 +36,7 @@ export default function createGenerator(customConfig = {}) {
     ...customConfig,
   }
 
-  const { adapter, generateResetClassName, rootNode } = config
+  const { adapter, generateResetClassName, rootNode, extractCss } = config
 
   if (!adapter) {
     throw new Error(
@@ -61,7 +63,7 @@ export default function createGenerator(customConfig = {}) {
 
     config.relativeRootPath = relativeRootPath || './'
 
-    const css = generateCSSFiles(escapedAst, config, fileName)
+    const css = extractCss ? generateCSSFiles(escapedAst, config, fileName) : {}
     const reason = generateReasonFile(escapedAst, config, fileName)
 
     return {
@@ -89,6 +91,7 @@ function generateReasonFile(ast, config, fileName) {
     generateFileName,
     relativeRootPath,
     dynamicImport,
+    extractCss,
   } = config
   const moduleName = generateFileName(fileName, '')
 
@@ -96,10 +99,12 @@ function generateReasonFile(ast, config, fileName) {
   const styles = ast.body.filter(node => node.type === 'Style')
   const variants = ast.body.filter(node => node.type === 'Variant')
 
-  const imports = styles.reduce((imports, module) => {
-    imports.push('require("./' + moduleName + module.name + '.elo.css")')
-    return imports
-  }, [])
+  const imports = extractCss
+    ? styles.reduce((imports, module) => {
+        imports.push('require("./' + moduleName + module.name + '.elo.css")')
+        return imports
+      }, [])
+    : []
 
   const modules = generateModules(ast, config, moduleName)
 
@@ -180,7 +185,7 @@ function generateCSSFiles(ast, { devMode, generateFileName }, fileName) {
 
 function generateModules(
   ast,
-  { devMode, generateResetClassName, dynamicImport, adapter },
+  { devMode, generateResetClassName, dynamicImport, adapter, extractCss },
   moduleName
 ) {
   // TODO: include fragments
@@ -195,9 +200,13 @@ function generateModules(
   const variantOrder = Object.keys(variantMap)
 
   return styles.reduce((rules, module) => {
-    const style = generateStyle(module.body)
+    const style = generateStyle(module.body, extractCss)
     const variables = getVariablesFromAST(module)
-    const variantStyleMap = generateVariantStyleMap(module.body, variants)
+    const variantStyleMap = generateVariantStyleMap(
+      module.body,
+      variants,
+      extractCss
+    )
     const usedVariants = getVariantsFromAST(module)
     const variantNames = Object.keys(usedVariants).sort((x, y) =>
       variantOrder.indexOf(x) > variantOrder.indexOf(y) ? 1 : -1
@@ -205,11 +214,10 @@ function generateModules(
 
     const className =
       generateResetClassName(module.format) +
-      ' ' +
-      getModuleName(module, devMode)
+      (extractCss ? ' ' + getModuleName(module, devMode) : '')
 
     let dynamicStyle =
-      variables.length > 0
+      !extractCss || variables.length > 0
         ? variantStyleMap
             .map(
               vari =>
@@ -346,16 +354,17 @@ function generateModules(
       adapter.generateModule({
         styleName: module.name.charAt(0).toLowerCase() + module.name.substr(1),
         style,
-        cssImport: dynamicImport
-          ? '[%bs.raw {| import("./' +
-            moduleName +
-            module.name +
-            '.elo.css") |}];\n  '
-          : '',
+        cssImport:
+          dynamicImport && extractCss
+            ? '[%bs.raw {| import("./' +
+              moduleName +
+              module.name +
+              '.elo.css") |}];\n  '
+            : '',
         variables,
         variantNames,
         variantStyleSwitch,
-        variantSwitch,
+        variantSwitch: extractCss ? variantSwitch : '',
         className,
         module,
       })
@@ -368,6 +377,7 @@ function generateModules(
 function generateVariantStyleMap(
   nodes,
   variants,
+  extractCss,
   styles = [],
   style = [],
   modifier = {}
@@ -395,8 +405,9 @@ function generateVariantStyleMap(
             generateVariantStyleMap(
               nest.body,
               variants,
+              extractCss,
               styles,
-              generateStyle(nest.body),
+              generateStyle(nest.body, extractCss),
               {
                 ...modifier,
                 [variant.name]: variation.value,
@@ -413,17 +424,18 @@ function generateVariantStyleMap(
   return styles
 }
 
-function generateStyle(nodes) {
+function generateStyle(nodes, extractCss) {
   const base = nodes.filter(node => node.type === 'Declaration')
   const nestings = nodes.filter(node => node.type !== 'Declaration')
 
   const declarations = base
-    .filter(decl => decl.dynamic)
+    .filter(decl => (extractCss ? decl.dynamic : true))
     .map(declaration => ({
       property: declaration.property,
       value: generateValue(
         declaration.value,
-        declaration.property === 'opacity'
+        declaration.property,
+        declaration.dynamic
       ),
     }))
 
@@ -437,7 +449,7 @@ function generateStyle(nodes) {
         ) {
           return {
             property: nest.property.value,
-            value: generateStyle(nest.body),
+            value: generateStyle(nest.body, extractCss),
           }
         }
 
@@ -448,7 +460,7 @@ function generateStyle(nodes) {
               nest.property.value,
               nest.operator
             ),
-            value: generateStyle(nest.body),
+            value: generateStyle(nest.body, extractCss),
             media: true,
           }
         }
@@ -541,7 +553,13 @@ function generateFunction(node, floatingPercentage = false) {
   // }
 }
 
-function generateValue(node, floatingPercentage = false) {
+function generateValue(node, property, dynamic) {
+  const floatingPercentage = property === 'opacity'
+
+  if (!dynamic) {
+    return wrapInString(generateCSSValue(node, property))
+  }
+
   if (node.type === 'FunctionExpression') {
     return generateFunction(node, floatingPercentage)
   }

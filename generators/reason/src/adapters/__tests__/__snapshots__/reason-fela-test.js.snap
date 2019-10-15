@@ -26,7 +26,7 @@ type mode =
   | Light
   | Semi;
 
-let buttonStyle = (~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft) => style([unsafe(\\"_className\\", \\"_elo_view _333se4\\"),unsafe(\\"border-width\\", borderWidth)]);
+let buttonStyle = (~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft) => style([unsafe(\\"_className\\", \\"_elo_view _333se4\\"), unsafe(\\"border-width\\", borderWidth)]);
 let getButtonStyleVariants = (~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_, ~mode, ()) => {
     let buttonStylePrimary = style([unsafe(\\"padding-left\\", paddingLeft),
       hover([unsafe(\\"padding-right\\", paddingRight)])]);
@@ -69,7 +69,7 @@ let button = (~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_=?, ~mo
   getButtonVariants(~type_, ~mode, ()) ++ \\" \\" ++ merge([buttonStyle(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft), ...getButtonStyleVariants(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_, ~mode, ())]);
 }
 
-let labelStyle = (~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize) => style([unsafe(\\"_className\\", \\"_elo_text _1imz7a4\\"),unsafe(\\"line-height\\", lineHeight),
+let labelStyle = (~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize) => style([unsafe(\\"_className\\", \\"_elo_text _1imz7a4\\"), unsafe(\\"line-height\\", lineHeight),
     hover([unsafe(\\"font-size\\", fontSize)]),
     media(\\"(min-width: 320px) and (max-width: 320px)\\", [unsafe(\\"font-size\\", mediaFontSize),
 hover([unsafe(\\"font-size\\", mediaHoverFontSize)])])]);

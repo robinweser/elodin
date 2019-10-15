@@ -91,4 +91,15 @@ describe('Compiling to ReasonML', () => {
       )
     ).toMatchSnapshot()
   })
+
+  it('should return no css files', () => {
+    const { ast } = parse(file)
+
+    expect(
+      createGenerator({ adapter: bsCssAdapter(), extractCss: false })(
+        ast,
+        'root.elo'
+      )
+    ).toMatchSnapshot()
+  })
 })

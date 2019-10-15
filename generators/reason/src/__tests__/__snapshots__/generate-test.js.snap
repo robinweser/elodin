@@ -383,3 +383,82 @@ let label = (~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize, ~mode=
   "_reset.elo.css": "._elo_view{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;overflow:hidden;-webkit-overflow-scrolling:touch;align-self:stretch;flex-direction:column;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-shrink:0;max-width:100%;box-sizing:border-box}._elo_text{display:inline;overflow:visible}",
 }
 `;
+
+exports[`Compiling to ReasonML should return no css files 1`] = `
+Object {
+  "RootStyle.re": "open Css;
+
+
+[%bs.raw{|
+  require(\\"./_reset.elo.css\\")
+|}];
+
+[@bs.deriving jsConverter]
+type type_ =
+  | Primary
+  | Secondary;
+
+[@bs.deriving jsConverter]
+type mode =
+  | Dark
+  | Light
+  | Semi;
+
+let buttonStyle = (~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft) => style([unsafe(\\"background-color\\", \\"red\\"),
+    unsafe(\\"padding-left\\", \\"10px\\"),
+    unsafe(\\"border\\", \\"0px\\"),
+    unsafe(\\"border-width\\", borderWidth)]);
+let getButtonStyleVariants = (~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_, ~mode, ()) => {
+    let buttonStylePrimary = style([unsafe(\\"background-color\\", \\"red\\"),
+      unsafe(\\"padding-left\\", paddingLeft),
+      hover([unsafe(\\"padding-left\\", \\"10px\\"),
+unsafe(\\"padding-right\\", paddingRight)])]);
+    let buttonStylePrimaryDark = style([unsafe(\\"background-color\\", \\"blue\\"),
+      unsafe(\\"padding-left\\", padLeft)]);
+    let buttonStyleLight = style([unsafe(\\"background-color\\", \\"green\\")]);
+
+switch (type_, mode) {
+    | (Some(Primary), Some(Dark)) => [buttonStylePrimary,buttonStylePrimaryDark]
+    | (Some(Primary), Some(Light)) => [buttonStylePrimary,buttonStyleLight]
+    | (Some(Primary), Some(Semi)) => [buttonStylePrimary]
+    | (Some(Primary), None) => [buttonStylePrimary]
+    | (Some(Secondary), Some(Dark)) => []
+    | (Some(Secondary), Some(Light)) => [buttonStyleLight]
+    | (Some(Secondary), Some(Semi)) => []
+    | (Some(Secondary), None) => []
+    | (None, Some(Dark)) => []
+    | (None, Some(Light)) => [buttonStyleLight]
+    | (None, Some(Semi)) => []
+    | (None, None) => []
+    }
+  };
+
+let button = (~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_=?, ~mode=?, ()) => {
+  \\"_elo_view\\" ++ getButtonVariants(~type_, ~mode, ()) ++ \\" \\" ++ merge([buttonStyle(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft), ...getButtonStyleVariants(~borderWidth, ~paddingLeft, ~paddingRight, ~padLeft, ~type_, ~mode, ())]);
+}
+
+let labelStyle = (~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize) => style([unsafe(\\"line-height\\", lineHeight),
+    hover([unsafe(\\"color\\", \\"red\\"),
+unsafe(\\"font-size\\", fontSize)]),
+    media(\\"(min-width: 320px) and (max-width: 320px)\\", [unsafe(\\"color\\", \\"green\\"),
+unsafe(\\"font-size\\", mediaFontSize),
+hover([unsafe(\\"font-size\\", mediaHoverFontSize),
+unsafe(\\"color\\", \\"blue\\")])])]);
+let getLabelStyleVariants = (~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize, ~mode, ()) => {
+    let labelStyleLight = style([unsafe(\\"font-size\\", \\"16px\\")]);
+
+switch (mode) {
+    | (Some(Dark)) => []
+    | (Some(Light)) => [labelStyleLight]
+    | (Some(Semi)) => []
+    | (None) => []
+    }
+  };
+
+let label = (~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize, ~mode=?, ()) => {
+  \\"_elo_text\\" ++ getLabelVariants(~mode, ()) ++ \\" \\" ++ merge([labelStyle(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize), ...getLabelStyleVariants(~lineHeight, ~fontSize, ~mediaFontSize, ~mediaHoverFontSize, ~mode, ())]);
+}
+",
+  "_reset.elo.css": "._elo_view{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;overflow:hidden;-webkit-overflow-scrolling:touch;align-self:stretch;flex-direction:column;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-shrink:0;max-width:100%;box-sizing:border-box}._elo_text{display:inline;overflow:visible}",
+}
+`;
