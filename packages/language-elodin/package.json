@@ -5,7 +5,7 @@
   "displayName": "language-elodin",
   "description": "Language support for Elodin",
   "repository": "https://github.com/robinweser/elodin/tree/master/packages/language-elodin",
-  "version": "0.0.38",
+  "version": "0.0.39",
   "main": "index.js",
   "scripts": {
     "release": "vsce package && vsce publish"
