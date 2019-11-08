@@ -40,6 +40,7 @@ For further information check out {underline https://elodin.dev/docs/setup/getti
 {red A generator is required to be able to compile elodin files.
 For further information check out {underline https://elodin.dev/docs/setup/configuration}.}`
     )
+
     return false
   }
 

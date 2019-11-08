@@ -1,5 +1,4 @@
 import { isUnitlessProperty, hyphenateProperty } from 'css-in-js-utils'
-import color from 'color'
 
 const math = {
   add: true,
@@ -13,6 +12,7 @@ const stringFn = {
   rgb: true,
   hsl: true,
   hsla: true,
+  percentage: true,
 }
 
 function resolveMath(value) {
@@ -96,22 +96,6 @@ export default function generateCSSValue(
 
   if (value.type === 'String') {
     return value.value
-  }
-
-  if (value.type === 'Color') {
-    const { format, red, blue, green, alpha } = value
-
-    const colorValue = color.rgb(red, green, blue, alpha)
-    if (format === 'hex') {
-      return colorValue.hex()
-    }
-
-    if (format === 'keyword') {
-      // TODO: check APIs
-      return colorValue.keyword()
-    }
-
-    return colorValue[format]().string()
   }
 
   if (value.type === 'Float') {

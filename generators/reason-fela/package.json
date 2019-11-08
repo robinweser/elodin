@@ -1,5 +1,5 @@
 {
-  "name": "@elodin/generator-reason",
+  "name": "@elodin/generator-reason-fela",
   "version": "0.0.41",
   "main": "lib/index.js",
   "module": "es/index.js",

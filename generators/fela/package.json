@@ -1,5 +1,5 @@
 {
-  "name": "@elodin/generator-css-in-js",
+  "name": "@elodin/generator-fela",
   "version": "0.0.41",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -18,7 +18,6 @@
   "author": "robinweser <contact@weser.io>",
   "license": "MIT",
   "dependencies": {
-    "@elodin/runtime": "^0.0.41",
     "@elodin/utils": "^0.0.41",
     "css-in-js-utils": "^3.0.0"
   },
@@ -26,7 +25,6 @@
     "@babel/cli": "^7.2.0",
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.0",
-    "@elodin/parser": "^0.0.41",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "cross-env": "^5.2.0",

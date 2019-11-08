@@ -15,38 +15,24 @@ import {
   generateCSSClasses,
   generateCSSValue,
 } from '@elodin/utils'
-import { isUnitlessProperty, hyphenateProperty } from 'css-in-js-utils'
+import { hyphenateProperty } from 'css-in-js-utils'
 
 import keywords from './keywords'
-import { baseReset, rootReset } from './getReset'
-import stringifyDeclaration from './stringifyDeclaration'
 
 const defaultConfig = {
   devMode: false,
   dynamicImport: false,
-  extractCss: true,
-  generateResetClassName: type => '_elo_' + type,
-  generateFileName: (fileName, moduleName) =>
-    capitalizeString(fileName) + moduleName + 'Style',
+  extractCSS: true,
+  generateStyleName: styleName => styleName,
+  generateCSSFileName: (moduleName, styleName) =>
+    capitalizeString(moduleName) + styleName + '.elo',
+  generateReasonFileName: fileName => capitalizeString(fileName) + 'Style',
 }
 
 export default function createGenerator(customConfig = {}) {
   const config = {
     ...defaultConfig,
     ...customConfig,
-  }
-
-  const { adapter, generateResetClassName, rootNode, extractCss } = config
-
-  if (!adapter) {
-    throw new Error(
-      'An adapter needs to passed in order to generate code. See @elodin/generator-reason/lib/adapters for more information.'
-    )
-  }
-
-  let cssReset = baseReset(generateResetClassName)
-  if (rootNode) {
-    cssReset += rootReset(rootNode)
   }
 
   function generate(ast, path = '') {
@@ -59,24 +45,21 @@ export default function createGenerator(customConfig = {}) {
       .join('')
 
     const escapedAst = escapeKeywords(ast, keywords)
-    const relativeRootPath = '../'.repeat(path.split('/').length - 1)
-
-    config.relativeRootPath = relativeRootPath || './'
-
-    const css = extractCss ? generateCSSFiles(escapedAst, config, fileName) : {}
+    const css = config.extractCSS
+      ? generateCSSFiles(escapedAst, config, fileName)
+      : {}
     const reason = generateReasonFile(escapedAst, config, fileName)
 
     return {
-      [relativeRootPath + '_reset.elo.css']: cssReset,
       ...css,
       ...reason,
     }
   }
 
   generate.filePattern = [
-    config.generateFileName('*', '') + '.re',
-    config.generateFileName('*', '') + '.bs.js',
-    '*.elo.css',
+    config.generateReasonFileName('*') + '.re',
+    config.generateReasonFileName('*') + '.bs.js',
+    config.generateCSSFileName('*', '') + '.css',
   ]
 
   generate.ignorePattern = ['node_modules']
@@ -86,27 +69,28 @@ export default function createGenerator(customConfig = {}) {
 
 function generateReasonFile(ast, config, fileName) {
   const {
-    adapter,
     devMode,
-    generateFileName,
-    relativeRootPath,
+    generateReasonFileName,
+    generateCSSFileName,
     dynamicImport,
-    extractCss,
+    extractCSS,
   } = config
-  const moduleName = generateFileName(fileName, '')
+  const moduleName = generateReasonFileName(fileName)
 
   // TODO: include fragments
   const styles = ast.body.filter(node => node.type === 'Style')
   const variants = ast.body.filter(node => node.type === 'Variant')
 
-  const imports = extractCss
+  const imports = extractCSS
     ? styles.reduce((imports, module) => {
-        imports.push('require("./' + moduleName + module.name + '.elo.css")')
+        imports.push(
+          'import("./' + generateCSSFileName(fileName, module.name) + '.css")'
+        )
         return imports
       }, [])
     : []
 
-  const modules = generateModules(ast, config, moduleName)
+  const modules = generateModules(ast, config, fileName)
 
   const variantMap = variants.reduce((flatVariants, variant) => {
     flatVariants[variant.name] = variant.body.map(variation => variation.value)
@@ -128,25 +112,26 @@ function generateReasonFile(ast, config, fileName) {
     .join('\n\n')
 
   return {
-    [moduleName + '.re']: adapter.generateFile({
-      relativeRootPath,
-      cssImports: config.dynamicImport
-        ? ''
-        : imports
-            .map(cssFile => '[%bs.raw {|\n  ' + cssFile + '\n|}];')
-            .join('\n\n') + '\n\n',
-      variables: allVariables,
-      modules,
-      variantTypes,
-    }),
+    [moduleName + '.re']:
+      'open Fela;\n\n' +
+      `type extend;\nexternal extend: Js.t('a) => extend = "%identity";\n\n` +
+      (!dynamicImport && imports.length > 0
+        ? imports.map(file => '[%bs.raw {| ' + file + ' |}];').join('\n') +
+          '\n\n'
+        : '') +
+      (variantTypes ? variantTypes + '\n\n' : '') +
+      modules.join('\n\n'),
   }
 }
 
-function generateCSSFiles(ast, { devMode, generateFileName }, fileName) {
+function generateCSSFiles(
+  ast,
+  { devMode, generateReasonFileName, generateCSSFileName },
+  fileName
+) {
   // TODO: include fragments
   const styles = ast.body.filter(node => node.type === 'Style')
   const variants = ast.body.filter(node => node.type === 'Variant')
-  const generatedFileName = generateFileName(fileName, '')
 
   return styles.reduce((files, module) => {
     const usedVariants = getVariantsFromAST(module)
@@ -162,7 +147,7 @@ function generateCSSFiles(ast, { devMode, generateFileName }, fileName) {
 
     const classes = generateCSSClasses(module.body, variantMap, devMode)
 
-    files[generatedFileName + module.name + '.elo.css'] = classes
+    files[generateCSSFileName(fileName, module.name) + '.css'] = classes
       .filter(selector => selector.declarations.length > 0)
       .map(selector => {
         const css = stringifyCSSRule(
@@ -185,8 +170,16 @@ function generateCSSFiles(ast, { devMode, generateFileName }, fileName) {
 
 function generateModules(
   ast,
-  { devMode, generateResetClassName, dynamicImport, adapter, extractCss },
-  moduleName
+  {
+    devMode,
+    dynamicImport,
+    extractCSS,
+    viewBaseClassName,
+    textBaseClassName,
+    generateStyleName,
+    generateCSSFileName,
+  },
+  fileName
 ) {
   // TODO: include fragments
   const styles = ast.body.filter(node => node.type === 'Style')
@@ -200,43 +193,30 @@ function generateModules(
   const variantOrder = Object.keys(variantMap)
 
   return styles.reduce((rules, module) => {
-    const style = generateStyle(module.body, extractCss)
+    const out = generateStyle(module.body, extractCSS, {})
+
     const variables = getVariablesFromAST(module)
     const variantStyleMap = generateVariantStyleMap(
       module.body,
       variants,
-      extractCss
+      extractCSS
     )
+
     const usedVariants = getVariantsFromAST(module)
     const variantNames = Object.keys(usedVariants).sort((x, y) =>
       variantOrder.indexOf(x) > variantOrder.indexOf(y) ? 1 : -1
     )
 
-    const className =
-      generateResetClassName(module.format) +
-      (extractCss ? ' ' + getModuleName(module, devMode) : '')
+    const params = [...variables, ...variantNames]
+    const baseClassName =
+      (module.format === 'view' && viewBaseClassName) ||
+      (module.format === 'text' && textBaseClassName)
 
-    let dynamicStyle =
-      !extractCss || variables.length > 0
-        ? variantStyleMap
-            .map(
-              vari =>
-                'let ' +
-                uncapitalizeString(module.name) +
-                'Style' +
-                Object.keys(vari.variants)
-                  .map(variant => vari.variants[variant])
-                  .join('') +
-                ' = ' +
-                'style([' +
-                vari.style.map(stringifyDeclaration).join(',\n      ') +
-                ']);'
-            )
-            .join('\n    ')
-        : undefined
+    const className =
+      (baseClassName ? baseClassName + (extractCSS ? ' ' : '') : '') +
+      (extractCSS ? getModuleName(module, devMode) : '')
 
     let variantSwitch = ''
-    let variantStyleSwitch = ''
 
     if (variantNames.length > 0) {
       const combinations = getArrayCombinations(
@@ -269,39 +249,6 @@ function generateModules(
         }
         return matches
       }, [])
-
-      if (variables.length > 0 || dynamicStyle) {
-        variantStyleSwitch = `let get${
-          module.name
-        }StyleVariants = (${variables
-          .map(variable => '~' + variable)
-          .join(', ') +
-          (variables.length > 0 && variants.length > 0 ? ', ' : '') +
-          variantNames
-            .map(name => '~' + name.toLowerCase())
-            .join(', ')}, ()) => {
-    ${dynamicStyle + '\n\n'}switch (${variantNames
-          .map(v => v.toLowerCase())
-          .join(', ')}) {
-    ${combis
-      // .filter(({ style }) => style.length > 0)
-      .map(
-        ({ combination, style }) =>
-          '| (' +
-          combination
-            .map(comb => (comb === 'None' ? 'None' : 'Some(' + comb + ')'))
-            .join(', ') +
-          ') => ' +
-          '[' +
-          style
-            .map(style => uncapitalizeString(module.name) + 'Style' + style)
-            .join(',') +
-          ']'
-      )
-      .join('\n    ')}
-    }
-  };`
-      }
 
       variantSwitch = `let get${module.name}Variants = (${variantNames
         .map(variant => '~' + variant.toLowerCase())
@@ -350,34 +297,179 @@ function generateModules(
 };`
     }
 
+    const style =
+      '  style({\n' +
+      (className || (variantSwitch && extractCSS) ? '    "_className": ' : '') +
+      (className ? wrapInString(className) : '') +
+      (variantSwitch && extractCSS
+        ? (className ? ' ++ ' : '') +
+          'get' +
+          module.name +
+          'Variants(' +
+          variantNames.map(n => '~' + uncapitalizeString(n)).join(', ') +
+          ', ()),\n'
+        : className
+        ? ',\n'
+        : '') +
+      stringifyStyle(out) +
+      '  })'
+
+    const rule =
+      'let ' +
+      uncapitalizeString(generateStyleName(module.name)) +
+      ' = (' +
+      (params.length > 0
+        ? params.map(name => '~' + uncapitalizeString(name) + '=?').join(', ') +
+          ', ()'
+        : '') +
+      ') => {\n' +
+      (dynamicImport && extractCSS
+        ? '  [%bs.raw {| import("./' +
+          generateCSSFileName(fileName, module.name) +
+          '.css") |}];\n\n'
+        : '') +
+      style +
+      '\n};'
+
     rules.push(
-      adapter.generateModule({
-        styleName: module.name.charAt(0).toLowerCase() + module.name.substr(1),
-        style,
-        cssImport:
-          dynamicImport && extractCss
-            ? '[%bs.raw {| import("./' +
-              moduleName +
-              module.name +
-              '.elo.css") |}];\n  '
-            : '',
-        variables,
-        variantNames,
-        variantStyleSwitch,
-        variantSwitch: extractCss ? variantSwitch : '',
-        className,
-        module,
-      })
+      (variantSwitch && extractCSS ? variantSwitch + '\n\n' : '') + rule
     )
 
     return rules
   }, [])
 }
 
+function stringifyStyle(style, out = '', level = 2) {
+  Object.keys(style).map(property => {
+    const value = style[property]
+
+    if (typeof value === 'object') {
+      // handle extend
+      if (Array.isArray(value)) {
+        out +=
+          '  '.repeat(level) +
+          wrapInString(property) +
+          ': ' +
+          '[|' +
+          value
+            .map(
+              extension =>
+                '{\n' +
+                stringifyStyle(extension, '', level + 1) +
+                '  '.repeat(level) +
+                '}'
+            )
+            .join(',') +
+          '|],' +
+          '\n'
+      } else {
+        if (property === 'style') {
+          out +=
+            '  '.repeat(level) +
+            wrapInString(property) +
+            ': ' +
+            'extend({\n' +
+            stringifyStyle(value, '', level + 1) +
+            '  '.repeat(level) +
+            '}),\n'
+        } else {
+          out +=
+            '  '.repeat(level) +
+            wrapInString(property) +
+            ': ' +
+            '{\n' +
+            stringifyStyle(value, '', level + 1) +
+            '  '.repeat(level) +
+            '},\n'
+        }
+      }
+    } else {
+      out += '  '.repeat(level) + wrapInString(property) + ': ' + value + ',\n'
+    }
+  })
+
+  return out
+}
+
+function generateStyle(nodes, extractCSS, style = {}) {
+  nodes.map(node => {
+    if (node.type === 'Declaration' && (node.dynamic || !extractCSS)) {
+      style[node.property] = generateValue(
+        node.value,
+        node.property,
+        node.dynamic
+      )
+    }
+
+    if (node.type === 'Conditional') {
+      if (node.property.type === 'Variable' && node.property.environment) {
+        if (
+          node.boolean &&
+          (isPseudoClass(node.property.value) ||
+            isPseudoElement(node.property.value))
+        ) {
+          const nested = generateStyle(node.body, extractCSS)
+
+          if (Object.keys(nested).length > 0) {
+            style[
+              (isPseudoElement(node.property.value) ? '::' : ':') +
+                hyphenateProperty(node.property.value)
+            ] = nested
+          }
+        }
+
+        if (isMediaQuery(node.property.value)) {
+          const nested = generateStyle(node.body, extractCSS)
+
+          if (Object.keys(nested).length > 0) {
+            style[
+              '@media ' +
+                generateCSSMediaQueryFromNode(
+                  node.boolean ? undefined : node.value.value,
+                  node.property.value,
+                  node.operator
+                )
+            ] = nested
+          }
+        }
+      } else {
+        if (
+          node.property.type === 'Identifier' &&
+          node.value.type === 'Identifier' &&
+          node.operator === '='
+        ) {
+          if (!style.extend) {
+            style.extend = []
+          }
+
+          const nested = generateStyle(node.body, extractCSS)
+
+          if (Object.keys(nested).length > 0) {
+            style.extend.push({
+              condition:
+                uncapitalizeString(node.property.value) +
+                ' === Some(' +
+                node.value.value +
+                ')',
+              style: nested,
+            })
+          }
+
+          if (style.extend.length === 0) {
+            delete style.extend
+          }
+        }
+      }
+    }
+  })
+
+  return style
+}
+
 function generateVariantStyleMap(
   nodes,
   variants,
-  extractCss,
+  extractCSS,
   styles = [],
   style = [],
   modifier = {}
@@ -405,9 +497,9 @@ function generateVariantStyleMap(
             generateVariantStyleMap(
               nest.body,
               variants,
-              extractCss,
+              extractCSS,
               styles,
-              generateStyle(nest.body, extractCss),
+              generateStyle(nest.body, extractCSS),
               {
                 ...modifier,
                 [variant.name]: variation.value,
@@ -422,53 +514,6 @@ function generateVariantStyleMap(
   })
 
   return styles
-}
-
-function generateStyle(nodes, extractCss) {
-  const base = nodes.filter(node => node.type === 'Declaration')
-  const nestings = nodes.filter(node => node.type !== 'Declaration')
-
-  const declarations = base
-    .filter(decl => (extractCss ? decl.dynamic : true))
-    .map(declaration => ({
-      property: declaration.property,
-      value: generateValue(
-        declaration.value,
-        declaration.property,
-        declaration.dynamic
-      ),
-    }))
-
-  const nests = nestings
-    .map(nest => {
-      if (nest.property.type === 'Variable' && nest.property.environment) {
-        if (
-          nest.boolean &&
-          (isPseudoClass(nest.property.value) ||
-            isPseudoElement(nest.property.value))
-        ) {
-          return {
-            property: nest.property.value,
-            value: generateStyle(nest.body, extractCss),
-          }
-        }
-
-        if (isMediaQuery(nest.property.value)) {
-          return {
-            property: generateCSSMediaQueryFromNode(
-              nest.boolean ? undefined : nest.value.value,
-              nest.property.value,
-              nest.operator
-            ),
-            value: generateStyle(nest.body, extractCss),
-            media: true,
-          }
-        }
-      }
-    })
-    .filter(nesting => nesting && nesting.value.length > 0)
-
-  return [...declarations, ...nests]
 }
 
 function wrapInString(value) {
