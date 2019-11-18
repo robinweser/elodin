@@ -12,13 +12,9 @@
     {
       "dir": "bindings",
       "subdirs": true
-    },
-    {
-      "dir": "styling",
-      "subdirs": true
     }
   ],
-  "bs-dependencies": ["reason-react", "reason-fela"],
+  "bs-dependencies": ["reason-react", "reason-fela", "@gazzer/globe"],
   "reason": {
     "react-jsx": 3
   },

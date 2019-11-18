@@ -19,6 +19,24 @@
     "**/.merlin": true,
     "**/.bsb.lock": true,
     "**/.graphql_ppx_cache/": true,
-    "**/.DS_Store": true
+    "**/.DS_Store": true,
+    "**/._*": true,
+    "**/Thumbs.db": true,
+    "**/.Spotlight-V100": true,
+    "**/.Trashes": true,
+    "**/*~": true,
+    "**/*.diff": true,
+    "**/*.err": true,
+    "**/*.log": true,
+    "**/*.orig": true,
+    "**/*.pyc": true,
+    "**/*.rej": true,
+    "**/*.vsix": true,
+    "**/*.sass-cache": true,
+    "**/*.sw?": true,
+    "**/*.vi": true,
+    "**/package-lock.json": true,
+    "**/es ": true,
+    "**/coverage ": true
   }
 }

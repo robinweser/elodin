@@ -11,6 +11,33 @@ export default function replaceVariable(customConfig = {}) {
   }
 
   return {
+    FunctionExpression: {
+      enter(path) {
+        path.node.params = path.node.params.map(param => {
+          if (param.type === 'Variable' && !param.environment) {
+            const value = selector(variables, param.value)
+
+            if (value) {
+              if (typeof value === 'number') {
+                return {
+                  type: 'Integer',
+                  value,
+                }
+              }
+
+              if (typeof value === 'string') {
+                return {
+                  type: 'Identifier',
+                  value,
+                }
+              }
+            }
+          } else {
+            return param
+          }
+        })
+      },
+    },
     Declaration: {
       enter(path) {
         if (
