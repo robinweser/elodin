@@ -4,17 +4,21 @@ open Next;
 module NavigationLink = {
   [@react.component]
   let make = (~disabled=false, ~href, ~children) => {
+    let css = ReactFela.useFela1();
     let router = Router.useRouter();
     let isActive = router##pathname === href;
     let status = isActive ? Some(NavigationStyle.Active) : None;
 
-    <div className={NavigationStyle.navigationItem()}>
+    <div className={css(NavigationStyle.navigationItem())}>
       {disabled
-         ? <span className={NavigationStyle.navigationItemDisabled()}>
+         ? <span className={css(NavigationStyle.navigationItemDisabled())}>
              {children |> s}
            </span>
          : <Link href>
-             <a className={NavigationStyle.navigationItemText(~status?, ())}>
+             <a
+               className={css(
+                 NavigationStyle.navigationItemText(~status?, ()),
+               )}>
                {children |> s}
              </a>
            </Link>}
@@ -24,20 +28,22 @@ module NavigationLink = {
 
 module NavigationGroup = {
   [@react.component]
-  let make = (~text, ~children=?) =>
-    <div className={NavigationStyle.navigationItem()}>
-      <span className={NavigationStyle.navigationGroupText()}>
+  let make = (~text, ~children=?) => {
+    let css = ReactFela.useFela1();
+    <div className={css(NavigationStyle.navigationItem())}>
+      <span className={css(NavigationStyle.navigationGroupText())}>
         {text |> s}
       </span>
       {resolveOption(
          children,
          c =>
-           <div className={NavigationStyle.navigationInnerContainer()}>
+           <div className={css(NavigationStyle.navigationInnerContainer())}>
              c
            </div>,
          React.null,
        )}
     </div>;
+  };
 };
 
 module NavigationContent = {
@@ -171,5 +177,9 @@ module NavigationContent = {
 };
 
 [@react.component]
-let make = () =>
-  <nav className={NavigationStyle.navigation()}> <NavigationContent /> </nav>;
+let make = () => {
+  let css = ReactFela.useFela1();
+  <nav className={css(NavigationStyle.navigation())}>
+    <NavigationContent />
+  </nav>;
+};

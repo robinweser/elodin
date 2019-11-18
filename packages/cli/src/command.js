@@ -33,7 +33,7 @@ For further information check out {underline https://elodin.dev/docs/setup/getti
 
   const filenames = cliOptions.filenames
 
-  if (!config.generator) {
+  if (!config.generators) {
     console.error(
       chalk`{bold.red Unable to find a generator in your elodin configuration.}
    
@@ -45,39 +45,35 @@ For further information check out {underline https://elodin.dev/docs/setup/confi
   }
 
   if (cliOptions.clean) {
-    if (config.generator.filePattern) {
-      let didClean = false
-      const ignorePattern = config.generator.ignorePattern || []
-      config.generator.filePattern.map(v => {
-        try {
-          const files = glob.sync(process.cwd() + '/**/' + v)
-          const actualFiles = files.filter(
-            file =>
-              ignorePattern.find(pattern => file.indexOf(pattern) !== -1) ===
-              undefined
-          )
+    config.generators.forEach(generator => {
+      if (generator.filePattern) {
+        let didClean = false
+        const ignorePattern = generator.ignorePattern || []
+        generator.filePattern.map(v => {
+          try {
+            const files = glob.sync(process.cwd() + '/**/' + v)
+            const actualFiles = files.filter(
+              file =>
+                ignorePattern.find(pattern => file.indexOf(pattern) !== -1) ===
+                undefined
+            )
 
-          if (actualFiles.length > 0) {
-            console.log('Cleaning ' + actualFiles.length + ' files.')
-            actualFiles.forEach(fs.unlinkSync)
-            didClean = true
+            if (actualFiles.length > 0) {
+              console.log('Cleaning ' + actualFiles.length + ' files.')
+              actualFiles.forEach(fs.unlinkSync)
+              didClean = true
+            }
+          } catch (e) {
+            // TODO: throw sth
+            // console.log(e)
           }
+        })
 
-          // config.generator.filePattern
-          //   .map(v => process.cwd() + '/**/' + v)
-          //   .map(path => rimraf.sync(path))
-
-          // console.log('Successfully cleaned all files.')
-        } catch (e) {
-          // TODO: throw sth
-          // console.log(e)
+        if (didClean) {
+          console.log('')
         }
-      })
-
-      if (didClean) {
-        console.log('')
       }
-    }
+    })
   }
 
   async function walk(filenames) {

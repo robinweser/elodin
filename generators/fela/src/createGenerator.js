@@ -132,7 +132,9 @@ function generateJSFiles(ast, config, fileName) {
       (fullClassName || (extractCSS && hasVariations)
         ? '    _className: '
         : '') +
-      (fullClassName ? wrapInString(fullClassName) : '') +
+      (fullClassName
+        ? wrapInString(fullClassName + (extractCSS && hasVariations ? ' ' : ''))
+        : '') +
       (extractCSS && hasVariations
         ? (fullClassName ? ' + ' : '') +
           "getClassNameFromVariantMap('" +
@@ -147,7 +149,7 @@ function generateJSFiles(ast, config, fileName) {
     const rule =
       'export function ' +
       generateStyleName(module.name) +
-      ' (props = {}) {\n' +
+      '(props = {}) {\n' +
       (dynamicImport && extractCSS
         ? '  import("./' + generateCSSFileName(module.name) + '.css")\n\n'
         : '') +
@@ -159,7 +161,7 @@ function generateJSFiles(ast, config, fileName) {
         ? 'import { getClassNameFromVariantMap } from "@elodin/runtime"\n'
         : '') +
       (extractCSS && !dynamicImport
-        ? 'import "./' + generateCSSFileName(module.name) + '.css"\n\n'
+        ? 'require("./' + generateCSSFileName(module.name) + '.css")\n\n'
         : '') +
       (hasVariations
         ? 'const variantClassNameMap = ' +

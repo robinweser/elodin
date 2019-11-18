@@ -44,7 +44,7 @@ export default function transformFile(inputPath, config, callback) {
 
     const ast = traverse(parsed.ast, plugins)
     const files = generators.reduce(
-      (files, generator) => {...files, ...generator(ast, inputPath)},
+      (files, generator) => ({ ...files, ...generator(ast, inputPath) }),
       {}
     )
 

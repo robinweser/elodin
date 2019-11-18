@@ -4,6 +4,7 @@ open Next;
 module HeaderLink = {
   [@react.component]
   let make = (~external_=?, ~href, ~children, ~includes=?) => {
+    let css = ReactFela.useFela1();
     let router = Router.useRouter();
     let isActive =
       Js.String.includes(
@@ -12,15 +13,17 @@ module HeaderLink = {
       );
     let status = isActive ? Some(HeaderStyle.Active) : None;
 
-    <div className={HeaderStyle.navItem()}>
+    <div className={css(HeaderStyle.navItem())}>
       {switch (external_) {
        | Some(bool) =>
-         <a href className={HeaderStyle.navItemLink(~status?, ())}>
+         <a href className={css(HeaderStyle.navItemLink(~status?, ()))}>
            children
          </a>
        | None =>
          <Link href>
-           <a className={HeaderStyle.navItemLink(~status?, ())}> children </a>
+           <a className={css(HeaderStyle.navItemLink(~status?, ()))}>
+             children
+           </a>
          </Link>
        }}
     </div>;
@@ -30,12 +33,14 @@ module HeaderLink = {
 [@react.component]
 let make = () => {
   let (navActive, setNavActive) = React.useState(_ => false);
+  let css = ReactFela.useFela1();
+  let css2 = ReactFela.useFela2();
   let router = Router.useRouter();
   let isWide =
     Js.String.includes("docs", router##pathname)
     || Js.String.includes("try", router##pathname);
 
-  <header className={HeaderStyle.header()}>
+  <header className={css(HeaderStyle.header())}>
     <div
       style={ReactDOMRe.Style.make(
         ~position="fixed",
@@ -66,7 +71,7 @@ let make = () => {
       <Navigation.NavigationContent />
     </div>
     <Layout as_="nav">
-      <div className={LayoutStyle.row()}>
+      <div className={css(LayoutStyle.row())}>
         <HeaderLink href="/">
           <svg width="42" height="42" viewBox="0 0 1241 1241" version="1.1">
             <g transform="matrix(0.63711,0,0,0.63711,-109.062,-394.703)">
@@ -143,11 +148,11 @@ let make = () => {
            ? <div
                onClick={_ => setNavActive(_ => true)}
                style={ReactDOMRe.Style.make(~cursor="pointer", ())}
-               className={cls([
+               className={css2(
                  HeaderStyle.navItem(),
                  LayoutStyle.hideOnDesktop(),
-               ])}>
-               <span className={HeaderStyle.navItemLink()}>
+               )}>
+               <span className={css(HeaderStyle.navItemLink())}>
                  {"Menu" |> s}
                </span>
              </div>

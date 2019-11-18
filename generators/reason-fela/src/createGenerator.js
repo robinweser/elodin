@@ -84,7 +84,7 @@ function generateReasonFile(ast, config, fileName) {
   const imports = extractCSS
     ? styles.reduce((imports, module) => {
         imports.push(
-          'import("./' + generateCSSFileName(fileName, module.name) + '.css")'
+          'require("./' + generateCSSFileName(fileName, module.name) + '.css")'
         )
         return imports
       }, [])
@@ -585,7 +585,7 @@ function generateFunction(node, floatingPercentage = false) {
   if (inlineFns[node.callee]) {
     return wrapInParens(
       node.params
-        .map(value => generateValue(value, floatingPercentage))
+        .map(value => generateValue(value, floatingPercentage, true))
         .join(inlineFns[node.callee])
     )
   }

@@ -2,6 +2,8 @@ open Utils;
 
 [@react.component]
 let make = () => {
+  let css = ReactFela.useFela1();
+
   <PageLayout>
     <Next.Head>
       <title> {"Elodin - The Universal Styling Language" |> s} </title>
@@ -39,7 +41,7 @@ let make = () => {
       // </div>
       <Section>
         <div
-          className={LayoutStyle.rowOnDesktop()}
+          className={css(LayoutStyle.rowOnDesktop())}
           style={ReactDOMRe.Style.make(
             ~flexGrow="1",
             ~padding="20px 0 20px",
@@ -90,7 +92,7 @@ let make = () => {
           </div>
         </div>
         <div
-          className={LayoutStyle.rowOnDesktop()}
+          className={css(LayoutStyle.rowOnDesktop())}
           style={ReactDOMRe.Style.make(~flexGrow="1", ~lineHeight="1.4", ())}>
           <div
             style={ReactDOMRe.Style.make(

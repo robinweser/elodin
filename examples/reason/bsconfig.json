@@ -1,12 +1,20 @@
 {
-  "name": "elodin.dev",
+  "name": "elodin-example-reason",
   "sources": [
     {
-      "dir": "src",
+      "dir": "components",
+      "subdirs": true
+    },
+    {
+      "dir": "styling",
+      "subdirs": true
+    },
+    {
+      "dir": "pages",
       "subdirs": true
     }
   ],
-  "bs-dependencies": ["reason-react", "bs-css"],
+  "bs-dependencies": ["reason-react", "reason-fela"],
   "reason": {
     "react-jsx": 3
   },

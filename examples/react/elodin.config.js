@@ -1,6 +1,4 @@
-var generator = require('@elodin/generator-css-in-js').createGenerator
-var felaAdapter = require('@elodin/generator-css-in-js/lib/adapters/fela')
-  .default
+var createGenerator = require('@elodin/generator-fela').createGenerator
 
 var replaceVariable = require('@elodin/plugin-replace-variable').default
 var theme = require('./theme')
@@ -17,9 +15,12 @@ module.exports = {
           .reduce((out, sub) => (out ? out[sub] : undefined), vars),
     }),
   ],
-  generator: generator({
-    adapter: felaAdapter,
-    rootNode: '#__next',
-    generateResetClassName: type => '_' + type.charAt(0),
-  }),
+  generators: [
+    createGenerator({
+      devMode: process.env.NODE_ENV !== 'production',
+      generateStyleName: styleName => styleName + 'Style',
+      viewBaseClassName: '_v',
+      textBaseClassName: '_t',
+    }),
+  ],
 }

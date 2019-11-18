@@ -1,8 +1,11 @@
-var generator = require('@elodin/generator-reason').createGenerator
+var createGenerator = require('@elodin/generator-reason-fela').createGenerator
 
 module.exports = {
-  generator: generator({
-    rootNode: '#__next',
-    generateResetClassName: type => '__' + type.substr(0, 1),
-  }),
+  generators: [
+    createGenerator({
+      devMode: process.env.NODE_ENV !== 'production',
+      viewBaseClassName: '_v',
+      textBaseClassName: '_t',
+    }),
+  ],
 }

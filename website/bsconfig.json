@@ -12,9 +12,13 @@
     {
       "dir": "bindings",
       "subdirs": true
+    },
+    {
+      "dir": "styling",
+      "subdirs": true
     }
   ],
-  "bs-dependencies": ["reason-react", "bs-css"],
+  "bs-dependencies": ["reason-react", "reason-fela"],
   "reason": {
     "react-jsx": 3
   },

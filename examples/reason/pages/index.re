@@ -27,14 +27,16 @@ module ModeSwitch = {
             }
           )
         }>
-        {"Mode: "
-         ++ (
-           switch (mode) {
-           | BlockStyle.Light => "Light"
-           | BlockStyle.Dark => "Dark"
-           }
+        {(
+           "Mode: "
+           ++ (
+             switch (mode) {
+             | BlockStyle.Light => "Light"
+             | BlockStyle.Dark => "Dark"
+             }
+           )
          )
-         |> s}
+         ->s}
       </Block>
     </div>;
   };
@@ -45,9 +47,9 @@ let make = () => {
   let (text, setText) = React.useState(_ => "somevalue");
 
   <div>
-    <Button> {"Hello" |> s} </Button>
-    <Button fontSize="30px"> {"Hello" |> s} </Button>
-    <LabeledInput value=text setValue=setText> {"Text" |> s} </LabeledInput>
+    <Button> "Hello"->s </Button>
+    <Button fontSize="30px"> "Hello"->s </Button>
+    <LabeledInput value=text setValue=setText> "Text"->s </LabeledInput>
     <ModeSwitch />
   </div>;
 };

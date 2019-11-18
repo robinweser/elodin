@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useFela } from 'react-fela'
 
-import { Label, Input } from './style.elo.js'
+import { LabelStyle, InputStyle } from './style.elo.js'
 
 export default function LabeledInput({ children, ...styleProps }) {
   const [value, setValue] = useState('somevalue')
@@ -9,9 +9,9 @@ export default function LabeledInput({ children, ...styleProps }) {
 
   return (
     <>
-      <label className={css(Label)}>{children}</label>
+      <label className={css(LabelStyle)}>{children}</label>
       <input
-        className={css(Input)}
+        className={css(InputStyle)}
         value={value}
         onChange={e => setValue(e.target.value)}
       />

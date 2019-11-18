@@ -1,6 +1,5 @@
 open Utils;
 open Prism;
-open Css;
 open Next;
 
 let prism: Js.t('a) = [%bs.raw {| require("prismjs")|}];
@@ -11,17 +10,24 @@ let prism: Js.t('a) = [%bs.raw {| require("prismjs")|}];
 
 let components = {
   "h1": (props: {. children: React.element}) => {
+    let css = ReactFela.useFela();
+
     <h1
-      className={cls([
+      className={css([
         MarkdownStyle.titleText(),
-        style([selector("& + p", [marginTop(px(20))])]),
+        Fela.style({
+          "& + p": {
+            "marginTop": "20px",
+          },
+        }),
       ])}>
       {props##children}
     </h1>;
   },
   "h2": (props: {. children: React.element}) => {
+    let css = ReactFela.useFela();
     <h2
-      className={cls([
+      className={css([
         MarkdownStyle.heading(),
         MarkdownStyle.headingTwo(),
         MarkdownStyle.headingText(),
@@ -30,41 +36,47 @@ let components = {
     </h2>;
   },
   "h3": (props: {. children: React.element}) => {
+    let css = ReactFela.useFela();
     <h3
-      className={cls([MarkdownStyle.heading(), MarkdownStyle.headingText()])}>
+      className={css([MarkdownStyle.heading(), MarkdownStyle.headingText()])}>
       {props##children}
     </h3>;
   },
 
   "h4": (props: {. children: React.element}) => {
+    let css = ReactFela.useFela();
     <h4
-      className={cls([MarkdownStyle.fileName(), MarkdownStyle.headingText()])}>
+      className={css([MarkdownStyle.fileName(), MarkdownStyle.headingText()])}>
       {props##children}
     </h4>;
   },
 
   "h5": (props: {. children: React.element}) => {
+    let css = ReactFela.useFela();
     <h5
-      className={cls([MarkdownStyle.heading(), MarkdownStyle.headingText()])}>
+      className={css([MarkdownStyle.heading(), MarkdownStyle.headingText()])}>
       {props##children}
     </h5>;
   },
 
   "h6": (props: {. children: React.element}) => {
+    let css = ReactFela.useFela();
     <h6
-      className={cls([MarkdownStyle.heading(), MarkdownStyle.headingText()])}>
+      className={css([MarkdownStyle.heading(), MarkdownStyle.headingText()])}>
       {props##children}
     </h6>;
   },
 
-  "p": (props: {. children: React.element}) =>
+  "p": (props: {. children: React.element}) => {
+    let css = ReactFela.useFela();
     <p
-      className={cls([
+      className={css([
         MarkdownStyle.paragraph(),
         MarkdownStyle.paragraphText(),
       ])}>
       {props##children}
-    </p>,
+    </p>;
+  },
   "code":
     (
       props: {
@@ -73,6 +85,8 @@ let components = {
         className: option(string),
       },
     ) => {
+    let css = ReactFela.useFela();
+    let css1 = ReactFela.useFela1();
     let className = resolveOption(props##className, c => c, "");
     let language = Js.String.substr(9, className);
 
@@ -86,27 +100,39 @@ let components = {
       | None => props##children
       };
 
-    <pre className={MarkdownStyle.codeBox()}>
+    <pre className={css1(MarkdownStyle.codeBox())}>
       <code
-        className={cls([MarkdownStyle.code(), className])}
+        className={css([MarkdownStyle.code(), Fela.raw(className)])}
         dangerouslySetInnerHTML={__html: highlighted}
       />
     </pre>;
   },
-  "td": (props: {. children: React.element}) =>
-    <td className={MarkdownStyle.tableCell()}> {props##children} </td>,
-  "table": (props: {. children: React.element}) =>
-    <table className={MarkdownStyle.table()}> {props##children} </table>,
-  "th": (props: {. children: React.element}) =>
-    <th className={MarkdownStyle.tableHead()}> {props##children} </th>,
-  "tr": (props: {. children: React.element}) =>
-    <tr className={MarkdownStyle.tableRow()}> {props##children} </tr>,
-  "inlineCode": (props: {. children: React.element}) =>
-    <pre className={MarkdownStyle.inlineCodeBox()}>
-      <code className={MarkdownStyle.code()}> {props##children} </code>
-    </pre>,
-  "strong": (props: {. children: React.element}) =>
-    <b className={MarkdownStyle.strong()}> {props##children} </b>,
+  "td": (props: {. children: React.element}) => {
+    let css = ReactFela.useFela1();
+    <td className={css(MarkdownStyle.tableCell())}> {props##children} </td>;
+  },
+  "table": (props: {. children: React.element}) => {
+    let css = ReactFela.useFela1();
+    <table className={css(MarkdownStyle.table())}> {props##children} </table>;
+  },
+  "th": (props: {. children: React.element}) => {
+    let css = ReactFela.useFela1();
+    <th className={css(MarkdownStyle.tableHead())}> {props##children} </th>;
+  },
+  "tr": (props: {. children: React.element}) => {
+    let css = ReactFela.useFela1();
+    <tr className={css(MarkdownStyle.tableRow())}> {props##children} </tr>;
+  },
+  "inlineCode": (props: {. children: React.element}) => {
+    let css = ReactFela.useFela1();
+    <pre className={css(MarkdownStyle.inlineCodeBox())}>
+      <code className={css(MarkdownStyle.code())}> {props##children} </code>
+    </pre>;
+  },
+  "strong": (props: {. children: React.element}) => {
+    let css = ReactFela.useFela1();
+    <b className={css(MarkdownStyle.strong())}> {props##children} </b>;
+  },
   "a":
     (
       props: {
@@ -114,37 +140,51 @@ let components = {
         href: string,
         children: React.element,
       },
-    ) =>
+    ) => {
+    let css = ReactFela.useFela1();
+
     <a
       href={
         props##href;
       }
-      className={MarkdownStyle.link()}>
+      className={css(MarkdownStyle.link())}>
       {props##children}
-    </a>,
-  "ul": (props: {. children: React.element}) =>
-    <ul className={cls([MarkdownStyle.list(), MarkdownStyle.listText()])}>
+    </a>;
+  },
+  "ul": (props: {. children: React.element}) => {
+    let css = ReactFela.useFela();
+    <ul className={css([MarkdownStyle.list(), MarkdownStyle.listText()])}>
       {props##children}
-    </ul>,
-  "ol": (props: {. children: React.element}) =>
-    <ol className={cls([MarkdownStyle.list(), MarkdownStyle.listText()])}>
+    </ul>;
+  },
+  "ol": (props: {. children: React.element}) => {
+    let css = ReactFela.useFela();
+    <ol className={css([MarkdownStyle.list(), MarkdownStyle.listText()])}>
       {props##children}
-    </ol>,
-  "li": (props: {. children: React.element}) =>
-    <li className={MarkdownStyle.listItem()}> {props##children} </li>,
+    </ol>;
+  },
+  "li": (props: {. children: React.element}) => {
+    let css = ReactFela.useFela1();
+    <li className={css(MarkdownStyle.listItem())}> {props##children} </li>;
+  },
 
-  "blockquote": (props: {. children: React.element}) =>
+  "blockquote": (props: {. children: React.element}) => {
+    let css = ReactFela.useFela();
     <div
-      className={cls([
+      className={css([
         MarkdownStyle.blockquote(),
         MarkdownStyle.blockquoteText(),
       ])}>
       {props##children}
-    </div>,
+    </div>;
+  },
 };
 
 [@react.component]
 let make = (~children) => {
+  let css = ReactFela.useFela();
+  let css1 = ReactFela.useFela1();
+
   <PageLayout>
     <Head>
       <link
@@ -164,13 +204,17 @@ let make = (~children) => {
           (),
         )}
       />
-      <div className={LayoutStyle.row()}>
+      <div className={css1(LayoutStyle.row())}>
         <Navigation />
         <MDX.MDXProvider components>
           <div
-            className={cls([
+            className={css([
               LayoutStyle.docContent(),
-              style([selector("::-webkit-scrollbar", [display(`none)])]),
+              Fela.style({
+                "::-webkit-scrollbar": {
+                  "display": "none",
+                },
+              }),
             ])}>
             children
           </div>
