@@ -5,9 +5,9 @@ import { parse } from '@elodin/parser'
 import { traverse } from '@elodin/traverser'
 
 export default function transformFile(inputPath, config, callback) {
-  const { plugins = [], generators = [], errors = 'throw', log } = config
+  const { plugins = [], generator, errors = 'throw', log } = config
 
-  if (!generators || generators.length === 0) {
+  if (!generator) {
     if (!log) {
       // TODO: Improve Error message
       throw new Error('No generator passed.')
@@ -43,10 +43,7 @@ export default function transformFile(inputPath, config, callback) {
     }
 
     const ast = traverse(parsed.ast, plugins)
-    const files = generators.reduce(
-      (files, generator) => ({ ...files, ...generator(ast, inputPath) }),
-      {}
-    )
+    const files = generator(ast, inputPath)
 
     const inputDir = dirname(inputPath)
     const inputFile = basename(inputPath)

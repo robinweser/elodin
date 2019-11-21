@@ -274,6 +274,8 @@ export default class Parser {
             },
             true
           )
+
+          return
         }
 
         const duplicate = body.find(n => n.property === node.property)
