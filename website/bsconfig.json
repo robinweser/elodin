@@ -2,11 +2,11 @@
   "name": "elodin.dev",
   "sources": [
     {
-      "dir": "components",
+      "dir": "pages",
       "subdirs": true
     },
     {
-      "dir": "pages",
+      "dir": "components",
       "subdirs": true
     },
     {

@@ -1,21 +1,23 @@
+import { getVariablesFromAST, getVariantsFromAST } from '@elodin/utils-core'
 import {
-  capitalizeString,
-  uncapitalizeString,
   isPseudoClass,
   isPseudoElement,
   isMediaQuery,
+  stringifyRule,
+  generateMediaQueryFromNode,
+  generateClasses,
+  generateClassName,
+  generateClassNameMap,
+} from '@elodin/utils-css'
+import {
+  escapeKeywords,
+  generateValue,
   getArrayCombinations,
   getValueCombinations,
-  getModuleName,
-  stringifyCSSRule,
-  getVariablesFromAST,
-  getVariantsFromAST,
-  escapeKeywords,
-  generateCSSMediaQueryFromNode,
-  generateCSSClasses,
-  generateCSSValue,
-} from '@elodin/utils'
+} from '@elodin/utils-reason'
 import { hyphenateProperty } from 'css-in-js-utils'
+import capitalizeString from 'capitalize'
+import uncapitalizeString from 'uncapitalize'
 
 import keywords from './keywords'
 
@@ -61,8 +63,6 @@ export default function createGenerator(customConfig = {}) {
     config.generateReasonFileName('*') + '.bs.js',
     config.generateCSSFileName('*', '') + '.css',
   ]
-
-  generate.ignorePattern = ['node_modules']
 
   return generate
 }
@@ -114,6 +114,7 @@ function generateReasonFile(ast, config, fileName) {
   return {
     [moduleName + '.re']:
       'open Fela;\n\n' +
+      // TODO: only include if styles use extend
       `type extend;\nexternal extend: Js.t('a) => extend = "%identity";\n\n` +
       (!dynamicImport && imports.length > 0
         ? imports.map(file => '[%bs.raw {| ' + file + ' |}];').join('\n') +
@@ -145,14 +146,16 @@ function generateCSSFiles(
       return flatVariants
     }, {})
 
-    const classes = generateCSSClasses(module.body, variantMap, devMode)
+    const classes = generateClasses(module.body, variantMap, devMode)
 
     files[generateCSSFileName(fileName, module.name) + '.css'] = classes
       .filter(selector => selector.declarations.length > 0)
       .map(selector => {
-        const css = stringifyCSSRule(
+        const css = stringifyRule(
           selector.declarations,
-          getModuleName(module, devMode) + selector.modifier + selector.pseudo,
+          generateClassName(module, devMode) +
+            selector.modifier +
+            selector.pseudo,
           selector.media ? '  ' : ''
         )
 
@@ -214,7 +217,7 @@ function generateModules(
 
     const className =
       (baseClassName ? baseClassName + (extractCSS ? ' ' : '') : '') +
-      (extractCSS ? getModuleName(module, devMode) : '')
+      (extractCSS ? generateClassName(module, devMode) : '')
 
     let variantSwitch = ''
 
@@ -272,7 +275,7 @@ function generateModules(
             false
           )
             ? ' ' +
-              getModuleName(module, devMode) +
+              generateClassName(module, devMode) +
               getValueCombinations(
                 ...combination
                   .map((comb, index) =>
@@ -289,7 +292,7 @@ function generateModules(
               )
                 .filter(set => set.length > 0)
                 .map(set => set.join(''))
-                .join(' ' + getModuleName(module, devMode))
+                .join(' ' + generateClassName(module, devMode))
             : '') +
           '"'
       )
@@ -424,7 +427,7 @@ function generateStyle(nodes, extractCSS, style = {}) {
           if (Object.keys(nested).length > 0) {
             style[
               '@media ' +
-                generateCSSMediaQueryFromNode(
+                generateMediaQueryFromNode(
                   node.boolean ? undefined : node.value.value,
                   node.property.value,
                   node.operator
@@ -522,104 +525,4 @@ function wrapInString(value) {
 
 function wrapInParens(value) {
   return '(' + value + ')'
-}
-
-const inlineFns = {
-  add: ' + ',
-  sub: ' - ',
-  mul: ' * ',
-  div: ' / ',
-  percentage: true,
-}
-
-const stringFns = {
-  rgb: true,
-  rgba: true,
-  hsl: true,
-  hsla: true,
-}
-
-function generateFunction(node, floatingPercentage = false) {
-  if (stringFns[node.callee]) {
-    return wrapInString(
-      node.callee +
-        '(' +
-        node.params
-          .map(param => {
-            if (
-              param.type === 'Variable' ||
-              (param.type === 'FunctionExpression' && inlineFns[param.callee])
-            ) {
-              return (
-                '" ++ string_of_int(' + generateValue(param, true) + ') ++ "'
-              )
-            }
-
-            return generateValue(param, true)
-          })
-          .join(', ') +
-        ')'
-    )
-  }
-
-  if (node.callee === 'percentage') {
-    if (floatingPercentage) {
-      return (
-        'string_of_int((' +
-        generateValue(node.params[0], floatingPercentage) +
-        ') / 100)'
-      )
-    }
-
-    return (
-      'string_of_int(' +
-      generateValue(node.params[0], floatingPercentage) +
-      ') ++ "%"'
-    )
-  }
-
-  if (node.callee === 'raw') {
-    return generateValue(node.params[0], floatingPercentage)
-  }
-
-  if (inlineFns[node.callee]) {
-    return wrapInParens(
-      node.params
-        .map(value => generateValue(value, floatingPercentage, true))
-        .join(inlineFns[node.callee])
-    )
-  }
-
-  // if (math[node.callee]) {
-  //   return generateValue({
-  //     type: 'Integer',
-  //     value: resolveMath(value),
-  //   })
-  // }
-}
-
-function generateValue(node, property, dynamic) {
-  const floatingPercentage = property === 'opacity'
-
-  if (!dynamic) {
-    return wrapInString(generateCSSValue(node, property))
-  }
-
-  if (node.type === 'FunctionExpression') {
-    return generateFunction(node, floatingPercentage)
-  }
-
-  if (node.type === 'Integer') {
-    return (node.negative ? '-' : '') + node.value
-  }
-
-  if (node.type === 'Float') {
-    return (node.negative ? '-' : '') + node.integer + '.' + node.fractional
-  }
-
-  if (node.type === 'Identifier') {
-    return hyphenateProperty(node.value)
-  }
-
-  return node.value
 }

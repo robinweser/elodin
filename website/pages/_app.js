@@ -1,4 +1,5 @@
 import App from 'next/app'
+import Head from 'next/head'
 import React from 'react'
 
 import { StyleProvider } from '@gazzer/globe'
@@ -31,13 +32,6 @@ const staticStyle = [
     },
   ],
   ['body, #__next', { height: '100%', maxHeight: '100%', overflow: 'hidden' }],
-  [
-    'body',
-    {
-      backgroundColor: 'rgb(0,176,164)',
-      overflow: 'hidden',
-    },
-  ],
   [
     'input, textarea, button, select option, a',
     { fontFamily: 'inherit', outline: 0 },

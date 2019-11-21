@@ -16,7 +16,7 @@ Object {
   padding-top: 10px
 }",
   "Button.elo.js": "import { getClassNameFromVariantMap } from \\"@elodin/runtime\\"
-import \\"./Button.elo.css\\"
+require(\\"./Button.elo.css\\")
 
 const variantClassNameMap = {
   \\"\\": {},
@@ -25,9 +25,9 @@ const variantClassNameMap = {
   }
 }
 
-export function Button (props = {}) {
+export function Button(props = {}) {
   return {
-    _className: \\"view\\" + getClassNameFromVariantMap('_fjfhc0', variantClassNameMap, props),
+    _className: \\"view \\" + getClassNameFromVariantMap('_fjfhc0', variantClassNameMap, props),
     \\"paddingRight\\": props.right,
     \\"@media (min-width: 1024px)\\": {
       \\"paddingRight\\": props.right,
@@ -43,9 +43,9 @@ export function Button (props = {}) {
   "ButtonText.elo.css": "._7hpvwv {
   color: red
 }",
-  "ButtonText.elo.js": "import \\"./ButtonText.elo.css\\"
+  "ButtonText.elo.js": "require(\\"./ButtonText.elo.css\\")
 
-export function ButtonText (props = {}) {
+export function ButtonText(props = {}) {
   return {
     _className: \\"text _7hpvwv\\",
   }
@@ -76,7 +76,7 @@ Object {
   padding-top: 10px
 }",
   "Button.elo.js": "import { getClassNameFromVariantMap } from \\"@elodin/runtime\\"
-import \\"./Button.elo.css\\"
+require(\\"./Button.elo.css\\")
 
 const variantClassNameMap = {
   \\"\\": {},
@@ -85,7 +85,7 @@ const variantClassNameMap = {
   }
 }
 
-export function Button (props = {}) {
+export function Button(props = {}) {
   return {
     _className: getClassNameFromVariantMap('_fjfhc0', variantClassNameMap, props),
     \\"paddingRight\\": props.right,
@@ -103,45 +103,11 @@ export function Button (props = {}) {
   "ButtonText.elo.css": "._7hpvwv {
   color: red
 }",
-  "ButtonText.elo.js": "import \\"./ButtonText.elo.css\\"
+  "ButtonText.elo.js": "require(\\"./ButtonText.elo.css\\")
 
-export function ButtonText (props = {}) {
+export function ButtonText(props = {}) {
   return {
     _className: \\"_7hpvwv\\",
-  }
-};",
-  "style.elo.js": "import { Button } from './Button.elo.js'
-import { ButtonText } from './ButtonText.elo.js'
-
-export {
-  Button,
-  ButtonText
-}",
-}
-`;
-
-exports[`Generating files using @elodin/generator-fela should generate js files only 1`] = `
-Object {
-  "Button.elo.js": "export function Button (props = {}) {
-  return {
-    \\"paddingLeft\\": \\"10px\\",
-    \\"paddingRight\\": props.right,
-    \\"@media (min-width: 1024px)\\": {
-      \\"paddingLeft\\": \\"20px\\",
-      \\"paddingRight\\": props.right,
-    },
-    \\"extend\\": [{
-      \\"condition\\": props.mode === \\"Dark\\",
-      \\"style\\": {
-        \\"paddingTop\\": \\"10px\\",
-        \\"paddingBottom\\": props.bottom,
-      },
-    }],
-  }
-};",
-  "ButtonText.elo.js": "export function ButtonText (props = {}) {
-  return {
-    \\"color\\": \\"red\\",
   }
 };",
   "style.elo.js": "import { Button } from './Button.elo.js'
@@ -170,7 +136,7 @@ Object {
   padding-top: 10px
 }",
   "Button.elo.js": "import { getClassNameFromVariantMap } from \\"@elodin/runtime\\"
-import \\"./Button.elo.css\\"
+require(\\"./Button.elo.css\\")
 
 const variantClassNameMap = {
   \\"\\": {},
@@ -179,7 +145,7 @@ const variantClassNameMap = {
   }
 }
 
-export function Button (props = {}) {
+export function Button(props = {}) {
   return {
     _className: getClassNameFromVariantMap('Button_fjfhc0', variantClassNameMap, props),
     \\"paddingRight\\": props.right,
@@ -197,9 +163,9 @@ export function Button (props = {}) {
   "ButtonText.elo.css": ".ButtonText_7hpvwv {
   color: red
 }",
-  "ButtonText.elo.js": "import \\"./ButtonText.elo.css\\"
+  "ButtonText.elo.js": "require(\\"./ButtonText.elo.css\\")
 
-export function ButtonText (props = {}) {
+export function ButtonText(props = {}) {
   return {
     _className: \\"ButtonText_7hpvwv\\",
   }
@@ -216,7 +182,7 @@ export {
 
 exports[`Generating files using @elodin/generator-fela should only generate js files 1`] = `
 Object {
-  "Button.elo.js": "export function Button (props = {}) {
+  "Button.elo.js": "export function Button(props = {}) {
   return {
     \\"paddingLeft\\": \\"10px\\",
     \\"paddingRight\\": props.right,
@@ -233,7 +199,7 @@ Object {
     }],
   }
 };",
-  "ButtonText.elo.js": "export function ButtonText (props = {}) {
+  "ButtonText.elo.js": "export function ButtonText(props = {}) {
   return {
     \\"color\\": \\"red\\",
   }
@@ -250,7 +216,7 @@ export {
 
 exports[`Generating files using @elodin/generator-fela should only generate js files with baseClassName 1`] = `
 Object {
-  "Button.elo.js": "export function Button (props = {}) {
+  "Button.elo.js": "export function Button(props = {}) {
   return {
     _className: \\"view\\",
     \\"paddingLeft\\": \\"10px\\",
@@ -268,7 +234,7 @@ Object {
     }],
   }
 };",
-  "ButtonText.elo.js": "export function ButtonText (props = {}) {
+  "ButtonText.elo.js": "export function ButtonText(props = {}) {
   return {
     _className: \\"text\\",
     \\"color\\": \\"red\\",
@@ -300,7 +266,7 @@ Object {
   padding-top: 10px
 }",
   "Button.elo.js": "import { getClassNameFromVariantMap } from \\"@elodin/runtime\\"
-import \\"./Button.elo.css\\"
+require(\\"./Button.elo.css\\")
 
 const variantClassNameMap = {
   \\"\\": {},
@@ -309,7 +275,7 @@ const variantClassNameMap = {
   }
 }
 
-export function ButtonStyle (props = {}) {
+export function ButtonStyle(props = {}) {
   return {
     _className: getClassNameFromVariantMap('_fjfhc0', variantClassNameMap, props),
     \\"paddingRight\\": props.right,
@@ -327,9 +293,9 @@ export function ButtonStyle (props = {}) {
   "ButtonText.elo.css": "._7hpvwv {
   color: red
 }",
-  "ButtonText.elo.js": "import \\"./ButtonText.elo.css\\"
+  "ButtonText.elo.js": "require(\\"./ButtonText.elo.css\\")
 
-export function ButtonTextStyle (props = {}) {
+export function ButtonTextStyle(props = {}) {
   return {
     _className: \\"_7hpvwv\\",
   }
@@ -363,7 +329,7 @@ Object {
   color: red
 }",
   "Button.elo.js": "import { getClassNameFromVariantMap } from \\"@elodin/runtime\\"
-import \\"./BUTTON.elo.css\\"
+require(\\"./BUTTON.elo.css\\")
 
 const variantClassNameMap = {
   \\"\\": {},
@@ -372,7 +338,7 @@ const variantClassNameMap = {
   }
 }
 
-export function Button (props = {}) {
+export function Button(props = {}) {
   return {
     _className: getClassNameFromVariantMap('_fjfhc0', variantClassNameMap, props),
     \\"paddingRight\\": props.right,
@@ -387,9 +353,9 @@ export function Button (props = {}) {
     }],
   }
 };",
-  "ButtonText.elo.js": "import \\"./BUTTONTEXT.elo.css\\"
+  "ButtonText.elo.js": "require(\\"./BUTTONTEXT.elo.css\\")
 
-export function ButtonText (props = {}) {
+export function ButtonText(props = {}) {
   return {
     _className: \\"_7hpvwv\\",
   }
@@ -407,7 +373,7 @@ export {
 exports[`Generating files using @elodin/generator-fela should use custom js file names 1`] = `
 Object {
   "BUTTON.elo.js": "import { getClassNameFromVariantMap } from \\"@elodin/runtime\\"
-import \\"./Button.elo.css\\"
+require(\\"./Button.elo.css\\")
 
 const variantClassNameMap = {
   \\"\\": {},
@@ -416,7 +382,7 @@ const variantClassNameMap = {
   }
 }
 
-export function Button (props = {}) {
+export function Button(props = {}) {
   return {
     _className: getClassNameFromVariantMap('_fjfhc0', variantClassNameMap, props),
     \\"paddingRight\\": props.right,
@@ -431,9 +397,9 @@ export function Button (props = {}) {
     }],
   }
 };",
-  "BUTTONTEXT.elo.js": "import \\"./ButtonText.elo.css\\"
+  "BUTTONTEXT.elo.js": "require(\\"./ButtonText.elo.css\\")
 
-export function ButtonText (props = {}) {
+export function ButtonText(props = {}) {
   return {
     _className: \\"_7hpvwv\\",
   }
@@ -487,7 +453,7 @@ const variantClassNameMap = {
   }
 }
 
-export function Button (props = {}) {
+export function Button(props = {}) {
   import(\\"./Button.elo.css\\")
 
   return {
@@ -507,7 +473,7 @@ export function Button (props = {}) {
   "ButtonText.elo.css": "._7hpvwv {
   color: red
 }",
-  "ButtonText.elo.js": "export function ButtonText (props = {}) {
+  "ButtonText.elo.js": "export function ButtonText(props = {}) {
   import(\\"./ButtonText.elo.css\\")
 
   return {
@@ -547,11 +513,11 @@ const variantClassNameMap = {
   }
 }
 
-export function Button (props = {}) {
+export function Button(props = {}) {
   import(\\"./BUTTON.elo.css\\")
 
   return {
-    _className: \\"view\\" + getClassNameFromVariantMap('Button_fjfhc0', variantClassNameMap, props),
+    _className: \\"view \\" + getClassNameFromVariantMap('Button_fjfhc0', variantClassNameMap, props),
     \\"paddingRight\\": props.right,
     \\"@media (min-width: 1024px)\\": {
       \\"paddingRight\\": props.right,
@@ -567,7 +533,7 @@ export function Button (props = {}) {
   "BUTTONTEXT.elo.css": ".ButtonText_7hpvwv {
   color: red
 }",
-  "BUTTONTEXT.elo.js": "export function ButtonText (props = {}) {
+  "BUTTONTEXT.elo.js": "export function ButtonText(props = {}) {
   import(\\"./BUTTONTEXT.elo.css\\")
 
   return {

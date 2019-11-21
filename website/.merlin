@@ -12,8 +12,8 @@ S /Users/weezer/Code/elodin/node_modules/@gazzer/globe/lib/ocaml
 B /Users/weezer/Code/elodin/node_modules/@gazzer/globe/lib/ocaml
 S bindings
 B lib/bs/bindings
-S pages
-B lib/bs/pages
 S components
 B lib/bs/components
+S pages
+B lib/bs/pages
 ####BSB GENERATED: NO EDIT}

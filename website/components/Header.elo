@@ -26,8 +26,8 @@ view HeaderSpacer {
 
 view NavItem {
   justifyContent: center
-  paddingLeft: 10
-  paddingRight: 10
+  paddingLeft: 8
+  paddingRight: 8
   [@viewportWidth>=1024] {
     [@firstChild] {
       paddingLeft: 0
@@ -42,12 +42,9 @@ text NavItemLink {
   lineHeight: .8
   color: white
   [@hover] {
-    color: rgb(50 246 234)
+    color: rgb(206 245 242)
   }
   [Status=Active] {
-    color: rgb(150 246 234)
-    [@hover] {
-      color: rgb(50 246 234)
-    }
+    color: rgb(206 245 242)
   }
 }

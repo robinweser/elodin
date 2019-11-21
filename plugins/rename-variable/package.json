@@ -10,7 +10,7 @@
     "clean": "rimraf lib es coverage",
     "build": "yarn build:es && yarn build:lib",
     "build:es": "babel src --out-dir es --ignore \"src/__tests__\"",
-    "build:lib": "babel src --out-dir lib --ignore \"src/__tests__\"",
+    "build:lib": "cross-env BABEL_ENV=commonjs babel src --out-dir lib --ignore \"src/__tests__\"",
     "test": "cross-env BABEL_ENV=commonjs jest",
     "coverage": "yarn test --coverage"
   },

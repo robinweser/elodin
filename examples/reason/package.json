@@ -6,11 +6,11 @@
     "dev": "now dev",
     "start": "next start",
     "build": "yarn build:elodin && yarn build:reason",
-    "build:elodin": "elodin components --clean",
+    "build:elodin": "elodin --clean",
     "build:reason": "bsb -clean-world -make-world",
     "deploy": "now --target production",
     "reason": "bsb -clean-world -make-world -w",
-    "elodin": "elodin components --watch --clean"
+    "elodin": "elodin --watch --clean"
   },
   "license": "MIT",
   "dependencies": {
@@ -21,15 +21,15 @@
     "@elodin/parser": "^0.0.41",
     "@zeit/next-css": "^1.0.1",
     "babel-plugin-bucklescript": "^0.5.3",
-    "fela": "^10.8.2",
-    "fela-dom": "^10.8.2",
-    "fela-preset-web": "^10.8.2",
+    "fela": "^11.0.2",
+    "fela-dom": "^11.0.2",
+    "fela-preset-web": "^11.0.2",
     "next": "^9.0.5",
     "next-transpile-modules": "^2.3.1",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
-    "react-fela": "^10.8.2",
-    "reason-fela": "^10.8.2",
+    "react-fela": "^11.0.2",
+    "reason-fela": "^11.0.2",
     "reason-react": "^0.7.0"
   },
   "devDependencies": {

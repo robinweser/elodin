@@ -1,18 +1,18 @@
 import {
-  capitalizeString,
-  uncapitalizeString,
+  generateClasses,
+  generateClassName,
+  generateClassNameMap,
+  generateMediaQueryFromNode,
+  isMediaQuery,
   isPseudoClass,
   isPseudoElement,
-  isMediaQuery,
-  getModuleName,
-  stringifyCSSRule,
-  getVariablesFromAST,
-  getVariantsFromAST,
-  generateCSSMediaQueryFromNode,
-  generateCSSClasses,
-  generateCSSValue,
-} from '@elodin/utils'
+  stringifyRule,
+} from '@elodin/utils-css'
+import { getVariablesFromAST, getVariantsFromAST } from '@elodin/utils-core'
+import { generateValue } from '@elodin/utils-javascript'
 import { hyphenateProperty } from 'css-in-js-utils'
+import capitalizeString from 'capitalize'
+import uncapitalizeString from 'uncapitalize'
 
 const defaultConfig = {
   devMode: false,
@@ -47,8 +47,6 @@ export default function createGenerator(customConfig = {}) {
     config.generateJSFileName('*') + '.js',
     config.generateCSSFileName('*') + '.css',
   ]
-
-  generate.ignorePattern = ['node_modules']
 
   return generate
 }
@@ -118,7 +116,7 @@ function generateJSFiles(ast, config, fileName) {
       (module.format === 'text' && textBaseClassName)
 
     const hasVariations = Object.keys(classNameMap).length > 1
-    const className = getModuleName(module, devMode)
+    const className = generateClassName(module, devMode)
 
     const fullClassName = [
       baseClassName ? baseClassName : '',
@@ -191,14 +189,16 @@ function generateCSSFiles(ast, { devMode, generateCSSFileName }) {
       return flatVariants
     }, {})
 
-    const classes = generateCSSClasses(module.body, variantMap, devMode)
+    const classes = generateClasses(module.body, variantMap, devMode)
 
     files[generateCSSFileName(module.name) + '.css'] = classes
       .filter(selector => selector.declarations.length > 0)
       .map(selector => {
-        const css = stringifyCSSRule(
+        const css = stringifyRule(
           selector.declarations,
-          getModuleName(module, devMode) + selector.modifier + selector.pseudo,
+          generateClassName(module, devMode) +
+            selector.modifier +
+            selector.pseudo,
           selector.media ? '  ' : ''
         )
 
@@ -298,7 +298,7 @@ function generateStyle(nodes, extractCSS, style = {}) {
           if (Object.keys(nested).length > 0) {
             style[
               '@media ' +
-                generateCSSMediaQueryFromNode(
+                generateMediaQueryFromNode(
                   node.boolean ? undefined : node.value.value,
                   node.property.value,
                   node.operator
@@ -341,168 +341,10 @@ function generateStyle(nodes, extractCSS, style = {}) {
   return style
 }
 
-function generateClassNameMap(
-  nodes,
-  variantMap,
-  devMode,
-  classes = {},
-  variations = {},
-  modifier = []
-) {
-  const nesting = nodes.filter(node => node.type !== 'Declaration')
-  const variantOrder = Object.keys(variantMap)
-  // ensure the variant modifier order is always deterministic
-  classes[
-    modifier
-      .sort((a, b) =>
-        variantOrder.indexOf(a[0]) > variantOrder.indexOf(b[0]) ? 1 : -1
-      )
-      .map(([name, value]) =>
-        devMode
-          ? '__' + name + '-' + value
-          : '_' +
-            variantOrder.indexOf(name) +
-            '-' +
-            variantMap[name].indexOf(value)
-      )
-      .join('')
-  ] = variations
-
-  nesting.forEach(nest => {
-    if (nest.property.type === 'Identifier') {
-      const variant = variantMap[nest.property.value]
-
-      if (variant) {
-        if (nest.value.type === 'Identifier') {
-          const variation = variant.indexOf(nest.value.value) !== -1
-
-          if (variation) {
-            generateClassNameMap(
-              nest.body,
-              variantMap,
-              devMode,
-              classes,
-              {
-                ...variations,
-                [nest.property.value]: nest.value.value,
-              },
-              [...modifier, [nest.property.value, nest.value.value]]
-            )
-          }
-        }
-      } else {
-        // TODO: throw
-      }
-    }
-  })
-
-  return classes
-}
-
 function wrapInString(value) {
   return '"' + value + '"'
 }
 
 function wrapInParens(value) {
   return '(' + value + ')'
-}
-
-const inlineFns = {
-  add: ' + ',
-  sub: ' - ',
-  mul: ' * ',
-  div: ' / ',
-  percentage: true,
-}
-
-const stringFns = {
-  rgb: true,
-  rgba: true,
-  hsl: true,
-  hsla: true,
-}
-
-function generateFunction(node, floatingPercentage = false) {
-  if (stringFns[node.callee]) {
-    return wrapInString(
-      node.callee +
-        '(' +
-        node.params
-          .map(param => {
-            if (
-              param.type === 'Variable' ||
-              (param.type === 'FunctionExpression' && inlineFns[param.callee])
-            ) {
-              return (
-                '" ++ string_of_int(' + generateValue(param, true) + ') ++ "'
-              )
-            }
-
-            return generateValue(param, true)
-          })
-          .join(', ') +
-        ')'
-    )
-  }
-
-  if (node.callee === 'percentage') {
-    if (floatingPercentage) {
-      return (
-        'string_of_int((' +
-        generateValue(node.params[0], floatingPercentage) +
-        ') / 100)'
-      )
-    }
-
-    return (
-      'string_of_int(' +
-      generateValue(node.params[0], floatingPercentage) +
-      ') ++ "%"'
-    )
-  }
-
-  if (node.callee === 'raw') {
-    return generateValue(node.params[0], floatingPercentage)
-  }
-
-  if (inlineFns[node.callee]) {
-    return wrapInParens(
-      node.params
-        .map(value => generateValue(value, floatingPercentage))
-        .join(inlineFns[node.callee])
-    )
-  }
-
-  // if (math[node.callee]) {
-  //   return generateValue({
-  //     type: 'Integer',
-  //     value: resolveMath(value),
-  //   })
-  // }
-}
-
-function generateValue(node, property, dynamic) {
-  const floatingPercentage = property === 'opacity'
-
-  if (!dynamic) {
-    return wrapInString(generateCSSValue(node, property))
-  }
-
-  if (node.type === 'FunctionExpression') {
-    return generateFunction(node, floatingPercentage)
-  }
-
-  if (node.type === 'Integer') {
-    return (node.negative ? '-' : '') + node.value
-  }
-
-  if (node.type === 'Float') {
-    return (node.negative ? '-' : '') + node.integer + '.' + node.fractional
-  }
-
-  if (node.type === 'Identifier') {
-    return hyphenateProperty(node.value)
-  }
-
-  return node.value
 }

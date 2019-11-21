@@ -1,4 +1,4 @@
-<img alt="Elodin" src="website/static/wordmark.svg" width="250"/>
+<img alt="Elodin" src="website/public/wordmark.svg" width="250"/>
 
 > **Warning**: Elodin is still WIP and experimental. It is not recommended to use it in production yet. There might be unknown bugs and the APIs might change rapidly.
 

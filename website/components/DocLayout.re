@@ -185,7 +185,7 @@ let make = (~children) => {
   let css = ReactFela.useFela();
   let css1 = ReactFela.useFela1();
 
-  <PageLayout>
+  <Page>
     <Head>
       <link
         href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/themes/prism.min.css"
@@ -221,5 +221,5 @@ let make = (~children) => {
         </MDX.MDXProvider>
       </div>
     </Section>
-  </PageLayout>;
+  </Page>;
 };

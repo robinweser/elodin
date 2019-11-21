@@ -4,6 +4,7 @@ var replaceVariable = require('@elodin/plugin-replace-variable').default
 var theme = require('./theme')
 
 module.exports = {
+  sources: ['components'],
   plugins: [
     replaceVariable({
       variables: {

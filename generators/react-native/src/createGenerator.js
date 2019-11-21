@@ -1,9 +1,11 @@
-import { uncapitalizeString, getVariablesFromAST } from '@elodin/utils'
+import { getVariablesFromAST } from '@elodin/utils-core'
+import { generateValue } from '@elodin/utils-javascript'
 import { hyphenateProperty } from 'css-in-js-utils'
-import color from 'color'
+import uncapitalizeString from 'uncapitalize'
 
 const defaultConfig = {
   importFrom: 'react-native',
+  generateJSFileName: moduleName => moduleName + '.elo',
 }
 
 export default function createGenerator(customConfig = {}) {
@@ -17,8 +19,7 @@ export default function createGenerator(customConfig = {}) {
     return { [fileName + '.js']: js }
   }
 
-  generate.filePattern = ['*.elo.js']
-  generate.ignorePattern = ['node_modules']
+  generate.filePattern = [config.generateJSFileName('*') + 'js']
 
   return generate
 }
@@ -94,104 +95,7 @@ function generateStyle(nodes) {
 
   return base.map(declaration => ({
     property: declaration.property,
-    value: generateValue(declaration.value, declaration.property === 'opacity'),
+    value: generateValue(declaration.value, declaration.property, true),
     dynamic: declaration.dynamic,
   }))
-}
-
-function wrapInString(value) {
-  return '"' + value + '"'
-}
-
-function wrapInParens(value) {
-  return '(' + value + ')'
-}
-
-const inlineFns = {
-  add: ' + ',
-  sub: ' - ',
-  mul: ' * ',
-  div: ' / ',
-  percentage: true,
-}
-
-const stringFns = {
-  rgb: true,
-  rgba: true,
-  hsl: true,
-  hsla: true,
-}
-
-function generateFunction(node, floatingPercentage = false) {
-  if (stringFns[node.callee]) {
-    return wrapInString(
-      node.callee +
-        '(' +
-        node.params
-          .map(param => {
-            if (
-              param.type === 'Variable' ||
-              (param.type === 'FunctionExpression' && inlineFns[param.callee])
-            ) {
-              return '" + ' + wrapInParens(generateValue(param, true)) + ' + "'
-            }
-            return generateValue(param, true)
-          })
-          .join(', ') +
-        ')'
-    )
-  }
-
-  if (node.callee === 'percentage') {
-    if (floatingPercentage) {
-      return wrapInParens(
-        generateValue(node.params[0], floatingPercentage) + ' / 100'
-      )
-    }
-
-    return '(' + generateValue(node.params[0], floatingPercentage) + ') + "%"'
-  }
-
-  if (node.callee === 'raw') {
-    return wrapInString(generateValue(node.params[0], floatingPercentage))
-  }
-
-  if (inlineFns[node.callee]) {
-    return wrapInParens(
-      node.params
-        .map(value => generateValue(value, floatingPercentage))
-        .join(inlineFns[node.callee])
-    )
-  }
-
-  // if (math[node.callee]) {
-  //   return generateValue({
-  //     type: 'Integer',
-  //     value: resolveMath(value),
-  //   })
-  // }
-}
-
-function generateValue(node, floatingPercentage = false) {
-  if (node.type === 'FunctionExpression') {
-    return generateFunction(node, floatingPercentage)
-  }
-
-  if (node.type === 'Integer') {
-    return (node.negative ? '-' : '') + node.value
-  }
-
-  if (node.type === 'Float') {
-    return (node.negative ? '-' : '') + node.integer + '.' + node.fractional
-  }
-
-  if (node.type === 'Identifier') {
-    return wrapInString(hyphenateProperty(node.value))
-  }
-
-  if (node.type === 'Variable') {
-    return 'props.' + node.value
-  }
-
-  return wrapInString(node.value)
 }
