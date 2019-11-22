@@ -28,7 +28,6 @@ export default class Parser {
   constructor(config = {}) {
     this.config = config
     this.context = config.context || {}
-    this.strictMode = config.strictMode || {}
   }
 
   getNextToken(position) {
@@ -526,26 +525,13 @@ export default class Parser {
           }
         }
 
-        const node = {
+        return {
           type: 'Declaration',
           raw: isRawDeclaration,
           dynamic: this.isDynamic,
           property: isRawDeclaration ? property.slice(2) : property,
           value,
         }
-
-        if (isRawDeclaration && this.strictMode.rawDeclaration) {
-          this.addError(
-            {
-              type: errorTypes.STRICT_MODE_RAW_DECLARATION,
-              message: `Strict mode: No raw declarations.`,
-              node,
-            },
-            true
-          )
-        }
-
-        return node
       }
     }
   }
@@ -786,24 +772,11 @@ export default class Parser {
           )
         }
 
-        const node = {
+        return {
           type: 'FunctionExpression',
           callee: ident,
           params,
         }
-
-        if (ident === 'raw' && this.strictMode.rawValue) {
-          this.addError(
-            {
-              type: errorTypes.STRICT_MODE_RAW_VALUE,
-              message: `Strict mode: No raw values.`,
-              node,
-            },
-            true
-          )
-        }
-
-        return node
       }
 
       return {
@@ -821,24 +794,11 @@ export default class Parser {
 
       if (this.currentToken.type === 'identifier') {
         this.isDynamic = true
-        const node = {
+        return {
           type: 'Variable',
           value: this.currentToken.value,
           environment: isEnv,
         }
-
-        if (!isEnv && this.strictMode.variable) {
-          this.addError(
-            {
-              type: errorTypes.STRICT_MODE_VARIABLE,
-              message: `Strict mode: No variables.`,
-              node,
-            },
-            true
-          )
-        }
-
-        return node
       }
     }
   }
