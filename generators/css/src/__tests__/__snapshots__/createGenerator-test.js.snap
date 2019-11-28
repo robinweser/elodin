@@ -1,0 +1,471 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Generating files using @elodin/generator-fela should add reset class names 1`] = `
+Object {
+  "Button.elo.css": "._diyf7s {
+  padding-left: 10px
+}
+
+@media (min-width: 1024px) {
+  ._diyf7s {
+    padding-left: 20px
+  }
+}
+
+._diyf7s_0-0 {
+  padding-top: 10px
+}",
+  "Button.elo.js": "import { getClassNameFromVariantMap } from \\"@elodin/runtime\\"
+require(\\"./Button.elo.css\\")
+
+const variantClassNameMap = {
+  \\"\\": {},
+  \\"_0-0\\": {
+    \\"Mode\\": \\"Dark\\"
+  }
+}
+
+export function Button(props = {}) {
+  return \\"view \\" + getClassNameFromVariantMap('_diyf7s', variantClassNameMap, props)
+
+};",
+  "ButtonText.elo.css": "._1hjhowh {
+  color: red
+}",
+  "ButtonText.elo.js": "require(\\"./ButtonText.elo.css\\")
+
+export function ButtonText(props = {}) {
+  return \\"text _1hjhowh\\"
+};",
+  "style.elo.js": "import { Button } from './Button.elo.js'
+import { ButtonText } from './ButtonText.elo.js'
+
+export {
+  Button,
+  ButtonText
+}",
+}
+`;
+
+exports[`Generating files using @elodin/generator-fela should generate css and js files for each style 1`] = `
+Object {
+  "Button.elo.css": "._diyf7s {
+  padding-left: 10px
+}
+
+@media (min-width: 1024px) {
+  ._diyf7s {
+    padding-left: 20px
+  }
+}
+
+._diyf7s_0-0 {
+  padding-top: 10px
+}",
+  "Button.elo.js": "import { getClassNameFromVariantMap } from \\"@elodin/runtime\\"
+require(\\"./Button.elo.css\\")
+
+const variantClassNameMap = {
+  \\"\\": {},
+  \\"_0-0\\": {
+    \\"Mode\\": \\"Dark\\"
+  }
+}
+
+export function Button(props = {}) {
+  return getClassNameFromVariantMap('_diyf7s', variantClassNameMap, props)
+
+};",
+  "ButtonText.elo.css": "._1hjhowh {
+  color: red
+}",
+  "ButtonText.elo.js": "require(\\"./ButtonText.elo.css\\")
+
+export function ButtonText(props = {}) {
+  return \\"_1hjhowh\\"
+};",
+  "style.elo.js": "import { Button } from './Button.elo.js'
+import { ButtonText } from './ButtonText.elo.js'
+
+export {
+  Button,
+  ButtonText
+}",
+}
+`;
+
+exports[`Generating files using @elodin/generator-fela should generate readable classnames in devMode 1`] = `
+Object {
+  "Button.elo.css": ".Button_diyf7s {
+  padding-left: 10px
+}
+
+@media (min-width: 1024px) {
+  .Button_diyf7s {
+    padding-left: 20px
+  }
+}
+
+.Button_diyf7s__Mode-Dark {
+  padding-top: 10px
+}",
+  "Button.elo.js": "import { getClassNameFromVariantMap } from \\"@elodin/runtime\\"
+require(\\"./Button.elo.css\\")
+
+const variantClassNameMap = {
+  \\"\\": {},
+  \\"__Mode-Dark\\": {
+    \\"Mode\\": \\"Dark\\"
+  }
+}
+
+export function Button(props = {}) {
+  return getClassNameFromVariantMap('Button_diyf7s', variantClassNameMap, props)
+
+};",
+  "ButtonText.elo.css": ".ButtonText_1hjhowh {
+  color: red
+}",
+  "ButtonText.elo.js": "require(\\"./ButtonText.elo.css\\")
+
+export function ButtonText(props = {}) {
+  return \\"ButtonText_1hjhowh\\"
+};",
+  "style.elo.js": "import { Button } from './Button.elo.js'
+import { ButtonText } from './ButtonText.elo.js'
+
+export {
+  Button,
+  ButtonText
+}",
+}
+`;
+
+exports[`Generating files using @elodin/generator-fela should only generate js files 1`] = `
+Object {
+  "Button.elo.css": "._diyf7s {
+  padding-left: 10px
+}
+
+@media (min-width: 1024px) {
+  ._diyf7s {
+    padding-left: 20px
+  }
+}
+
+._diyf7s_0-0 {
+  padding-top: 10px
+}",
+  "Button.elo.js": "import { getClassNameFromVariantMap } from \\"@elodin/runtime\\"
+require(\\"./Button.elo.css\\")
+
+const variantClassNameMap = {
+  \\"\\": {},
+  \\"_0-0\\": {
+    \\"Mode\\": \\"Dark\\"
+  }
+}
+
+export function Button(props = {}) {
+  return getClassNameFromVariantMap('_diyf7s', variantClassNameMap, props)
+
+};",
+  "ButtonText.elo.css": "._1hjhowh {
+  color: red
+}",
+  "ButtonText.elo.js": "require(\\"./ButtonText.elo.css\\")
+
+export function ButtonText(props = {}) {
+  return \\"_1hjhowh\\"
+};",
+  "style.elo.js": "import { Button } from './Button.elo.js'
+import { ButtonText } from './ButtonText.elo.js'
+
+export {
+  Button,
+  ButtonText
+}",
+}
+`;
+
+exports[`Generating files using @elodin/generator-fela should only generate js files with baseClassName 1`] = `
+Object {
+  "Button.elo.css": "._diyf7s {
+  padding-left: 10px
+}
+
+@media (min-width: 1024px) {
+  ._diyf7s {
+    padding-left: 20px
+  }
+}
+
+._diyf7s_0-0 {
+  padding-top: 10px
+}",
+  "Button.elo.js": "import { getClassNameFromVariantMap } from \\"@elodin/runtime\\"
+require(\\"./Button.elo.css\\")
+
+const variantClassNameMap = {
+  \\"\\": {},
+  \\"_0-0\\": {
+    \\"Mode\\": \\"Dark\\"
+  }
+}
+
+export function Button(props = {}) {
+  return \\"view \\" + getClassNameFromVariantMap('_diyf7s', variantClassNameMap, props)
+
+};",
+  "ButtonText.elo.css": "._1hjhowh {
+  color: red
+}",
+  "ButtonText.elo.js": "require(\\"./ButtonText.elo.css\\")
+
+export function ButtonText(props = {}) {
+  return \\"text _1hjhowh\\"
+};",
+  "style.elo.js": "import { Button } from './Button.elo.js'
+import { ButtonText } from './ButtonText.elo.js'
+
+export {
+  Button,
+  ButtonText
+}",
+}
+`;
+
+exports[`Generating files using @elodin/generator-fela should use a custom style name 1`] = `
+Object {
+  "Button.elo.css": "._diyf7s {
+  padding-left: 10px
+}
+
+@media (min-width: 1024px) {
+  ._diyf7s {
+    padding-left: 20px
+  }
+}
+
+._diyf7s_0-0 {
+  padding-top: 10px
+}",
+  "Button.elo.js": "import { getClassNameFromVariantMap } from \\"@elodin/runtime\\"
+require(\\"./Button.elo.css\\")
+
+const variantClassNameMap = {
+  \\"\\": {},
+  \\"_0-0\\": {
+    \\"Mode\\": \\"Dark\\"
+  }
+}
+
+export function ButtonStyle(props = {}) {
+  return getClassNameFromVariantMap('_diyf7s', variantClassNameMap, props)
+
+};",
+  "ButtonText.elo.css": "._1hjhowh {
+  color: red
+}",
+  "ButtonText.elo.js": "require(\\"./ButtonText.elo.css\\")
+
+export function ButtonTextStyle(props = {}) {
+  return \\"_1hjhowh\\"
+};",
+  "style.elo.js": "import { ButtonStyle } from './Button.elo.js'
+import { ButtonTextStyle } from './ButtonText.elo.js'
+
+export {
+  ButtonStyle,
+  ButtonTextStyle
+}",
+}
+`;
+
+exports[`Generating files using @elodin/generator-fela should use custom css file names 1`] = `
+Object {
+  "BUTTON.elo.css": "._diyf7s {
+  padding-left: 10px
+}
+
+@media (min-width: 1024px) {
+  ._diyf7s {
+    padding-left: 20px
+  }
+}
+
+._diyf7s_0-0 {
+  padding-top: 10px
+}",
+  "BUTTONTEXT.elo.css": "._1hjhowh {
+  color: red
+}",
+  "Button.elo.js": "import { getClassNameFromVariantMap } from \\"@elodin/runtime\\"
+require(\\"./BUTTON.elo.css\\")
+
+const variantClassNameMap = {
+  \\"\\": {},
+  \\"_0-0\\": {
+    \\"Mode\\": \\"Dark\\"
+  }
+}
+
+export function Button(props = {}) {
+  return getClassNameFromVariantMap('_diyf7s', variantClassNameMap, props)
+
+};",
+  "ButtonText.elo.js": "require(\\"./BUTTONTEXT.elo.css\\")
+
+export function ButtonText(props = {}) {
+  return \\"_1hjhowh\\"
+};",
+  "style.elo.js": "import { Button } from './Button.elo.js'
+import { ButtonText } from './ButtonText.elo.js'
+
+export {
+  Button,
+  ButtonText
+}",
+}
+`;
+
+exports[`Generating files using @elodin/generator-fela should use custom js file names 1`] = `
+Object {
+  "BUTTON.elo.js": "import { getClassNameFromVariantMap } from \\"@elodin/runtime\\"
+require(\\"./Button.elo.css\\")
+
+const variantClassNameMap = {
+  \\"\\": {},
+  \\"_0-0\\": {
+    \\"Mode\\": \\"Dark\\"
+  }
+}
+
+export function Button(props = {}) {
+  return getClassNameFromVariantMap('_diyf7s', variantClassNameMap, props)
+
+};",
+  "BUTTONTEXT.elo.js": "require(\\"./ButtonText.elo.css\\")
+
+export function ButtonText(props = {}) {
+  return \\"_1hjhowh\\"
+};",
+  "Button.elo.css": "._diyf7s {
+  padding-left: 10px
+}
+
+@media (min-width: 1024px) {
+  ._diyf7s {
+    padding-left: 20px
+  }
+}
+
+._diyf7s_0-0 {
+  padding-top: 10px
+}",
+  "ButtonText.elo.css": "._1hjhowh {
+  color: red
+}",
+  "style.elo.js": "import { Button } from './BUTTON.elo.js'
+import { ButtonText } from './BUTTONTEXT.elo.js'
+
+export {
+  Button,
+  ButtonText
+}",
+}
+`;
+
+exports[`Generating files using @elodin/generator-fela should use dynamic imports 1`] = `
+Object {
+  "Button.elo.css": "._diyf7s {
+  padding-left: 10px
+}
+
+@media (min-width: 1024px) {
+  ._diyf7s {
+    padding-left: 20px
+  }
+}
+
+._diyf7s_0-0 {
+  padding-top: 10px
+}",
+  "Button.elo.js": "import { getClassNameFromVariantMap } from \\"@elodin/runtime\\"
+const variantClassNameMap = {
+  \\"\\": {},
+  \\"_0-0\\": {
+    \\"Mode\\": \\"Dark\\"
+  }
+}
+
+export function Button(props = {}) {
+  import(\\"./Button.elo.css\\")
+
+  return getClassNameFromVariantMap('_diyf7s', variantClassNameMap, props)
+
+};",
+  "ButtonText.elo.css": "._1hjhowh {
+  color: red
+}",
+  "ButtonText.elo.js": "export function ButtonText(props = {}) {
+  import(\\"./ButtonText.elo.css\\")
+
+  return \\"_1hjhowh\\"
+};",
+  "style.elo.js": "import { Button } from './Button.elo.js'
+import { ButtonText } from './ButtonText.elo.js'
+
+export {
+  Button,
+  ButtonText
+}",
+}
+`;
+
+exports[`Generating files using @elodin/generator-fela should work with all options combined 1`] = `
+Object {
+  "BUTTON.elo.css": ".Button_diyf7s {
+  padding-left: 10px
+}
+
+@media (min-width: 1024px) {
+  .Button_diyf7s {
+    padding-left: 20px
+  }
+}
+
+.Button_diyf7s__Mode-Dark {
+  padding-top: 10px
+}",
+  "BUTTON.elo.js": "import { getClassNameFromVariantMap } from \\"@elodin/runtime\\"
+const variantClassNameMap = {
+  \\"\\": {},
+  \\"__Mode-Dark\\": {
+    \\"Mode\\": \\"Dark\\"
+  }
+}
+
+export function Button(props = {}) {
+  import(\\"./BUTTON.elo.css\\")
+
+  return \\"view \\" + getClassNameFromVariantMap('Button_diyf7s', variantClassNameMap, props)
+
+};",
+  "BUTTONTEXT.elo.css": ".ButtonText_1hjhowh {
+  color: red
+}",
+  "BUTTONTEXT.elo.js": "export function ButtonText(props = {}) {
+  import(\\"./BUTTONTEXT.elo.css\\")
+
+  return \\"text ButtonText_1hjhowh\\"
+};",
+  "style.elo.js": "import { Button } from './BUTTON.elo.js'
+import { ButtonText } from './BUTTONTEXT.elo.js'
+
+export {
+  Button,
+  ButtonText
+}",
+}
+`;

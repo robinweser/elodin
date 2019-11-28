@@ -10,13 +10,16 @@ variant Mode {
 
 view Button {
   paddingLeft: 10
+  paddingRight: $right
 
   [@viewportWidth>=1024] {
     paddingLeft: 20
+    paddingRight: $right
   }
 
   [Mode=Dark] {
     paddingTop: 10
+    paddingBottom: $bottom
   }
 }
 
@@ -25,8 +28,8 @@ text ButtonText {
 }
 `
 
-describe('Generating files using @elodin/generator-css', () => {
-  it('should generate css and js files', () => {
+describe('Generating files using @elodin/generator-fela', () => {
+  it('should generate css and js files for each style', () => {
     const ast = parse(style).ast
 
     expect(createGenerator()(ast, 'style.elo')).toMatchSnapshot()
@@ -90,11 +93,32 @@ describe('Generating files using @elodin/generator-css', () => {
     ).toMatchSnapshot()
   })
 
+  it('should only generate js files', () => {
+    const ast = parse(style).ast
+
+    expect(
+      createGenerator({ extractCSS: false })(ast, 'style.elo')
+    ).toMatchSnapshot()
+  })
+
+  it('should only generate js files with baseClassName', () => {
+    const ast = parse(style).ast
+
+    expect(
+      createGenerator({
+        extractCSS: false,
+        viewBaseClassName: 'view',
+        textBaseClassName: 'text',
+      })(ast, 'style.elo')
+    ).toMatchSnapshot()
+  })
+
   it('should work with all options combined', () => {
     const ast = parse(style).ast
 
     expect(
       createGenerator({
+        extractCSS: true,
         devMode: true,
         dynamicImport: true,
         viewBaseClassName: 'view',

@@ -1,0 +1,40 @@
+{
+  "name": "@elodin/generator-css",
+  "version": "0.0.41",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "clean": "rimraf lib es coverage",
+    "build": "yarn build:es && yarn build:lib",
+    "build:es": "babel src --out-dir es --ignore \"src/__tests__\"",
+    "build:lib": "cross-env BABEL_ENV=commonjs babel src --out-dir lib --ignore \"src/__tests__\"",
+    "test": "cross-env BABEL_ENV=commonjs jest",
+    "coverage": "yarn test --coverage"
+  },
+  "repository": "https://github.com/robinweser/elodin.git",
+  "author": "robinweser <contact@weser.io>",
+  "license": "MIT",
+  "dependencies": {
+    "@elodin/utils-core": "^0.0.41",
+    "@elodin/utils-css": "^0.0.41",
+    "@elodin/utils-javascript": "^0.0.41",
+    "css-in-js-utils": "^3.0.0",
+    "capitalize": "^2.0.0",
+    "uncapitalize": "1.0.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.0",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
+    "cross-env": "^5.2.0",
+    "jest": "^23.6.0",
+    "rimraf": "^2.6.2"
+  },
+  "gitHead": "974383a4e8bca0abd357f804b190addc5e1a8a56"
+}

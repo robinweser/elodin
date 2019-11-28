@@ -5,7 +5,7 @@ export default function generateClassName(
   devMode = false,
   hash = defaultHash
 ) {
-  const hashedBody = '_' + hash(JSON.stringify(module.body))
+  const hashedBody = '_' + hash(JSON.stringify(module.body)).toString(36)
 
   if (devMode) {
     return module.name + hashedBody
