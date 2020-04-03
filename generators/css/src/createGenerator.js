@@ -8,11 +8,7 @@ import {
   isPseudoElement,
   stringifyRule,
 } from '@elodin/utils-css'
-import { getVariablesFromAST, getVariantsFromAST } from '@elodin/utils-core'
-import { generateValue } from '@elodin/utils-javascript'
-import { hyphenateProperty } from 'css-in-js-utils'
-import capitalizeString from 'capitalize'
-import uncapitalizeString from 'uncapitalize'
+import { getVariantsFromAST } from '@elodin/utils-core'
 
 const defaultConfig = {
   devMode: false,

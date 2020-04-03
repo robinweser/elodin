@@ -5,7 +5,7 @@ import uncapitalizeString from 'uncapitalize'
 
 const defaultConfig = {
   importFrom: 'react-native',
-  generateJSFileName: moduleName => moduleName + '.elo',
+  generateJSFileName: (moduleName) => moduleName + '.elo',
 }
 
 export default function createGenerator(customConfig = {}) {
@@ -33,11 +33,11 @@ function stringifyDeclaration(declaration) {
     )
   }
 
-  return prop + declaration.value
+  return prop + (declaration.dynamic ? 'props.' : '') + declaration.value
 }
 
 function generateJS(ast, config) {
-  const styles = ast.body.filter(node => node.type === 'Style')
+  const styles = ast.body.filter((node) => node.type === 'Style')
 
   const modules = styles.reduce((modules, module) => {
     const variables = getVariablesFromAST(module)
@@ -54,11 +54,11 @@ function generateJS(ast, config) {
     'const styles = StyleSheet.create({\n  ' +
     Object.keys(modules)
       .map(
-        name =>
+        (name) =>
           uncapitalizeString(name) +
           ': {\n    ' +
           modules[name].style
-            .filter(decl => !decl.dynamic)
+            .filter((decl) => !decl.dynamic)
             .map(stringifyDeclaration)
             .join(',\n    ') +
           '\n  }'
@@ -68,14 +68,14 @@ function generateJS(ast, config) {
     '\n\n' +
     Object.keys(modules)
       .map(
-        name =>
+        (name) =>
           'export function ' +
           name +
           '(props = {}) {\n  ' +
-          (modules[name].style.find(decl => decl.dynamic)
+          (modules[name].style.find((decl) => decl.dynamic)
             ? 'const style = {\n    ' +
               modules[name].style
-                .filter(decl => decl.dynamic)
+                .filter((decl) => decl.dynamic)
                 .map(stringifyDeclaration)
                 .join(',\n    ') +
               '\n  }\n\n  ' +
@@ -90,10 +90,9 @@ function generateJS(ast, config) {
 }
 
 function generateStyle(nodes) {
-  const base = nodes.filter(node => node.type === 'Declaration')
-  getVariablesFromAST
+  const base = nodes.filter((node) => node.type === 'Declaration')
 
-  return base.map(declaration => ({
+  return base.map((declaration) => ({
     property: declaration.property,
     value: generateValue(declaration.value, declaration.property, true),
     dynamic: declaration.dynamic,

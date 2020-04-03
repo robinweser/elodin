@@ -36,7 +36,7 @@ export default function generateValue(node, property, dynamic) {
   }
 
   if (node.type === 'Identifier') {
-    return hyphenateProperty(node.value)
+    return wrapInString(hyphenateProperty(node.value))
   }
 
   return node.value
@@ -48,7 +48,7 @@ function generateFunction(node, floatingPercentage = false) {
       node.callee +
         '(' +
         node.params
-          .map(param => {
+          .map((param) => {
             if (
               param.type === 'Variable' ||
               (param.type === 'FunctionExpression' && inlineFns[param.callee])
@@ -80,7 +80,7 @@ function generateFunction(node, floatingPercentage = false) {
   if (inlineFns[node.callee]) {
     return wrapInParens(
       node.params
-        .map(value => generateValue(value, floatingPercentage))
+        .map((value) => generateValue(value, floatingPercentage))
         .join(inlineFns[node.callee])
     )
   }

@@ -33,12 +33,8 @@ Object {
           "raw": false,
           "type": "Declaration",
           "value": Object {
-            "alpha": 1,
-            "blue": 0,
-            "format": "keyword",
-            "green": 0,
-            "red": 255,
-            "type": "Color",
+            "type": "Identifier",
+            "value": "red",
           },
         },
         Object {
@@ -164,12 +160,8 @@ Object {
           "raw": false,
           "type": "Declaration",
           "value": Object {
-            "alpha": 1,
-            "blue": 0,
-            "format": "keyword",
-            "green": 0,
-            "red": 255,
-            "type": "Color",
+            "type": "Identifier",
+            "value": "red",
           },
         },
         Object {
@@ -181,12 +173,8 @@ Object {
               "raw": false,
               "type": "Declaration",
               "value": Object {
-                "alpha": 1,
-                "blue": 255,
-                "format": "keyword",
-                "green": 0,
-                "red": 0,
-                "type": "Color",
+                "type": "Identifier",
+                "value": "blue",
               },
             },
           ],
@@ -227,12 +215,8 @@ Object {
               "raw": false,
               "type": "Declaration",
               "value": Object {
-                "alpha": 1,
-                "blue": 0,
-                "format": "keyword",
-                "green": 0,
-                "red": 255,
-                "type": "Color",
+                "type": "Identifier",
+                "value": "red",
               },
             },
           ],
@@ -254,12 +238,8 @@ Object {
               "raw": false,
               "type": "Declaration",
               "value": Object {
-                "alpha": 1,
-                "blue": 255,
-                "format": "keyword",
-                "green": 0,
-                "red": 0,
-                "type": "Color",
+                "type": "Identifier",
+                "value": "blue",
               },
             },
             Object {
@@ -271,12 +251,8 @@ Object {
                   "raw": false,
                   "type": "Declaration",
                   "value": Object {
-                    "alpha": 1,
-                    "blue": 0,
-                    "format": "keyword",
-                    "green": 128,
-                    "red": 0,
-                    "type": "Color",
+                    "type": "Identifier",
+                    "value": "green",
                   },
                 },
               ],
@@ -327,12 +303,8 @@ Object {
           "raw": false,
           "type": "Declaration",
           "value": Object {
-            "alpha": 1,
-            "blue": 0,
-            "format": "keyword",
-            "green": 0,
-            "red": 255,
-            "type": "Color",
+            "type": "Identifier",
+            "value": "red",
           },
         },
         Object {
@@ -471,21 +443,6 @@ Object {
           },
         },
       ],
-      "comments": Array [],
-      "format": "view",
-      "name": "Button",
-      "type": "Style",
-    },
-  ],
-  "type": "File",
-}
-`;
-
-exports[`Parsing elodin syntax should not throw 1`] = `
-Object {
-  "body": Array [
-    Object {
-      "body": Array [],
       "comments": Array [],
       "format": "view",
       "name": "Button",
