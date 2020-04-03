@@ -3495,7 +3495,7 @@ bs-moment@^0.4.4:
   resolved "https://registry.yarnpkg.com/bs-moment/-/bs-moment-0.4.5.tgz#3f84fed55c2a70d25b0b6025e4e8d821fcdd4dc8"
   integrity sha512-anPYkFSof+X8EeomnP0fbQBvWFJeganwPqqARVB+fcdKYX2Uog/n3CCiFGEA+66yHbwnWZD5YFhtHCuyLMcQfQ==
 
-bs-platform@^5.0.4, bs-platform@^5.0.6, bs-platform@^5.2.1:
+bs-platform@^5.0.6, bs-platform@^5.2.1:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/bs-platform/-/bs-platform-5.2.1.tgz#3f76f6d4f4c7255296375a8104c8be332770b691"
   integrity sha512-3ISP+RBC/NYILiJnphCY0W3RTYpQ11JGa2dBBLVug5fpFZ0qtSaL3ZplD8MyjNeXX2bC7xgrWfgBSn8Tc9om7Q==
@@ -3504,6 +3504,11 @@ bs-platform@^6.0.x:
   version "6.2.1"
   resolved "https://registry.yarnpkg.com/bs-platform/-/bs-platform-6.2.1.tgz#30266c7f23a3b323e1fc9596a9a6eb9f053981b4"
   integrity sha512-FmQ8kYV52A0Y302qh6o0/J9TO+kHzsjGQnsjrg/ONUYIY/jWzBnt9dCBO6EBnaEKfFJLqk5JrUDCxuihqtTcnw==
+
+bs-platform@^7.2.2:
+  version "7.2.2"
+  resolved "https://registry.yarnpkg.com/bs-platform/-/bs-platform-7.2.2.tgz#76fdc63e4889458ae3d257a0132107a792f2309c"
+  integrity sha512-PWcFfN+jCTtT/rMaHDhKh+W9RUTpaRunmSF9vbLYcrJbpgCNW6aFKAY33u0P3mLxwuhshN3b4FxqGUBPj6exZQ==
 
 bser@2.1.1:
   version "2.1.1"
@@ -11881,7 +11886,7 @@ umask@^1.1.0:
   resolved "https://registry.yarnpkg.com/umask/-/umask-1.1.0.tgz#f29cebf01df517912bb58ff9c4e50fde8e33320d"
   integrity sha1-8pzr8B31F5ErtY/5xOUP3o4zMg0=
 
-uncapitalize@1.0.2, uncapitalize@^1.0.2:
+uncapitalize@1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/uncapitalize/-/uncapitalize-1.0.2.tgz#3a8d26475b3b874eef3c47df750e400be03eb4a4"
   integrity sha1-Oo0mR1s7h07vPEffdQ5AC+A+tKQ=
