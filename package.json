@@ -29,10 +29,7 @@
   "devDependencies": {
     "lerna": "^3.6.0",
     "prettier": "^1.15.3",
+    "cross-env": "^7.0.2",
     "rimraf": "^2.6.2"
   },
-  "dependencies": {
-    "capitalize": "^2.0.0",
-    "uncapitalize": "^1.0.2"
-  }
 }
