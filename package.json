@@ -27,9 +27,8 @@
     "website"
   ],
   "devDependencies": {
-    "lerna": "^3.6.0",
-    "prettier": "^1.15.3",
-    "cross-env": "^7.0.2",
-    "rimraf": "^2.6.2"
+    "lerna": "^3.20.2",
+    "prettier": "^2.0.2",
+    "rimraf": "^3.0.2"
   }
 }
