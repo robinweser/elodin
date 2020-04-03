@@ -1,0 +1,443 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Generating files using @elodin/generator-reason should add reset class names 1`] = `
+Object {
+  "StyleButton.elo.css": "._diyf7s {
+  padding-left: 10px
+}
+
+@media (min-width: 1024px) {
+  ._diyf7s {
+    padding-left: 20px
+  }
+}
+
+._diyf7s_0-0 {
+  padding-top: 10px
+}",
+  "StyleButtonText.elo.css": "._1hjhowh {
+  color: red
+}",
+  "StyleStyle.re": "[%bs.raw {| require(\\"./StyleButton.elo.css\\") |}];
+[%bs.raw {| require(\\"./StyleButtonText.elo.css\\") |}];
+
+[@bs.deriving jsConverter]
+type mode =
+  | Dark
+  | Light;
+
+let getButtonVariants = (~mode, ()) => {
+  switch (mode) {
+    | (Some(Dark)) => \\" _diyf7s_0-0\\"
+    | (Some(Light)) => \\"\\"
+    | (None) => \\"\\"
+  }
+};
+
+let button = (~right=?, ~bottom=?, ~mode=?, ()) => {
+  \\"view _diyf7s\\" ++ \\" \\" ++ getButtonVariants(~mode, ())
+}
+
+let buttonText = () => {
+  \\"text _1hjhowh\\"
+}",
+}
+`;
+
+exports[`Generating files using @elodin/generator-reason should generate css files for each style and a single reason file 1`] = `
+Object {
+  "StyleButton.elo.css": "._diyf7s {
+  padding-left: 10px
+}
+
+@media (min-width: 1024px) {
+  ._diyf7s {
+    padding-left: 20px
+  }
+}
+
+._diyf7s_0-0 {
+  padding-top: 10px
+}",
+  "StyleButtonText.elo.css": "._1hjhowh {
+  color: red
+}",
+  "StyleStyle.re": "[%bs.raw {| require(\\"./StyleButton.elo.css\\") |}];
+[%bs.raw {| require(\\"./StyleButtonText.elo.css\\") |}];
+
+[@bs.deriving jsConverter]
+type mode =
+  | Dark
+  | Light;
+
+let getButtonVariants = (~mode, ()) => {
+  switch (mode) {
+    | (Some(Dark)) => \\" _diyf7s_0-0\\"
+    | (Some(Light)) => \\"\\"
+    | (None) => \\"\\"
+  }
+};
+
+let button = (~right=?, ~bottom=?, ~mode=?, ()) => {
+  \\"_diyf7s\\" ++ \\" \\" ++ getButtonVariants(~mode, ())
+}
+
+let buttonText = () => {
+  \\"_1hjhowh\\"
+}",
+}
+`;
+
+exports[`Generating files using @elodin/generator-reason should generate readable classnames in devMode 1`] = `
+Object {
+  "StyleButton.elo.css": ".Button_diyf7s {
+  padding-left: 10px
+}
+
+@media (min-width: 1024px) {
+  .Button_diyf7s {
+    padding-left: 20px
+  }
+}
+
+.Button_diyf7s__Mode-Dark {
+  padding-top: 10px
+}",
+  "StyleButtonText.elo.css": ".ButtonText_1hjhowh {
+  color: red
+}",
+  "StyleStyle.re": "[%bs.raw {| require(\\"./StyleButton.elo.css\\") |}];
+[%bs.raw {| require(\\"./StyleButtonText.elo.css\\") |}];
+
+[@bs.deriving jsConverter]
+type mode =
+  | Dark
+  | Light;
+
+let getButtonVariants = (~mode, ()) => {
+  switch (mode) {
+    | (Some(Dark)) => \\" Button_diyf7s__Mode-Dark\\"
+    | (Some(Light)) => \\"\\"
+    | (None) => \\"\\"
+  }
+};
+
+let button = (~right=?, ~bottom=?, ~mode=?, ()) => {
+  \\"Button_diyf7s\\" ++ \\" \\" ++ getButtonVariants(~mode, ())
+}
+
+let buttonText = () => {
+  \\"ButtonText_1hjhowh\\"
+}",
+}
+`;
+
+exports[`Generating files using @elodin/generator-reason should only generate a reason file 1`] = `
+Object {
+  "StyleButton.elo.css": "._diyf7s {
+  padding-left: 10px
+}
+
+@media (min-width: 1024px) {
+  ._diyf7s {
+    padding-left: 20px
+  }
+}
+
+._diyf7s_0-0 {
+  padding-top: 10px
+}",
+  "StyleButtonText.elo.css": "._1hjhowh {
+  color: red
+}",
+  "StyleStyle.re": "[%bs.raw {| require(\\"./StyleButton.elo.css\\") |}];
+[%bs.raw {| require(\\"./StyleButtonText.elo.css\\") |}];
+
+[@bs.deriving jsConverter]
+type mode =
+  | Dark
+  | Light;
+
+let getButtonVariants = (~mode, ()) => {
+  switch (mode) {
+    | (Some(Dark)) => \\" _diyf7s_0-0\\"
+    | (Some(Light)) => \\"\\"
+    | (None) => \\"\\"
+  }
+};
+
+let button = (~right=?, ~bottom=?, ~mode=?, ()) => {
+  \\"_diyf7s\\" ++ \\" \\" ++ getButtonVariants(~mode, ())
+}
+
+let buttonText = () => {
+  \\"_1hjhowh\\"
+}",
+}
+`;
+
+exports[`Generating files using @elodin/generator-reason should only generate a reason file with baseClassName 1`] = `
+Object {
+  "StyleButton.elo.css": "._diyf7s {
+  padding-left: 10px
+}
+
+@media (min-width: 1024px) {
+  ._diyf7s {
+    padding-left: 20px
+  }
+}
+
+._diyf7s_0-0 {
+  padding-top: 10px
+}",
+  "StyleButtonText.elo.css": "._1hjhowh {
+  color: red
+}",
+  "StyleStyle.re": "[%bs.raw {| require(\\"./StyleButton.elo.css\\") |}];
+[%bs.raw {| require(\\"./StyleButtonText.elo.css\\") |}];
+
+[@bs.deriving jsConverter]
+type mode =
+  | Dark
+  | Light;
+
+let getButtonVariants = (~mode, ()) => {
+  switch (mode) {
+    | (Some(Dark)) => \\" _diyf7s_0-0\\"
+    | (Some(Light)) => \\"\\"
+    | (None) => \\"\\"
+  }
+};
+
+let button = (~right=?, ~bottom=?, ~mode=?, ()) => {
+  \\"view _diyf7s\\" ++ \\" \\" ++ getButtonVariants(~mode, ())
+}
+
+let buttonText = () => {
+  \\"text _1hjhowh\\"
+}",
+}
+`;
+
+exports[`Generating files using @elodin/generator-reason should use a custom style name 1`] = `
+Object {
+  "StyleButton.elo.css": "._diyf7s {
+  padding-left: 10px
+}
+
+@media (min-width: 1024px) {
+  ._diyf7s {
+    padding-left: 20px
+  }
+}
+
+._diyf7s_0-0 {
+  padding-top: 10px
+}",
+  "StyleButtonText.elo.css": "._1hjhowh {
+  color: red
+}",
+  "StyleStyle.re": "[%bs.raw {| require(\\"./StyleButton.elo.css\\") |}];
+[%bs.raw {| require(\\"./StyleButtonText.elo.css\\") |}];
+
+[@bs.deriving jsConverter]
+type mode =
+  | Dark
+  | Light;
+
+let getButtonVariants = (~mode, ()) => {
+  switch (mode) {
+    | (Some(Dark)) => \\" _diyf7s_0-0\\"
+    | (Some(Light)) => \\"\\"
+    | (None) => \\"\\"
+  }
+};
+
+let buttonStyle = (~right=?, ~bottom=?, ~mode=?, ()) => {
+  \\"_diyf7s\\" ++ \\" \\" ++ getButtonVariants(~mode, ())
+}
+
+let buttonTextStyle = () => {
+  \\"_1hjhowh\\"
+}",
+}
+`;
+
+exports[`Generating files using @elodin/generator-reason should use custom css file names 1`] = `
+Object {
+  "STYLEbutton.elo.css": "._diyf7s {
+  padding-left: 10px
+}
+
+@media (min-width: 1024px) {
+  ._diyf7s {
+    padding-left: 20px
+  }
+}
+
+._diyf7s_0-0 {
+  padding-top: 10px
+}",
+  "STYLEbuttontext.elo.css": "._1hjhowh {
+  color: red
+}",
+  "StyleStyle.re": "[%bs.raw {| require(\\"./STYLEbutton.elo.css\\") |}];
+[%bs.raw {| require(\\"./STYLEbuttontext.elo.css\\") |}];
+
+[@bs.deriving jsConverter]
+type mode =
+  | Dark
+  | Light;
+
+let getButtonVariants = (~mode, ()) => {
+  switch (mode) {
+    | (Some(Dark)) => \\" _diyf7s_0-0\\"
+    | (Some(Light)) => \\"\\"
+    | (None) => \\"\\"
+  }
+};
+
+let button = (~right=?, ~bottom=?, ~mode=?, ()) => {
+  \\"_diyf7s\\" ++ \\" \\" ++ getButtonVariants(~mode, ())
+}
+
+let buttonText = () => {
+  \\"_1hjhowh\\"
+}",
+}
+`;
+
+exports[`Generating files using @elodin/generator-reason should use custom reason file names 1`] = `
+Object {
+  "ElodinStyle.re": "[%bs.raw {| require(\\"./StyleButton.elo.css\\") |}];
+[%bs.raw {| require(\\"./StyleButtonText.elo.css\\") |}];
+
+[@bs.deriving jsConverter]
+type mode =
+  | Dark
+  | Light;
+
+let getButtonVariants = (~mode, ()) => {
+  switch (mode) {
+    | (Some(Dark)) => \\" _diyf7s_0-0\\"
+    | (Some(Light)) => \\"\\"
+    | (None) => \\"\\"
+  }
+};
+
+let button = (~right=?, ~bottom=?, ~mode=?, ()) => {
+  \\"_diyf7s\\" ++ \\" \\" ++ getButtonVariants(~mode, ())
+}
+
+let buttonText = () => {
+  \\"_1hjhowh\\"
+}",
+  "StyleButton.elo.css": "._diyf7s {
+  padding-left: 10px
+}
+
+@media (min-width: 1024px) {
+  ._diyf7s {
+    padding-left: 20px
+  }
+}
+
+._diyf7s_0-0 {
+  padding-top: 10px
+}",
+  "StyleButtonText.elo.css": "._1hjhowh {
+  color: red
+}",
+}
+`;
+
+exports[`Generating files using @elodin/generator-reason should use dynamic imports 1`] = `
+Object {
+  "StyleButton.elo.css": "._diyf7s {
+  padding-left: 10px
+}
+
+@media (min-width: 1024px) {
+  ._diyf7s {
+    padding-left: 20px
+  }
+}
+
+._diyf7s_0-0 {
+  padding-top: 10px
+}",
+  "StyleButtonText.elo.css": "._1hjhowh {
+  color: red
+}",
+  "StyleStyle.re": "[@bs.deriving jsConverter]
+type mode =
+  | Dark
+  | Light;
+
+let getButtonVariants = (~mode, ()) => {
+  switch (mode) {
+    | (Some(Dark)) => \\" _diyf7s_0-0\\"
+    | (Some(Light)) => \\"\\"
+    | (None) => \\"\\"
+  }
+};
+
+let button = (~right=?, ~bottom=?, ~mode=?, ()) => {
+  [%bs.raw {| import(\\"./StyleButton.elo.css\\") |}];
+
+  \\"_diyf7s\\" ++ \\" \\" ++ getButtonVariants(~mode, ())
+}
+
+let buttonText = () => {
+  [%bs.raw {| import(\\"./StyleButtonText.elo.css\\") |}];
+
+  \\"_1hjhowh\\"
+}",
+}
+`;
+
+exports[`Generating files using @elodin/generator-reason should work with all options combined 1`] = `
+Object {
+  "ElodinStyle.re": "[@bs.deriving jsConverter]
+type mode =
+  | Dark
+  | Light;
+
+let getButtonVariants = (~mode, ()) => {
+  switch (mode) {
+    | (Some(Dark)) => \\" Button_diyf7s__Mode-Dark\\"
+    | (Some(Light)) => \\"\\"
+    | (None) => \\"\\"
+  }
+};
+
+let button = (~right=?, ~bottom=?, ~mode=?, ()) => {
+  [%bs.raw {| import(\\"./STYLEbutton.elo.css\\") |}];
+
+  \\"view Button_diyf7s\\" ++ \\" \\" ++ getButtonVariants(~mode, ())
+}
+
+let buttonText = () => {
+  [%bs.raw {| import(\\"./STYLEbuttontext.elo.css\\") |}];
+
+  \\"text ButtonText_1hjhowh\\"
+}",
+  "STYLEbutton.elo.css": ".Button_diyf7s {
+  padding-left: 10px
+}
+
+@media (min-width: 1024px) {
+  .Button_diyf7s {
+    padding-left: 20px
+  }
+}
+
+.Button_diyf7s__Mode-Dark {
+  padding-top: 10px
+}",
+  "STYLEbuttontext.elo.css": ".ButtonText_1hjhowh {
+  color: red
+}",
+}
+`;

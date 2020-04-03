@@ -1,12 +1,10 @@
-var createGenerator = require('@elodin/generator-reason-fela').createGenerator
+var createGenerator = require('@elodin/generator-reason').createGenerator
 
 module.exports = {
   sources: ['components'],
-  generators: [
-    createGenerator({
-      devMode: process.env.NODE_ENV !== 'production',
-      viewBaseClassName: '_v',
-      textBaseClassName: '_t',
-    }),
-  ],
+  generator: createGenerator({
+    devMode: process.env.NODE_ENV !== 'production',
+    viewBaseClassName: '_v',
+    textBaseClassName: '_t',
+  }),
 }

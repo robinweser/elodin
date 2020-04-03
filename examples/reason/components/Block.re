@@ -4,10 +4,11 @@ let make = (~size, ~mode=?, ~onClick, ~children) => {
 
   <div
     onClick
-    className={css(
-      BlockStyle.block(~mode?, ()),
-      BlockStyle.blockText(~size, ~mode?, ()),
-    )}>
+    className={
+      BlockStyle.block(~mode?, ())
+      ++ " "
+      ++ BlockStyle.blockText(~size, ~mode?, ())
+    }>
     children
   </div>;
 };
