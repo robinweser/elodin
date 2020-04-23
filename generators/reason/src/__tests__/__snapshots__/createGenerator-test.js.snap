@@ -3,17 +3,20 @@
 exports[`Generating files using @elodin/generator-reason should add reset class names 1`] = `
 Object {
   "StyleButton.elo.css": "._diyf7s {
-  padding-left: 10px
+  padding-left: 10px;
+  padding-right: var(--right)
 }
 
 @media (min-width: 1024px) {
   ._diyf7s {
-    padding-left: 20px
+    padding-left: 20px;
+    padding-right: var(--right)
   }
 }
 
 ._diyf7s_0-0 {
-  padding-top: 10px
+  padding-top: 10px;
+  padding-bottom: var(--bottom)
 }",
   "StyleButtonText.elo.css": "._1hjhowh {
   color: red
@@ -47,17 +50,20 @@ let buttonText = () => {
 exports[`Generating files using @elodin/generator-reason should generate css files for each style and a single reason file 1`] = `
 Object {
   "StyleButton.elo.css": "._diyf7s {
-  padding-left: 10px
+  padding-left: 10px;
+  padding-right: var(--right)
 }
 
 @media (min-width: 1024px) {
   ._diyf7s {
-    padding-left: 20px
+    padding-left: 20px;
+    padding-right: var(--right)
   }
 }
 
 ._diyf7s_0-0 {
-  padding-top: 10px
+  padding-top: 10px;
+  padding-bottom: var(--bottom)
 }",
   "StyleButtonText.elo.css": "._1hjhowh {
   color: red
@@ -91,17 +97,20 @@ let buttonText = () => {
 exports[`Generating files using @elodin/generator-reason should generate readable classnames in devMode 1`] = `
 Object {
   "StyleButton.elo.css": ".Button_diyf7s {
-  padding-left: 10px
+  padding-left: 10px;
+  padding-right: var(--right)
 }
 
 @media (min-width: 1024px) {
   .Button_diyf7s {
-    padding-left: 20px
+    padding-left: 20px;
+    padding-right: var(--right)
   }
 }
 
 .Button_diyf7s__Mode-Dark {
-  padding-top: 10px
+  padding-top: 10px;
+  padding-bottom: var(--bottom)
 }",
   "StyleButtonText.elo.css": ".ButtonText_1hjhowh {
   color: red
@@ -135,17 +144,20 @@ let buttonText = () => {
 exports[`Generating files using @elodin/generator-reason should only generate a reason file 1`] = `
 Object {
   "StyleButton.elo.css": "._diyf7s {
-  padding-left: 10px
+  padding-left: 10px;
+  padding-right: var(--right)
 }
 
 @media (min-width: 1024px) {
   ._diyf7s {
-    padding-left: 20px
+    padding-left: 20px;
+    padding-right: var(--right)
   }
 }
 
 ._diyf7s_0-0 {
-  padding-top: 10px
+  padding-top: 10px;
+  padding-bottom: var(--bottom)
 }",
   "StyleButtonText.elo.css": "._1hjhowh {
   color: red
@@ -179,17 +191,20 @@ let buttonText = () => {
 exports[`Generating files using @elodin/generator-reason should only generate a reason file with baseClassName 1`] = `
 Object {
   "StyleButton.elo.css": "._diyf7s {
-  padding-left: 10px
+  padding-left: 10px;
+  padding-right: var(--right)
 }
 
 @media (min-width: 1024px) {
   ._diyf7s {
-    padding-left: 20px
+    padding-left: 20px;
+    padding-right: var(--right)
   }
 }
 
 ._diyf7s_0-0 {
-  padding-top: 10px
+  padding-top: 10px;
+  padding-bottom: var(--bottom)
 }",
   "StyleButtonText.elo.css": "._1hjhowh {
   color: red
@@ -223,17 +238,20 @@ let buttonText = () => {
 exports[`Generating files using @elodin/generator-reason should use a custom style name 1`] = `
 Object {
   "StyleButton.elo.css": "._diyf7s {
-  padding-left: 10px
+  padding-left: 10px;
+  padding-right: var(--right)
 }
 
 @media (min-width: 1024px) {
   ._diyf7s {
-    padding-left: 20px
+    padding-left: 20px;
+    padding-right: var(--right)
   }
 }
 
 ._diyf7s_0-0 {
-  padding-top: 10px
+  padding-top: 10px;
+  padding-bottom: var(--bottom)
 }",
   "StyleButtonText.elo.css": "._1hjhowh {
   color: red
@@ -267,17 +285,20 @@ let buttonTextStyle = () => {
 exports[`Generating files using @elodin/generator-reason should use custom css file names 1`] = `
 Object {
   "STYLEbutton.elo.css": "._diyf7s {
-  padding-left: 10px
+  padding-left: 10px;
+  padding-right: var(--right)
 }
 
 @media (min-width: 1024px) {
   ._diyf7s {
-    padding-left: 20px
+    padding-left: 20px;
+    padding-right: var(--right)
   }
 }
 
 ._diyf7s_0-0 {
-  padding-top: 10px
+  padding-top: 10px;
+  padding-bottom: var(--bottom)
 }",
   "STYLEbuttontext.elo.css": "._1hjhowh {
   color: red
@@ -334,17 +355,20 @@ let buttonText = () => {
   \\"_1hjhowh\\"
 }",
   "StyleButton.elo.css": "._diyf7s {
-  padding-left: 10px
+  padding-left: 10px;
+  padding-right: var(--right)
 }
 
 @media (min-width: 1024px) {
   ._diyf7s {
-    padding-left: 20px
+    padding-left: 20px;
+    padding-right: var(--right)
   }
 }
 
 ._diyf7s_0-0 {
-  padding-top: 10px
+  padding-top: 10px;
+  padding-bottom: var(--bottom)
 }",
   "StyleButtonText.elo.css": "._1hjhowh {
   color: red
@@ -355,17 +379,20 @@ let buttonText = () => {
 exports[`Generating files using @elodin/generator-reason should use dynamic imports 1`] = `
 Object {
   "StyleButton.elo.css": "._diyf7s {
-  padding-left: 10px
+  padding-left: 10px;
+  padding-right: var(--right)
 }
 
 @media (min-width: 1024px) {
   ._diyf7s {
-    padding-left: 20px
+    padding-left: 20px;
+    padding-right: var(--right)
   }
 }
 
 ._diyf7s_0-0 {
-  padding-top: 10px
+  padding-top: 10px;
+  padding-bottom: var(--bottom)
 }",
   "StyleButtonText.elo.css": "._1hjhowh {
   color: red
@@ -424,17 +451,20 @@ let buttonText = () => {
   \\"text ButtonText_1hjhowh\\"
 }",
   "STYLEbutton.elo.css": ".Button_diyf7s {
-  padding-left: 10px
+  padding-left: 10px;
+  padding-right: var(--right)
 }
 
 @media (min-width: 1024px) {
   .Button_diyf7s {
-    padding-left: 20px
+    padding-left: 20px;
+    padding-right: var(--right)
   }
 }
 
 .Button_diyf7s__Mode-Dark {
-  padding-top: 10px
+  padding-top: 10px;
+  padding-bottom: var(--bottom)
 }",
   "STYLEbuttontext.elo.css": ".ButtonText_1hjhowh {
   color: red

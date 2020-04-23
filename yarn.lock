@@ -1096,6 +1096,18 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@elodin/generator-css@^0.0.44":
+  version "0.0.44"
+  resolved "https://registry.yarnpkg.com/@elodin/generator-css/-/generator-css-0.0.44.tgz#7349a6081c560e47864681ebcedf22a64d4a38a4"
+  integrity sha512-o+Fbg33ukXC+hALkicKPadGYeTMCCj3WdgNdldrAIF6cIHR52oY87vsShXT0O9PRnQfulIYsxQHWbMvk0kHvbg==
+  dependencies:
+    "@elodin/utils-core" "^0.0.44"
+    "@elodin/utils-css" "^0.0.44"
+    "@elodin/utils-javascript" "^0.0.44"
+    capitalize "^2.0.0"
+    css-in-js-utils "^3.0.0"
+    uncapitalize "1.0.2"
+
 "@evocateur/libnpmaccess@^3.1.2":
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/@evocateur/libnpmaccess/-/libnpmaccess-3.1.2.tgz#ecf7f6ce6b004e9f942b098d92200be4a4b1c845"
