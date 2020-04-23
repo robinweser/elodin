@@ -1,6 +1,6 @@
 {
   "name": "@elodin/utils-reason",
-  "version": "0.0.44",
+  "version": "0.0.45",
   "main": "lib/index.js",
   "module": "es/index.js",
   "publishConfig": {
@@ -21,7 +21,7 @@
     "@elodin/core": "^0.0.41"
   },
   "dependencies": {
-    "@elodin/utils-css": "^0.0.44",
+    "@elodin/utils-css": "^0.0.45",
     "color": "^3.1.2",
     "css-in-js-utils": "^3.0.0"
   },

@@ -1,6 +1,6 @@
 {
   "name": "@elodin/parser",
-  "version": "0.0.44",
+  "version": "0.0.45",
   "main": "lib/index.js",
   "module": "es/index.js",
   "publishConfig": {
