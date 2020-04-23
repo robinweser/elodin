@@ -32,10 +32,6 @@ export default function generateValue(
   unit = true,
   floatingPercentage = false
 ) {
-  if (value.type === 'Variable') {
-    return 'var(--' + value.value + ')'
-  }
-
   if (value.type === 'Integer') {
     return (
       (value.negative ? '-' : '') +
