@@ -1,6 +1,6 @@
 {
   "name": "@elodin/utils-css",
-  "version": "0.0.43",
+  "version": "0.0.44",
   "main": "lib/index.js",
   "module": "es/index.js",
   "publishConfig": {

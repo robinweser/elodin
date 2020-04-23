@@ -1,6 +1,6 @@
 {
   "name": "@elodin/generator-reason",
-  "version": "0.0.43",
+  "version": "0.0.44",
   "main": "lib/index.js",
   "module": "es/index.js",
   "publishConfig": {
@@ -18,10 +18,10 @@
   "author": "robinweser <contact@weser.io>",
   "license": "MIT",
   "dependencies": {
-    "@elodin/utils-core": "^0.0.43",
-    "@elodin/utils-css": "^0.0.43",
-    "css-in-js-utils": "^3.0.0",
+    "@elodin/utils-core": "^0.0.44",
+    "@elodin/utils-css": "^0.0.44",
     "capitalize": "^2.0.3",
+    "css-in-js-utils": "^3.0.0",
     "uncapitalize": "1.0.2"
   },
   "devDependencies": {
