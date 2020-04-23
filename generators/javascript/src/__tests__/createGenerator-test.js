@@ -47,10 +47,9 @@ describe('Generating files using @elodin/generator-fela', () => {
     const ast = parse(style).ast
 
     expect(
-      createGenerator({ generateStyleName: styleName => styleName + 'Style' })(
-        ast,
-        'style.elo'
-      )
+      createGenerator({
+        generateStyleName: (styleName) => styleName + 'Style',
+      })(ast, 'style.elo')
     ).toMatchSnapshot()
   })
 
@@ -59,7 +58,7 @@ describe('Generating files using @elodin/generator-fela', () => {
 
     expect(
       createGenerator({
-        generateCSSFileName: moduleName => moduleName.toUpperCase() + '.elo',
+        generateCSSFileName: (moduleName) => moduleName.toUpperCase() + '.elo',
       })(ast, 'style.elo')
     ).toMatchSnapshot()
   })
@@ -69,7 +68,7 @@ describe('Generating files using @elodin/generator-fela', () => {
 
     expect(
       createGenerator({
-        generateJSFileName: moduleName => moduleName.toUpperCase() + '.elo',
+        generateJSFileName: (moduleName) => moduleName.toUpperCase() + '.elo',
       })(ast, 'style.elo')
     ).toMatchSnapshot()
   })
@@ -123,9 +122,9 @@ describe('Generating files using @elodin/generator-fela', () => {
         dynamicImport: true,
         viewBaseClassName: 'view',
         textBaseClassName: 'text',
-        generateJSFileName: name => name.toUpperCase() + '.elo',
-        generateCSSFileName: name => name.toUpperCase() + '.elo',
-        generateStyleFileName: name => name + 'Style',
+        generateJSFileName: (name) => name.toUpperCase() + '.elo',
+        generateCSSFileName: (name) => name.toUpperCase() + '.elo',
+        generateStyleFileName: (name) => name + 'Style',
       })(ast, 'style.elo')
     ).toMatchSnapshot()
   })

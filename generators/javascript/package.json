@@ -1,5 +1,5 @@
 {
-  "name": "@elodin/generator-css",
+  "name": "@elodin/generator-javascript",
   "version": "0.0.44",
   "main": "lib/index.js",
   "module": "es/index.js",

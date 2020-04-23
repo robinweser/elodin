@@ -32,6 +32,10 @@ export default function generateValue(
   unit = true,
   floatingPercentage = false
 ) {
+  if (value.type === 'Variable') {
+    return 'var(--' + value.value + ')'
+  }
+
   if (value.type === 'Integer') {
     return (
       (value.negative ? '-' : '') +
@@ -121,7 +125,7 @@ function generateFunction(value, property, unit, floatingPercentage = false) {
       value.callee +
       '(' +
       value.params
-        .map(param => generateValue(param, property, false, true))
+        .map((param) => generateValue(param, property, false, true))
         .join(', ') +
       ')'
     )
@@ -130,15 +134,11 @@ function generateFunction(value, property, unit, floatingPercentage = false) {
   if (colorFn[value.callee]) {
     const colorValue = generateValue(value.params[0], property, false, false)
     if (value.callee === 'negate') {
-      return color(colorValue)
-        .negate()
-        .string()
+      return color(colorValue).negate().string()
     }
 
     const percentage = generateValue(value.params[1], property, false, true)
 
-    return color(colorValue)
-      [value.callee](percentage)
-      .string()
+    return color(colorValue)[value.callee](percentage).string()
   }
 }

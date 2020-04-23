@@ -7,15 +7,6 @@ import isPseudoClass from './isPseudoClass'
 import isPseudoElement from './isPseudoElement'
 import isMediaQuery from './isMediaQuery'
 
-function getStaticDeclarations(declarations) {
-  return declarations
-    .filter(decl => !decl.dynamic)
-    .map(declaration => ({
-      property: declaration.property,
-      value: generateValue(declaration.value, declaration.property),
-    }))
-}
-
 export default function generateClasses(
   nodes,
   variantMap,
@@ -25,8 +16,8 @@ export default function generateClasses(
   pseudo = '',
   media = ''
 ) {
-  const base = nodes.filter(node => node.type === 'Declaration')
-  const nesting = nodes.filter(node => node.type !== 'Declaration')
+  const base = nodes.filter((node) => node.type === 'Declaration')
+  const nesting = nodes.filter((node) => node.type !== 'Declaration')
   const variantOrder = Object.keys(variantMap)
 
   classes.push({
@@ -46,10 +37,13 @@ export default function generateClasses(
             variantMap[name].indexOf(value)
       )
       .join(''),
-    declarations: getStaticDeclarations(base),
+    declarations: base.map((declaration) => ({
+      property: declaration.property,
+      value: generateValue(declaration.value, declaration.property),
+    })),
   })
 
-  nesting.forEach(nest => {
+  nesting.forEach((nest) => {
     if (nest.property.type === 'Identifier') {
       const variant = variantMap[nest.property.value]
 

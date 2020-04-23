@@ -3,17 +3,20 @@
 exports[`Generating files using @elodin/generator-fela should add reset class names 1`] = `
 Object {
   "Button.elo.css": "._diyf7s {
-  padding-left: 10px
+  padding-left: 10px;
+  padding-right: var(--right)
 }
 
 @media (min-width: 1024px) {
   ._diyf7s {
-    padding-left: 20px
+    padding-left: 20px;
+    padding-right: var(--right)
   }
 }
 
 ._diyf7s_0-0 {
-  padding-top: 10px
+  padding-top: 10px;
+  padding-bottom: var(--bottom)
 }",
   "Button.elo.js": "import { getClassNameFromVariantMap } from \\"@elodin/runtime\\"
 require(\\"./Button.elo.css\\")
@@ -50,17 +53,20 @@ export {
 exports[`Generating files using @elodin/generator-fela should generate css and js files for each style 1`] = `
 Object {
   "Button.elo.css": "._diyf7s {
-  padding-left: 10px
+  padding-left: 10px;
+  padding-right: var(--right)
 }
 
 @media (min-width: 1024px) {
   ._diyf7s {
-    padding-left: 20px
+    padding-left: 20px;
+    padding-right: var(--right)
   }
 }
 
 ._diyf7s_0-0 {
-  padding-top: 10px
+  padding-top: 10px;
+  padding-bottom: var(--bottom)
 }",
   "Button.elo.js": "import { getClassNameFromVariantMap } from \\"@elodin/runtime\\"
 require(\\"./Button.elo.css\\")
@@ -97,17 +103,20 @@ export {
 exports[`Generating files using @elodin/generator-fela should generate readable classnames in devMode 1`] = `
 Object {
   "Button.elo.css": ".Button_diyf7s {
-  padding-left: 10px
+  padding-left: 10px;
+  padding-right: var(--right)
 }
 
 @media (min-width: 1024px) {
   .Button_diyf7s {
-    padding-left: 20px
+    padding-left: 20px;
+    padding-right: var(--right)
   }
 }
 
 .Button_diyf7s__Mode-Dark {
-  padding-top: 10px
+  padding-top: 10px;
+  padding-bottom: var(--bottom)
 }",
   "Button.elo.js": "import { getClassNameFromVariantMap } from \\"@elodin/runtime\\"
 require(\\"./Button.elo.css\\")
@@ -144,17 +153,20 @@ export {
 exports[`Generating files using @elodin/generator-fela should only generate js files 1`] = `
 Object {
   "Button.elo.css": "._diyf7s {
-  padding-left: 10px
+  padding-left: 10px;
+  padding-right: var(--right)
 }
 
 @media (min-width: 1024px) {
   ._diyf7s {
-    padding-left: 20px
+    padding-left: 20px;
+    padding-right: var(--right)
   }
 }
 
 ._diyf7s_0-0 {
-  padding-top: 10px
+  padding-top: 10px;
+  padding-bottom: var(--bottom)
 }",
   "Button.elo.js": "import { getClassNameFromVariantMap } from \\"@elodin/runtime\\"
 require(\\"./Button.elo.css\\")
@@ -191,17 +203,20 @@ export {
 exports[`Generating files using @elodin/generator-fela should only generate js files with baseClassName 1`] = `
 Object {
   "Button.elo.css": "._diyf7s {
-  padding-left: 10px
+  padding-left: 10px;
+  padding-right: var(--right)
 }
 
 @media (min-width: 1024px) {
   ._diyf7s {
-    padding-left: 20px
+    padding-left: 20px;
+    padding-right: var(--right)
   }
 }
 
 ._diyf7s_0-0 {
-  padding-top: 10px
+  padding-top: 10px;
+  padding-bottom: var(--bottom)
 }",
   "Button.elo.js": "import { getClassNameFromVariantMap } from \\"@elodin/runtime\\"
 require(\\"./Button.elo.css\\")
@@ -238,17 +253,20 @@ export {
 exports[`Generating files using @elodin/generator-fela should use a custom style name 1`] = `
 Object {
   "Button.elo.css": "._diyf7s {
-  padding-left: 10px
+  padding-left: 10px;
+  padding-right: var(--right)
 }
 
 @media (min-width: 1024px) {
   ._diyf7s {
-    padding-left: 20px
+    padding-left: 20px;
+    padding-right: var(--right)
   }
 }
 
 ._diyf7s_0-0 {
-  padding-top: 10px
+  padding-top: 10px;
+  padding-bottom: var(--bottom)
 }",
   "Button.elo.js": "import { getClassNameFromVariantMap } from \\"@elodin/runtime\\"
 require(\\"./Button.elo.css\\")
@@ -285,17 +303,20 @@ export {
 exports[`Generating files using @elodin/generator-fela should use custom css file names 1`] = `
 Object {
   "BUTTON.elo.css": "._diyf7s {
-  padding-left: 10px
+  padding-left: 10px;
+  padding-right: var(--right)
 }
 
 @media (min-width: 1024px) {
   ._diyf7s {
-    padding-left: 20px
+    padding-left: 20px;
+    padding-right: var(--right)
   }
 }
 
 ._diyf7s_0-0 {
-  padding-top: 10px
+  padding-top: 10px;
+  padding-bottom: var(--bottom)
 }",
   "BUTTONTEXT.elo.css": "._1hjhowh {
   color: red
@@ -351,17 +372,20 @@ export function ButtonText(props = {}) {
   return \\"_1hjhowh\\"
 };",
   "Button.elo.css": "._diyf7s {
-  padding-left: 10px
+  padding-left: 10px;
+  padding-right: var(--right)
 }
 
 @media (min-width: 1024px) {
   ._diyf7s {
-    padding-left: 20px
+    padding-left: 20px;
+    padding-right: var(--right)
   }
 }
 
 ._diyf7s_0-0 {
-  padding-top: 10px
+  padding-top: 10px;
+  padding-bottom: var(--bottom)
 }",
   "ButtonText.elo.css": "._1hjhowh {
   color: red
@@ -379,17 +403,20 @@ export {
 exports[`Generating files using @elodin/generator-fela should use dynamic imports 1`] = `
 Object {
   "Button.elo.css": "._diyf7s {
-  padding-left: 10px
+  padding-left: 10px;
+  padding-right: var(--right)
 }
 
 @media (min-width: 1024px) {
   ._diyf7s {
-    padding-left: 20px
+    padding-left: 20px;
+    padding-right: var(--right)
   }
 }
 
 ._diyf7s_0-0 {
-  padding-top: 10px
+  padding-top: 10px;
+  padding-bottom: var(--bottom)
 }",
   "Button.elo.js": "import { getClassNameFromVariantMap } from \\"@elodin/runtime\\"
 const variantClassNameMap = {
@@ -426,17 +453,20 @@ export {
 exports[`Generating files using @elodin/generator-fela should work with all options combined 1`] = `
 Object {
   "BUTTON.elo.css": ".Button_diyf7s {
-  padding-left: 10px
+  padding-left: 10px;
+  padding-right: var(--right)
 }
 
 @media (min-width: 1024px) {
   .Button_diyf7s {
-    padding-left: 20px
+    padding-left: 20px;
+    padding-right: var(--right)
   }
 }
 
 .Button_diyf7s__Mode-Dark {
-  padding-top: 10px
+  padding-top: 10px;
+  padding-bottom: var(--bottom)
 }",
   "BUTTON.elo.js": "import { getClassNameFromVariantMap } from \\"@elodin/runtime\\"
 const variantClassNameMap = {
