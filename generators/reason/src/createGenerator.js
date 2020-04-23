@@ -24,10 +24,10 @@ import keywords from './keywords'
 const defaultConfig = {
   devMode: false,
   dynamicImport: false,
-  generateStyleName: styleName => styleName,
+  generateStyleName: (styleName) => styleName,
   generateCSSFileName: (moduleName, styleName) =>
     capitalizeString(moduleName) + styleName + '.elo',
-  generateReasonFileName: fileName => capitalizeString(fileName) + 'Style',
+  generateReasonFileName: (fileName) => capitalizeString(fileName) + 'Style',
 }
 
 export default function createGenerator(customConfig = {}) {
@@ -74,8 +74,8 @@ function generateReasonFile(ast, config, fileName) {
   const moduleName = generateReasonFileName(fileName)
 
   // TODO: include fragments
-  const styles = ast.body.filter(node => node.type === 'Style')
-  const variants = ast.body.filter(node => node.type === 'Variant')
+  const styles = ast.body.filter((node) => node.type === 'Style')
+  const variants = ast.body.filter((node) => node.type === 'Variant')
 
   const imports = styles.reduce((imports, module) => {
     imports.push(
@@ -87,7 +87,9 @@ function generateReasonFile(ast, config, fileName) {
   const modules = generateModules(ast, config, fileName)
 
   const variantMap = variants.reduce((flatVariants, variant) => {
-    flatVariants[variant.name] = variant.body.map(variation => variation.value)
+    flatVariants[variant.name] = variant.body.map(
+      (variation) => variation.value
+    )
 
     return flatVariants
   }, {})
@@ -95,12 +97,12 @@ function generateReasonFile(ast, config, fileName) {
   const allVariables = getVariablesFromAST(ast)
   const variantTypes = Object.keys(variantMap)
     .map(
-      variant =>
+      (variant) =>
         '[@bs.deriving jsConverter]\n' +
         `type ` +
         variant.toLowerCase() +
         ` =\n  ` +
-        variantMap[variant].map(val => '| ' + val).join('\n  ') +
+        variantMap[variant].map((val) => '| ' + val).join('\n  ') +
         ';'
     )
     .join('\n\n')
@@ -108,7 +110,7 @@ function generateReasonFile(ast, config, fileName) {
   return {
     [moduleName + '.re']:
       (!dynamicImport && imports.length > 0
-        ? imports.map(file => '[%bs.raw {| ' + file + ' |}];').join('\n') +
+        ? imports.map((file) => '[%bs.raw {| ' + file + ' |}];').join('\n') +
           '\n\n'
         : '') +
       (variantTypes ? variantTypes + '\n\n' : '') +
@@ -122,15 +124,15 @@ function generateCSSFiles(
   fileName
 ) {
   // TODO: include fragments
-  const styles = ast.body.filter(node => node.type === 'Style')
-  const variants = ast.body.filter(node => node.type === 'Variant')
+  const styles = ast.body.filter((node) => node.type === 'Style')
+  const variants = ast.body.filter((node) => node.type === 'Variant')
 
   return styles.reduce((files, module) => {
     const usedVariants = getVariantsFromAST(module)
     const variantMap = variants.reduce((flatVariants, variant) => {
       if (usedVariants[variant.name]) {
         flatVariants[variant.name] = variant.body.map(
-          variation => variation.value
+          (variation) => variation.value
         )
       }
 
@@ -140,8 +142,8 @@ function generateCSSFiles(
     const classes = generateClasses(module.body, variantMap, devMode)
 
     files[generateCSSFileName(fileName, module.name) + '.css'] = classes
-      .filter(selector => selector.declarations.length > 0)
-      .map(selector => {
+      .filter((selector) => selector.declarations.length > 0)
+      .map((selector) => {
         const css = stringifyRule(
           selector.declarations,
           generateClassName(module, devMode) +
@@ -175,11 +177,13 @@ function generateModules(
   fileName
 ) {
   // TODO: include fragments
-  const styles = ast.body.filter(node => node.type === 'Style')
-  const variants = ast.body.filter(node => node.type === 'Variant')
+  const styles = ast.body.filter((node) => node.type === 'Style')
+  const variants = ast.body.filter((node) => node.type === 'Variant')
 
   const variantMap = variants.reduce((flatVariants, variant) => {
-    flatVariants[variant.name] = variant.body.map(variation => variation.value)
+    flatVariants[variant.name] = variant.body.map(
+      (variation) => variation.value
+    )
 
     return flatVariants
   }, {})
@@ -206,23 +210,23 @@ function generateModules(
 
     if (variantNames.length > 0) {
       const combinations = getArrayCombinations(
-        ...variantNames.map(variant => [...variantMap[variant], 'None'])
+        ...variantNames.map((variant) => [...variantMap[variant], 'None'])
       )
 
       variantSwitch = `let get${module.name}Variants = (${variantNames
-        .map(variant => '~' + variant.toLowerCase())
+        .map((variant) => '~' + variant.toLowerCase())
         .join(', ')}, ()) => {
-  switch (${variantNames.map(v => v.toLowerCase()).join(', ')}) {
+  switch (${variantNames.map((v) => v.toLowerCase()).join(', ')}) {
     ${combinations
       // .filter(combination => combination.find(comp => comp !== 'None'))
       .map(
-        combination =>
+        (combination) =>
           '| (' +
           combination
-            .map(comb => (comb === 'None' ? 'None' : 'Some(' + comb + ')'))
+            .map((comb) => (comb === 'None' ? 'None' : 'Some(' + comb + ')'))
             .join(', ') +
           ') => "' +
-          (combination.find(val => val !== 'None') &&
+          (combination.find((val) => val !== 'None') &&
           combination.reduce(
             (hasCombination, value, index) =>
               value === 'None' ||
@@ -244,10 +248,10 @@ function generateModules(
                         '-' +
                         variantMap[variantNames[index]].indexOf(comb)
                   )
-                  .filter(val => val !== '')
+                  .filter((val) => val !== '')
               )
-                .filter(set => set.length > 0)
-                .map(set => set.join(''))
+                .filter((set) => set.length > 0)
+                .map((set) => set.join(''))
                 .join(' ' + generateClassName(module, devMode))
             : '') +
           '"'
@@ -263,7 +267,7 @@ function generateModules(
           'get' +
           module.name +
           'Variants(' +
-          variantNames.map(n => '~' + uncapitalizeString(n)).join(', ') +
+          variantNames.map((n) => '~' + uncapitalizeString(n)).join(', ') +
           ', ())'
         : '')
 
@@ -272,8 +276,9 @@ function generateModules(
       uncapitalizeString(generateStyleName(module.name)) +
       ' = (' +
       (params.length > 0
-        ? params.map(name => '~' + uncapitalizeString(name) + '=?').join(', ') +
-          ', ()'
+        ? params
+            .map((name) => '~' + uncapitalizeString(name) + '=?')
+            .join(', ') + ', ()'
         : '') +
       ') => {\n' +
       (dynamicImport
@@ -291,7 +296,7 @@ function generateModules(
 }
 
 function stringifyStyle(style, out = '', level = 2) {
-  Object.keys(style).map(property => {
+  Object.keys(style).map((property) => {
     const value = style[property]
 
     if (typeof value === 'object') {
@@ -304,7 +309,7 @@ function stringifyStyle(style, out = '', level = 2) {
           '[|' +
           value
             .map(
-              extension =>
+              (extension) =>
                 '{\n' +
                 stringifyStyle(extension, '', level + 1) +
                 '  '.repeat(level) +

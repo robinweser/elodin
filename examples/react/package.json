@@ -14,7 +14,7 @@
     "@babel/polyfill": "^7.2.5",
     "@elodin/cli": "^0.0.43",
     "@elodin/core": "^0.0.43",
-    "@elodin/generator-fela": "^0.0.41",
+    "@elodin/generator-css": "^0.0.43",
     "@elodin/parser": "^0.0.43",
     "@elodin/plugin-replace-variable": "^0.0.43",
     "@zeit/next-css": "^1.0.1",
