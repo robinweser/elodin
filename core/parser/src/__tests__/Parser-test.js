@@ -3,7 +3,7 @@ import Parser from '../Parser'
 describe('Parsing elodin syntax', () => {
   it('should correctly parse styles', () => {
     const file = `
-view Button {
+style Button {
   backgroundColor: red
   borderColor: rgb(255 255 255)
   paddingLeft: 15
@@ -20,12 +20,12 @@ view Button {
 
   it('should correctly parse multiple styles', () => {
     const file = `
-view Button {
+style Button {
   backgroundColor: red
   paddingLeft: 10
 }
 
-text Label {
+style Label {
   lineHeight: 2
 }`
 
@@ -42,7 +42,7 @@ text Label {
       Light
     }
 
-view Button {
+style Button {
   backgroundColor: red
 
   [Mode=Dark] {
@@ -66,7 +66,7 @@ view Button {
     }
     # A comment
     # Another one
-view Button {
+style Button {
   backgroundColor: red # inline
   borderColor: rgb(255 255 255)
   paddingLeft: 15
@@ -84,7 +84,7 @@ view Button {
 
   it('should correctly parse env condition', () => {
     const file = `
-view Button {
+style Button {
   [@hover] {
     backgroundColor: red
   }

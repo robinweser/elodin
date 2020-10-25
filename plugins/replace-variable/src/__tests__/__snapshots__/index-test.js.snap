@@ -1,6 +1,62 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Replacing variables should correctly replace variables 1`] = `
+exports[`Replacing variables should correctly replace variables in conditions 1`] = `
+Object {
+  "body": Array [
+    Object {
+      "body": Array [
+        Object {
+          "comments": Array [],
+          "dynamic": false,
+          "property": "paddingLeft",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "negative": false,
+            "type": "Integer",
+            "value": 10,
+          },
+        },
+        Object {
+          "body": Array [
+            Object {
+              "comments": Array [],
+              "dynamic": false,
+              "property": "paddingLeft",
+              "raw": false,
+              "type": "Declaration",
+              "value": Object {
+                "negative": false,
+                "type": "Integer",
+                "value": 20,
+              },
+            },
+          ],
+          "comments": Array [],
+          "dynamic": false,
+          "operator": ">=",
+          "property": Object {
+            "environment": true,
+            "type": "Variable",
+            "value": "viewportWidth",
+          },
+          "type": "Conditional",
+          "value": Object {
+            "type": "Integer",
+            "value": 480,
+          },
+        },
+      ],
+      "comments": Array [],
+      "name": "Button",
+      "type": "Style",
+    },
+  ],
+  "type": "File",
+}
+`;
+
+exports[`Replacing variables should correctly replace variables in declarations 1`] = `
 Object {
   "body": Array [
     Object {
@@ -30,7 +86,55 @@ Object {
         },
       ],
       "comments": Array [],
-      "format": "view",
+      "name": "Button",
+      "type": "Style",
+    },
+  ],
+  "type": "File",
+}
+`;
+
+exports[`Replacing variables should correctly replace variables in functions 1`] = `
+Object {
+  "body": Array [
+    Object {
+      "body": Array [
+        Object {
+          "comments": Array [],
+          "dynamic": false,
+          "property": "paddingLeft",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "negative": false,
+            "type": "Integer",
+            "value": 10,
+          },
+        },
+        Object {
+          "comments": Array [],
+          "dynamic": true,
+          "property": "paddingRight",
+          "raw": false,
+          "type": "Declaration",
+          "value": Object {
+            "callee": "add",
+            "params": Array [
+              Object {
+                "type": "Integer",
+                "value": 20,
+              },
+              Object {
+                "negative": false,
+                "type": "Integer",
+                "value": 1,
+              },
+            ],
+            "type": "FunctionExpression",
+          },
+        },
+      ],
+      "comments": Array [],
       "name": "Button",
       "type": "Style",
     },
@@ -69,7 +173,6 @@ Object {
         },
       ],
       "comments": Array [],
-      "format": "view",
       "name": "Button",
       "type": "Style",
     },

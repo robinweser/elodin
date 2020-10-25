@@ -6,13 +6,13 @@ variant Type { Primary }
 variant Mode { Dark 
 
  Light}
-view Flex {
+style Flex {
    flexGrow: 1
    #foobar
       # baz
   flexDirection: row
 }
-view Button{justifyContent: flexStart #baz
+style Button{justifyContent: flexStart #baz
 
 
       __borderWidth: .3
@@ -23,7 +23,7 @@ view Button{justifyContent: flexStart #baz
       __paddingLeft: 10}}
   }
 
-   text    Label {
+  style    Label {
 lineHeight:   $lineHeight
     fontSize: 20
 

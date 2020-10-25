@@ -46,12 +46,12 @@ export function isCompilableExtension(filename) {
 // }
 
 export function compile(filename, opts) {
-  const log = errors =>
-    errors.forEach(error => {
+  const log = (errors) =>
+    errors.forEach((error) => {
       const count = ++opts.errorCount
 
       if (error.type === errorTypes.INVALID_PROPERTY) {
-        const { property, value, path, line, format, hint } = error
+        const { property, value, path, line, hint } = error
 
         const didYouMeanMessage = hint
           ? `
@@ -65,8 +65,8 @@ export function compile(filename, opts) {
           path,
           lineNumber: line,
           line: chalk`{red ${property}}: ${formatFromAST(value)}`,
-          message: chalk`The property {bold ${property}} is not a valid ${format} property.${didYouMeanMessage}
-{dim Check {underline https://elodin.dev/docs/language/styles#${format}} for a list of available properties.}`,
+          message: chalk`The property {bold ${property}} is not a valid style property.${didYouMeanMessage}
+{dim Check {underline https://elodin.dev/docs/language/styles} for a list of available properties.}`,
         })
       } else if (error.type === errorTypes.INVALID_VALUE) {
         const { property, value, path, line, format } = error
@@ -79,16 +79,13 @@ export function compile(filename, opts) {
           message: chalk`The property ${property} does not accept the value {bold ${formatFromAST(
             value
           )}}.
-{dim Check {underline https://elodin.dev/docs/language/styles#${format}} for a list of available values.}`,
+{dim Check {underline https://elodin.dev/docs/language/styles} for a list of available values.}`,
         })
       } else {
         const { line, path, message, source, token } = error
 
         const lineCode = source
-          ? source
-              .substr(0, token.end)
-              .split('\n')
-              .pop()
+          ? source.substr(0, token.end).split('\n').pop()
           : ''
 
         logSyntaxError({
@@ -108,7 +105,7 @@ export function compile(filename, opts) {
 
 export function deleteDir(path) {
   if (fs.existsSync(path)) {
-    fs.readdirSync(path).forEach(function(file) {
+    fs.readdirSync(path).forEach(function (file) {
       const curPath = path + '/' + file
       if (fs.lstatSync(curPath).isDirectory()) {
         // recurse
@@ -122,7 +119,7 @@ export function deleteDir(path) {
   }
 }
 
-process.on('uncaughtException', function(err) {
+process.on('uncaughtException', function (err) {
   console.error(err)
   process.exit(1)
 })

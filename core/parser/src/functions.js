@@ -1,4 +1,4 @@
-const isBetween = (start, end) => node =>
+const isBetween = (start, end) => (node) =>
   node.value > start && node.value <= end
 
 export default {
@@ -19,7 +19,7 @@ export default {
         type: 'any',
       },
     ],
-    return: params => params[1].type,
+    return: (params) => params[1].type,
   },
   percentage: {
     params: [
@@ -182,22 +182,22 @@ export default {
   // math
   add: {
     types: ['Integer', 'Float'],
-    return: params =>
-      params.find(param => param.type === 'Float') ? 'Float' : 'Integer',
+    return: (params) =>
+      params.find((param) => param.type === 'Float') ? 'Float' : 'Integer',
   },
   sub: {
     types: ['Integer', 'Float'],
-    return: params =>
-      params.find(param => param.type === 'Float') ? 'Float' : 'Integer',
+    return: (params) =>
+      params.find((param) => param.type === 'Float') ? 'Float' : 'Integer',
   },
   mul: {
     types: ['Integer', 'Float'],
-    return: params =>
-      params.find(param => param.type === 'Float') ? 'Float' : 'Integer',
+    return: (params) =>
+      params.find((param) => param.type === 'Float') ? 'Float' : 'Integer',
   },
   div: {
     types: ['Integer', 'Float'],
-    return: params =>
-      params.find(param => param.type === 'Float') ? 'Float' : 'Integer',
+    return: (params) =>
+      params.find((param) => param.type === 'Float') ? 'Float' : 'Integer',
   },
 }

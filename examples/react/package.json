@@ -3,10 +3,11 @@
   "name": "@elodin/example-react",
   "version": "0.0.45",
   "scripts": {
-    "dev": "now dev",
-    "build": "yarn build:elodin",
-    "build:elodin": "elodin --clean",
+    "dev": "next dev",
+    "build": "yarn build:elodin && next build",
+    "export": "next export",
     "start": "next start",
+    "build:elodin": "elodin --clean",
     "elodin": "elodin --watch --clean"
   },
   "license": "MIT",
@@ -14,17 +15,12 @@
     "@babel/polyfill": "^7.2.5",
     "@elodin/cli": "^0.0.45",
     "@elodin/core": "^0.0.45",
-    "@elodin/generator-css": "^0.0.44",
+    "@elodin/generator-javascript": "^0.0.45",
     "@elodin/parser": "^0.0.45",
     "@elodin/plugin-replace-variable": "^0.0.45",
-    "@zeit/next-css": "^1.0.1",
-    "fela": "^11.0.2",
-    "fela-dom": "^11.0.2",
-    "fela-preset-web": "^11.0.2",
-    "next": "latest",
+    "next": "^9.5.5",
     "prettier-plugin-elodin": "^0.0.45",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0",
-    "react-fela": "^11.0.2"
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
   }
 }

@@ -3,24 +3,21 @@ variant Mode {
   Light
 }
 
-view Button {
+style Button {
+    color: white
   backgroundColor: rgb(61 116 204)
   [@hover] {
     backgroundColor: rgb(89 148 242)
   }
 }
 
-text ButtonText {
-  color: white
-  fontSize: $fontSize
-}
 
-text Label {
+style Label {
   color: grey
   fontSize: 20
 }
 
-text Input {
+style Input {
   fontSize: 15
   color: $theme_colors_primary
   [@viewportWidth>=1000] {
@@ -29,22 +26,15 @@ text Input {
   }
 }
 
-view Block {
+style Block {
   padding: 10
+
   [Mode=Light] {
     backgroundColor: white
-  }
-  [Mode=Dark] {
-    backgroundColor: black
-  }
-}
-
-text BlockText {
-  fontSize: $size
-  [Mode=Light] {
     color: black
   }
   [Mode=Dark] {
+    backgroundColor: black
     color: white
   }
 }

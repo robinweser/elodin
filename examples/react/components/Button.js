@@ -1,10 +1,6 @@
 import React from 'react'
-import { useFela } from 'react-fela'
+import { ButtonStyle } from './style.elo.js'
 
-import { ButtonStyle, ButtonTextStyle } from './style.elo.js'
-
-export default function Button({ children, ...styleProps }) {
-  const { css } = useFela(styleProps)
-
-  return <div className={css(ButtonStyle, ButtonTextStyle)}>{children}</div>
+export default function Button({ children }) {
+  return <div className={ButtonStyle()}>{children}</div>
 }

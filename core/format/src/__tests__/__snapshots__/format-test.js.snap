@@ -11,14 +11,14 @@ variant Mode {
   Light
 }
 
-view Flex {
+style Flex {
   flexGrow: 1
   # foobar
   # baz
   flexDirection: row
 }
 
-view Button {
+style Button {
   # baz
   __borderWidth: .3
   justifyContent: flexStart
@@ -35,7 +35,7 @@ view Button {
   }
 }
 
-text Label {
+style Label {
   lineHeight: $lineHeight
   fontSize: 20
   color: rgb(200 120 0)
@@ -63,14 +63,14 @@ variant Mode {
   Light
 }
 
-view Flex {
+style Flex {
   flexGrow: 1
   # foobar
   # baz
   flexDirection: row
 }
 
-view Button {
+style Button {
   # baz
   __borderWidth: .3
   justifyContent: flexStart
@@ -87,7 +87,7 @@ view Button {
   }
 }
 
-text Label {
+style Label {
   lineHeight: $lineHeight
   fontSize: 20
   color: rgb(200 120 0)

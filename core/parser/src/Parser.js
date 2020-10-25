@@ -83,7 +83,7 @@ export default class Parser {
 
   parse(input) {
     this.tokens = tokenize(input.trim(), ruleMap, 'unknown').filter(
-      token => token.type !== 'whitespace'
+      (token) => token.type !== 'whitespace'
     )
 
     this.tokens.push({
@@ -110,7 +110,7 @@ export default class Parser {
       const node = this.parseStyle() || this.parseVariant()
 
       if (node) {
-        const duplicate = file.body.find(n => n.name === node.name)
+        const duplicate = file.body.find((n) => n.name === node.name)
 
         if (duplicate) {
           this.updateCurrentToken(1)
@@ -136,7 +136,7 @@ export default class Parser {
           {
             type: errorTypes.SYNTAX_ERROR,
             message:
-              'Invalid Syntax. Top-level constructs can only be view, text or variant.',
+              'Invalid Syntax. Top-level constructs can only be style or variant.',
           },
           true
         )
@@ -145,9 +145,9 @@ export default class Parser {
       file.body.push({ ...node, comments })
     }
 
-    const variants = file.body.filter(node => node.type === 'Variant')
+    const variants = file.body.filter((node) => node.type === 'Variant')
     this.variantConditionals.forEach(({ property, value }) => {
-      const matchingVariant = variants.find(v => v.name === property.value)
+      const matchingVariant = variants.find((v) => v.name === property.value)
 
       if (!matchingVariant) {
         this.addError({
@@ -156,7 +156,7 @@ export default class Parser {
         })
       } else {
         const matchingValue = matchingVariant.body.find(
-          v => v.value === value.value
+          (v) => v.value === value.value
         )
 
         if (!matchingValue) {
@@ -185,10 +185,8 @@ export default class Parser {
   parseStyle() {
     if (
       this.currentToken.type === 'identifier' &&
-      (this.currentToken.value === 'view' || this.currentToken.value === 'text')
+      this.currentToken.value === 'style'
     ) {
-      const format = this.currentToken.value
-
       this.updateCurrentToken(1)
 
       const name = this.parseStyleName()
@@ -197,7 +195,7 @@ export default class Parser {
         this.addError(
           {
             type: errorTypes.SYNTAX_ERROR,
-            message: 'A ' + format + ' must have a valid name.',
+            message: 'A style must have a valid name.',
           },
           true
         )
@@ -207,8 +205,7 @@ export default class Parser {
         this.addError(
           {
             type: errorTypes.SYNTAX_ERROR,
-            message:
-              'A ' + format + ' name must begin with an uppercase letter.',
+            message: 'A style name must begin with an uppercase letter.',
             name,
           },
           true
@@ -217,7 +214,6 @@ export default class Parser {
 
       this.parent = {
         type: 'Style',
-        format,
         name,
       }
 
@@ -227,7 +223,7 @@ export default class Parser {
         this.addError(
           {
             type: errorTypes.SYNTAX_ERROR,
-            message: 'A ' + format + ' must at least contain 1 declaration.',
+            message: 'A style must at least contain 1 declaration.',
           },
           true
         )
@@ -267,9 +263,7 @@ export default class Parser {
               token: this.getNextToken(-1),
               type: errorTypes.SYNTAX_ERROR,
               message:
-                'A ' +
-                this.parent.format +
-                ' must only contain declarations and conditional declarations.',
+                'A style must only contain declarations and conditional declarations.',
             },
             true
           )
@@ -277,7 +271,7 @@ export default class Parser {
           return
         }
 
-        const duplicate = body.find(n => n.property === node.property)
+        const duplicate = body.find((n) => n.property === node.property)
 
         if (duplicate) {
           this.addError(
@@ -391,7 +385,7 @@ export default class Parser {
           )
         }
 
-        const duplicate = body.find(v => v.value === variant.value)
+        const duplicate = body.find((v) => v.value === variant.value)
         if (duplicate) {
           this.addError(
             {
@@ -439,12 +433,7 @@ export default class Parser {
         }
 
         if (!isRawDeclaration) {
-          const validation = validateDeclaration(
-            property,
-            value,
-            value.value,
-            this.parent.format
-          )
+          const validation = validateDeclaration(property, value, value.value)
 
           if (typeof validation === 'object') {
             if (validation.type === 'property') {
@@ -462,9 +451,7 @@ export default class Parser {
                     '\n^-------\n' +
                     'The property ' +
                     property +
-                    ' is an invalid ' +
-                    this.parent.format +
-                    ' property.' +
+                    ' is an invalid style property.' +
                     '\n' +
                     'In ' +
                     this.parent.name +
@@ -758,7 +745,9 @@ export default class Parser {
       if (nextToken.type === 'round_bracket' && nextToken.value === '(') {
         this.updateCurrentToken(2)
 
-        const params = this.parseUntil(token => token.type === 'round_bracket')
+        const params = this.parseUntil(
+          (token) => token.type === 'round_bracket'
+        )
 
         const validation = validateFunction(ident, params)
 

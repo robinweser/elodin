@@ -3,4 +3,7 @@ module.exports = {
     primary: 'blue',
     secondary: 'red',
   },
+  breakpoints: {
+    fromM: 480,
+  },
 }

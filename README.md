@@ -13,7 +13,7 @@ Elodin is a small styling language that aims to provide a universal way to autho
 
 ## Example
 
-> **Note**: This example uses the [generator-css-in-js]() with the [fela]() adapter which is just one of many possible targets. Depending on the configuration the output will vary a lot.
+> **Note**: This example uses the [generator-javascript]() which is just one of many possible targets. Depending on the configuration the output will vary a lot.
 
 ```
 variant Mode {
@@ -21,12 +21,13 @@ variant Mode {
   Light
 }
 
-view Header {
-  height: $height
+style Button {
   justifyContent: center
   alignItems: flexEnd
   paddingBottom: 10
   paddingTop: 10
+  fontSize: 15
+  color: rgb(255 0 255)
 
   [Mode=Dark] {
     backgroundColor: black
@@ -37,15 +38,15 @@ view Header {
   }
 }
 
-text Label {
-  fontSize: 15
-  color: rgb(255 0 255)
+style Label {
+  fontSize: 10
+  color: grey
 }
 ```
 
 This compiles to the following files where `_hash` is just a placeholder for an auto-generated unique class name.
 
-**Header.elo.css**
+**Button.elo.css**
 
 ```css
 ._hash {
@@ -53,6 +54,8 @@ This compiles to the following files where `_hash` is just a placeholder for an 
   align-items: flex-end;
   padding-bottom: 10;
   padding-top: 10;
+  font-size: 15px;
+  color: rgb(255, 0, 255);
 }
 
 ._hash__0-0 {
@@ -64,19 +67,19 @@ This compiles to the following files where `_hash` is just a placeholder for an 
 }
 ```
 
-**Label.elo.css**
+**Button.elo.css**
 
 ```css
 ._hash {
-  font-size: 15px;
-  color: rgb(255, 0, 255);
+  font-size: 10px;
+  color: grey;
 }
 ```
 
-**Header.elo.js**
+**Button.elo.js**
 
 ```js
-import './Header.elo.css'
+import './Button.elo.css'
 import { getClassNameFromVariantMap } from '@elodin/runtime'
 
 const variantClassNameMap = {
@@ -89,13 +92,8 @@ const variantClassNameMap = {
   },
 }
 
-export default function Header(props) {
-  return {
-    _className:
-      '_elo_view _hash ' +
-      getClassNameFromVariantMap(variantClassNameMap, props),
-    height: props.height,
-  }
+export default function Button(props) {
+  return '_hash ' + getClassNameFromVariantMap(variantClassNameMap, props)
 }
 ```
 
@@ -105,9 +103,7 @@ export default function Header(props) {
 import './Label.elo.css'
 
 export default function Label() {
-  return {
-    _className: '_elo_text _hash',
-  }
+  return '_hash',
 }
 ```
 

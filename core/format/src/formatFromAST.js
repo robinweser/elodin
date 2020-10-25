@@ -5,9 +5,9 @@ const defaultConfig = {
   ident: '  ',
 }
 
-const sortDeclarations = body => [
-  ...body.filter(node => node.raw),
-  ...body.filter(node => !node.raw),
+const sortDeclarations = (body) => [
+  ...body.filter((node) => node.raw),
+  ...body.filter((node) => !node.raw),
 ]
 
 export default function formatFromAST(node, customConfig = {}, level = 1) {
@@ -16,17 +16,17 @@ export default function formatFromAST(node, customConfig = {}, level = 1) {
     ...customConfig,
   }
 
-  const generate = node => formatFromAST(node, config, level)
-  const generateWithLevel = newLevel => node =>
+  const generate = (node) => formatFromAST(node, config, level)
+  const generateWithLevel = (newLevel) => (node) =>
     formatFromAST(node, config, newLevel)
 
   const { lineSpace, ident } = config
 
   switch (node.type) {
     case 'File':
-      const fragments = node.body.filter(node => node.type === 'Fragment')
-      const styles = node.body.filter(node => node.type === 'Style')
-      const variants = node.body.filter(node => node.type === 'Variant')
+      const fragments = node.body.filter((node) => node.type === 'Fragment')
+      const styles = node.body.filter((node) => node.type === 'Style')
+      const variants = node.body.filter((node) => node.type === 'Variant')
 
       return (
         variants.map(generate).join(lineSpace) +
@@ -38,9 +38,8 @@ export default function formatFromAST(node, customConfig = {}, level = 1) {
 
     case 'Style':
       return (
-        node.comments.map(comment => '# ' + comment.trim() + '\n').join('') +
-        node.format +
-        ' ' +
+        node.comments.map((comment) => '# ' + comment.trim() + '\n').join('') +
+        'style ' +
         node.name +
         ' {\n' +
         ident.repeat(level) +
@@ -52,7 +51,7 @@ export default function formatFromAST(node, customConfig = {}, level = 1) {
 
     case 'Variant':
       return (
-        node.comments.map(comment => '# ' + comment.trim() + '\n').join('') +
+        node.comments.map((comment) => '# ' + comment.trim() + '\n').join('') +
         'variant ' +
         node.name +
         ' {\n' +
@@ -66,7 +65,7 @@ export default function formatFromAST(node, customConfig = {}, level = 1) {
 
       return (
         node.comments
-          .map(comment => '# ' + comment.trim() + '\n' + ident.repeat(level))
+          .map((comment) => '# ' + comment.trim() + '\n' + ident.repeat(level))
           .join('') +
         '[' +
         (node.boolean
@@ -88,7 +87,7 @@ export default function formatFromAST(node, customConfig = {}, level = 1) {
     case 'Declaration':
       return (
         node.comments
-          .map(comment => '# ' + comment.trim() + '\n' + ident.repeat(level))
+          .map((comment) => '# ' + comment.trim() + '\n' + ident.repeat(level))
           .join('') +
         (node.raw ? '__' : '') +
         node.property +

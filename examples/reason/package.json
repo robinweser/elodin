@@ -5,7 +5,6 @@
   "scripts": {
     "dev": "now dev",
     "start": "next start",
-    "build": "yarn build:elodin && yarn build:reason",
     "build:elodin": "elodin --clean",
     "build:reason": "bsb -clean-world -make-world",
     "deploy": "now --target production",

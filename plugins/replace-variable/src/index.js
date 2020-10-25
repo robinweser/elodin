@@ -13,7 +13,7 @@ export default function replaceVariable(customConfig = {}) {
   return {
     FunctionExpression: {
       enter(path) {
-        path.node.params = path.node.params.map(param => {
+        path.node.params = path.node.params.map((param) => {
           if (param.type === 'Variable' && !param.environment) {
             const value = selector(variables, param.value)
 
@@ -36,6 +36,39 @@ export default function replaceVariable(customConfig = {}) {
             return param
           }
         })
+      },
+    },
+    Conditional: {
+      enter(path) {
+        if (
+          !path.node.boolean &&
+          path.node.value.type === 'Variable' &&
+          !path.node.value.environment
+        ) {
+          const value = selector(variables, path.node.value.value)
+
+          if (value) {
+            if (typeof value === 'number') {
+              path.replaceNode({
+                ...path.node,
+                value: {
+                  type: 'Integer',
+                  value,
+                },
+              })
+            }
+
+            if (typeof value === 'string') {
+              path.replaceNode({
+                ...path.node,
+                value: {
+                  type: 'Identifier',
+                  value,
+                },
+              })
+            }
+          }
+        }
       },
     },
     Declaration: {

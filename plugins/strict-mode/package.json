@@ -1,5 +1,5 @@
 {
-  "name": "@elodin/plugin-replace-variable",
+  "name": "@elodin/plugin-strict-mode",
   "version": "0.0.45",
   "main": "lib/index.js",
   "module": "es/index.js",

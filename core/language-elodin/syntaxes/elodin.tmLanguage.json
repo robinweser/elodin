@@ -22,7 +22,7 @@
         },
         {
           "name": "keyword.control.elodin",
-          "match": "(view|variant|fragment|text)(?=\\s+)"
+          "match": "(style|variant|fragment)(?=\\s+)"
         },
         {
           "name": "entity.name.function.elodin",
@@ -46,11 +46,7 @@
         },
         {
           "name": "entity.name.class.elodin",
-          "match": "(?<=view)\\s*([A-Z]+[A-Za-z]*)"
-        },
-        {
-          "name": "entity.name.class.elodin",
-          "match": "(?<=text)\\s*([A-Z]+[A-Za-z]*)"
+          "match": "(?<=style)\\s*([A-Z]+[A-Za-z]*)"
         },
         {
           "name": "constant.character.elodin",

@@ -3,13 +3,10 @@ import functions from './functions'
 
 var Matcher = require('did-you-mean')
 
-const matcher = {
-  view: new Matcher(Object.keys(definitions.view).join(' ')),
-  text: new Matcher(Object.keys(definitions.text).join(' ')),
-}
+const matcher = new Matcher(Object.keys(definitions).join(' '))
 
-export default function validateDeclaration(property, value, rawValue, format) {
-  const propertyDefinition = definitions[format][property]
+export default function validateDeclaration(property, value, rawValue) {
+  const propertyDefinition = definitions[property]
 
   if (propertyDefinition) {
     let val = value
@@ -34,13 +31,12 @@ export default function validateDeclaration(property, value, rawValue, format) {
     }
 
     const isValid = propertyDefinition.find(
-      validator => validator(val) === true
+      (validator) => validator(val) === true
     )
 
     if (!isValid) {
       return {
         type: 'value',
-        format,
         message:
           'The value `' +
           rawValue +
@@ -55,8 +51,7 @@ export default function validateDeclaration(property, value, rawValue, format) {
 
   return {
     type: 'property',
-    format,
     message: 'The property `' + property + '` is not a valid property.',
-    hint: matcher[format].get(property),
+    hint: matcher.get(property),
   }
 }

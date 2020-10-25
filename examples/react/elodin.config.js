@@ -1,4 +1,4 @@
-var createGenerator = require('@elodin/generator-css').createGenerator
+var createGenerator = require('@elodin/generator-javascript').createGenerator
 
 var replaceVariable = require('@elodin/plugin-replace-variable').default
 var theme = require('./theme')
@@ -18,7 +18,7 @@ module.exports = {
   ],
   generator: createGenerator({
     devMode: process.env.NODE_ENV !== 'production',
-    generateStyleName: styleName => styleName + 'Style',
+    generateStyleName: (styleName) => styleName + 'Style',
     viewBaseClassName: '_v',
     textBaseClassName: '_t',
   }),

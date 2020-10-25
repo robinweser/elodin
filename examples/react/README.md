@@ -1,6 +1,6 @@
 # React Example
 
-This example uses JavaScript with [React](https://reactjs.org) and [@elodin/generator-css-in-js](https://elodin.dev/docs/targets/javascript/css-in-js) with the [Fela](http://fela.js.org) adapter.
+This example uses [React](https://reactjs.org) with [Next.js](https://nextjs.org) and [@elodin/generator-javascript](https://elodin.dev/docs/targets/javascript).
 
 ## Installation
 
