@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Replacing variables should correctly replace variables 1`] = `
+exports[`Strict mode should correctly throw on variables 1`] = `
 Object {
   "body": Array [
     Object {
@@ -17,59 +17,8 @@ Object {
             "value": 10,
           },
         },
-        Object {
-          "comments": Array [],
-          "dynamic": false,
-          "property": "paddingRight",
-          "raw": false,
-          "type": "Declaration",
-          "value": Object {
-            "type": "Integer",
-            "value": 20,
-          },
-        },
       ],
       "comments": Array [],
-      "format": "view",
-      "name": "Button",
-      "type": "Style",
-    },
-  ],
-  "type": "File",
-}
-`;
-
-exports[`Replacing variables should work with custom selectors 1`] = `
-Object {
-  "body": Array [
-    Object {
-      "body": Array [
-        Object {
-          "comments": Array [],
-          "dynamic": false,
-          "property": "paddingLeft",
-          "raw": false,
-          "type": "Declaration",
-          "value": Object {
-            "negative": false,
-            "type": "Integer",
-            "value": 10,
-          },
-        },
-        Object {
-          "comments": Array [],
-          "dynamic": false,
-          "property": "backgroundColor",
-          "raw": false,
-          "type": "Declaration",
-          "value": Object {
-            "type": "Identifier",
-            "value": "red",
-          },
-        },
-      ],
-      "comments": Array [],
-      "format": "view",
       "name": "Button",
       "type": "Style",
     },

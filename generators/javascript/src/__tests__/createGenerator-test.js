@@ -8,7 +8,7 @@ variant Mode {
   Light
 }
 
-view Button {
+style Button {
   paddingLeft: 10
   paddingRight: $right
 
@@ -23,12 +23,12 @@ view Button {
   }
 }
 
-text ButtonText {
+style ButtonText {
   color: red
 }
 `
 
-describe('Generating files using @elodin/generator-fela', () => {
+describe('Generating files using @elodin/generator-javascript', () => {
   it('should generate css and js files for each style', () => {
     const ast = parse(style).ast
 
@@ -85,10 +85,7 @@ describe('Generating files using @elodin/generator-fela', () => {
     const ast = parse(style).ast
 
     expect(
-      createGenerator({ viewBaseClassName: 'view', textBaseClassName: 'text' })(
-        ast,
-        'style.elo'
-      )
+      createGenerator({ baseClassName: 'elo' })(ast, 'style.elo')
     ).toMatchSnapshot()
   })
 
@@ -106,8 +103,7 @@ describe('Generating files using @elodin/generator-fela', () => {
     expect(
       createGenerator({
         extractCSS: false,
-        viewBaseClassName: 'view',
-        textBaseClassName: 'text',
+        baseClassName: 'elo',
       })(ast, 'style.elo')
     ).toMatchSnapshot()
   })
@@ -120,8 +116,7 @@ describe('Generating files using @elodin/generator-fela', () => {
         extractCSS: true,
         devMode: true,
         dynamicImport: true,
-        viewBaseClassName: 'view',
-        textBaseClassName: 'text',
+        baseClassName: 'elo',
         generateJSFileName: (name) => name.toUpperCase() + '.elo',
         generateCSSFileName: (name) => name.toUpperCase() + '.elo',
         generateStyleFileName: (name) => name + 'Style',

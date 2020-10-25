@@ -38,11 +38,11 @@ let getButtonVariants = (~mode, ()) => {
 };
 
 let button = (~right=?, ~bottom=?, ~mode=?, ()) => {
-  \\"view _diyf7s\\" ++ \\" \\" ++ getButtonVariants(~mode, ())
+  \\"elo _diyf7s\\" ++ \\" \\" ++ getButtonVariants(~mode, ())
 }
 
 let buttonText = () => {
-  \\"text _1hjhowh\\"
+  \\"elo _1hjhowh\\"
 }",
 }
 `;
@@ -226,11 +226,11 @@ let getButtonVariants = (~mode, ()) => {
 };
 
 let button = (~right=?, ~bottom=?, ~mode=?, ()) => {
-  \\"view _diyf7s\\" ++ \\" \\" ++ getButtonVariants(~mode, ())
+  \\"elo _diyf7s\\" ++ \\" \\" ++ getButtonVariants(~mode, ())
 }
 
 let buttonText = () => {
-  \\"text _1hjhowh\\"
+  \\"elo _1hjhowh\\"
 }",
 }
 `;
@@ -442,13 +442,13 @@ let getButtonVariants = (~mode, ()) => {
 let button = (~right=?, ~bottom=?, ~mode=?, ()) => {
   [%bs.raw {| import(\\"./STYLEbutton.elo.css\\") |}];
 
-  \\"view Button_diyf7s\\" ++ \\" \\" ++ getButtonVariants(~mode, ())
+  \\"elo Button_diyf7s\\" ++ \\" \\" ++ getButtonVariants(~mode, ())
 }
 
 let buttonText = () => {
   [%bs.raw {| import(\\"./STYLEbuttontext.elo.css\\") |}];
 
-  \\"text ButtonText_1hjhowh\\"
+  \\"elo ButtonText_1hjhowh\\"
 }",
   "STYLEbutton.elo.css": ".Button_diyf7s {
   padding-left: 10px;

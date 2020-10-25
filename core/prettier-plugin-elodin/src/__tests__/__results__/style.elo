@@ -1,4 +1,4 @@
-view Button {
+style Button {
   paddingLeft: 10
   justifyContent: $jC
   backgroundColor: blue

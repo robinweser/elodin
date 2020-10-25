@@ -8,7 +8,7 @@ variant Mode {
   Light
 }
 
-view Button {
+style Button {
   paddingLeft: 10
   paddingRight: $right
 
@@ -23,7 +23,7 @@ view Button {
   }
 }
 
-text ButtonText {
+style ButtonText {
   color: red
 }
 `
@@ -47,10 +47,9 @@ describe('Generating files using @elodin/generator-reason', () => {
     const ast = parse(style).ast
 
     expect(
-      createGenerator({ generateStyleName: styleName => styleName + 'Style' })(
-        ast,
-        'style.elo'
-      )
+      createGenerator({
+        generateStyleName: (styleName) => styleName + 'Style',
+      })(ast, 'style.elo')
     ).toMatchSnapshot()
   })
 
@@ -70,7 +69,7 @@ describe('Generating files using @elodin/generator-reason', () => {
 
     expect(
       createGenerator({
-        generateReasonFileName: moduleName => 'Elodin' + moduleName,
+        generateReasonFileName: (moduleName) => 'Elodin' + moduleName,
       })(ast, 'style.elo')
     ).toMatchSnapshot()
   })
@@ -87,10 +86,7 @@ describe('Generating files using @elodin/generator-reason', () => {
     const ast = parse(style).ast
 
     expect(
-      createGenerator({ viewBaseClassName: 'view', textBaseClassName: 'text' })(
-        ast,
-        'style.elo'
-      )
+      createGenerator({ baseClassName: 'elo' })(ast, 'style.elo')
     ).toMatchSnapshot()
   })
 
@@ -108,8 +104,7 @@ describe('Generating files using @elodin/generator-reason', () => {
     expect(
       createGenerator({
         extractCSS: false,
-        viewBaseClassName: 'view',
-        textBaseClassName: 'text',
+        baseClassName: 'elo',
       })(ast, 'style.elo')
     ).toMatchSnapshot()
   })
@@ -122,12 +117,11 @@ describe('Generating files using @elodin/generator-reason', () => {
         extractCSS: true,
         devMode: true,
         dynamicImport: true,
-        viewBaseClassName: 'view',
-        textBaseClassName: 'text',
-        generateReasonFileName: moduleName => 'Elodin' + moduleName,
+        baseClassName: 'elo',
+        generateReasonFileName: (moduleName) => 'Elodin' + moduleName,
         generateCSSFileName: (moduleName, styleName) =>
           moduleName.toUpperCase() + styleName.toLowerCase() + '.elo',
-        generateStyleFileName: name => name + 'Style',
+        generateStyleFileName: (name) => name + 'Style',
       })(ast, 'style.elo')
     ).toMatchSnapshot()
   })

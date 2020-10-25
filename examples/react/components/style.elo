@@ -4,13 +4,12 @@ variant Mode {
 }
 
 style Button {
-    color: white
+  color: white
   backgroundColor: rgb(61 116 204)
   [@hover] {
     backgroundColor: rgb(89 148 242)
   }
 }
-
 
 style Label {
   color: grey
@@ -28,7 +27,6 @@ style Input {
 
 style Block {
   padding: 10
-
   [Mode=Light] {
     backgroundColor: white
     color: black

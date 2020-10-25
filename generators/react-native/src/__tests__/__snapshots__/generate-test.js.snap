@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Compiling to CSS and JavaScript should return a map of files 1`] = `
+exports[`Compiling to React Native should return a map of files 1`] = `
 Object {
   "style.elo.js": "import { StyleSheet } from \\"react-native\\"
 
@@ -39,7 +39,7 @@ export function Label(props = {}) {
 }
 `;
 
-exports[`Compiling to CSS and JavaScript should use a custom importName 1`] = `
+exports[`Compiling to React Native should use a custom importName 1`] = `
 Object {
   "style.elo.js": "import { StyleSheet } from \\"@react-pdf/renderer\\"
 

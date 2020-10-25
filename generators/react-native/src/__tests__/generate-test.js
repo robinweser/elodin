@@ -3,22 +3,22 @@ import { parse } from '@elodin/parser'
 import { createGenerator } from '../index'
 
 const file = `
-view Button {
+style Button {
   backgroundColor: red
   paddingLeft: 10
   alignItems: $alignItems
 }
 
-view Box {
+style Box {
   paddingTop: 10
 }
 
-text Label {
+style Label {
   lineHeight: $lineHeight
   fontSize: 12
 }`
 
-describe('Compiling to CSS and JavaScript', () => {
+describe('Compiling to React Native', () => {
   it('should return a map of files', () => {
     const { ast } = parse(file)
 

@@ -13,9 +13,9 @@ import { getVariantsFromAST } from '@elodin/utils-core'
 const defaultConfig = {
   devMode: false,
   dynamicImport: false,
-  generateStyleName: styleName => styleName,
-  generateCSSFileName: moduleName => moduleName + '.elo',
-  generateJSFileName: moduleName => moduleName + '.elo',
+  generateStyleName: (styleName) => styleName,
+  generateCSSFileName: (moduleName) => moduleName + '.elo',
+  generateJSFileName: (moduleName) => moduleName + '.elo',
 }
 
 export default function createGenerator(customConfig = {}) {
@@ -51,11 +51,11 @@ function generateRootFile(
   { generateCSSFileName, generateJSFileName, generateStyleName }
 ) {
   // TODO: include fragments
-  const styles = ast.body.filter(node => node.type === 'Style')
+  const styles = ast.body.filter((node) => node.type === 'Style')
 
   const imports = styles
     .map(
-      module =>
+      (module) =>
         'import { ' +
         generateStyleName(module.name) +
         " } from './" +
@@ -68,7 +68,7 @@ function generateRootFile(
     imports +
     '\n\n' +
     'export {\n  ' +
-    styles.map(module => generateStyleName(module.name)).join(',\n  ') +
+    styles.map((module) => generateStyleName(module.name)).join(',\n  ') +
     '\n}'
   )
 }
@@ -79,21 +79,20 @@ function generateJSFiles(ast, config, fileName) {
     generateJSFileName,
     generateCSSFileName,
     generateStyleName,
-    textBaseClassName,
-    viewBaseClassName,
+    baseClassName,
     dynamicImport,
   } = config
 
   // TODO: include fragments
-  const styles = ast.body.filter(node => node.type === 'Style')
-  const variants = ast.body.filter(node => node.type === 'Variant')
+  const styles = ast.body.filter((node) => node.type === 'Style')
+  const variants = ast.body.filter((node) => node.type === 'Variant')
 
   return styles.reduce((files, module) => {
     const usedVariants = getVariantsFromAST(module)
     const variantMap = variants.reduce((flatVariants, variant) => {
       if (usedVariants[variant.name]) {
         flatVariants[variant.name] = variant.body.map(
-          variation => variation.value
+          (variation) => variation.value
         )
       }
 
@@ -101,10 +100,6 @@ function generateJSFiles(ast, config, fileName) {
     }, {})
 
     const classNameMap = generateClassNameMap(module.body, variantMap, devMode)
-
-    const baseClassName =
-      (module.format === 'view' && viewBaseClassName) ||
-      (module.format === 'text' && textBaseClassName)
 
     const hasVariations = Object.keys(classNameMap).length > 1
     const className = generateClassName(module, devMode)
@@ -160,15 +155,15 @@ function generateJSFiles(ast, config, fileName) {
 
 function generateCSSFiles(ast, { devMode, generateCSSFileName }) {
   // TODO: include fragments
-  const styles = ast.body.filter(node => node.type === 'Style')
-  const variants = ast.body.filter(node => node.type === 'Variant')
+  const styles = ast.body.filter((node) => node.type === 'Style')
+  const variants = ast.body.filter((node) => node.type === 'Variant')
 
   return styles.reduce((files, module) => {
     const usedVariants = getVariantsFromAST(module)
     const variantMap = variants.reduce((flatVariants, variant) => {
       if (usedVariants[variant.name]) {
         flatVariants[variant.name] = variant.body.map(
-          variation => variation.value
+          (variation) => variation.value
         )
       }
 
@@ -178,8 +173,8 @@ function generateCSSFiles(ast, { devMode, generateCSSFileName }) {
     const classes = generateClasses(module.body, variantMap, devMode)
 
     files[generateCSSFileName(module.name) + '.css'] = classes
-      .filter(selector => selector.declarations.length > 0)
-      .map(selector => {
+      .filter((selector) => selector.declarations.length > 0)
+      .map((selector) => {
         const css = stringifyRule(
           selector.declarations,
           generateClassName(module, devMode) +

@@ -33,7 +33,6 @@ Object {
             },
           ],
           "comments": Array [],
-          "dynamic": false,
           "operator": ">=",
           "property": Object {
             "environment": true,

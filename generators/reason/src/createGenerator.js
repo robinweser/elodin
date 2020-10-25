@@ -169,8 +169,7 @@ function generateModules(
   {
     devMode,
     dynamicImport,
-    viewBaseClassName,
-    textBaseClassName,
+    baseClassName,
     generateStyleName,
     generateCSSFileName,
   },
@@ -198,9 +197,6 @@ function generateModules(
     )
 
     const params = [...variables, ...variantNames]
-    const baseClassName =
-      (module.format === 'view' && viewBaseClassName) ||
-      (module.format === 'text' && textBaseClassName)
 
     const className =
       (baseClassName ? baseClassName + ' ' : '') +

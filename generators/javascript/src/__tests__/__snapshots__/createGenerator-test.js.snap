@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Generating files using @elodin/generator-fela should add reset class names 1`] = `
+exports[`Generating files using @elodin/generator-javascript should add reset class names 1`] = `
 Object {
   "Button.elo.css": "._diyf7s {
   padding-left: 10px;
@@ -29,7 +29,7 @@ const variantClassNameMap = {
 }
 
 export function Button(props = {}) {
-  return \\"view \\" + getClassNameFromVariantMap('_diyf7s', variantClassNameMap, props)
+  return \\"elo \\" + getClassNameFromVariantMap('_diyf7s', variantClassNameMap, props)
 
 };",
   "ButtonText.elo.css": "._1hjhowh {
@@ -38,7 +38,7 @@ export function Button(props = {}) {
   "ButtonText.elo.js": "require(\\"./ButtonText.elo.css\\")
 
 export function ButtonText(props = {}) {
-  return \\"text _1hjhowh\\"
+  return \\"elo _1hjhowh\\"
 };",
   "style.elo.js": "import { Button } from './Button.elo.js'
 import { ButtonText } from './ButtonText.elo.js'
@@ -50,7 +50,7 @@ export {
 }
 `;
 
-exports[`Generating files using @elodin/generator-fela should generate css and js files for each style 1`] = `
+exports[`Generating files using @elodin/generator-javascript should generate css and js files for each style 1`] = `
 Object {
   "Button.elo.css": "._diyf7s {
   padding-left: 10px;
@@ -100,7 +100,7 @@ export {
 }
 `;
 
-exports[`Generating files using @elodin/generator-fela should generate readable classnames in devMode 1`] = `
+exports[`Generating files using @elodin/generator-javascript should generate readable classnames in devMode 1`] = `
 Object {
   "Button.elo.css": ".Button_diyf7s {
   padding-left: 10px;
@@ -150,7 +150,7 @@ export {
 }
 `;
 
-exports[`Generating files using @elodin/generator-fela should only generate js files 1`] = `
+exports[`Generating files using @elodin/generator-javascript should only generate js files 1`] = `
 Object {
   "Button.elo.css": "._diyf7s {
   padding-left: 10px;
@@ -200,7 +200,7 @@ export {
 }
 `;
 
-exports[`Generating files using @elodin/generator-fela should only generate js files with baseClassName 1`] = `
+exports[`Generating files using @elodin/generator-javascript should only generate js files with baseClassName 1`] = `
 Object {
   "Button.elo.css": "._diyf7s {
   padding-left: 10px;
@@ -229,7 +229,7 @@ const variantClassNameMap = {
 }
 
 export function Button(props = {}) {
-  return \\"view \\" + getClassNameFromVariantMap('_diyf7s', variantClassNameMap, props)
+  return \\"elo \\" + getClassNameFromVariantMap('_diyf7s', variantClassNameMap, props)
 
 };",
   "ButtonText.elo.css": "._1hjhowh {
@@ -238,7 +238,7 @@ export function Button(props = {}) {
   "ButtonText.elo.js": "require(\\"./ButtonText.elo.css\\")
 
 export function ButtonText(props = {}) {
-  return \\"text _1hjhowh\\"
+  return \\"elo _1hjhowh\\"
 };",
   "style.elo.js": "import { Button } from './Button.elo.js'
 import { ButtonText } from './ButtonText.elo.js'
@@ -250,7 +250,7 @@ export {
 }
 `;
 
-exports[`Generating files using @elodin/generator-fela should use a custom style name 1`] = `
+exports[`Generating files using @elodin/generator-javascript should use a custom style name 1`] = `
 Object {
   "Button.elo.css": "._diyf7s {
   padding-left: 10px;
@@ -300,7 +300,7 @@ export {
 }
 `;
 
-exports[`Generating files using @elodin/generator-fela should use custom css file names 1`] = `
+exports[`Generating files using @elodin/generator-javascript should use custom css file names 1`] = `
 Object {
   "BUTTON.elo.css": "._diyf7s {
   padding-left: 10px;
@@ -350,7 +350,7 @@ export {
 }
 `;
 
-exports[`Generating files using @elodin/generator-fela should use custom js file names 1`] = `
+exports[`Generating files using @elodin/generator-javascript should use custom js file names 1`] = `
 Object {
   "BUTTON.elo.js": "import { getClassNameFromVariantMap } from \\"@elodin/runtime\\"
 require(\\"./Button.elo.css\\")
@@ -400,7 +400,7 @@ export {
 }
 `;
 
-exports[`Generating files using @elodin/generator-fela should use dynamic imports 1`] = `
+exports[`Generating files using @elodin/generator-javascript should use dynamic imports 1`] = `
 Object {
   "Button.elo.css": "._diyf7s {
   padding-left: 10px;
@@ -450,7 +450,7 @@ export {
 }
 `;
 
-exports[`Generating files using @elodin/generator-fela should work with all options combined 1`] = `
+exports[`Generating files using @elodin/generator-javascript should work with all options combined 1`] = `
 Object {
   "BUTTON.elo.css": ".Button_diyf7s {
   padding-left: 10px;
@@ -479,7 +479,7 @@ const variantClassNameMap = {
 export function Button(props = {}) {
   import(\\"./BUTTON.elo.css\\")
 
-  return \\"view \\" + getClassNameFromVariantMap('Button_diyf7s', variantClassNameMap, props)
+  return \\"elo \\" + getClassNameFromVariantMap('Button_diyf7s', variantClassNameMap, props)
 
 };",
   "BUTTONTEXT.elo.css": ".ButtonText_1hjhowh {
@@ -488,7 +488,7 @@ export function Button(props = {}) {
   "BUTTONTEXT.elo.js": "export function ButtonText(props = {}) {
   import(\\"./BUTTONTEXT.elo.css\\")
 
-  return \\"text ButtonText_1hjhowh\\"
+  return \\"elo ButtonText_1hjhowh\\"
 };",
   "style.elo.js": "import { Button } from './BUTTON.elo.js'
 import { ButtonText } from './BUTTONTEXT.elo.js'
