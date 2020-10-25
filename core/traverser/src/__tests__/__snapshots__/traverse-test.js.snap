@@ -44,7 +44,6 @@ Object {
         },
       ],
       "comments": Array [],
-      "format": "view",
       "name": "Button",
       "type": "Style",
     },

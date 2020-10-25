@@ -5,7 +5,7 @@ import traverse from '../traverse'
 describe('Traversing ast nodes', () => {
   it('should correctly traverse nodes', () => {
     const file = `
-view Button {
+style Button {
   color: red
   [Type=Primary] {
     color: blue

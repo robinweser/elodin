@@ -10,7 +10,7 @@ variant Type {
   Secondary
 }
 
-view Button {
+style Button {
   color: $color
   backgroundColor: $bgColor
   
