@@ -1,18 +1,23 @@
-import { make as DocLayout } from '../../../components/DocLayout.bs.js'
+import DocLayout from '../../../components/DocLayout.js'
 
 export default DocLayout
 
 # Variables
 
 Apart from primitive values, we can also pass variables to set dynamic properties.<br/>
-Instead of being rendered during compilation, variables are passed in runtime and can change over time.
+Variables are resolved depending on the target.
 
-Depending on the generator, the way they resolve might be different.
+For example, the [@elodin/generator-javascript]() will render CSS variables by default.
 
-## Example
-
-```
-view Button {
+```elodin name=button.elo
+style Button {
   backgroundColor: $bgColor
 }
 ```
+
+---
+
+## Related
+
+- [@elodin/plugin-replace-variable](/docs/plugins/replace-variable)
+- [@elodin/plugin-rename-variable](/docs/plugins/rename-variable)

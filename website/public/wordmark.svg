@@ -8,7 +8,7 @@
         <circle cx="637.945" cy="1039.3" r="148.992" style="fill:rgb(25,93,157);"/>
     </g>
     <g transform="matrix(1,0,0,1,329.248,-203.393)">
-        <circle cx="637.945" cy="1039.3" r="148.992" style="fill:rgb(25,139,157);fill-opacity:0.76;"/>
+        <circle cx="637.945" cy="1039.3" r="148.992" style="fill:rgb(80,167,180);"/>
     </g>
     <g transform="matrix(1,0,0,1,-47.7074,9.46524)">
         <circle cx="637.945" cy="1039.3" r="148.992" style="fill:rgb(25,93,157);"/>
@@ -22,7 +22,7 @@
     <g transform="matrix(1,0,0,1,-427.437,-203.278)">
         <circle cx="637.945" cy="1039.3" r="148.992" style="fill:rgb(80,167,180);"/>
     </g>
-    <g transform="matrix(1,0,0,1,-235.598,-414.914)">
-        <text x="1588.7px" y="1361.67px" style="font-family:'MyanmarSangamMN-Bold', 'Myanmar Sangam MN';font-size:893.105px;fill:rgb(48,48,48);">Elodin</text>
+    <g transform="matrix(1,0,0,1,1353.1,946.756)">
+        <text x="0px" y="0px" style="font-family:'MyanmarSangamMN-Bold', 'Myanmar Sangam MN';font-size:893.105px;fill:rgb(48,48,48);">Elodin</text>
     </g>
 </svg>

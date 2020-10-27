@@ -1,4 +1,4 @@
-import { make as DocLayout } from '../../../components/DocLayout.bs.js'
+import DocLayout from '../../../components/DocLayout.js'
 
 export default DocLayout
 
@@ -9,20 +9,17 @@ Usually, you'll use variants if you have a known number of static variations.
 
 Variants are used together with [Conditionals](/docs/language/conditionals) and can only be compared using an equal comparison.
 
-## Example
-
-```
+```elodin name=button.elo
 variant ThemeMode {
   Dark
   Light
 }
 
-view Button {
+style Button {
   padding: 10
   [ThemeMode=Dark] {
     backgroundColor: black
   }
-
   [ThemeMode=Light] {
     backgroundColor: white
   }
@@ -31,9 +28,7 @@ view Button {
 
 Variants can also be nested to specify styles that are only applied if both conditions are met.
 
-## Example
-
-```
+```elodin name=button.elo
 variant ThemeMode {
   Dark
   Light
@@ -44,7 +39,7 @@ variant Size {
   Small
 }
 
-view Button {
+style Button {
   padding: 10
   width: 100
   [ThemeMode=Dark] {
@@ -52,7 +47,6 @@ view Button {
     [Size=Normal] {
       width: 150
     }
-
     [Size=Small] {
       width: 80
     }

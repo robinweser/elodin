@@ -1,10 +1,12 @@
-import { make as DocLayout } from '../../../components/DocLayout.bs.js'
+import DocLayout from '../../../components/DocLayout.js'
 
 export default DocLayout
 
 # Parser
 
-`@elodin/parser`
+```bash
+yarn add --dev @elodin/parser
+```
 
 The parser turns a string of Elodin code into an AST (Abstract Syntax Tree).
 
@@ -18,7 +20,7 @@ It exposes a `parse` method that just takes an single string of code.
 import { parse } from '@elodin/parser'
 
 const input = `
-view Button {
+style Button {
   backgroundColor: red
   paddingLeft: 10
   paddingRight: 10
@@ -38,6 +40,9 @@ The AST consists of the following AST nodes:
 | -------- | ---------------- | ------------------ |
 | body     | [Variant, Style] | List of root nodes |
 
+<br />
+<br />
+
 ### Style
 
 | Property | Type                       | Description                                  |
@@ -47,6 +52,9 @@ The AST consists of the following AST nodes:
 | body     | [Declaration, Conditional] | List of declarations                         |
 | comments | [String]                   | List of comments found in front of the style |
 
+<br />
+<br />
+
 ### Variant
 
 | Property | Type         | Description                                  |
@@ -54,6 +62,9 @@ The AST consists of the following AST nodes:
 | name     | String       | The name of the variant                      |
 | body     | [Identifier] | List of variant values                       |
 | comments | [String]     | List of comments found in front of the style |
+
+<br />
+<br />
 
 ### Conditional
 
@@ -65,6 +76,9 @@ The AST consists of the following AST nodes:
 | boolean  | Boolean                            | Whether the condition is boolean                                                                       |
 | body     | [Declaration, Conditional]         | List of declarations                                                                                   |
 
+<br />
+<br />
+
 ### Declaration
 
 | Property | Type                                                               | Description                                                           |
@@ -74,12 +88,18 @@ The AST consists of the following AST nodes:
 | dynamic  | Boolean                                                            | Whether it's declaration has dynamic input (thus a variable as value) |
 | raw      | Boolean                                                            | Whether it has a raw property prefixed with `__`                      |
 
+<br />
+<br />
+
 ### FunctionExpression
 
 | Property | Type | Description |
 | -------- | ---- | ----------- |
 | callee   |      |             |
 | params   |      |             |
+
+<br />
+<br />
 
 ### Float
 
@@ -89,6 +109,9 @@ The AST consists of the following AST nodes:
 | fractional |      |             |
 | negative   |      |             |
 
+<br />
+<br />
+
 ### Integer
 
 | Property | Type | Description |
@@ -96,17 +119,26 @@ The AST consists of the following AST nodes:
 | value    |      |             |
 | negative |      |             |
 
+<br />
+<br />
+
 ### Identifier
 
 | Property | Type | Description |
 | -------- | ---- | ----------- |
 | value    |      |             |
 
+<br />
+<br />
+
 ### String
 
 | Property | Type | Description |
 | -------- | ---- | ----------- |
 | value    |      |             |
+
+<br />
+<br />
 
 ### Variable
 

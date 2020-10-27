@@ -1,0 +1,97 @@
+import DocLayout from '../../../components/DocLayout.js'
+
+export default DocLayout
+
+# JavaScript
+
+```bash
+yarn add --dev @elodin/generator-javascript
+```
+
+This generator is used with JavaScript. It renders to plain CSS and JavaScript files.<br />
+The JavaScript files contain functions that return the correct className depending on passed variants.
+
+## Usage
+
+To use the Javascript generator, simply add it to your Elodin configuration and you're ready to go.
+
+```javascript name=elodin.config.js
+var createGenerator = require('@elodin/generator-javascript').createGenerator
+
+module.exports = {
+  generator: createGenerator(),
+}
+```
+
+## Configuration
+
+| Option        | Type    | Default | Description                                                                                                                                                                       |
+| ------------- | ------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| devMode       | Boolean | _false_ | In devMode, class names contain human-readable prefixes that help to indentify the referenced style.                                                                              |
+| dynamicImport | Boolean | _false_ | By default, CSS files are required as soon as the corresponding JavaScript file is imported.<br />With dynamic imports, it is only imported once the function is actually called. |
+
+### Example
+
+```javascript name=elodin.config.js
+var createGenerator = require('@elodin/generator-react-native').createGenerator
+
+module.exports = {
+  ...elodinConfig,
+  generator: createGenerator({
+    devMode: true,
+    dynamicImport: false,
+    generateStyleName: (name) => name + 'Style',
+  }),
+}
+```
+
+## Feature Coverage
+
+- Styles
+- Primitives
+- Variables
+- Functions
+- Variants
+- Conditionals
+
+---
+
+## Usage Examples
+
+```elo name=button.elo
+variant Variant {
+  Primary
+  Secondary
+}
+
+style Button {
+  paddingLeft: 10
+  paddingRight: 10
+  minWidth: $theme_widths_button
+  [Variant=Primary] {
+    backgroundColor: blue
+  }
+  [Variant=Secondary] {
+    backgroundColor: red
+  }
+}
+```
+
+```css name=root.css
+:root {
+  --theme_widths_button: 120px;
+}
+```
+
+### React
+
+```javascript name=Button.js info=Usage
+import React from 'react'
+
+import { Button as ButtonStyle } from './button.elo.js'
+
+// just to showcase the API - do not create Buttons from Views!
+function Button({ children, variant = 'primary' }) {
+  return <button className={ButtonStyle({ variant })}>{children}</button>
+}
+```

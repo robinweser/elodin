@@ -1,4 +1,4 @@
-import { make as DocLayout } from '../../../components/DocLayout.bs.js'
+import DocLayout from '../../../components/DocLayout.js'
 
 export default DocLayout
 
@@ -10,8 +10,8 @@ Elodin provides a couple of primitives that are used to define property values.
 
 Both are used to describe numbers, but not all properties accept both.
 
-```
-text Label {
+```elodin name=label.elo
+style Label {
   fontSize: 10
   lineHeight: 1.2
 }
@@ -21,8 +21,8 @@ text Label {
 
 String are used for identifiers other than property keywords.
 
-```
-text Label {
+```elodin name=label.elo
+style Label {
   fontFamily: "Arial"
 }
 ```

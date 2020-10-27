@@ -1,4 +1,4 @@
-import { make as DocLayout } from '../../../components/DocLayout.bs.js'
+import DocLayout from '../../../components/DocLayout.js'
 
 export default DocLayout
 
@@ -21,15 +21,13 @@ They're written in square brackets and depending on the type of comparison suppo
 
 The most simple conditions are variant checks which we've seen in the [Variant](/docs/language/variants) docs before.
 
-### Example
-
-```elodin
+```elodin name=button.elo
 variant Mode {
   Dark
   Light
 }
 
-view Button {
+style Button {
   padding: 10
   [Mode=Dark] {
     backgroundColor: black
@@ -46,10 +44,8 @@ view Button {
 Apart from variants, some generators also implement special environment conditionals such as pseudo classes and media queries for web-specific generators.<br />
 Some environment variables are boolean types, which means they don't use a comparison operator at all.
 
-### Example
-
-```elodin
-view Button {
+```elodin name=button.elo
+style Button {
   padding: 10
   backgroundColor: black
   [@hover] {

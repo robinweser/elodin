@@ -1,4 +1,4 @@
-import { make as DocLayout } from '../../../components/DocLayout.bs.js'
+import DocLayout from '../../../components/DocLayout.js'
 
 export default DocLayout
 
@@ -7,23 +7,23 @@ export default DocLayout
 We already learned that Elodin requires a generator to run.<br />
 Apart from that, we can pass a bunch of other configurations.
 
-| Configuration | Value           | Default | Description                                                                                                      |
-| ------------- | --------------- | ------- | ---------------------------------------------------------------------------------------------------------------- |
-| generator     | Generator       |         |                                                                                                                  |
-| plugins       | Array\<Plugin\> | `[]`    | List of plugins to be applied before compilation                                                                 |
-| errors        | `throw`, `log`  | `throw` | Whether compilation errors throw or just log.<br />**It is recommend to throw in order to ensure valid output.** |
+| Configuration | Value          | Default | Description                                                                                                      |
+| ------------- | -------------- | ------- | ---------------------------------------------------------------------------------------------------------------- |
+| generator     | Generator      |         | The target generator that is used to compile all elodin files to a desired target format.                        |
+| sources       | Array<Path\>   |         | List of source folders which contain elodin files that should be compiled.                                       |
+| plugins       | Array<Plugin\> | _[]_    | List of plugins to be applied before compilation                                                                 |
+| errors        | `throw`, `log` | _throw_ | Whether compilation errors throw or just log.<br />**It is recommend to throw in order to ensure valid output.** |
 
 ## Example
 
 > **Note**: We're using ES5 here since it won't pre-compile configuration files by default. If you want to write modern ES2015+, you'll have to transpile those with e.g. Babel first.
 
-#### elodin.config.js
-
-```javascript
-var createGenerator = require('@elodin/generator-reason').createGenerator
+```javascript name=elodin.config.js copy
+var createGenerator = require('@elodin/generator-javascript').createGenerator
 var replaceVariable = require('@elodin/plugin-replace-variabe')
 
 module.exports = {
+  sources: ['src', 'components'],
   errors: 'log',
   plugins: [
     replaceVariable({

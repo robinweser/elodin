@@ -1,10 +1,12 @@
-import { make as DocLayout } from '../../../components/DocLayout.bs.js'
+import DocLayout from '../../../components/DocLayout.js'
 
 export default DocLayout
 
 # Replace Variable
 
-`@elodin/plugin-replace-variable`
+```bash
+yarn add @elodin/plugin-replace-variable
+```
 
 The replace variable plugin is used to replace dynamic variables with static values before compilation in order to get rid of runtime code.<br />
 It can be used to achieve e.g. static theming.
@@ -13,9 +15,7 @@ It can be used to achieve e.g. static theming.
 
 To use the plugin, simply add it to your Elodin configuration and you're ready to go.
 
-#### elodin.config.js
-
-```javascript
+```javascript name=elodin.config.js
 var replaceVariable = require('@elodin/plugin-replace-variable')
 
 module.exports = {
@@ -34,33 +34,23 @@ module.exports = {
 
 | Option    | Type     | Default                      | Description                                       |
 | --------- | -------- | ---------------------------- | ------------------------------------------------- |
-| variables | Object   |                              | The variable map which are used to replace values |
-| selector  | Function | `(vars, prop) => vars[prop]` | A property selector function                      |
+| variables | Object   | _{}_                         | The variable map which are used to replace values |
+| selector  | Function | _(vars, prop) => vars[prop]_ | A property selector function                      |
 
 ### Example
 
 Given the variables from the usage example above:
 
-#### Input
-
-```elodin
-view Button {
+```elodin name=button.elo info=Input
+style Button {
   backgroundColor: $primaryColor
-}
-
-text ButtonText {
   color: $secondaryColor
 }
 ```
 
-#### Output
-
-```elodin
-view Button {
+```elodin name=button.elo info=Output
+style Button {
   backgroundColor: red
-}
-
-text ButtonText {
   color: blue
 }
 ```
@@ -69,9 +59,7 @@ text ButtonText {
 
 Apart from plain flat variables, we can also use a custom selector to implement more complex structures.
 
-#### elodin.config.js
-
-```javascript
+```javascript name=elodin.config.js
 var replaceVariable = require('@elodin/plugin-replace-variable')
 
 module.exports = {
@@ -99,27 +87,19 @@ module.exports = {
 }
 ```
 
-#### Input
+### Example
 
-```elodin
-view Button {
+```elodin name=button.elo info=Input
+style Button {
   backgroundColor: $theme_colors_primary
-}
-
-text ButtonText {
   color: $theme_colors_secondary
   fontSize: $theme_sizes_l
 }
 ```
 
-#### Output
-
-```elodin
-view Button {
+```elodin name=button.elo info=Output
+style Button {
   backgroundColor: red
-}
-
-text ButtonText {
   color: blue
   fontSize: 20
 }

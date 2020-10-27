@@ -196,7 +196,7 @@ function generateModules(
       variantOrder.indexOf(x) > variantOrder.indexOf(y) ? 1 : -1
     )
 
-    const params = [...variables, ...variantNames]
+    const params = [...variantNames]
 
     const className =
       (baseClassName ? baseClassName + ' ' : '') +

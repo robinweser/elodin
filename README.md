@@ -11,9 +11,7 @@ Elodin is a small styling language that aims to provide a universal way to autho
 
 <img alt="License" src="https://img.shields.io/badge/license-MIT-brightgreen.svg"></a> <a href="https://spectrum.chat/elodin"><img alt="Spectrum" src="https://img.shields.io/badge/support-spectrum-brightgreen.svg"></a> <img alt="npm downloads" src="https://img.shields.io/npm/dm/@elodin/core.svg">
 
-## Example
-
-> **Note**: This example uses the [generator-javascript]() which is just one of many possible targets. Depending on the configuration the output will vary a lot.
+## The Gist
 
 ```
 variant Mode {
@@ -41,69 +39,6 @@ style Button {
 style Label {
   fontSize: 10
   color: grey
-}
-```
-
-This compiles to the following files where `_hash` is just a placeholder for an auto-generated unique class name.
-
-**Button.elo.css**
-
-```css
-._hash {
-  justify-content: center;
-  align-items: flex-end;
-  padding-bottom: 10;
-  padding-top: 10;
-  font-size: 15px;
-  color: rgb(255, 0, 255);
-}
-
-._hash__0-0 {
-  background-color: black;
-}
-
-._hash__0-1 {
-  background-color: white;
-}
-```
-
-**Button.elo.css**
-
-```css
-._hash {
-  font-size: 10px;
-  color: grey;
-}
-```
-
-**Button.elo.js**
-
-```js
-import './Button.elo.css'
-import { getClassNameFromVariantMap } from '@elodin/runtime'
-
-const variantClassNameMap = {
-  '': {},
-  '__0-0': {
-    Mode: 'Dark',
-  },
-  '__0-1': {
-    Mode: 'Light',
-  },
-}
-
-export default function Button(props) {
-  return '_hash ' + getClassNameFromVariantMap(variantClassNameMap, props)
-}
-```
-
-**Label.elo.js**
-
-```js
-import './Label.elo.css'
-
-export default function Label() {
-  return '_hash',
 }
 ```
 

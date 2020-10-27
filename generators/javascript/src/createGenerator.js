@@ -10,12 +10,16 @@ import {
 } from '@elodin/utils-css'
 import { getVariantsFromAST } from '@elodin/utils-core'
 
+const uncapitalizeString = (str) => str.charAt(0).toLowerCase() + str.substr(1)
+
 const defaultConfig = {
   devMode: false,
   dynamicImport: false,
   generateStyleName: (styleName) => styleName,
   generateCSSFileName: (moduleName) => moduleName + '.elo',
   generateJSFileName: (moduleName) => moduleName + '.elo',
+  generateVariantName: uncapitalizeString,
+  generateVariantValue: uncapitalizeString,
 }
 
 export default function createGenerator(customConfig = {}) {
@@ -79,6 +83,8 @@ function generateJSFiles(ast, config, fileName) {
     generateJSFileName,
     generateCSSFileName,
     generateStyleName,
+    generateVariantName,
+    generateVariantValue,
     baseClassName,
     dynamicImport,
   } = config
@@ -101,6 +107,24 @@ function generateJSFiles(ast, config, fileName) {
 
     const classNameMap = generateClassNameMap(module.body, variantMap, devMode)
 
+    const normalizedClassNameMap = Object.keys(classNameMap).reduce(
+      (normalized, cls) => {
+        normalized[cls] = Object.keys(classNameMap[cls]).reduce(
+          (variants, variant) => {
+            variants[generateVariantName(variant)] = generateVariantValue(
+              classNameMap[cls][variant]
+            )
+
+            return variants
+          },
+          {}
+        )
+
+        return normalized
+      },
+      {}
+    )
+
     const hasVariations = Object.keys(classNameMap).length > 1
     const className = generateClassName(module, devMode)
 
@@ -120,7 +144,7 @@ function generateJSFiles(ast, config, fileName) {
         ? (fullClassName ? ' + ' : '') +
           "getClassNameFromVariantMap('" +
           className +
-          "', variantClassNameMap, props)\n"
+          "', variantMap, props)"
         : fullClassName
         ? ''
         : '')
@@ -143,8 +167,8 @@ function generateJSFiles(ast, config, fileName) {
         ? 'require("./' + generateCSSFileName(module.name) + '.css")\n\n'
         : '') +
       (hasVariations
-        ? 'const variantClassNameMap = ' +
-          JSON.stringify(classNameMap, null, 2) +
+        ? 'const variantMap = ' +
+          JSON.stringify(normalizedClassNameMap, null, 2) +
           '\n\n'
         : '') +
       rule

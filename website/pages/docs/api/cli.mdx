@@ -1,33 +1,33 @@
-import { make as DocLayout } from '../../../components/DocLayout.bs.js'
+import DocLayout from '../../../components/DocLayout.js'
 
 export default DocLayout
 
-# CLI
+# Command Line Interface
 
-`@elodin/cli`
+```bash
+yarn add --dev @elodin/cli
+```
 
 This package provides the CLI for Elodin with compilation commands.<br/>
 It requires a valid [Elodin configuration](/docs/setup/configuration) to run.
 
 ## Usage
 
-The basic elodin command requires at least 1 file or directly to run.
-
 ```shell
-# Compiling a single file
-elodin src/style.elo
+# Single build
+elodin
 
-# Compiling multiple files
-elodin src/button.elo src/label.elo
+# Single build with cleanup
+elodin -c
 
-# Compiling a whole directory (including sub directories)
-elodin src
+# Single build + build on every change
+elodin -w
 
-# Compiling multiple directories
-elodin components pages
+# Single build with cleanup + build on every change
+elodin -c -w
 
-# Compiling a mix of files and directories
-elodin components pages root.elo src/app.elo
+# Build on every change
+elodin -w -sib
 ```
 
 ## Configuration
@@ -37,7 +37,7 @@ One can also use run `elodin --help` or `elodin -h` for a quick overview of all 
 
 | Option                       | Default              | Description                                                                                                                 |
 | ---------------------------- | -------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `--config [path]`            | `./elodin.config.js` | The relative path to your [Elodin configuration](/docs/setup/configuration).                                                |
+| `--config [path]`            | _./elodin.config.js_ | The relative path to your [Elodin configuration](/docs/setup/configuration).                                                |
 | `--watch, -w`                |                      | Enables watch mode to automatically recompile on file changes.                                                              |
 | `--clean, -c`                |                      | Remove previously generated files before compilation. Helps to get rid of old files where the Elodin file has been removed. |
 | `--skip-initial-build, -sib` |                      | Skips the initial build in watch mode.<br />_Only works with watch mode enabled_.                                           |

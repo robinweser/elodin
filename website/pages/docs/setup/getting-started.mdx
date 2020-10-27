@@ -1,24 +1,26 @@
-import { make as DocLayout } from '../../../components/DocLayout.bs.js'
+import DocLayout from '../../../components/DocLayout.js'
 
 export default DocLayout
 
 # Getting Started
 
 With the CLI installed, we can start writing styles.<br />
-Let's create a button style named `button.elo` in which we define a [view](/docs/language/styles#view) style and [text](/docs/language/styles#text) style.<br />
+Let's create some styles in a _example.elo_ file.<br />
 Check the [Styles](/docs/language/styles) section for all available properties.
 
-```el
-view Button {
+```elodin copy name=components/example.elo
+style Button {
   paddingLeft: 10
   paddingRight: 10
   backgroundColor: blue
-}
-
-text ButtonText {
   fontSize: 18
   lineHeight: 1.2
   color: white
+}
+
+style Label {
+  fontSize: 14
+  color: red
 }
 ```
 
@@ -26,18 +28,17 @@ text ButtonText {
 
 In order to compile this style, we need to configure a generator which generates target-specific files. Check the Targets section to find the right generator for your job. Each generator accepts different configuration options.<br />
 
-The simplest way to add an Elodin configuration is by creating a `elodin.config.js` file at the root of your project.
+The simplest way to add an Elodin configuration is by creating a _elodin.config.js_ file at the root of your project.
 
-```javascript
-// For this example, we'll use the ReasonML generator
-var createGenerator = require('@elodin/generator-reason').createGenerator
+```javascript name=elodin.config.js copy
+// For this example, we'll use the JavaScript generator
+var createGenerator = require('@elodin/generator-javascript').createGenerator
 
 module.exports = {
+  sources ["components"],
   generator: createGenerator(),
 }
 ```
-
-<br />
 
 > **Note**: For other configuration options, please check out [Configuration](/docs/setup/configuration).
 
@@ -45,15 +46,17 @@ module.exports = {
 
 Now that we have a generator configured, we can run the CLI to generate our output files.
 
-```sh
-elodin button.elo
+```sh copy
+elodin
 ```
 
-> **Note**: Also check the [CLI Options](/docs/api/CLI) for other useful options such as `--watch`.
+> **Note**: Also check the [CLI Options](/docs/api/cli) for other useful options such as `--watch`.
 
 **Congratulations!** You just compiled your first Elodin files.<br />
 The generator has created the following files:
 
-- **ButtonButton.elo.css**: Contains all static styles defined in `Button`
-- **ButtonButtonText.elo.css**: Contains all static styles defined in `ButtonText`
-- **ButtonStyle.re**: Contains style functions for `Button` and `ButtonText` including dynamic styles
+- **Button.elo.css**: Contains all static styles defined in `Button`
+- **Button.elo.js**: Contains a `Button` function that returns the class name
+- **Label.elo.css**: Contains all static styles defined in `Label`
+- **Label.elo.js**: Contains a `Label` function that returns the class name
+- **example.elo.js**: Exports all style functions, in this case `Button` and `Label`

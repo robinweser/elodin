@@ -1,6 +1,0 @@
-{
-  "version": 2,
-  "name": "elodin.dev",
-  "alias": "elodin.dev",
-  "builds": [{ "src": "next.config.js", "use": "@now/next" }]
-}

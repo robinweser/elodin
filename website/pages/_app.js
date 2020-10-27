@@ -1,51 +1,15 @@
-import App from 'next/app'
-import Head from 'next/head'
 import React from 'react'
+import { ThemeProvider } from 'react-fela'
 
-import { StyleProvider } from '@gazzer/globe'
+import FelaProvider from '../styling/FelaProvider'
+import theme from '../styling/theme'
 
-const staticStyle = [
-  ['::-webkit-scrollbar', { display: 'none' }],
-  [
-    'div, form',
-    {
-      display: 'flex',
-      alignSelf: 'stretch',
-      flexDirection: 'column',
-      flexShrink: 0,
-      maxWidth: '100%',
-      boxSizing: 'border-box',
-      WebkitOverflowScrolling: 'touch',
-    },
-  ],
-  ['address', { fontStyle: 'normal' }],
-  [
-    'html',
-    {
-      WebkitTextSizeAdjust: '100%',
-      position: 'fixed',
-      top: 0,
-      right: 0,
-      left: 0,
-      bottom: 0,
-      overflow: 'hidden',
-    },
-  ],
-  ['body, #__next', { height: '100%', maxHeight: '100%', overflow: 'hidden' }],
-  [
-    'input, textarea, button, select option, a',
-    { fontFamily: 'inherit', outline: 0 },
-  ],
-]
-
-export default class MyApp extends App {
-  render() {
-    const { Component, pageProps, renderer } = this.props
-
-    return (
-      <StyleProvider renderer={renderer} staticStyles={staticStyle}>
+export default function App({ Component, pageProps, renderer }) {
+  return (
+    <FelaProvider renderer={renderer}>
+      <ThemeProvider theme={theme}>
         <Component {...pageProps} />
-      </StyleProvider>
-    )
-  }
+      </ThemeProvider>
+    </FelaProvider>
+  )
 }

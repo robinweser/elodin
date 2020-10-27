@@ -1,10 +1,12 @@
-import { make as DocLayout } from '../../../components/DocLayout.bs.js'
+import DocLayout from '../../../components/DocLayout.js'
 
 export default DocLayout
 
 # Color
 
-`@elodin/plugin-color`
+```bash
+yarn add @elodin/plugin-color
+```
 
 The color plugin converts all used colors into a consistent color format.
 
@@ -12,9 +14,7 @@ The color plugin converts all used colors into a consistent color format.
 
 To use the plugin, simply add it to your Elodin configuration and you're ready to go.
 
-#### elodin.config.js
-
-```javascript
+```javascript name=elodin.config.js
 import color from '@elodin/plugin-color'
 
 module.exports = {
@@ -32,19 +32,15 @@ module.exports = {
 
 Let's say we want all colors to be written as `rgb` colors.
 
-#### Input
-
-```elodin
-view Button {
+```elodin name=button.elo info=Input
+style Button {
   backgroundColor: rgb(0 10 0)
-  borderTopColor: #fff
+  borderTopColor: white
 }
 ```
 
-#### Output
-
-```elodin
-view Button {
+```elodin name=button.elo info=Output
+style Button {
   backgroundColor: rgb(0 10 0)
   borderTopColor: rgb(255 255 255)
 }

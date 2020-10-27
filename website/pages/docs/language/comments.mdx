@@ -1,4 +1,4 @@
-import { make as DocLayout } from '../../../components/DocLayout.bs.js'
+import DocLayout from '../../../components/DocLayout.js'
 
 export default DocLayout
 
@@ -7,18 +7,14 @@ export default DocLayout
 Comments can be helpful to explain a certain line of code or add some notes for other developers.<br />
 In Elodin, there're only single line comments, if you want a comment spread over multiple lines, simply use multiple single line comments.
 
-## Example
-
-```elodin
+```elodin name=button.elo
 variant Mode {
-  # the better mode
   Light
-  # the hipster one, required to be cool
   Mode
 }
 
 # This is our main Button
-view Button {
+style Button {
   padding: 10
   # we set a marginBottom to ensure that
   # they're never paired with text directly

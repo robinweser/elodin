@@ -1,5 +1,5 @@
 import { parse } from '@elodin/parser'
-import types from '@elodin/types'
+import * as types from '@elodin/types'
 
 import traverse from './traverse'
 
@@ -14,7 +14,7 @@ export default function normalizeVisitors(visitors) {
     const resolvedVisitor =
       typeof visitor === 'function' ? visitor(elodinInterface) : visitor
 
-    Object.keys(resolvedVisitor).forEach(nodeType => {
+    Object.keys(resolvedVisitor).forEach((nodeType) => {
       const normalizedVisitor = resolvedVisitor[nodeType]
 
       if (typeof normalizedVisitor === 'function') {

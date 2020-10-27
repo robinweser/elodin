@@ -1,9 +1,8 @@
 import definitions from './definitions'
 import functions from './functions'
+import meant from 'meant'
 
-var Matcher = require('did-you-mean')
-
-const matcher = new Matcher(Object.keys(definitions).join(' '))
+const properties = Object.keys(definitions)
 
 export default function validateDeclaration(property, value, rawValue) {
   const propertyDefinition = definitions[property]
@@ -31,7 +30,7 @@ export default function validateDeclaration(property, value, rawValue) {
     }
 
     const isValid = propertyDefinition.find(
-      (validator) => validator(val) === true
+      validator => validator(val) === true
     )
 
     if (!isValid) {
@@ -49,9 +48,11 @@ export default function validateDeclaration(property, value, rawValue) {
     return true
   }
 
+  const hints = meant(property, properties)
+
   return {
     type: 'property',
     message: 'The property `' + property + '` is not a valid property.',
-    hint: matcher.get(property),
+    hint: hints ? hints[0] : undefined,
   }
 }

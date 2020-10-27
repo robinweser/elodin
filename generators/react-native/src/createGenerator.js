@@ -33,7 +33,7 @@ function stringifyDeclaration(declaration) {
     )
   }
 
-  return prop + (declaration.dynamic ? 'props.' : '') + declaration.value
+  return prop + declaration.value
 }
 
 function generateJS(ast, config) {

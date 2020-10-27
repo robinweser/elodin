@@ -1,4 +1,4 @@
-import { make as DocLayout } from '../../../components/DocLayout.bs.js'
+import DocLayout from '../../../components/DocLayout.js'
 
 export default DocLayout
 
@@ -7,21 +7,11 @@ export default DocLayout
 Styles are what Elodin is all about and thus the main building blocks of any Elodin file.<br />
 Simply put, they are a map of visual properties for a single specific component.<br />
 
-There are two different types of styles:
-
-- **Text**: Texts contain all style properties required to manipulate rendered Text
-- **View**: Views are basically everything else - composable boxes
-
-## Example
-
-```elo
-view Button {
+```elodin name=button.elo copy
+style Button {
   paddingLeft: 10
   paddingRight: 10
   width: percentage(50)
-}
-
-text ButtonText {
   fontSize: 15
   lineHeight: 1.3
 }
@@ -29,13 +19,9 @@ text ButtonText {
 
 ## Properties
 
-Both types of style have a different set of available properties.
-
 > **Type-safety**: The compiler will automatically throw an error and skip compilation if invalid properties are found.<br />This helps to ensure solid and type-safe styles.
 
-### View
-
-Most view properties are ported from React Native and can be implemented in most platforms as they're quite basic.<br />
+Most properties are ported from React Native and can be implemented in most platforms as they're quite basic.<br />
 Layout is built using the flexbox layout model. If you're not familiar with that, make sure to check out [React Native's flexbox documentation](https://facebook.github.io/react-native/docs/flexbox) which is a great resource.<br />
 All properties are also available in CSS, so if you're coming from a web background - lucky you!
 
@@ -90,22 +76,14 @@ All properties are also available in CSS, so if you're coming from a web backgro
 | right                   | Integer, Float, `percentage()`                                                 |
 | top                     | Integer, Float, `percentage()`                                                 |
 | width                   | Integer, Float, `percentage()`                                                 |
-
-### Text
-
-Just like the view properties, most text properties are ported from React Native as well.<br />
-Again they're also available in CSS, so any CSS documentation will be a good resource as well.
-
-| Property      | Type(s)                                                        |
-| ------------- | -------------------------------------------------------------- |
-| color         | Identifier, `rgb()`, `rgba()`, `hsl()`, `hsla()`               |
-| fontFamily    | String                                                         |
-| fontStyle     | `normal`, `italic`                                             |
-| fontWeight    | `100`, `200`, `300`, `400`, `500`, `600`, `700`,  `800`, `900` |
-| letterSpacing | Integer, Float                                                 |
-| lineHeight    | Integer, Float                                                 |
-| textAlign     | `auto`, `left`, `right`, `center`, `justify`                   |
-| textAlign     | `none`, `underline`, `lineThrough`                             |
+| color                   | Identifier, `rgb()`, `rgba()`, `hsl()`, `hsla()`                               |
+| fontFamily              | String                                                                         |
+| fontStyle               | `normal`, `italic`                                                             |
+| fontWeight              | `100`, `200`, `300`, `400`, `500`, `600`, `700`,  `800`, `900`                 |
+| letterSpacing           | Integer, Float                                                                 |
+| lineHeight              | Integer, Float                                                                 |
+| textAlign               | `auto`, `left`, `right`, `center`, `justify`                                   |
+| textAlign               | `none`, `underline`, `lineThrough`                                             |
 
 ## Raw Properties
 
@@ -116,10 +94,8 @@ For example, the CSS `box-shadow` property is not available in Elodin, but if we
 
 Raw properties are specified by a leading `__` and **always** take a [RawValue](/docs/language/primitives#rawvalue) value.
 
-### Example
-
-```elo
-view Button {
+```elodin name=button.elo copy
+style Button {
   __boxShadow: raw("0 2px 6px rgb(80, 80, 80)")
   paddingLeft: 10
   paddingRight: 10

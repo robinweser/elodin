@@ -16,7 +16,7 @@ const stringFns = {
   hsla: true,
 }
 
-export default function generateValue(node, property, dynamic) {
+export default function generateValue(node, property, dynamic = true) {
   const floatingPercentage = property === 'opacity'
 
   if (!dynamic) {
@@ -24,7 +24,7 @@ export default function generateValue(node, property, dynamic) {
   }
 
   if (node.type === 'FunctionExpression') {
-    return generateFunction(node, floatingPercentage)
+    return generateFunction(node, property, floatingPercentage)
   }
 
   if (node.type === 'Integer') {
@@ -38,25 +38,36 @@ export default function generateValue(node, property, dynamic) {
   if (node.type === 'Identifier') {
     return wrapInString(hyphenateProperty(node.value))
   }
+  if (node.type === 'String') {
+    return wrapInString(node.value)
+  }
+
+  if (node.type === 'Variable') {
+    return 'props.' + node.value
+  }
 
   return node.value
 }
 
-function generateFunction(node, floatingPercentage = false) {
+function generateFunction(node, property, floatingPercentage = false) {
   if (stringFns[node.callee]) {
     return wrapInString(
       node.callee +
         '(' +
         node.params
           .map((param) => {
-            if (
-              param.type === 'Variable' ||
-              (param.type === 'FunctionExpression' && inlineFns[param.callee])
-            ) {
+            if (param.type === 'Variable') {
               return '" + props.' + param.value + ' + "'
             }
 
-            return generateValue(param, true)
+            if (
+              param.type === 'FunctionExpression' &&
+              inlineFns[param.callee]
+            ) {
+              return '" + ' + generateValue(param, property) + ' + "'
+            }
+
+            return generateValue(param, property)
           })
           .join(', ') +
         ')'
@@ -65,22 +76,20 @@ function generateFunction(node, floatingPercentage = false) {
 
   if (node.callee === 'percentage') {
     if (floatingPercentage) {
-      return (
-        '((' + generateValue(node.params[0], floatingPercentage) + ') / 100)'
-      )
+      return '((' + generateValue(node.params[0], property) + ') / 100)'
     }
 
-    return '(' + generateValue(node.params[0], floatingPercentage) + ') + "%"'
+    return '(' + generateValue(node.params[0], property) + ') + "%"'
   }
 
   if (node.callee === 'raw') {
-    return generateValue(node.params[0], floatingPercentage)
+    return generateValue(node.params[0], property)
   }
 
   if (inlineFns[node.callee]) {
     return wrapInParens(
       node.params
-        .map((value) => generateValue(value, floatingPercentage))
+        .map((value) => generateValue(value, property))
         .join(inlineFns[node.callee])
     )
   }

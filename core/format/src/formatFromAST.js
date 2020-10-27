@@ -30,9 +30,11 @@ export default function formatFromAST(node, customConfig = {}, level = 1) {
 
       return (
         variants.map(generate).join(lineSpace) +
-        (variants.length > 0 ? lineSpace : '') +
+        (variants.length > 0 && (fragments.length > 0 || styles.length > 0)
+          ? lineSpace
+          : '') +
         fragments.map(generate).join(lineSpace) +
-        (fragments.length > 0 ? lineSpace : '') +
+        (fragments.length > 0 && styles.length > 0 ? lineSpace : '') +
         styles.map(generate).join(lineSpace)
       )
 

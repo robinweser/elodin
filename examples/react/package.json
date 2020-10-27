@@ -7,7 +7,7 @@
     "build": "yarn build:elodin && next build",
     "export": "next export",
     "start": "next start",
-    "build:elodin": "elodin --clean",
+    "build:elodin": "ELODIN_ENV=production elodin --clean",
     "elodin": "elodin --watch --clean"
   },
   "license": "MIT",

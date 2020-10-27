@@ -17,7 +17,7 @@ module.exports = {
     }),
   ],
   generator: createGenerator({
-    devMode: process.env.NODE_ENV !== 'production',
+    devMode: process.env.ELODIN_ENV !== 'production',
     generateStyleName: (styleName) => styleName + 'Style',
     viewBaseClassName: '_v',
     textBaseClassName: '_t',
