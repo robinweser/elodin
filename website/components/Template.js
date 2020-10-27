@@ -14,7 +14,7 @@ const nav = {
   '/try': 'Try',
 }
 
-export default function Template({ children, onNavigation }) {
+export default function Template({ children }) {
   const { theme } = useFela()
   const router = useRouter()
 
@@ -24,7 +24,7 @@ export default function Template({ children, onNavigation }) {
     <Box grow={1}>
       <Box
         direction="row"
-        height={44}
+        height={[50, , 44]}
         alignItems="center"
         extend={{
           backgroundColor: theme.colors.primaryDark,
@@ -36,20 +36,13 @@ export default function Template({ children, onNavigation }) {
         }}>
         <Layout>
           <Box direction="row">
-            <Box display={['flex', , 'none']}>
-              {onNavigation && (
-                <NavItem onClick={onNavigation}>
-                  <i class="fas fa-bars"></i>
-                </NavItem>
-              )}
-            </Box>
             {Object.keys(nav).map((path) => (
               <NavItem path={path}>{nav[path]}</NavItem>
             ))}
           </Box>
         </Layout>
       </Box>
-      <Box grow={1} paddingTop={11}>
+      <Box grow={1} paddingTop={[12.5, , 11]}>
         {children}
       </Box>
       {showFooter && (

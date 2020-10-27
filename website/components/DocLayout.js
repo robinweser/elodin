@@ -8,6 +8,7 @@ import { MDXProvider } from '@mdx-js/react'
 
 import Link from './Link'
 import CodeBlock from './CodeBlock'
+import NavItem from './NavItem'
 import Template from './Template'
 import Layout from './Layout'
 
@@ -85,8 +86,34 @@ export default function DocLayout({ children }) {
   const { theme } = useFela()
   const router = useRouter()
 
+  const currentPage = Object.keys(nav).reduce((hit, group) => {
+    return (
+      Object.keys(nav[group]).reduce(
+        (hit, title) =>
+          (router.pathname.indexOf(nav[group][title]) !== -1 && title) || hit,
+        ''
+      ) || hit
+    )
+  }, '')
+
   return (
-    <Template onNavigation={() => setNavigationVisible(true)}>
+    <Template>
+      <Box>
+        <Box
+          space={4}
+          display={['flex', , 'none']}
+          padding={[5, , 4]}
+          direction="row"
+          alignItems="center"
+          extend={{ backgroundColor: theme.colors.background }}>
+          <Box
+            onClick={() => setNavigationVisible(!navigationVisible)}
+            extend={{ cursor: 'pointer', height: '100%', width: 16 }}>
+            <i className={'fas fa-' + (navigationVisible ? 'times' : 'bars')} />
+          </Box>
+          <Box>{currentPage}</Box>
+        </Box>
+      </Box>
       <Head>
         <link
           href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/themes/prism.min.css"
@@ -96,36 +123,24 @@ export default function DocLayout({ children }) {
       </Head>
       <Box
         minWidth={['100%', , 240]}
-        paddingTop={[16, , 8]}
-        paddingLeft={4}
-        paddingRight={4}
+        paddingTop={[4, , 8]}
+        paddingLeft={5}
+        paddingRight={5}
         paddingBottom={12}
         display={[navigationVisible ? 'flex' : 'none', , 'flex']}
         extend={{
-          backgroundColor: 'rgb(245, 245 ,245)',
+          backgroundColor: 'white',
           overflow: 'auto',
           position: 'fixed',
           zIndex: 3,
           left: 0,
-          top: 0,
+          top: 108,
           bottom: 0,
           medium: {
+            backgroundColor: theme.colors.background,
             top: 44,
           },
         }}>
-        <Box
-          display={['flex', , 'none']}
-          onClick={() => setNavigationVisible(false)}
-          extend={{
-            cursor: 'pointer',
-            position: 'absolute',
-            top: 12,
-            left: 12,
-            color: theme.colors.primary,
-            fontSize: 20,
-          }}>
-          <i class="fas fa-times"></i>
-        </Box>
         <Box space={8}>
           {Object.keys(nav).map((group) => (
             <Box space={2.5}>
@@ -163,9 +178,9 @@ export default function DocLayout({ children }) {
           },
         }}>
         <Box
-          paddingTop={[4, , , 6.5, 10]}
-          paddingRight={[0, , , 2.5, 0]}
-          paddingLeft={[0, , , 2.5, 0]}
+          paddingTop={[2, , , 7, 10]}
+          paddingRight={[0, , , 5, 0]}
+          paddingLeft={[0, , , 5, 0]}
           paddingBottom={20}>
           <MDXProvider
             components={{

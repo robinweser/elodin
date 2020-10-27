@@ -16,17 +16,13 @@ const example = `variant Intent {
 
 style Button {
   paddingLeft: 10
-  paddingRight: 10
+  paddingRight: $theme_sizes_xl
   [Intent=Positive] {
     color: green
   }
   [Intent=Negative] {
     color: red
   }
-}
-
-style Label {
-  fontSize: $theme_sizes_label
 }`
 
 export default () => {
@@ -49,16 +45,19 @@ export default () => {
         />
         <Box space={5}>
           <Layout>
-            <Box direction={['column', , 'row']} space={16} alignItems="center">
+            <Box
+              direction={['column', , , 'row']}
+              space={16}
+              alignItems="center">
               <Box grow={1}>
                 <CodeBlock nocopy>{example}</CodeBlock>
               </Box>
               <Box
                 grow={1}
+                maxWidth={['100%', , 480]}
                 extend={{
                   fontSize: 26,
                   lineHeight: 1.4,
-                  maxWidth: 480,
                   textAlign: 'center',
                   fontWeight: 300,
                 }}>
@@ -80,8 +79,8 @@ export default () => {
       </Box>
 
       <Box
-        paddingLeft={[4, , 12]}
-        paddingRight={[4, , 12]}
+        paddingLeft={[0, , 12]}
+        paddingRight={[0, , 12]}
         paddingTop={[6, , 15]}
         paddingBottom={[10, , 20]}>
         <Layout>
