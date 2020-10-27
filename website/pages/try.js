@@ -59,7 +59,10 @@ export default () => {
 
   return (
     <Template>
-      <Box direction={['column', , , 'row']} grow={1}>
+      <Box
+        direction={['column', , , 'row']}
+        grow={1}
+        minHeight={[1000, , , 500]}>
         <Box grow={1} shrink={0} basis={0} alignSelf="stretch">
           <Box
             padding={2}
