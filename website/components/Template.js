@@ -54,8 +54,8 @@ export default function Template({ children, onNavigation }) {
       </Box>
       {showFooter && (
         <Box
-          paddingTop={8}
-          paddingBottom={8}
+          paddingTop={[4, , 8]}
+          paddingBottom={[4, , 8]}
           extend={{ backgroundColor: theme.colors.background }}>
           <Layout>
             <Box space={10}>
