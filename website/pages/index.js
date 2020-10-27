@@ -36,18 +36,18 @@ export default () => {
     <Template>
       <Box
         padding={10}
-        minHeight={['20vh', , '40vh']}
+        minHeight={['20vh', , '30vh']}
         justifyContent="center"
-        space={10}
+        space={5}
         extend={{ backgroundColor: theme.colors.background }}>
         <Box
           as="img"
           width="100%"
           alignSelf="center"
-          maxWidth={[300, , 700]}
+          maxWidth={[300, , 500, , 550]}
           src="/wordmark.svg"
         />
-        <Box space={8}>
+        <Box space={5}>
           <Layout>
             <Box direction={['column', , 'row']} space={16} alignItems="center">
               <Box grow={1}>
@@ -62,8 +62,8 @@ export default () => {
                   textAlign: 'center',
                   fontWeight: 300,
                 }}>
-                Elodin let's you write type-safe component styles in a simple
-                and familiar way.
+                Elodin lets you write type-safe component styles in a simple and
+                familiar way.
                 <br />
                 It unifies the way we write styles for cross-platform
                 components.

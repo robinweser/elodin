@@ -20,7 +20,8 @@
   "dependencies": {
     "@elodin/utils-core": "^0.1.0",
     "@elodin/utils-javascript": "^0.1.0",
-    "css-in-js-utils": "^3.0.0"
+    "css-in-js-utils": "^3.0.0",
+    "uncapitalize": "^1.0.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.0",

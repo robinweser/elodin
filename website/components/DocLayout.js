@@ -53,9 +53,9 @@ const nav = {
     Comments: 'language/comments',
   },
   Targets: {
-    Javascript: 'targets/javascript',
+    JavaScript: 'targets/javascript',
     'React Native': 'targets/react-native',
-    ReasonML: 'targets/reason',
+    Reason: 'targets/reason',
   },
   Plugins: {
     'Replace Variable': 'plugins/replace-variable',
@@ -139,7 +139,7 @@ export default function DocLayout({ children }) {
                         textDecoration: 'none',
                         color:
                           router.pathname.indexOf(nav[group][page]) !== -1
-                            ? theme.colors.primaryDark
+                            ? theme.colors.primaryText
                             : 'black',
                       }}>
                       {page}
@@ -207,19 +207,18 @@ export default function DocLayout({ children }) {
 
               blockquote: ({ children }) => (
                 <Box
+                  paddingLeft={3}
+                  paddingTop={2}
+                  paddingRight={2}
+                  paddingBottom={2}
                   extend={{
-                    paddingLeft: 7,
-                    left: -10,
-                    position: 'relative',
-                    borderLeft: '3px solid rgb(100, 100, 100)',
-                    fontStyle: 'italic',
+                    borderLeftWidth: 6,
+                    borderLeftStyle: 'solid',
+                    borderLeftColor: theme.colors.primary,
+                    backgroundColor: theme.colors.primaryTransparent,
+
                     margin: '5px 0 15px',
-                    large: {
-                      left: -15,
-                      paddingLeft: 12,
-                    },
                     '& p': {
-                      color: 'rgb(100, 100, 100)',
                       marginBottom: 0,
                       marginTop: 0,
                     },

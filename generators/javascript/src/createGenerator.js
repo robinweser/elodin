@@ -9,8 +9,8 @@ import {
   stringifyRule,
 } from '@elodin/utils-css'
 import { getVariantsFromAST } from '@elodin/utils-core'
+import uncapitalizeString from 'uncapitalize'
 
-const uncapitalizeString = (str) => str.charAt(0).toLowerCase() + str.substr(1)
 
 const defaultConfig = {
   devMode: false,

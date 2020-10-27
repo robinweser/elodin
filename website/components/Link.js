@@ -15,9 +15,9 @@ export default function Link({ href, children, highlight, extern }) {
         display: 'inline',
         alignSelf: 'flex-start',
         textDecoration: 'none',
-        color: theme.colors.primaryDark,
+        color: theme.colors.primaryText,
         ':hover': {
-          color: theme.colors.primary,
+          color: theme.colors.primaryDark,
         },
       }}>
       {children}

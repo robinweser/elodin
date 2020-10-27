@@ -32,7 +32,7 @@ export default () => {
   try {
     parsed = parse(text)
   } catch (e) {
-    console.log(e)
+    console.error(e)
     parsed = {
       errors: [{ message: 'Error' }],
     }
@@ -42,6 +42,7 @@ export default () => {
     try {
       generated = generate(parsed.ast, 'example.elo')
     } catch (e) {
+      console.error(e)
       parsed = {
         errors: [{ message: 'Error' }],
       }

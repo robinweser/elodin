@@ -33,7 +33,7 @@ module.exports = {
 ### Example
 
 ```javascript name=elodin.config.js
-var createGenerator = require('@elodin/generator-react-native').createGenerator
+var createGenerator = require('@elodin/generator-javascript').createGenerator
 
 module.exports = {
   ...elodinConfig,
@@ -85,12 +85,11 @@ style Button {
 
 ### React
 
-```javascript name=Button.js info=Usage
+```javascript name=Button.js
 import React from 'react'
 
 import { Button as ButtonStyle } from './button.elo.js'
 
-// just to showcase the API - do not create Buttons from Views!
 function Button({ children, variant = 'primary' }) {
   return <button className={ButtonStyle({ variant })}>{children}</button>
 }

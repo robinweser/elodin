@@ -12,7 +12,6 @@ const nav = {
   '/': 'Home',
   '/docs': 'Docs',
   '/try': 'Try',
-  'https://github.com/robinweser/elodin': 'Github',
 }
 
 export default function Template({ children, onNavigation }) {
@@ -59,9 +58,27 @@ export default function Template({ children, onNavigation }) {
           paddingBottom={8}
           extend={{ backgroundColor: theme.colors.background }}>
           <Layout>
-            <Box space={5}>
-              <Box>
-                <Link href="https://github.com/robinweser/elodin">Github</Link>
+            <Box space={10}>
+              <Box direction={['column', , 'row']} space={[10, , '15%']}>
+                <Box space={2}>
+                  <Box as="p" extend={{ fontWeight: 500 }}>
+                    Documentation
+                  </Box>
+                  <Link href="/docs/setup/installation">Installation</Link>
+                  <Link href="/docs/setup/getting-started">
+                    Getting Started
+                  </Link>
+                  <Link href="/docs/extra/examples">Examples</Link>
+                </Box>
+                <Box space={2}>
+                  <Box as="p" extend={{ fontWeight: 500 }}>
+                    Links
+                  </Box>
+
+                  <Link href="https://github.com/robinweser/elodin">
+                    Github
+                  </Link>
+                </Box>
               </Box>
               <Box extend={{ display: 'block' }}>
                 Elodin is written with ❤︎ by{' '}
