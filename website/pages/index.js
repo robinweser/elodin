@@ -7,6 +7,8 @@ import Layout from '../components/Layout'
 import CodeBlock from '../components/CodeBlock'
 import Button from '../components/Button'
 
+const tryHref = `/try?code=variant%20Intent%20%7B%0A%20%20Positive%0A%20%20Negative%0A%7D%0A%0Astyle%20Button%20%7B%0A%20%20paddingLeft:%2010%0A%20%20paddingRight:%2010%0A%20%20%5BIntent=Positive%5D%20%7B%0A%20%20%20%20color:%20green%0A%20%20%7D%0A%20%20%5BIntent=Negative%5D%20%7B%0A%20%20%20%20color:%20red%0A%20%20%7D%0A%7D%0A%0Astyle%20Label%20%7B%0A%20%20fontSize:%20$theme_sizes_label%0A%7D`
+
 const example = `variant Intent {
   Positive
   Negative
@@ -70,7 +72,7 @@ export default () => {
           </Layout>
           <Box direction="row" space={3} alignSelf="center">
             <Button href="/docs/setup/installation">Quick Start</Button>
-            <Button href="/try" variant="secondary">
+            <Button href={tryHref} variant="secondary">
               Try Online
             </Button>
           </Box>
