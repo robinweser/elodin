@@ -18,6 +18,7 @@ export default [
     style: {
       WebkitTextSizeAdjust: '100%',
       fontFamily: '-apple-system, sans-serif',
+      color: 'rgb(60, 60, 60)',
     },
   },
   {

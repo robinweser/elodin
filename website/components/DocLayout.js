@@ -22,6 +22,7 @@ function Heading({ level, children }) {
         marginTop: (level === 1 ? 0 : 22) + (level === 2 ? 26 : 0),
         marginBottom: level === 1 ? 30 : 10,
         lineHeight: 1.0,
+        fontWeight: level === 1 ? 700 : 600,
         '> a': {
           color: theme.colors.foreground,
         },
