@@ -135,6 +135,7 @@ export default function CodeBlock({
             paddingRight={4}
             paddingLeft={4}
             marginBottom={1.5}
+            maxWidth="100%"
             extend={{
               backgroundColor: theme.colors.background,
               overflow: 'auto',

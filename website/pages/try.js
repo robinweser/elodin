@@ -137,6 +137,7 @@ export default () => {
           grow={1}
           shrink={0}
           basis={0}
+          maxWidth={['100%', , '50%']}
           extend={{
             borderBottomWidth: 1,
             borderBottomStyle: 'solid',
