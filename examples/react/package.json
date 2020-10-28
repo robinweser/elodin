@@ -4,9 +4,9 @@
   "version": "0.1.0",
   "scripts": {
     "dev": "next dev",
-    "build": "yarn build:elodin && next build",
     "export": "next export",
     "start": "next start",
+    "build:page": "yarn build:elodin && next build",
     "build:elodin": "ELODIN_ENV=production elodin --clean",
     "elodin": "elodin --watch --clean"
   },
