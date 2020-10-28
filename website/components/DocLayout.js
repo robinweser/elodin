@@ -139,7 +139,7 @@ export default function DocLayout({ children }) {
           href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/themes/prism.min.css"
           rel="stylesheet"
         />
-        <title>Elodin - Documentation </title>
+        <title>Elodin - Documentation</title>
       </Head>
       <Box
         minWidth={['100%', , 240]}

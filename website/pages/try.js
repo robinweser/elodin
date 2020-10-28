@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { unstable_batchedUpdates } from 'react-dom'
+import Head from 'next/head'
 import { Box } from 'kilvin'
 import { useRouter } from 'next/router'
 import { parse } from '@elodin/parser'
@@ -68,6 +69,9 @@ export default () => {
 
   return (
     <Template>
+      <Head>
+        <title>Elodin - Online REPL</title>
+      </Head>
       <Box
         direction={['column', , , 'row']}
         grow={1}

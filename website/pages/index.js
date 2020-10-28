@@ -1,5 +1,6 @@
 import React from 'react'
 import { Box } from 'kilvin'
+import Head from 'next/head'
 import { useFela } from 'react-fela'
 
 import Template from '../components/Template'
@@ -30,6 +31,9 @@ export default () => {
 
   return (
     <Template>
+      <Head>
+        <title>The Elodin Styling Language</title>
+      </Head>
       <Box
         padding={10}
         minHeight={['20vh', , '30vh']}
