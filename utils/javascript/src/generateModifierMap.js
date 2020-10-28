@@ -10,8 +10,8 @@ export default function generateModifierMap(
     devMode,
     generateVariantName = (v) => v,
     generateVariantValue = (v) => v,
-    variantSeparator = '__',
-    valueSeparator = '_',
+    variantSeparator = '_',
+    valueSeparator = '-',
   } = config
 
   const nesting = nodes.filter((node) => node.type !== 'Declaration')

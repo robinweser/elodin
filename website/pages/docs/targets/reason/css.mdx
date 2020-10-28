@@ -1,11 +1,11 @@
-import DocLayout from '../../../components/DocLayout.js'
+import DocLayout from '../../../../components/DocLayout.js'
 
 export default DocLayout
 
-# Reason
+# Reason: CSS
 
 ```bash
-yarn add --dev @elodin/generator-reason
+yarn add --dev @elodin/generator-reason-css
 ```
 
 This generator is used with [ReasonML](https://reasonml.github.io). It renders to plain CSS and Reason files.<br />
@@ -16,10 +16,10 @@ The Reason files contain functions that return the correct className depending o
 To use the Javascript generator, simply add it to your Elodin configuration and you're ready to go.
 
 ```javascript name=elodin.config.js
-var createGenerator = require('@elodin/generator-reason').createGenerator
+var generator = require('@elodin/generator-reason-css')
 
 module.exports = {
-  generator: createGenerator(),
+  generator: generator.createGenerator(),
 }
 ```
 
@@ -33,11 +33,10 @@ module.exports = {
 ### Example
 
 ```javascript name=elodin.config.js
-var createGenerator = require('@elodin/generator-reason').createGenerator
+var generator = require('@elodin/generator-reason-css')
 
 module.exports = {
-  ...elodinConfig,
-  generator: createGenerator({
+  generator: generator.createGenerator({
     devMode: true,
     dynamicImport: false,
   }),

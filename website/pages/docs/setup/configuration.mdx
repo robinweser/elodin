@@ -4,7 +4,7 @@ export default DocLayout
 
 # Configuration
 
-We already learned that Elodin requires a generator to run.<br />
+We already learned that Elodin requires a generator and a list of sources to run.<br />
 Apart from that, we can pass a bunch of other configurations.
 
 | Configuration | Value          | Default | Description                                                                                                      |
@@ -19,7 +19,7 @@ Apart from that, we can pass a bunch of other configurations.
 > **Note**: We're using ES5 here since it won't pre-compile configuration files by default. If you want to write modern ES2015+, you'll have to transpile those with e.g. Babel first.
 
 ```javascript name=elodin.config.js copy
-var createGenerator = require('@elodin/generator-javascript').createGenerator
+var generator = require('@elodin/generator-javascript-css')
 var replaceVariable = require('@elodin/plugin-replace-variabe')
 
 module.exports = {
@@ -35,7 +35,7 @@ module.exports = {
       },
     }),
   ],
-  generator: createGenerator({
+  generator: generator.createGenerator({
     devMode: true,
   }),
 }

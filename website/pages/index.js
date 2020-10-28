@@ -23,7 +23,7 @@ style Button {
   }
 }`
 
-const tryHref = '/try?generator=javascript&code=' + encodeURI(example)
+const tryHref = '/try?generator=javascript-css&code=' + encodeURI(example)
 
 export default () => {
   const { theme } = useFela()

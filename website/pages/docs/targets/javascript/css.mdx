@@ -1,11 +1,11 @@
-import DocLayout from '../../../components/DocLayout.js'
+import DocLayout from '../../../../components/DocLayout.js'
 
 export default DocLayout
 
-# JavaScript
+# JavaScript: CSS
 
 ```bash
-yarn add --dev @elodin/generator-javascript
+yarn add --dev @elodin/generator-javascript-css
 ```
 
 This generator is used with JavaScript. It renders to plain CSS and JavaScript files.<br />
@@ -33,11 +33,10 @@ module.exports = {
 ### Example
 
 ```javascript name=elodin.config.js
-var createGenerator = require('@elodin/generator-javascript').createGenerator
+var generator = require('@elodin/generator-javascript-css')
 
 module.exports = {
-  ...elodinConfig,
-  generator: createGenerator({
+  generator: generator.createGenerator({
     devMode: true,
     dynamicImport: false,
     generateStyleName: (name) => name + 'Style',

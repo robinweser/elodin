@@ -26,17 +26,17 @@ style Label {
 
 ## Configure Elodin
 
-In order to compile this style, we need to configure a generator which generates target-specific files. Check the Targets section to find the right generator for your job. Each generator accepts different configuration options.<br />
+In order to compile this style, we need to pass a list of sources and configure a generator which generates target-specific files. Check the Targets section to find the right generator for your job. Each generator accepts different configuration options.<br />
 
 The simplest way to add an Elodin configuration is by creating a _elodin.config.js_ file at the root of your project.
 
 ```javascript name=elodin.config.js copy
-// For this example, we'll use the JavaScript generator
-var createGenerator = require('@elodin/generator-javascript').createGenerator
+// For this example, we'll use the JavaScript CSS generator
+var generator = require('@elodin/generator-javascript-css')
 
 module.exports = {
   sources ["components"],
-  generator: createGenerator(),
+  generator: generator.createGenerator(),
 }
 ```
 

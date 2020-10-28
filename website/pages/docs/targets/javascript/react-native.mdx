@@ -1,11 +1,11 @@
-import DocLayout from '../../../components/DocLayout.js'
+import DocLayout from '../../../../components/DocLayout.js'
 
 export default DocLayout
 
-# React Native
+# JavaScript: React Native
 
 ```bash
-yarn add --dev @elodin/generator-react-native
+yarn add --dev @elodin/generator-javascript-react-native
 ```
 
 This generator is used with JavaScript and React Native.<br />
@@ -16,10 +16,10 @@ It renders all styles to [StyleSheet](https://facebook.github.io/react-native/do
 To use the React Native generator, simply add it to your Elodin configuration and you're ready to go.
 
 ```javascript name=elodin.config.js
-var createGenerator = require('@elodin/generator-react-native').createGenerator
+var generator = require('@elodin/generator-javascript-react-native')
 
 module.exports = {
-  generator: createGenerator(),
+  generator: generator.createGenerator(),
 }
 ```
 
@@ -28,16 +28,15 @@ module.exports = {
 | Option     | Type    | Default        | Description                                                                                                                                                                                                                                |
 | ---------- | ------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | importFrom | String  | _react-native_ | Package from which package the `StyleSheet` API is imported. Useful when building with other React Native adopted renderers such as [react-pdf](https://react-pdf.org) or [react-native-web](https://github.com/necolas/react-native-web). |
-| devMode    | Boolean | _false_        | In devMode, class names contain human-readable prefixes that help to indentify the referenced style.                                                                                                                                       |
+| devMode    | Boolean | _false_        | In devMode, style names contain human-readable prefixes that help to indentify the referenced style.                                                                                                                                       |
 
 ### Example
 
 ```javascript name=elodin.config.js
-var createGenerator = require('@elodin/generator-react-native').createGenerator
+var generator = require('@elodin/generator-javascript-react-native')
 
 module.exports = {
-  ...elodinConfig,
-  generator: createGenerator({
+  generator: generator.createGenerator({
     importFrom: '@react-pdf/renderer',
   }),
 }

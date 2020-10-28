@@ -54,10 +54,14 @@ const nav = {
     Comments: 'language/comments',
   },
   Targets: {
-    JavaScript: 'targets/javascript',
-    'React Native': 'targets/react-native',
-    Reason: 'targets/reason',
-    Fela: 'targets/fela',
+    JavaScript: {
+      CSS: 'targets/javascript/css',
+      'React Native': 'targets/javascript/react-native',
+      Fela: 'targets/javascript/fela',
+    },
+    Reason: {
+      CSS: 'targets/reason/css',
+    },
   },
   Plugins: {
     'Replace Variable': 'plugins/replace-variable',
@@ -147,21 +151,52 @@ export default function DocLayout({ children }) {
             <Box space={2.5}>
               <Box extend={{ fontWeight: 700 }}>{group}</Box>
               <Box paddingLeft={4} space={2.5}>
-                {Object.keys(nav[group]).map((page) => (
-                  <NextLink href={'/docs/' + nav[group][page]} passHref>
-                    <Box
-                      as="a"
-                      extend={{
-                        textDecoration: 'none',
-                        color:
-                          router.pathname.indexOf(nav[group][page]) !== -1
-                            ? theme.colors.primaryText
-                            : 'black',
-                      }}>
-                      {page}
-                    </Box>
-                  </NextLink>
-                ))}
+                {Object.keys(nav[group]).map((page) => {
+                  if (typeof nav[group][page] === 'object') {
+                    return (
+                      <Box space={2.5}>
+                        <Box extend={{ fontWeight: 700 }}>{page}</Box>
+                        <Box paddingLeft={4} space={2.5}>
+                          {Object.keys(nav[group][page]).map((generator) => (
+                            <NextLink
+                              href={'/docs/' + nav[group][page][generator]}
+                              passHref>
+                              <Box
+                                as="a"
+                                extend={{
+                                  textDecoration: 'none',
+                                  color:
+                                    router.pathname.indexOf(
+                                      nav[group][page][generator]
+                                    ) !== -1
+                                      ? theme.colors.primaryText
+                                      : 'black',
+                                }}>
+                                {generator}
+                              </Box>
+                            </NextLink>
+                          ))}
+                        </Box>
+                      </Box>
+                    )
+                  }
+
+                  return (
+                    <NextLink href={'/docs/' + nav[group][page]} passHref>
+                      <Box
+                        as="a"
+                        extend={{
+                          textDecoration: 'none',
+                          color:
+                            router.pathname.indexOf(nav[group][page]) !== -1
+                              ? theme.colors.primaryText
+                              : 'black',
+                        }}>
+                        {page}
+                      </Box>
+                    </NextLink>
+                  )
+                })}
               </Box>
             </Box>
           ))}

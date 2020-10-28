@@ -1,11 +1,11 @@
-import DocLayout from '../../../components/DocLayout.js'
+import DocLayout from '../../../../components/DocLayout.js'
 
 export default DocLayout
 
-# Fela
+# JavaScript: Fela
 
 ```bash
-yarn add --dev @elodin/generator-fela
+yarn add --dev @elodin/generator-javascript-fela
 ```
 
 This generator is used with JavaScript and [Fela](https://fela.js.org).<br />
@@ -16,29 +16,26 @@ It renders all styles to [Fela rules](http://fela.js.org/docs/basics/Rules.html)
 To use the Fela generator, simply add it to your Elodin configuration and you're ready to go.
 
 ```javascript name=elodin.config.js
-var createGenerator = require('@elodin/generator-fela').createGenerator
+var generator = require('@elodin/generator-javascript-fela')
 
 module.exports = {
-  generator: createGenerator(),
+  generator: generator.createGenerator(),
 }
 ```
 
 ## Configuration
 
-| Option  | Type    | Default | Description                                                                                          |
-| ------- | ------- | ------- | ---------------------------------------------------------------------------------------------------- |
-| devMode | Boolean | _false_ | In devMode, class names contain human-readable prefixes that help to indentify the referenced style. |
+| Option | Type | Default | Description |
+| ------ | ---- | ------- | ----------- |
+|        |      |         |             |
 
 ### Example
 
 ```javascript name=elodin.config.js
-var createGenerator = require('@elodin/generator-fela').createGenerator
+var generator = require('@elodin/generator-javascript-fela')
 
 module.exports = {
-  ...elodinConfig,
-  generator: createGenerator({
-    devMode: true,
-  }),
+  generator: generator.createGenerator(),
 }
 ```
 
@@ -79,7 +76,6 @@ style Button {
 ```
 
 ```javascript name=Button.js
-import React from 'react'
 import { createRenderer } from 'fela'
 
 import { Button } from './button.elo.js'

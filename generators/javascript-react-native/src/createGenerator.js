@@ -68,6 +68,8 @@ function generateJS(
         devMode,
         generateVariantName,
         generateVariantValue,
+        valueSeparator: '_',
+        variantSeparator: '__',
       }),
     }
 

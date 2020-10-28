@@ -6,20 +6,20 @@ import { parse } from '@elodin/parser'
 import { format } from '@elodin/format'
 import { useFela } from 'react-fela'
 
-import * as javascript from '@elodin/generator-javascript'
-import * as reactNative from '@elodin/generator-react-native'
-import * as reason from '@elodin/generator-reason'
-import * as fela from '@elodin/generator-fela'
+import * as jsCss from '@elodin/generator-javascript-css'
+import * as jsReactNative from '@elodin/generator-javascript-react-native'
+import * as jsFela from '@elodin/generator-javascript-fela'
+import * as reasonCss from '@elodin/generator-reason-css'
 
 import Template from '../components/Template'
 import Layout from '../components/Layout'
 import CodeBlock from '../components/CodeBlock'
 
 const generators = {
-  javascript: javascript.createGenerator,
-  reactNative: reactNative.createGenerator,
-  reason: reason.createGenerator,
-  fela: fela.createGenerator,
+  'javascript-css': jsCss.createGenerator,
+  'javascript-react-native': jsReactNative.createGenerator,
+  'javascript-fela': jsFela.createGenerator,
+  'reason-css': reasonCss.createGenerator,
 }
 
 export default () => {
@@ -27,7 +27,7 @@ export default () => {
   const [text, setText] = useState('')
   const [dirty, setDirty] = useState(false)
   const [devMode, setDevMode] = useState(false)
-  const [generator, setGenerator] = useState('javascript')
+  const [generator, setGenerator] = useState('javascript-css')
   const router = useRouter()
 
   const generate = generators[generator]({
@@ -101,10 +101,12 @@ export default () => {
                 <select
                   value={generator}
                   onChange={(e) => setGenerator(e.target.value)}>
-                  <option value="javascript">JavaScript</option>
-                  <option value="reactNative">React Native</option>
-                  <option value="reason">Reason</option>
-                  <option value="fela">Fela</option>
+                  <option value="javascript-css">javascript-css</option>
+                  <option value="javascript-react-native">
+                    javascript-react-native
+                  </option>
+                  <option value="javascript-fela">javascript-fela</option>
+                  <option value="reason-css">reason-css</option>
                 </select>
               </Box>
             </Box>
