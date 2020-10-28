@@ -12,14 +12,29 @@ import NavItem from './NavItem'
 import Template from './Template'
 import Layout from './Layout'
 
+function beautifyId(text) {
+  return text.replace(/ /gi, '-').toLowerCase()
+}
+
 function Heading({ level, children }) {
   const { theme } = useFela()
+  const router = useRouter()
+
+  const id =
+    typeof children === 'string' ? encodeURI(beautifyId(children)) : undefined
 
   return (
     <Box
       as={'h' + level}
+      id={id}
+      onClick={() => {
+        if (id) {
+          window.location.hash = id
+        }
+      }}
       extend={{
         display: 'block',
+        cursor: id ? 'pointer' : 'inherit',
         marginTop: (level === 1 ? 0 : 22) + (level === 2 ? 26 : 0),
         marginBottom: level === 1 ? 30 : 10,
         lineHeight: 1.0,
