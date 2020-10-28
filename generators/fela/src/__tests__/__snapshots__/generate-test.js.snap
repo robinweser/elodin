@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Compiling to React Native should return a map of files 1`] = `
+Object {
+  "style.elo.js": "import { StyleSheet } from \\"react-native\\"
+
+const styles = StyleSheet.create({
+  button: {
+    backgroundColor: \\"red\\",
+    paddingLeft: 10
+  },
+  box: {
+    paddingTop: 10
+  },
+  label: {
+    fontSize: 12
+  }
+})
+
+export function Button(props = {}) {
+  const style = {
+    alignItems: props.alignItems
+  }
+
+  return StyleSheet.flatten([styles.button, style])
+}
+
+export function Box(props = {}) {
+  return styles.box
+}
+
+export function Label(props = {}) {
+  const style = {
+    lineHeight: props.lineHeight
+  }
+
+  return StyleSheet.flatten([styles.label, style])
+}",
+}
+`;
+
+exports[`Compiling to React Native should use a custom importName 1`] = `
+Object {
+  "style.elo.js": "import { StyleSheet } from \\"@react-pdf/renderer\\"
+
+const styles = StyleSheet.create({
+  button: {
+    backgroundColor: \\"red\\",
+    paddingLeft: 10
+  },
+  box: {
+    paddingTop: 10
+  },
+  label: {
+    fontSize: 12
+  }
+})
+
+export function Button(props = {}) {
+  const style = {
+    alignItems: props.alignItems
+  }
+
+  return StyleSheet.flatten([styles.button, style])
+}
+
+export function Box(props = {}) {
+  return styles.box
+}
+
+export function Label(props = {}) {
+  const style = {
+    lineHeight: props.lineHeight
+  }
+
+  return StyleSheet.flatten([styles.label, style])
+}",
+}
+`;

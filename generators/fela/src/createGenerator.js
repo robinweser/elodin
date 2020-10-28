@@ -45,7 +45,6 @@ function generateJS(
   const styles = ast.body.filter((node) => node.type === 'Style')
   const variants = ast.body.filter((node) => node.type === 'Variant')
 
-  let modifierMap = {}
   const modules = styles.reduce((modules, module) => {
     const usedVariants = getVariantsFromAST(module)
     const variantMap = variants.reduce((flatVariants, variant) => {
@@ -59,85 +58,58 @@ function generateJS(
     }, {})
 
     const variables = getVariablesFromAST(module)
-    const style = generateStyle(module.body)
     const styles = generateStyles(module.body, variantMap, devMode)
 
-    modifierMap = {
-      ...modifierMap,
-      ...generateModifierMap(module.body, variantMap, {
-        devMode,
-        generateVariantName,
-        generateVariantValue,
-      }),
-    }
+    const modifierStyle = styles.filter((style) => style.modifier.length !== 0)
+    const baseStyle = styles.filter((style) => style.modifier.length === 0)[0]
+
+    console.log(modifierStyle)
 
     modules[module.name] = {
-      style,
-      styles,
+      baseStyle,
+      modifierStyle,
       variables,
     }
     return modules
   }, {})
 
-  return (
-    'import { StyleSheet } from "' +
-    importFrom +
-    '"' +
-    '\n\n' +
-    'const styles = StyleSheet.create({\n  ' +
-    Object.keys(modules)
-      .map((name) =>
-        modules[name].styles
-          .map(
-            ({ modifier, declarations }) =>
-              uncapitalizeString(name) +
-              modifier +
-              ': {\n    ' +
-              declarations
-                .filter((decl) => !decl.dynamic)
-                .map(stringifyDeclaration)
-                .join(',\n    ') +
-              '\n  }'
-          )
-          .join(',\n  ')
-      )
-      .join(',\n  ') +
-    '\n})' +
-    '\n\n' +
-    'const modifierMap = ' +
-    JSON.stringify(modifierMap, null, 2) +
-    '\n\n' +
-    Object.keys(modules)
-      .map(
-        (name) =>
-          'export function ' +
-          name +
-          '(props = {}) {\n  ' +
-          (modules[name].style.find((decl) => decl.dynamic)
-            ? 'const style = {\n    ' +
-              modules[name].style
-                .filter((decl) => decl.dynamic)
-                .map(stringifyDeclaration)
-                .join(',\n    ') +
-              '\n  }\n\n  ' +
-              'return StyleSheet.flatten([styles.' +
-              uncapitalizeString(name) +
-              ', style])'
-            : 'return styles.' + uncapitalizeString(name)) +
-          '\n}'
-      )
-      .join('\n\n')
-  )
-}
-
-function generateStyle(nodes) {
-  const base = nodes.filter((node) => node.type === 'Declaration')
-
-  return base.map((declaration) => ({
-    property: declaration.property,
-    value: generateValue(declaration.value, declaration.property, true),
-    dynamic: declaration.dynamic,
-  }))
+  return Object.keys(modules)
+    .map(
+      (name) =>
+        'export function ' +
+        name +
+        '(props = {}) {\n  return {\n    ' +
+        modules[name].baseStyle.declarations
+          .map(stringifyDeclaration)
+          .join(',\n    ') +
+        (modules[name].modifierStyle.length > 0
+          ? ',\n    extend: [\n      ' +
+            modules[name].modifierStyle
+              .map(
+                ({ modifier, declarations }) =>
+                  '{\n        ' +
+                  'condition: ' +
+                  modifier
+                    .map(
+                      ([name, value]) =>
+                        'props.' +
+                        generateVariantName(name) +
+                        ' === ' +
+                        wrapInString(generateVariantValue(value))
+                    )
+                    .join(' && ') +
+                  ',\n        style: {\n          ' +
+                  declarations.map(stringifyDeclaration).join(',\n          ') +
+                  '\n        }' +
+                  '\n      }'
+              )
+              .join(',\n      ') +
+            '\n    ]'
+          : '') +
+        '\n  }' +
+        '\n}'
+    )
+    .join('\n\n')
 }
 
 function generateStyles(
@@ -149,23 +121,9 @@ function generateStyles(
 ) {
   const base = nodes.filter((node) => node.type === 'Declaration')
   const nesting = nodes.filter((node) => node.type !== 'Declaration')
-  const variantOrder = Object.keys(variantMap)
 
   styles.push({
-    // ensure the variant modifier order is always deterministic
-    modifier: modifier
-      .sort((a, b) =>
-        variantOrder.indexOf(a[0]) > variantOrder.indexOf(b[0]) ? 1 : -1
-      )
-      .map(([name, value]) =>
-        devMode
-          ? '___' + name + '_' + value
-          : '__' +
-            variantOrder.indexOf(name) +
-            '_' +
-            variantMap[name].indexOf(value)
-      )
-      .join(''),
+    modifier,
     declarations: base.map((declaration) => ({
       property: declaration.property,
       value: generateValue(declaration.value, declaration.property, true),
@@ -195,4 +153,8 @@ function generateStyles(
   })
 
   return styles
+}
+
+function wrapInString(value) {
+  return '"' + value + '"'
 }

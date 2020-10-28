@@ -57,6 +57,7 @@ const nav = {
     JavaScript: 'targets/javascript',
     'React Native': 'targets/react-native',
     Reason: 'targets/reason',
+    Fela: 'targets/fela',
   },
   Plugins: {
     'Replace Variable': 'plugins/replace-variable',

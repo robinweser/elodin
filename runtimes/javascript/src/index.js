@@ -1,2 +1,2 @@
-import getClassNameFromVariantMap from './getClassNameFromVariantMap'
-export { getClassNameFromVariantMap }
+import getClassNameFromModifierMap from './getClassNameFromModifierMap'
+export { getClassNameFromModifierMap }

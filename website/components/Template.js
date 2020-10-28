@@ -71,6 +71,7 @@ export default function Template({ children }) {
                   <Link href="https://github.com/robinweser/elodin">
                     Github
                   </Link>
+                  <Link href="https://twitter.com/elodinlang">Twitter</Link>
                 </Box>
               </Box>
               <Box extend={{ display: 'block' }}>

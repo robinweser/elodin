@@ -1,0 +1,98 @@
+import DocLayout from '../../../components/DocLayout.js'
+
+export default DocLayout
+
+# Fela
+
+```bash
+yarn add --dev @elodin/generator-fela
+```
+
+This generator is used with JavaScript and [Fela](https://fela.js.org).<br />
+It renders all styles to [Fela rules](http://fela.js.org/docs/basics/Rules.html) using the [fela-plugin-extend](https://github.com/robinweser/fela/tree/master/packages/fela-plugin-extend) `extend` syntax to render variant conditionals.
+
+## Usage
+
+To use the Fela generator, simply add it to your Elodin configuration and you're ready to go.
+
+```javascript name=elodin.config.js
+var createGenerator = require('@elodin/generator-fela').createGenerator
+
+module.exports = {
+  generator: createGenerator(),
+}
+```
+
+## Configuration
+
+| Option  | Type    | Default | Description                                                                                          |
+| ------- | ------- | ------- | ---------------------------------------------------------------------------------------------------- |
+| devMode | Boolean | _false_ | In devMode, class names contain human-readable prefixes that help to indentify the referenced style. |
+
+### Example
+
+```javascript name=elodin.config.js
+var createGenerator = require('@elodin/generator-fela').createGenerator
+
+module.exports = {
+  ...elodinConfig,
+  generator: createGenerator({
+    devMode: true,
+  }),
+}
+```
+
+## Feature Coverage
+
+- Styles
+- Primitives
+- Variables
+- Functions
+- Variants
+- Conditionals
+
+#### Coming soon
+
+- Environment Conditionals
+
+---
+
+## Usage Example
+
+```elo name=button.elo
+variant Variant {
+  Primary
+  Secondary
+}
+
+style Button {
+  paddingLeft: 10
+  paddingRight: 10
+  minWidth: $minWidth
+  [Variant=Primary] {
+    backgroundColor: blue
+  }
+  [Variant=Secondary] {
+    backgroundColor: red
+  }
+}
+```
+
+```javascript name=Button.js
+import React from 'react'
+import { createRenderer } from 'fela'
+
+import { Button } from './button.elo.js'
+
+// make sure to include the fela-plugin-extend
+// it is included in the fela-preset-web
+const renderer = createRenderer()
+
+const className = renderer.renderRule(Button, {
+  variant: 'primary',
+  minWidth: 120,
+})
+
+// do something with it
+document.getElementById('button').className = className
+```

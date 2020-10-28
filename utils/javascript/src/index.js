@@ -1,3 +1,4 @@
 import generateValue from './generateValue'
+import generateModifierMap from './generateModifierMap'
 
-export { generateValue }
+export { generateValue, generateModifierMap }

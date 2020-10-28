@@ -1,32 +1,38 @@
 import React, { useState, useEffect } from 'react'
+import { unstable_batchedUpdates } from 'react-dom'
 import { Box } from 'kilvin'
 import { useRouter } from 'next/router'
 import { parse } from '@elodin/parser'
 import { format } from '@elodin/format'
 import { useFela } from 'react-fela'
 
+import * as javascript from '@elodin/generator-javascript'
+import * as reactNative from '@elodin/generator-react-native'
+import * as reason from '@elodin/generator-reason'
+import * as fela from '@elodin/generator-fela'
+
 import Template from '../components/Template'
 import Layout from '../components/Layout'
 import CodeBlock from '../components/CodeBlock'
 
-import * as javascript from '@elodin/generator-javascript'
-import * as reactNative from '@elodin/generator-react-native'
-import * as reason from '@elodin/generator-reason'
-
 const generators = {
-  javascript: javascript.createGenerator(),
-  reactNative: reactNative.createGenerator(),
-  reason: reason.createGenerator(),
+  javascript: javascript.createGenerator,
+  reactNative: reactNative.createGenerator,
+  reason: reason.createGenerator,
+  fela: fela.createGenerator,
 }
 
 export default () => {
   const { theme } = useFela()
   const [text, setText] = useState('')
   const [dirty, setDirty] = useState(false)
+  const [devMode, setDevMode] = useState(false)
   const [generator, setGenerator] = useState('javascript')
   const router = useRouter()
 
-  const generate = generators[generator]
+  const generate = generators[generator]({
+    devMode,
+  })
 
   let parsed, generated
   try {
@@ -53,7 +59,10 @@ export default () => {
 
   useEffect(() => {
     if (!dirty && router.query.code) {
-      setText(decodeURI(router.query.code))
+      unstable_batchedUpdates(() => {
+        setText(decodeURI(router.query.code))
+        setGenerator(router.query.generator || 'javascript')
+      })
     }
   }, [router.query])
 
@@ -75,17 +84,29 @@ export default () => {
             </Box>
             <Box
               direction="row"
-              space={2}
+              space={6}
               alignItems="center"
-              extend={{ lineHeight: 1 }}>
-              Generator:
-              <select
-                value={generator}
-                onChange={(e) => setGenerator(e.target.value)}>
-                <option value="javascript">JavaScript</option>
-                <option value="reactNative">React Native</option>
-                <option value="reason">Reason</option>
-              </select>
+              extend={{ lineHeight: 1, fontSize: 13 }}>
+              <Box direction="row" space={1} alignItems="center">
+                <input
+                  id="devMode"
+                  type="checkbox"
+                  checked={devMode}
+                  onChange={() => setDevMode((mode) => !mode)}
+                />
+                <label htmlFor="devMode">devMode</label>
+              </Box>
+              <Box direction="row" space={1} alignItems="center">
+                Generator:
+                <select
+                  value={generator}
+                  onChange={(e) => setGenerator(e.target.value)}>
+                  <option value="javascript">JavaScript</option>
+                  <option value="reactNative">React Native</option>
+                  <option value="reason">Reason</option>
+                  <option value="fela">Fela</option>
+                </select>
+              </Box>
             </Box>
           </Box>
           <Box
@@ -107,9 +128,21 @@ export default () => {
 
                 if (errors.length === 0) {
                   setText(code)
-                  router.replace(router.pathname + '?code=' + encodeURI(code))
+                  router.replace(
+                    router.pathname +
+                      '?generator=' +
+                      generator +
+                      '&code=' +
+                      encodeURI(code)
+                  )
                 } else {
-                  router.replace(router.pathname + '?code=' + encodeURI(text))
+                  router.replace(
+                    router.pathname +
+                      '?generator=' +
+                      generator +
+                      '&code=' +
+                      encodeURI(text)
+                  )
                 }
 
                 // Process the event here (such as click on submit button)
@@ -137,7 +170,7 @@ export default () => {
           grow={1}
           shrink={0}
           basis={0}
-          maxWidth={['100%', , '50%']}
+          maxWidth={['100%', , , '50%']}
           extend={{
             borderBottomWidth: 1,
             borderBottomStyle: 'solid',
