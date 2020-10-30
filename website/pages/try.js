@@ -96,7 +96,7 @@ export default () => {
                   id="devMode"
                   type="checkbox"
                   checked={devMode}
-                  onChange={() => setDevMode((mode) => !mode)}
+                  onChange={() => setDevMode(mode => !mode)}
                 />
                 <label htmlFor="devMode">devMode</label>
               </Box>
@@ -104,7 +104,7 @@ export default () => {
                 Generator:
                 <select
                   value={generator}
-                  onChange={(e) => setGenerator(e.target.value)}>
+                  onChange={e => setGenerator(e.target.value)}>
                   <option value="javascript-css">javascript-css</option>
                   <option value="javascript-react-native">
                     javascript-react-native
@@ -118,8 +118,8 @@ export default () => {
           <Box
             as="textarea"
             value={text}
-            onChange={(e) => setText(e.target.value)}
-            onKeyDown={(e) => {
+            onChange={e => setText(e.target.value)}
+            onKeyDown={e => {
               if (
                 (window.navigator.platform.match('Mac')
                   ? e.metaKey
@@ -190,7 +190,7 @@ export default () => {
                 backgroundColor: 'rgba(255, 0,0,0.3)',
                 overflow: 'auto',
               }}>
-              {parsed.errors.map((error) => {
+              {parsed.errors.map(error => {
                 const { message, ...rest } = error
 
                 return (
@@ -215,7 +215,7 @@ export default () => {
               basis={0}
               padding={4}
               extend={{ overflow: 'auto' }}>
-              {Object.keys(generated).map((file) => (
+              {Object.keys(generated).map(file => (
                 <CodeBlock
                   name={file}
                   nocopy

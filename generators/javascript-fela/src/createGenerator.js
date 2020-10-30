@@ -1,11 +1,19 @@
 import { getVariablesFromAST, getVariantsFromAST } from '@elodin/utils-core'
 import { generateValue, generateModifierMap } from '@elodin/utils-javascript'
+import {
+  generateMediaQueryFromNode,
+  isMediaQuery,
+  isPseudoClass,
+  isPseudoElement,
+} from '@elodin/utils-css'
 import { hyphenateProperty } from 'css-in-js-utils'
 import uncapitalizeString from 'uncapitalize'
+import { arrayReduce, arrayMap } from 'fast-loops'
 
 const defaultConfig = {
   importFrom: 'react-native',
-  generateJSFileName: (moduleName) => moduleName + '.elo',
+  generateStyleName: styleName => styleName,
+  generateFileName: moduleName => moduleName + '.elo',
   generateVariantName: uncapitalizeString,
   generateVariantValue: uncapitalizeString,
 }
@@ -15,15 +23,42 @@ export default function createGenerator(customConfig = {}) {
     ...defaultConfig,
     ...customConfig,
   }
-  function generate(ast, fileName = '') {
-    const js = generateJS(ast, config)
+  function generate(ast, path = '') {
+    const fileName = path.split('/').pop()
 
-    return { [fileName + '.js']: js }
+    const root = generateRootFile(ast, config)
+    const js = generateJSFiles(ast, config, fileName)
+
+    return { [fileName + '.js']: root, ...js }
   }
 
-  generate.filePattern = [config.generateJSFileName('*') + 'js']
+  generate.filePattern = [config.generateFileName('*') + 'js']
 
   return generate
+}
+
+function generateRootFile(ast, { generateFileName, generateStyleName }) {
+  // TODO: include fragments
+  const styles = ast.body.filter(node => node.type === 'Style')
+
+  const imports = styles
+    .map(
+      module =>
+        'import { ' +
+        generateStyleName(module.name) +
+        " } from './" +
+        generateFileName(module.name) +
+        ".js'"
+    )
+    .join('\n')
+
+  return (
+    imports +
+    '\n\n' +
+    'export {\n  ' +
+    styles.map(module => generateStyleName(module.name)).join(',\n  ') +
+    '\n}'
+  )
 }
 
 function stringifyDeclaration(declaration) {
@@ -38,19 +73,18 @@ function stringifyDeclaration(declaration) {
   return prop + declaration.value
 }
 
-function generateJS(
-  ast,
-  { importFrom, devMode, generateVariantValue, generateVariantName }
-) {
-  const styles = ast.body.filter((node) => node.type === 'Style')
-  const variants = ast.body.filter((node) => node.type === 'Variant')
+function generateJSFiles(ast, config) {
+  const { generateFileName, generateStyleName } = config
 
-  const modules = styles.reduce((modules, module) => {
+  const styles = ast.body.filter(node => node.type === 'Style')
+  const variants = ast.body.filter(node => node.type === 'Variant')
+
+  return styles.reduce((files, module) => {
     const usedVariants = getVariantsFromAST(module)
     const variantMap = variants.reduce((flatVariants, variant) => {
       if (usedVariants[variant.name]) {
         flatVariants[variant.name] = variant.body.map(
-          (variation) => variation.value
+          variation => variation.value
         )
       }
 
@@ -58,101 +92,123 @@ function generateJS(
     }, {})
 
     const variables = getVariablesFromAST(module)
-    const styles = generateStyles(module.body, variantMap, devMode)
+    const styles = generateStyles(module.body, variantMap, config)
 
-    const modifierStyle = styles.filter((style) => style.modifier.length !== 0)
-    const baseStyle = styles.filter((style) => style.modifier.length === 0)[0]
+    files[generateFileName(module.name) + '.js'] =
+      'export function ' +
+      generateStyleName(module.name) +
+      '(props = {}) {\n  return ' +
+      stringifyObject(styles, 2, 2) +
+      '\n}'
 
-    console.log(modifierStyle)
-
-    modules[module.name] = {
-      baseStyle,
-      modifierStyle,
-      variables,
-    }
-    return modules
+    return files
   }, {})
-
-  return Object.keys(modules)
-    .map(
-      (name) =>
-        'export function ' +
-        name +
-        '(props = {}) {\n  return {\n    ' +
-        modules[name].baseStyle.declarations
-          .map(stringifyDeclaration)
-          .join(',\n    ') +
-        (modules[name].modifierStyle.length > 0
-          ? ',\n    extend: [\n      ' +
-            modules[name].modifierStyle
-              .map(
-                ({ modifier, declarations }) =>
-                  '{\n        ' +
-                  'condition: ' +
-                  modifier
-                    .map(
-                      ([name, value]) =>
-                        'props.' +
-                        generateVariantName(name) +
-                        ' === ' +
-                        wrapInString(generateVariantValue(value))
-                    )
-                    .join(' && ') +
-                  ',\n        style: {\n          ' +
-                  declarations.map(stringifyDeclaration).join(',\n          ') +
-                  '\n        }' +
-                  '\n      }'
-              )
-              .join(',\n      ') +
-            '\n    ]'
-          : '') +
-        '\n  }' +
-        '\n}'
-    )
-    .join('\n\n')
 }
 
-function generateStyles(
-  nodes,
-  variantMap,
-  devMode,
-  styles = [],
-  modifier = []
-) {
-  const base = nodes.filter((node) => node.type === 'Declaration')
-  const nesting = nodes.filter((node) => node.type !== 'Declaration')
+function generateStyles(nodes, variantMap, config) {
+  const { generateVariantName, generateVariantValue } = config
 
-  styles.push({
-    modifier,
-    declarations: base.map((declaration) => ({
-      property: declaration.property,
-      value: generateValue(declaration.value, declaration.property, true),
-      dynamic: declaration.dynamic,
-    })),
-  })
+  return arrayReduce(
+    nodes,
+    (styles, node) => {
+      if (node.type === 'Declaration') {
+        styles[node.property] = generateValue(node.value, node.property, true)
+      } else {
+        if (node.property.type === 'Identifier') {
+          const variant = variantMap[node.property.value]
 
-  nesting.forEach((nest) => {
-    if (nest.property.type === 'Identifier') {
-      const variant = variantMap[nest.property.value]
+          if (variant) {
+            if (node.value.type === 'Identifier') {
+              const variation = variant.indexOf(node.value.value) !== -1
 
-      if (variant) {
-        if (nest.value.type === 'Identifier') {
-          const variation = variant.indexOf(nest.value.value) !== -1
+              if (variation) {
+                if (!styles.extend) {
+                  styles.extend = []
+                }
 
-          if (variation) {
-            generateStyles(nest.body, variantMap, devMode, styles, [
-              ...modifier,
-              [nest.property.value, nest.value.value],
-            ])
+                styles.extend.push({
+                  condition:
+                    'props.' +
+                    generateVariantName(node.property.value) +
+                    ' === ' +
+                    wrapInString(generateVariantValue(node.value.value)),
+                  style: generateStyles(node.body, variantMap, config),
+                })
+              }
+            }
+          } else {
+            // TODO: throw
+          }
+        } else if (
+          node.property.type === 'Variable' &&
+          node.property.environment
+        ) {
+          const pseudoClass = isPseudoClass(node.property.value)
+          const pseudoElement = isPseudoElement(node.property.value)
+          const mediaQuery = isMediaQuery(node.property.value)
+
+          if ((pseudoClass || pseudoElement) && node.boolean) {
+            const key =
+              (pseudoElement ? '::' : ':') +
+              hyphenateProperty(node.property.value)
+
+            styles[key] = generateStyles(node.body, variantMap, config)
+          }
+
+          if (mediaQuery) {
+            const key = generateMediaQueryFromNode(
+              node.boolean ? undefined : node.value.value,
+              node.property.value,
+              node.operator
+            )
+            styles['@media ' + key] = generateStyles(
+              node.body,
+              variantMap,
+              config
+            )
           }
         }
-      } else {
-        // TODO: throw
       }
+
+      return styles
+    },
+    {}
+  )
+}
+
+function stringifyObject(obj, indent = 2, startIndent = 0) {
+  const fullIndent = indent + startIndent
+
+  const items = arrayMap(Object.keys(obj), property => {
+    const value = obj[property]
+
+    const prefix =
+      ' '.repeat(fullIndent) +
+      (property.match(/^[a-z]+/) !== null ? property : wrapInString(property)) +
+      ': '
+
+    if (Array.isArray(value)) {
+      return (
+        prefix +
+        '[\n' +
+        ' '.repeat(fullIndent + 2) +
+        value
+          .map(val => stringifyObject(val, indent + 2 + 2, startIndent))
+          .join(',\n' + ' '.repeat(fullIndent + 2)) +
+        '\n' +
+        ' '.repeat(fullIndent) +
+        ']'
+      )
     }
+
+    if (typeof value === 'object') {
+      return prefix + stringifyObject(value, indent + 2, startIndent)
+    }
+
+    return prefix + obj[property]
   })
 
-  return styles
+  return '{\n' + items.join(',\n') + '\n' + ' '.repeat(indent) + '}'
 }
 
 function wrapInString(value) {

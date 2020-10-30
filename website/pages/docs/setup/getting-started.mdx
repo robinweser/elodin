@@ -32,11 +32,12 @@ The simplest way to add an Elodin configuration is by creating a _elodin.config.
 
 ```javascript name=elodin.config.js copy
 // For this example, we'll use the JavaScript CSS generator
-var generator = require('@elodin/generator-javascript-css')
+// you'll have to install your prefered generator as well e.g. yarn add @elodin/generator-javascript-css
+var { createGenerator } = require('@elodin/generator-javascript-css')
 
 module.exports = {
   sources ["components"],
-  generator: generator.createGenerator(),
+  generator: createGenerator(),
 }
 ```
 

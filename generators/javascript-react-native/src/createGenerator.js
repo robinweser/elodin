@@ -5,7 +5,7 @@ import uncapitalizeString from 'uncapitalize'
 
 const defaultConfig = {
   importFrom: 'react-native',
-  generateJSFileName: (moduleName) => moduleName + '.elo',
+  generateFileName: (moduleName) => moduleName + '.elo',
   generateVariantName: uncapitalizeString,
   generateVariantValue: uncapitalizeString,
 }
@@ -21,7 +21,7 @@ export default function createGenerator(customConfig = {}) {
     return { [fileName + '.js']: js }
   }
 
-  generate.filePattern = [config.generateJSFileName('*') + 'js']
+  generate.filePattern = [config.generateFileName('*') + 'js']
 
   return generate
 }

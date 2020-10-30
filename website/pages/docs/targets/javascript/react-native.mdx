@@ -16,28 +16,33 @@ It renders all styles to [StyleSheet](https://facebook.github.io/react-native/do
 To use the React Native generator, simply add it to your Elodin configuration and you're ready to go.
 
 ```javascript name=elodin.config.js
-var generator = require('@elodin/generator-javascript-react-native')
+var { createGenerator } = require('@elodin/generator-javascript-react-native')
 
 module.exports = {
-  generator: generator.createGenerator(),
+  generator: createGenerator(),
 }
 ```
 
 ## Configuration
 
-| Option     | Type    | Default        | Description                                                                                                                                                                                                                                |
-| ---------- | ------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| importFrom | String  | _react-native_ | Package from which package the `StyleSheet` API is imported. Useful when building with other React Native adopted renderers such as [react-pdf](https://react-pdf.org) or [react-native-web](https://github.com/necolas/react-native-web). |
-| devMode    | Boolean | _false_        | In devMode, style names contain human-readable prefixes that help to indentify the referenced style.                                                                                                                                       |
+| Option               | Type     | Default                        | Description                                                                                                                                                                                                                                |
+| -------------------- | -------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| importFrom           | String   | _react-native_                 | Package from which package the `StyleSheet` API is imported. Useful when building with other React Native adopted renderers such as [react-pdf](https://react-pdf.org) or [react-native-web](https://github.com/necolas/react-native-web). |
+| devMode              | Boolean  | _false_                        | In devMode, style names contain human-readable prefixes that help to indentify the referenced style.                                                                                                                                       |
+| generateFileName     | Function | _module => module + ".elo"_    | A function that represents the JavaScript filename convention. It takes the module name. The `.js` extension is applied automatically.                                                                                                     |
+| generateVariantName  | Function | _name => uncapitalize(name)_   | A function that generates variant names in our JavaScript files. It represents the property key which we need to pass in order to apply variants.                                                                                          |
+| generateVariantValue | Function | _value => uncapitalize(value)_ | A function that generates variant values in our JavaScript files. It represents the variant value which we need to pass in order to apply variants.                                                                                        |
 
 ### Example
 
 ```javascript name=elodin.config.js
-var generator = require('@elodin/generator-javascript-react-native')
+var { createGenerator } = require('@elodin/generator-javascript-react-native')
 
 module.exports = {
-  generator: generator.createGenerator({
+  generator: createGenerator({
     importFrom: '@react-pdf/renderer',
+    // makes variant values uppercase e.g. variant: "PRIMARY"
+    generateVariantValue: (value) => value.toUpperCase(),
   }),
 }
 ```

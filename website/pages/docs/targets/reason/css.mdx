@@ -11,34 +11,41 @@ yarn add --dev @elodin/generator-reason-css
 This generator is used with [ReasonML](https://reasonml.github.io). It renders to plain CSS and Reason files.<br />
 The Reason files contain functions that return the correct className depending on passed variants.
 
+It renders all variants to native Reason variants.
+
 ## Usage
 
 To use the Javascript generator, simply add it to your Elodin configuration and you're ready to go.
 
 ```javascript name=elodin.config.js
-var generator = require('@elodin/generator-reason-css')
+var { createGenerator } = require('@elodin/generator-reason-css')
 
 module.exports = {
-  generator: generator.createGenerator(),
+  generator: createGenerator(),
 }
 ```
 
 ## Configuration
 
-| Option        | Type    | Default | Description                                                                                                                                                                   |
-| ------------- | ------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| devMode       | Boolean | _false_ | In devMode, class names contain human-readable prefixes that help to indentify the referenced style.                                                                          |
-| dynamicImport | Boolean | _false_ | By default, CSS files are required as soon as the corresponding Reason file is imported.<br />With dynamic imports, it is only imported once the function is actually called. |
+| Option                 | Type     | Default                                                | Description                                                                                                                                                                                                              |
+| ---------------------- | -------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| devMode                | Boolean  | _false_                                                | In devMode, class names contain human-readable prefixes that help to indentify the referenced style.                                                                                                                     |
+| dynamicImport          | Boolean  | _false_                                                | By default, CSS files are required as soon as the corresponding Reason file is imported.<br />With dynamic imports, it is only imported once the function is actually called.                                            |
+| generateStyleName      | Function | _name => name_                                         | A function that returns name of the JavaScript function that returns the class name. It takes the style name and returns a string. The result will get uncapitalized by default due to the naming conventions in Reason. |
+| generateReasonFileName | Function | _module => capitalize(module) + "Style"_               | A function that represents the Reason filename convention. It takes the style and module name. The `.re` extension is applied automatically.                                                                             |
+| generateCSSFileName    | Function | _(module, name) => capitalize(module) + name + ".elo"_ | A function that represents the CSS filename convention. It takes the style and module name. The `.css` extension is applied automatically.                                                                               |
 
 ### Example
 
 ```javascript name=elodin.config.js
-var generator = require('@elodin/generator-reason-css')
+var { createGenerator } = require('@elodin/generator-reason-css')
 
 module.exports = {
-  generator: generator.createGenerator({
-    devMode: true,
+  generator: createGenerator({
+    // now our modules are prefixed with Elodin e.g. ElodinButton
+    generateReasonFileName: module => 'Elodin' + capitalize(module),
     dynamicImport: false,
+    devMode: true,
   }),
 }
 ```
@@ -51,6 +58,10 @@ module.exports = {
 - Functions
 - Variants
 - Conditionals
+  - Variants
+  - Environment
+    - Pseudo Classes
+    - Media Queries
 
 ---
 
@@ -86,7 +97,7 @@ style Button {
 ```reason name=Button.re
 [@react.component]
 let make = (~name, ~children, ~variant=ButtonStyle.Primary) =>
-  <button className=ButtonStyle(~variant, ())>
+  <button className=ButtonStyle.button(~variant, ())>
     children
   </button>
 ```

@@ -38,7 +38,7 @@ export default () => {
         padding={10}
         minHeight={['20vh', , '30vh']}
         justifyContent="center"
-        space={5}
+        space={[2, , , 5]}
         extend={{ backgroundColor: theme.colors.background }}>
         <Box
           as="img"
@@ -51,7 +51,7 @@ export default () => {
           <Layout>
             <Box
               direction={['column', , , 'row']}
-              space={16}
+              space={[4, , , 16]}
               alignItems="center">
               <Box grow={1}>
                 <CodeBlock nocopy>{example}</CodeBlock>

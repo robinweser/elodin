@@ -16,26 +16,32 @@ It renders all styles to [Fela rules](http://fela.js.org/docs/basics/Rules.html)
 To use the Fela generator, simply add it to your Elodin configuration and you're ready to go.
 
 ```javascript name=elodin.config.js
-var generator = require('@elodin/generator-javascript-fela')
+var { createGenerator } = require('@elodin/generator-javascript-fela')
 
 module.exports = {
-  generator: generator.createGenerator(),
+  generator: createGenerator(),
 }
 ```
 
 ## Configuration
 
-| Option | Type | Default | Description |
-| ------ | ---- | ------- | ----------- |
-|        |      |         |             |
+| Option               | Type     | Default                        | Description                                                                                                                                         |
+| -------------------- | -------- | ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| generateStyleName    | Function | _name => name_                 | A function that returns name of the JavaScript function that returns the class name. It takes the style name and returns a string.                  |
+| generateFileName     | Function | _module => module + ".elo"_    | A function that represents the JavaScript filename convention. It takes the style and module name. The `.js` extension is applied automatically.    |
+| generateVariantName  | Function | _name => uncapitalize(name)_   | A function that generates variant names in our JavaScript files. It represents the property key which we need to pass in order to apply variants.   |
+| generateVariantValue | Function | _value => uncapitalize(value)_ | A function that generates variant values in our JavaScript files. It represents the variant value which we need to pass in order to apply variants. |
 
 ### Example
 
 ```javascript name=elodin.config.js
-var generator = require('@elodin/generator-javascript-fela')
+var { createGenerator } = require('@elodin/generator-javascript-fela')
 
 module.exports = {
-  generator: generator.createGenerator(),
+  generator: createGenerator({
+    // makes variant values uppercase e.g. variant: "PRIMARY"
+    generateVariantValue: value => value.toUpperCase(),
+  }),
 }
 ```
 
@@ -47,10 +53,10 @@ module.exports = {
 - Functions
 - Variants
 - Conditionals
-
-#### Coming soon
-
-- Environment Conditionals
+  - Variants
+  - Environment
+    - Pseudo Classes
+    - Media Queries
 
 ---
 

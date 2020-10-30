@@ -16,7 +16,7 @@ The JavaScript files contain functions that return the correct className dependi
 To use the Javascript generator, simply add it to your Elodin configuration and you're ready to go.
 
 ```javascript name=elodin.config.js
-var createGenerator = require('@elodin/generator-javascript').createGenerator
+var { createGenerator } = require('@elodin/generator-javascript')
 
 module.exports = {
   generator: createGenerator(),
@@ -25,21 +25,29 @@ module.exports = {
 
 ## Configuration
 
-| Option        | Type    | Default | Description                                                                                                                                                                       |
-| ------------- | ------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| devMode       | Boolean | _false_ | In devMode, class names contain human-readable prefixes that help to indentify the referenced style.                                                                              |
-| dynamicImport | Boolean | _false_ | By default, CSS files are required as soon as the corresponding JavaScript file is imported.<br />With dynamic imports, it is only imported once the function is actually called. |
+| Option               | Type     | Default                        | Description                                                                                                                                                                       |
+| -------------------- | -------- | ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| devMode              | Boolean  | _false_                        | In devMode, class names contain human-readable prefixes that help to indentify the referenced style.                                                                              |
+| dynamicImport        | Boolean  | _false_                        | By default, CSS files are required as soon as the corresponding JavaScript file is imported.<br />With dynamic imports, it is only imported once the function is actually called. |
+| generateStyleName    | Function | _name => name_                 | A function that returns name of the JavaScript function that returns the class name. It takes the style name and returns a string.                                                |
+| generateJSFileName   | Function | _module => module + ".elo"_    | A function that represents the JavaScript filename convention. It takes the style and module name. The `.js` extension is applied automatically.                                  |
+| generateCSSFileName  | Function | _module => module + ".elo"_    | A function that represents the CSS filename convention. It takes the style and module name. The `.css` extension is applied automatically.                                        |
+| generateVariantName  | Function | _name => uncapitalize(name)_   | A function that generates variant names in our JavaScript files. It represents the property key which we need to pass in order to apply variants.                                 |
+| generateVariantValue | Function | _value => uncapitalize(value)_ | A function that generates variant values in our JavaScript files. It represents the variant value which we need to pass in order to apply variants.                               |
 
 ### Example
 
 ```javascript name=elodin.config.js
-var generator = require('@elodin/generator-javascript-css')
+var { createGenerator } = require('@elodin/generator-javascript-css')
 
 module.exports = {
-  generator: generator.createGenerator({
+  generator: createGenerator({
     devMode: true,
     dynamicImport: false,
-    generateStyleName: (name) => name + 'Style',
+    // makes all style functions being rendered with a Style postfix e.g. ButtonStyle
+    generateStyleName: name => name + 'Style',
+    // makes variant values uppercase e.g. variant: "PRIMARY"
+    generateVariantValue: value => value.toUpperCase(),
   }),
 }
 ```
@@ -52,6 +60,10 @@ module.exports = {
 - Functions
 - Variants
 - Conditionals
+  - Variants
+  - Environment
+    - Pseudo Classes
+    - Media Queries
 
 ---
 

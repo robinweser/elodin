@@ -163,17 +163,18 @@ export default function DocLayout({ children }) {
         }}>
         <Box space={8}>
           {Object.keys(nav).map((group) => (
-            <Box space={2.5}>
+            <Box space={2.5} key={group}>
               <Box extend={{ fontWeight: 700 }}>{group}</Box>
               <Box paddingLeft={4} space={2.5}>
                 {Object.keys(nav[group]).map((page) => {
                   if (typeof nav[group][page] === 'object') {
                     return (
-                      <Box space={2.5}>
+                      <Box space={2.5} key={page}>
                         <Box extend={{ fontWeight: 700 }}>{page}</Box>
                         <Box paddingLeft={4} space={2.5}>
                           {Object.keys(nav[group][page]).map((generator) => (
                             <NextLink
+                              key={group + page + generator}
                               href={'/docs/' + nav[group][page][generator]}
                               passHref>
                               <Box
@@ -197,7 +198,10 @@ export default function DocLayout({ children }) {
                   }
 
                   return (
-                    <NextLink href={'/docs/' + nav[group][page]} passHref>
+                    <NextLink
+                      key={group + page}
+                      href={'/docs/' + nav[group][page]}
+                      passHref>
                       <Box
                         as="a"
                         extend={{
